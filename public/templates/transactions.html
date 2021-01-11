@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block staticlinks %}
+{% endblock %}
+
+
+{% block content %}
+
+<section class="container-fluid">
+	<div class="col-12 mb-2 bs-callout bs-callout-primary" style="background-color: rgb(245, 255, 255)">
+		<h2><span id="account-name">Account</span>: <span id="account-balance" class="text-success"></span></h2>
+		
+		<div class="row justify-content-center my-1">
+			<div class="col-lg-4 col-md-12" >
+				<h4>Account Details</h4>
+			</div>
+			<div class="col-lg-8 col-md-12 col-md-12" id="transactions-chart-div">
+			</div>
+			
+		</div>
+	<div class="row justify-content-center my-2">
+		<div class="col-sm-12 col-md-10 col-lg-8">
+			<table class="table" style="width:100%" id="transactions-table"></table>
+		</div>
+	</div>
+
+	</div>
+
+	<!--
+	<div class="row justify-content-center my-2">
+		<div class="col-auto my-2">
+			<table class="table table-responsive" style="" id="transactions-table"></table>
+		</div>
+	</div>
+	-->
+</section>
+
+<!-- Add Edit Modal -->
+<div class="modal fade" id="edit-transaction-modal" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-md modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<form class="form">
+				<div class="modal-header">
+					<h5 class="modal-title">Edit Transaction</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				</div>
+				<div class="modal-body">
+				
+					<div class = "input-group input-group-md ">
+						<div class="input-group-prepend"><span class="input-group-text">Transaction #:</span></div>
+						<input type="text" class="form-control form-control-md disabled col-2" id="edit-transaction-id" readonly>
+						<div class="input-group-prepend"><span class="input-group-text">Transaction Date:</span></div>
+						<input type="text" class="form-control form-control-md" id="edit-transaction-date">
+					</div>
+
+					<div class = "input-group input-group-md ">
+						<div class="input-group-prepend"><span class="input-group-text">Description:</span></div>
+						<input type="text"  class="form-control form-control-md" id="edit-transaction-description"></input>
+					</div>
+
+					<div class = "input-group input-group-md ">
+						<div class="input-group-prepend"><span class="input-group-text">Funds In/Out
+							<span class="fa fa-question-circle fa-fw ml-1 mr-1" data-toggle="tooltip" data-html="true" title="Enter the dollar value of the funds entering this account; use negatives to represent funds exiting the account."></span>:
+						</span></div>
+						<input type="text"  class="form-control form-control-md" id="edit-transaction-value"></input>
+					</div>
+
+
+					<div class = "input-group input-group-md ">
+						<div class="input-group-prepend"><span class="input-group-text">Fund Source/Destination
+							<span class="fa fa-question-circle fa-fw ml-1 mr-1" data-toggle="tooltip" data-html="true" title="Source of funds entering account; or destination of funds exiting account if funds in/out value is negative."></span>:
+						</span></div>
+						<select id="edit-transaction-other-account" class="form-control form-control-md">
+						</select>
+					</div>
+					
+					<p id="edit-transaction-debit-statement" style="color: #DC3545, font-size: .8rem"></p>
+
+					<div class="invalid-feedback mt-1" style="color: #DC3545, font-size: .8rem">Error Message!</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button class="btn btn-danger" id="edit-transaction-delete" type="button">Delete Transaction</button>
+					<button class="btn btn-success" id="edit-transaction-submit" type="button">Submit Changes</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

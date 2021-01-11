@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% block staticlinks %}
+{% endblock %}
+
+
+{% block content %}
+
+	<h1 class="text-center">Net Worth & Account Balances</h1>
+	<h3 class="text-center">Net Worth: <span class="text-success" id="net-worth"></span></h3>
+    <section class="container">
+			<div class="row justify-content-center my-3">
+					<div class="col-md-12 w-100" id="accounts-chart-div">
+					</div>
+			</div>
+			<div class="row justify-content-center my-2">
+				<div class="col-auto">
+					<table class="border-bottom" id="accounts-table"></table>
+				</div>
+			</div>
+			<div class="row justify-content-center my-4">
+				<div class="col-6">
+					<button type="button" id="add-account-open" class="btn btn-success btn-md btn-block">Click to Add a New Account</button>
+				</div>
+			</div>
+
+    </section>
+
+		
+		
+		<!-- Edit Account Modal -->
+		<div class="modal fade" id="edit-account-modal" tabindex="-1" role="dialog">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<form class="form">
+						<div class="modal-header">
+							<h5 class="modal-title">Edit Account Information</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						</div>
+						<div class="modal-body">
+						
+							<div class = "input-group input-group-md ">
+								<div class="input-group-prepend"><span class="input-group-text">ID:</span></div>
+								<input type="text" class="form-control form-control-md" id="edit-account-id" placeholder="1" disabled>
+							</div>
+							
+							<div class = "input-group input-group-md ">
+								<div class="input-group-prepend"><span class="input-group-text">Account Name:</span></div>
+								<input type="text" class="form-control form-control-md" id="edit-account-name" placeholder="Account Name">
+							</div>
+
+
+							<div class = "input-group input-group-md">
+								<div class="input-group-prepend"><span class="input-group-text">Parent Account:</span></div>
+								<select class="form-control form-control-md" id="edit-account-parent-id"></select>
+								<div class="input-group-prepend"><span class="input-group-text">Order:</span></div>
+								<select class="form-control form-control-md col-2" id="edit-account-rel-order"></select>
+
+							</div>
+	
+							<div class = "input-group input-group-md ">
+								<div class="input-group-prepend"><span class="input-group-text">Debit Effect on Balance:<span class="fa fa-question-circle fa-fw ml-1 mr-1"></span></span></div>
+								<div class="btn-group btn-group-toggle" data-toggle="buttons" id="edit-account-debit-effect">
+									<label class="btn btn-info btn-md active"><input type="radio" value="1" name="edit-account-debit-effect" autocomplete="off">Increases Balance</label>
+									<label class="btn btn-info btn-md"><input type="radio" value="-1" name="edit-account-debit-effect" autocomplete="off">Decreases Balance</label>
+								</div>
+							</div>
+							
+							<input id="edit-account-is-open" class="form-check-input" type="checkbox" data-toggle="toggle" data-on="Account is Open to New transactions" data-off="Account is Closed to New Transactions" data-width="100%" data-size="sm" data-style="mt-3" data-onstyle="success" data-offstyle="danger">
+
+							<div class="invalid-feedback mt-1" style="color: #DC3545, font-size: .8rem">Error Message!</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							<button class="btn btn-primary" id="edit-account-submit" type="button">Submit</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		
+		
+		<!-- Add Account Modal -->
+		<div class="modal fade" id="add-account-modal" tabindex="-1" role="dialog">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<form class="form">
+						<div class="modal-header">
+							<h5 class="modal-title">New Account Information</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						</div>
+						<div class="modal-body">
+						
+							<div class = "input-group input-group-md ">
+								<div class="input-group-prepend"><span class="input-group-text">Account Name:</span></div>
+								<input type="text" class="form-control form-control-md" id="add-account-name" placeholder="Enter Account Name Here">
+							</div>
+
+							<div class = "input-group input-group-md ">
+								<div class="input-group-prepend"><span class="input-group-text">Parent Account:</span></div>
+								<select class="form-control form-control-md" id="add-account-parent-id"></select>
+								<div class="input-group-prepend"><span class="input-group-text">Order:</span></div>
+								<select class="form-control form-control-md col-2" id="add-account-rel-order"></select>
+							</div>
+
+	
+							<div class = "input-group input-group-md ">
+								<div class="input-group-prepend"><span class="input-group-text">Debit Effect on Balance:<span class="fa fa-question-circle fa-fw ml-1 mr-1"></span></span></div>
+								<div class="btn-group btn-group-toggle" data-toggle="buttons" id="add-account-debit-effect">
+									<label class="btn btn-secondary btn-md"><input type="radio" value="1" autocomplete="off">Increases Balance</label>
+									<label class="btn btn-secondary btn-md"><input type="radio" value="-1" autocomplete="off">Decreases Balance</label>
+								</div>
+							</div>
+									
+							<div class="invalid-feedback mt-1" style="color: #DC3545, font-size: .8rem">Error Message!</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							<button class="btn btn-primary" id="add-account-submit" type="button">Submit</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+
+{% endblock %}
