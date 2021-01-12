@@ -8,7 +8,8 @@ foreach (glob('/var/www/web-framework/php-files/*.php') as $filename) {
 if (isset($_POST) && isset($_POST['isAjax'])) {
 	routeAjax(
 		$postVars = $_POST,
-		$modelsDir = __DIR__.'/../php-models'
+		$modelsDir = __DIR__.'/../php-models',
+		$db = 'ef'
 	);
 } else {
 	routePage(
@@ -24,6 +25,7 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 		],
 		$errorRoute = ['template' => 'error', 'request' => 'error', 'title' => 'Error', 'js' => []],
 		$baseJsFiles = ['functions', 'moment.min'],
-		$devMode = TRUE
+		$devMode = TRUE,
+		$db = 'ef'
 	);
 }

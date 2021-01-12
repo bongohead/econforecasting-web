@@ -7,6 +7,13 @@ $(document).ready(function() {
 	const userData = getData('userData');
 
 
+	/*** Load dates list for when correlation data is available ***/
+	const getAcSeriesDatesDfd = getAcSeriesDates();
+	$.when(getAcSeriesDatesDfd).done(function(res) {
+		setData('userData', $.extend(true, getData('userData'), {hmDates: res}));
+	});
+
+
 	/*** Load initial data for basic fund info and map; use to get last date then pull historical series for that date ***/
     const loadDefinitionsData = $.Deferred(function(dfd) {
 		/* Get data pieces 1-2 (& assign coordinate order acFund) */
@@ -25,11 +32,13 @@ $(document).ready(function() {
 				return x;
 			});
 			//console.log(acFundSeriesMap, 'acFundSeriesMap');
+			setData('userData', $.extend(true, getData('userData'), {acFund: acFund, acFundSeriesMap: acFundSeriesMapOrdered, fundIdToFundOrder: fundIdToFundOrder}));
 			dfd.resolve({acFund: acFund, acFundSeriesMap: acFundSeriesMapOrdered, fundIdToFundOrder: fundIdToFundOrder});
 		});
 		return dfd.promise();
 	});
 	
+	/*** Load series data ***/
 	const loadSeriesData = $.Deferred(function(dfd) {
 		
 		$.when(loadDefinitionsData).done(function(res) {
@@ -100,6 +109,16 @@ $(document).ready(function() {
 	
 });
 
+/*** Get series dates as array ***/
+function getAcSeriesDates() {
+	const dfd = $.Deferred();
+	getAJAX('getAcSeriesDates', toScript = ['acSeriesDates']).done(function(ajaxRes) {
+		const acSeriesDates = JSON.parse(ajaxRes).acSeriesDates.map(x => x.date);
+		dfd.resolve(acSeriesDates);
+		});
+	return dfd.promise();
+}
+
 
 /*** Get basic fund info data and sort by category ***/
 function getAcFund(usage) {
@@ -131,7 +150,7 @@ function getAcFundSeriesMap(usage, method, roll) {
 
 /*** Get historical data and group by date ***/
 /* @param startDate: starting date of data pull
- * @param endDate: end date of data pull
+ * @param endDate: last date of data pull (SQL will pull most recent date before this)
  * @param fundSeriesMapIds: array of fundSeriesMap IDs for the historical series to pull
  * @param fundIdToFundOrder: object of {fundID1: orderID2, fundID2: orderID2, ..} to give an order assignment to each data point
  */
@@ -179,47 +198,6 @@ function getAcSeries(startDate, endDate, fundSeriesMapIds, fundIdToFundOrder) {
 }
 
 
-/*
-function getAcFund(usage, method, roll) {
-	// Create new promise for full function
-	const dfdFn = $.Deferred();
-
-	const getAcFund = $.Deferred(function(dfd) {
-		getAJAX('getAcFund', toScript = ['acFund']).done(function(ajaxRes) {
-			//console.log('ajaxRes', ajaxRes);
-			//console.log(usage, method, roll);
-			const acFund =
-				JSON.parse(ajaxRes).acFund
-				.filter(function(x) {
-					return (x.usage === usage && x.method === method && parseInt(x.roll) === roll);
-				})
-				.map(function(x) {
-					const y = {
-						id: x.id,
-						id1: x.fk_fund1,
-						id2: x.fk_fund2,
-						ticker1: x.ticker1,
-						ticker2: x.ticker2,
-						obs_start: moment(x.obs_start),
-						obs_end: moment(x.obs_end)
-					}
-					return y;
-				});
-			console.log('acFund', acFund);
-			dfd.resolve({acFund: acFund});
-			dfdFn.resolve({acFund: acFund});
-		});
-		return dfd.promise();
-	});
-	return dfdFn.promise();
-}
-
-*/
-
-function createHeatmapData(acFund, acSeries) {
-	
-	
-}
 
 
 /*** Get series data - from fund data ***/
@@ -231,7 +209,9 @@ function drawHeatmap(acFund, acFundSeriesMap, acSeries, seriesDate) {
 			groupindex: i,
 			groupname: x,
 			color: getColorArray()[i],
-			countries: acFund.filter(y => y.category.split('.')[0] === x).map(y => y.longname)
+			countries: acFund.filter(y => y.category.split('.')[0] === x).map(y => y.longname),
+			start: Math.min(...acFund.filter(y => y.category.split('.')[0] === x).map(y => y.order)),
+			end: Math.max(...acFund.filter(y => y.category.split('.')[0] === x).map(y => y.order))
 		};
 		return y;
 	});
@@ -241,7 +221,7 @@ function drawHeatmap(acFund, acFundSeriesMap, acSeries, seriesDate) {
 	console.log('groups', groups);
 	
 	console.log('seriesDate', seriesDate);
-	Highcharts.chart('heatmap-container', {
+	const chart = Highcharts.chart('heatmap-container', {
 		chart: {
 			height: 1060,
 			marginTop: 100,
@@ -290,8 +270,7 @@ function drawHeatmap(acFund, acFundSeriesMap, acSeries, seriesDate) {
 		yAxis: {
 			categories: categories,
 			title: null,
-			min: 0
-			/*
+			min: 0,
             labels: {
 				formatter: function () {
 					const color = groups.filter(x => x.countries.includes(this.value))[0].color;
@@ -299,7 +278,6 @@ function drawHeatmap(acFund, acFundSeriesMap, acSeries, seriesDate) {
 				},
                 rotation: -45
              }
-			 */
 		},
 		colorAxis: {
 			min: -1,
@@ -338,11 +316,176 @@ function drawHeatmap(acFund, acFundSeriesMap, acSeries, seriesDate) {
 		}]
 	});
 	
+	
+	/** Draw group rectangles etc **/
+
+	const boxW =  chart.xAxis[0].width/chart.xAxis[0].categories.length;
+    const boxH =  chart.yAxis[0].height/chart.yAxis[0].categories.length;
+    const offsetH = chart.plotSizeY + chart.plotTop;
+    const offsetW = chart.plotLeft;
+	
+    //Get x-y coords of labels
+    const xticks = chart.xAxis[0].ticks;
+    const yticks = chart.yAxis[0].ticks;
+	
+	const groupsWithDimensions = groups.map(function(group) {
+		group.XAXISy = xticks[group.start].label.attr('y');
+        group.YAXISx = yticks[group.start].label.attr('x');
+
+		//top-left, bottom-right,etc
+		group.yTop = offsetH - (group.start) * boxH;
+		group.yBottom = offsetH - (group.end + 1) * boxH;
+		group.xLeft = offsetW + group.start * boxW;
+		group.xRight = offsetW + (group.end + 1) * boxW;
+		
+		return group;
+	});
+	console.log('groupsWithDimensions', groupsWithDimensions);
+	
+    //Draw stuff
+    groupsWithDimensions.map(function(group, index) {
+        // horizontal line on x-axis
+        chart.renderer.path(['M', group.start * boxW + offsetW + 2, group.XAXISy - 5,'L', (group.end + 1) * boxW + offsetW - 2, group.XAXISy - 5])
+        .attr({
+            'stroke-width': 2,
+            stroke: group.color
+        })
+        .add();
+        
+        // vertical line on y-axis
+        chart.renderer.path(['M', group.YAXISx + 5, offsetH - group.start * boxH - 5, 'L', group.YAXISx + 5, offsetH - (group.end + 1) * boxH + 5])
+        .attr({
+            'stroke-width': 2,
+            stroke: group.color
+        })
+        .add();
+        
+        
+        //text and rectangles
+		
+        (function() {
+            if (group.grouping === 'World') return;
+            
+            var text = chart.renderer.text(group.grouping,offsetW+group.start*boxW+(group.end+1-group.start)*boxW/2,group.XAXISy+100) //(text,x,y)
+            .attr({
+                zIndex: 5,
+                'text-anchor': 'middle'
+            })
+            .css({
+                textAlign: 'center',
+                color: 'white'
+            })
+            .add();
+            box = text.getBBox();
+        
+            chart.renderer.rect(box.x - 5, box.y - 5, box.width + 10, box.height + 10, 5)
+            .attr({
+                fill: group.color,
+                stroke: 'gray',
+                'stroke-width': 1,
+                zIndex: 4
+            })
+            .add();
+        })();
+
+
+        //Draw a box around the square - TOP -> BOT -> LEFT -> RIGHT
+        var paths = [];
+        paths[0] = ['M',group.xLeft,group.yTop,'H',group.xRight]; //top-left to top-right
+        paths[1] = ['M',group.xLeft,group.yBottom,'H',group.xRight]; //bottom-left to bottom-right
+        paths[2] = ['M',group.xLeft,group.yBottom,'V',group.yTop]; //bottom-left to top-left
+        paths[3] = ['M',group.xRight,group.yBottom,'V',group.yTop]; //bottom-right to top-right
+
+        for (i=0;i<paths.length;i++) {
+            chart.renderer.path(paths[i])
+            .attr({
+                'stroke-width': 2,
+                "zIndex": 5,
+                "stroke": group.color
+            })
+            .add();
+        }
+        
+        //Region text in center of box
+        fontSize = Math.round( (group.xRight-group.xLeft)/5,0 );
+        if (fontSize < 6) {
+            
+        } else {
+            if (fontSize < 8) fontSize = 8;
+            if (fontSize > 20) fontSize = 20;
+
+            chart.renderer.text(group.groupname.replace(' ','<br>'),(group.xLeft+group.xRight)/2,(group.yTop+group.yBottom)/2) 
+            .attr({
+                zIndex: 6,
+                'text-anchor': 'middle'
+            })
+            .css({
+                "textAlign": 'center',
+                "color": group.color,
+                "opacity": 0.8,
+                //'text-shadow': '-0.05em 0 black, 0 0.05em black, 0.05em 0 black, 0 -0.05em ' + 'black',
+                'font-size': fontSize + 'px'
+            })
+            .add();
+        }
+        
+    });
 }
 
-/*** Get series data - from fund data ***/
-/*
-function getAcSeries() {
-	
-	
-}*/
+
+/*** ***/
+function updateCharts(chartHM,chartHMDates) {
+    var timeStart = new Date().getTime();
+
+    var data = getData();
+  
+    if (data.hmDates === undefined || data.playIndex === undefined) return;
+    var date = data.hmDates[data.playIndex];
+    updatePlotLine(chartHMDates,new Date(date).getTime());
+    
+
+    var ajaxGetHistCorrel = getAJAX(
+                                    ['get_hist_correl_by_date'],[],['tagsCorrel',],
+                                    {"date": date, "category": data.dataInfo.category, "corr_type": data.dataInfo.corr_type, "freq": data.dataInfo.freq, "trail": data.dataInfo.trail},
+                                    20000,'disabled');
+
+    ajaxGetHistCorrel.done(function(res) {
+            if (JSON.parse(res).tagsCorrel.length == null) return;
+            
+            var tagsCorrelDate = JSON.parse(res).tagsCorrel;
+            var hm = drawHeatMap(data.tagsSeries,tagsCorrelDate,1);
+            
+            for (j=0;j<hm.data.length;j++) {
+                chartHM.series[0].data[j].update(hm.data[j],false);
+            }
+            chartHM.redraw();
+            $('#heatmap-subtitle-date').text(Highcharts.dateFormat('%m/%d/%Y',new Date(date).getTime()));
+            
+                      
+            //If at end or beginning, auto-pause
+            
+            if (data.playIndex <= 0 ) {
+              data.playState = 'pause';
+              data.playIndex = 0;
+            }
+            
+            else if (data.playIndex >= data.hmDates.length - 1) {
+              data.playState = 'pause';
+              data.playIndex = data.hmDates.length - 1;
+            }
+            
+            else {
+              if (data.playState === 'forward')  data.playIndex = data.playIndex + 5; //skip by week
+              else data.playIndex = data.playIndex - 5; //skip by week
+            }
+            
+            setData(data);
+            
+            updateHMButtons();
+            var timeEnd = new Date().getTime();
+            var timeWait = timeEnd-timeStart < 500 ? 500 - (timeEnd-timeStart) : 500;
+          
+            if (data.playState !== 'pause') setTimeout(function() { updateCharts(chartHM,chartHMDates); }, timeWait);
+            
+    });
+}
