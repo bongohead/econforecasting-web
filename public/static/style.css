@@ -1,20 +1,20 @@
 /** Bootstrap Style Changes **/
-
-html {
-    font-size: 14px;
+@import url(//fonts.googleapis.com/css?family='Open Sans');
+body {
+	font-family: 'Open Sans', sans-serif !important;
+	font-size: 0.9rem !important;
 }
 
 #main {
-  background-color: rgba(255, 235, 205,.1) !important;
+	background-color: rgba(255, 235, 205,.1) !important;
 }
 
 .container {
-  max-width:1440px !important;
+	max-width:1440px !important;
 }
 
 header {
     background-color: rgba(245, 245, 248, 1) !important;
-   /* position: sticky; */
     top: 0;
     right: 0;
     left: 0;
@@ -30,8 +30,8 @@ header {
 }
 
 footer {
-  margin-top: 10rem !important;
-	color: rgba(220,220,250,1) !important;
+	margin-top: 10rem !important;
+	color: white !important;
 	-webkit-box-shadow: 0 -8px 6px -6px #999;
 	-moz-box-shadow: 0 -8px 6px -6px #999;
 	box-shadow: 0 -8px 6px -6px #999;
@@ -43,7 +43,7 @@ footer {
 nav.navbar {
     /*padding: 10px 20px;*/
     /*background-color: rgb(48, 58, 86);*/
-	background-color: rgb(78, 99, 31);
+	background-color: rgb(58, 79, 11);
     -webkit-box-shadow: 0 8px 6px -6px #999;
     -moz-box-shadow: 0 8px 6px -6px #333;
     box-shadow: 0 8px 6px -6px #333;

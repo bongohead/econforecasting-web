@@ -1,111 +1,127 @@
 $(document).ready(function() {
 
-	/********** Initialize **********/
+
+
+
+	/********** INITIALIZE **********/
 	$('div.overlay').show();
 	
-	setAllData($.extend(true, getAllData(), {userData:{usage: 'reg', method: 'p', roll: 30}}));
-	const userData = getData('userData');
+	/*** Set Default Data ***/
+	/* Use previous options if set, otherwise use default options stated above.
+	 * Also change roll window to currently selected value
+	 */ 
+	(function() {
+		const udPrev = getAllData().userData || {};
+		const ud =
+			$.extend(
+				true,
+				udPrev,
+				{
+					usage: udPrev.reg || 'reg',
+					method: udPrev.method || 'p',
+					roll: udPrev.roll || 30
+				}
+			)
 
-
-	/*** Load dates list for when correlation data is available ***/
-	const getAcSeriesDatesDfd = getAcSeriesDates();
-	$.when(getAcSeriesDatesDfd).done(function(res) {
-		setData('userData', $.extend(true, getData('userData'), {hmDates: res}));
-	});
-
-
-	/*** Load initial data for basic fund info and map; use to get last date then pull historical series for that date ***/
-    const loadDefinitionsData = $.Deferred(function(dfd) {
-		/* Get data pieces 1-2 (& assign coordinate order acFund) */
-		const getAcFundDfd = getAcFund(usage = userData.usage);
-		const getAcFundSeriesMapDfd = getAcFundSeriesMap(usage = userData.usage, method = userData.method, roll = userData.roll);
-
-		/* Add coordinate order to acFundSeriesMap */
-		$.when(getAcFundDfd, getAcFundSeriesMapDfd).done(function(acFund, acFundSeriesMap) {
-			/* Create object of {fundID1: orderID2, fundID2: orderID2, ..} */
-			const fundIdToFundOrder = acFund.reduce((obj, item) => Object.assign(obj, { [item.id]: item.order }), {});
-
-			acFundSeriesMapOrdered = acFundSeriesMap.map(function(x) {
-				//console.log(x.fk_fund1, x.fk_fund2);
-				x.order1 = fundIdToFundOrder[x.fk_fund1];
-				x.order2 = fundIdToFundOrder[x.fk_fund2];
-				return x;
-			});
-			//console.log(acFundSeriesMap, 'acFundSeriesMap');
-			setData('userData', $.extend(true, getData('userData'), {acFund: acFund, acFundSeriesMap: acFundSeriesMapOrdered, fundIdToFundOrder: fundIdToFundOrder}));
-			dfd.resolve({acFund: acFund, acFundSeriesMap: acFundSeriesMapOrdered, fundIdToFundOrder: fundIdToFundOrder});
-		});
-		return dfd.promise();
-	});
-	
-	/*** Load series data ***/
-	const loadSeriesData = $.Deferred(function(dfd) {
+		setData('userData', ud);
 		
-		$.when(loadDefinitionsData).done(function(res) {
-			const acFund = res.acFund;
-			const acFundSeriesMap = res.acFundSeriesMap;
-			const fundIdToFundOrder = res.fundIdToFundOrder;
-			
-			const endDate = moment.max(...(acFundSeriesMap.map(x => x.obs_end))).format('YYYY-MM-DD');
-			const startDate = endDate;
-			const fundSeriesMapIds = acFundSeriesMap.map(x => x.id);
+		document.querySelector('#roll').value = ud.roll;
+	
+	})();
 
-			const getAcSeriesDfd = getAcSeries(startDate, endDate, fundSeriesMapIds, fundIdToFundOrder);
+
+
+	/********** GET DATA **********/
+	/* Do not transfer data directly between functions - instead have everything work with sessionStorage.
+	 * Put the functions in a bigger $.Deferred function when more cleaning is needed before finalization;
+	 */
+    const loadData = $.Deferred(function(dfd) {
+		const ud = getData('userData');
+		const getAcSeriesDatesDfd = getAcSeriesDates();
+		const getAcFundDfd = getAcFund(usage = ud.usage);
+		const getAcFundSeriesMapDfd = getAcFundSeriesMap(usage = ud.usage, method = ud.method, roll = ud.roll);
+
+		$.when(getAcSeriesDatesDfd, getAcFundDfd, getAcFundSeriesMapDfd).done(function(acSeriesDates, acFund, acFundSeriesMap) {
+			/* Add order key to each fund */
+			const acFundOrdered = acFund.map((x, i) => $.extend(true, x, {order: i}));
+			/* Create object to map between fund ID and order ID: {fundID1: orderID2, fundID2: orderID2, ..} */
+			const fundIdOrderMap = acFundOrdered.reduce((obj, item) => Object.assign(obj, { [item.id]: item.order }), {});
+			/* Add order1 and order2 to each acFundSeriesMap object */
+			const acFundSeriesMapOrdered = acFundSeriesMap.map(x => $.extend(true, x, {order1: fundIdOrderMap[x.fk_fund1], order2: fundIdOrderMap[x.fk_fund2]}));
+			/* Now get series data - use last date */
+			const acActiveDate = moment.max(...(acSeriesDates.map(x => moment(x)))).format('YYYY-MM-DD');
 			
-			$.when(getAcSeriesDfd).done(function(acSeries) {
-				//console.log(acSeries, 'acSeries');
-				dfd.resolve({acFund: acFund, acFundSeriesMap: acFundSeriesMap, acSeries: acSeries});
+			const getAcSeriesDfd = getAcSeries(acActiveDate, acFundSeriesMapOrdered.map(x => x.id), fundIdOrderMap).done(function(acSeries) {
+				setData(
+					'userData',
+					$.extend(
+						true,
+						getData('userData'),
+						{
+							acFund: acFundOrdered,
+							fundIdOrderMap: fundIdOrderMap,
+							acFundSeriesMap: acFundSeriesMapOrdered,
+							acSeriesDates: acSeriesDates,
+							acActiveDate: acActiveDate,
+							acSeries: acSeries,
+							playState: 'pause',
+							playIndex: acSeriesDates.length - 1
+						}
+					)
+				);
+				dfd.resolve();
 			});
 		});
 		return dfd.promise();
 	});
 	
 	
-	loadSeriesData.done(function(res) {
-		console.log('res', res);
-		drawHeatmap(res.acFund, res.acFundSeriesMap, res.acSeries, seriesDate = moment.max(Object.keys(res.acSeries).map(x => moment(x))).format('YYYY-MM-DD'));
+	
+	/********** DRAW CHARST **********/
+	loadData.done(function() {
+		const ud = getData('userData');
+		drawHeatmap(ud.acFund, ud.acFundSeriesMap, ud.acSeries, ud.acActiveDate);
 		$('#overlay').hide();
 	});
+	
+	
+	
+	
+	/********** EVENT LISTENERS FOR PLAYING **********/
+	$('#heatmap-container').on('click', '#heatmap-subtitle-group > button.heatmap-subtitle', function() {
+		const ud = getData('userData');
+		const clickedPlayDirection = $(this).data('dir');
+		if (ud.playState == null) return;
+           
+		if (clickedPlayDirection === 'pause') var newPlayState = 'pause';
+      
+		if (clickedPlayDirection === 'start' || clickedPlayDirection === 'end') {
+			var newPlayState = 'pause';
+			var newPlayIndex = (clickedPlayDirection === 'start') ? 0 : ud.acSeriesDates.length - 1;
+		}
+		
+		/* If click back & index greater than 5, head back by 5, otherwise 0 */
+		else if (clickedPlayDirection === 'back' || clickedPlayDirection === 'forward') {
+			var newPlayState = clickedPlayDirection;
+			if (clickedPlayDirection === 'back') var newPlayIndex = (ud.playIndex >= 5) ? ud.playIndex - 5 : 0;
+			else var newPlayIndex = (ud.playIndex + 5 <= ud.acSeries.length - 1) ? ud.playIndex + 5 : ud.acSeries.length;
+		}
+           
+		setData('userData', $.extend(true, getData('userData'), {playState: newPlayState, playIndex: newPlayIndex}));
+		if (clickedPlayDirection !== 'pause') updateHeatmap();
+		return;
+    });
+	
+	
+	
+	/********** EVENT LISTENER FOR CORRELATION TYPE **********/
 
-		/* Get data piece 3 */
-		/*
-		$.when(getAcFundDfd, getAcFundSeriesMapDfd).done(function(acFund, acFundSeriesMap) {
-			const endDate = moment.max(...(acFundSeriesMap.map(x => x.obs_end))).format('YYYY-MM-DD');
-			const startDate = endDate;
-			const fundSeriesMapIds = acFundSeriesMap.map(x => x.id);
-						
-			const getAcSeriesDfd = getAcSeries(startDate, endDate, fundSeriesMapIds);
-			
-			$.when(getAcSeriesDfd).done(function(acSeries) {
-				dfd.resolve({acFund: acFund, acFundSeriesMap: acFundSeriesMap, acSeries: acSeries});
-			});
-		});
-		*/
-	/*
-	loadData.done(function(res) {
-		console.log('res', res);
-		drawHeatmap(res.acFund, res.acFundSeriesMap, res.acSeries, seriesDate = moment.max(Object.keys(res.acSeries).map(x => moment(x))).format('YYYY-MM-DD'));
-		$('#overlay').hide();
+	document.querySelector('#roll').addEventListener('change', (event) => {
+		console.log('changed', event.target.value);
+		setData('userData', $.extend(true, getData('userData'), {roll: parseInt(event.target.value)}));
+		location.reload(true);
 	});
-	*/
 
-/*	
-	const getAcFundObj = getAcFund(usage = userData.usage, method = userData.method, roll = userData.roll);
-	
-	$.when(getAcFundObj).done(function(res) {
-		const endDate = moment.max(...(res.acFund.map(x => x.obs_end))).format('YYYY-MM-DD');
-		const startDate = endDate;
-		const fundSeriesMapIds = res.acFund.map(x => x.id);
-		const sendData = {startDate: startDate, endDate: endDate, fundSeriesMapIds: '{' + fundSeriesMapIds.join() + '}'};
-		getAJAX('getAcSeries', toScript = ['acSeries'], fromAjax = sendData).done(function(ajaxRes) {
-			console.log('ajaxRes', ajaxRes);
-			const acSeries = groupBy(JSON.parse(ajaxRes).acSeries, 'date');
-			console.log('acSeries', acSeries)
-			drawHeatmap({res.acFund, acSeries});
-		});
-	})
-*/
-	
 	
 });
 
@@ -148,50 +164,37 @@ function getAcFundSeriesMap(usage, method, roll) {
 	return dfd.promise();
 }
 
-/*** Get historical data and group by date ***/
-/* @param startDate: starting date of data pull
- * @param endDate: last date of data pull (SQL will pull most recent date before this)
+/*** Get historical data ***/
+/* @param acActiveDate: date of data pull
  * @param fundSeriesMapIds: array of fundSeriesMap IDs for the historical series to pull
- * @param fundIdToFundOrder: object of {fundID1: orderID2, fundID2: orderID2, ..} to give an order assignment to each data point
+ * @param fundIdOrderMap: object of {fundID1: orderID2, fundID2: orderID2, ..} to give an order assignment to each data point
  */
-function getAcSeries(startDate, endDate, fundSeriesMapIds, fundIdToFundOrder) {
+function getAcSeries(acActiveDate, fundSeriesMapIds, fundIdOrderMap) {
 
 	const dfd = $.Deferred();
-	const sendData = {startDate: startDate, endDate: endDate, fundSeriesMapIds: '{' + fundSeriesMapIds.join() + '}'};
+	const sendData = {acActiveDate: acActiveDate, fundSeriesMapIds: '{' + fundSeriesMapIds.join() + '}'};
 	getAJAX('getAcSeries', toScript = ['acSeries'], fromAjax = sendData).done(function(ajaxRes) {
-		//console.log('fundIdToFundOrder', fundIdToFundOrder);
+		//console.log('ajaxRes', ajaxRes);
+		//console.log('fundIdOrderMap', fundIdOrderMap);
 		const acSeries0 = JSON.parse(ajaxRes).acSeries.map(function(x) {
-			x.order1 = fundIdToFundOrder[x.fk_fund1];
-			x.order2 = fundIdToFundOrder[x.fk_fund2];
+			x.order1 = fundIdOrderMap[x.fk_fund1];
+			x.order2 = fundIdOrderMap[x.fk_fund2];
 			x.value = parseFloat(x.value);
 			return x;
 		});
 		// Fill in inverse of series
 		const acSeries1 = acSeries0.map(function(x) {return {fk_fund1: x.fk_fund2, fk_fund2: x.fk_fund1, order1: x.order2, order2: x.order1, value: x.value, date: x.date}; });
 		// Fill in diagonal
-		const acSeries2 = Object.entries(fundIdToFundOrder).map(x => x[1]).map(function(x) {
+		const acSeries2 = Object.entries(fundIdOrderMap).map(x => x[1]).map(function(x) {
 			return {
 				order1: x,
 				order2: x,
-				date: acSeries1[0].date,
 				value: null,
-				color: 'rgba(20,20,20,.1)',
-				tooltip: false
+				color: 'rgba(20,20,20,.1)'
 			} 
 		});
-		//const acSeries2 = Object.K;
-		/*
-		const acSeries1 = acSeries0.map(function(x) {
-			let y = x;
-			y.fk_fund1 = x.fk_fund2;
-			y.fk_fund2 = x.fk_fund1;
-			y.order1 = x.order2;
-			y.order2 = x.order1;
-			return y;
-		});
-		*/
-		console.log(acSeries0, acSeries1);
-		const acSeries = groupBy(acSeries0.concat(acSeries1).concat(acSeries2), 'date');
+		//console.log(acSeries0, acSeries1);
+		const acSeries = acSeries0.concat(acSeries1).concat(acSeries2);
 		dfd.resolve(acSeries);
 	});
 	return dfd.promise();
@@ -201,7 +204,7 @@ function getAcSeries(startDate, endDate, fundSeriesMapIds, fundIdToFundOrder) {
 
 
 /*** Get series data - from fund data ***/
-function drawHeatmap(acFund, acFundSeriesMap, acSeries, seriesDate) {
+function drawHeatmap(acFund, acFundSeriesMap, acSeries, acActiveDate) {
 	
 	/* Get groups */
 	const groups = [...new Set(acFund.map(x => x.category.split('.')[0]))].map(function(x, i) {
@@ -220,19 +223,22 @@ function drawHeatmap(acFund, acFundSeriesMap, acSeries, seriesDate) {
 	console.log(categories, 'categories');
 	console.log('groups', groups);
 	
-	console.log('seriesDate', seriesDate);
+	console.log('acActiveDate', acActiveDate);
 	const chart = Highcharts.chart('heatmap-container', {
 		chart: {
 			height: 1060,
-			marginTop: 100,
+			marginTop: 110,
 			marginRight: 130,
 			marginBottom: 200,
 			marginLeft: 130,
 			plotBorderWidth: 1,
-			backgroundColor: null
+			backgroundColor: null,
+			style: {
+				fontFamily: 'Open Sans'
+			}
 		},
 		title: {
-			text: 'Correlation Matrix Between Stock Markets of Major Economies'
+			text: 'Correlation Matrix - Major Region Equities (' + acFundSeriesMap[0].roll + 'd rolling window)' 
 		},
 		subtitle: {
 			enabled: true,
@@ -242,15 +248,15 @@ function drawHeatmap(acFund, acFundSeriesMap, acSeries, seriesDate) {
 				"z-index": 1
 			},
 			text: '<div class="row text-center"><div class="col-12 d-inline-block">'+
-			'<h4 class="text-secondary"><span class="badge badge-secondary">*Data for&nbsp;<span id="heatmap-subtitle-date">'+ moment(seriesDate).format('MMM D YY') +'</span></span></h4>'+
+			'<h4><span class="badge badge-primary">*Data for&nbsp;<span id="heatmap-subtitle-date">'+ moment(acActiveDate).format('MMM D YY') +'</span></span></h4>'+
 			'</div></div>'+
 			'<div class="row text-center"><div class="col-12 btn-group d-inline-block" role="group" id="heatmap-subtitle-group">' +
-			'<button class="btn btn-secondary btn-sm" type="button" disabled>Click to show changes over time&nbsp;</button>'+
-			'<button class="btn btn-primary btn-sm heatmap-subtitle" type="button" data-dir="start" style="letter-spacing:-2px">&#10074;&#9664;&#9664;</button>' +
-			'<button class="btn btn-primary btn-sm heatmap-subtitle" type="button" data-dir="back">&#9664;</button>' +
-			'<button class="btn btn-primary btn-sm heatmap-subtitle" type="button" data-dir="pause" disabled>&#10074;&#10074;</button>' +
-			'<button class="btn btn-primary btn-sm heatmap-subtitle" type="button" data-dir="forward" disabled>&#9654;</button>' +
-			'<button class="btn btn-primary btn-sm heatmap-subtitle" type="button" data-dir="end" style="letter-spacing:-2px" disabled>&#9654;&#9654;&#10074;</button>' +
+				'<button class="btn btn-secondary btn-sm" style="font-size:.8rem" type="button" disabled>Click to show changes over time&nbsp;</button>'+
+				'<button class="btn btn-primary btn-sm heatmap-subtitle" style="font-size:.8rem" type="button" data-dir="start" style="letter-spacing:-2px">&#10074;&#9664;&#9664;</button>' +
+				'<button class="btn btn-primary btn-sm heatmap-subtitle" style="font-size:.8rem" type="button" data-dir="back">&#9664;</button>' +
+				'<button class="btn btn-primary btn-sm heatmap-subtitle" style="font-size:.8rem" type="button" data-dir="pause" disabled>&#10074;&#10074;</button>' +
+				'<button class="btn btn-primary btn-sm heatmap-subtitle" style="font-size:.8rem" type="button" data-dir="forward" disabled>&#9654;</button>' +
+				'<button class="btn btn-primary btn-sm heatmap-subtitle" style="font-size:.8rem" type="button" data-dir="end" style="letter-spacing:-2px" disabled>&#9654;&#9654;&#10074;</button>' +
 			'</div></div>'
 		},
 		credits: {
@@ -261,7 +267,7 @@ function drawHeatmap(acFund, acFundSeriesMap, acSeries, seriesDate) {
 			labels: {
 				formatter: function () {
 					const color = groups.filter(x => x.countries.includes(this.value))[0].color;
-					return '<span style="font-weight:bold;color:' + color + '">' + this.value  + '</span>';
+					return '<span style="font-weight:bolder;color:' + color + '">' + this.value  + '</span>';
 				},
 				rotation: -90,
 				y:15
@@ -274,7 +280,7 @@ function drawHeatmap(acFund, acFundSeriesMap, acSeries, seriesDate) {
             labels: {
 				formatter: function () {
 					const color = groups.filter(x => x.countries.includes(this.value))[0].color;
-					return '<span style="font-weight:bold;color:' + color + '">' + this.value  + '</span>';
+					return '<span style="font-weight:bolder;color:' + color + '">' + this.value  + '</span>';
 				},
                 rotation: -45
              }
@@ -303,15 +309,41 @@ function drawHeatmap(acFund, acFundSeriesMap, acSeries, seriesDate) {
 			symbolHeight: 800,
 			y: 40
 		},
+		tooltip: {
+			useHTML: true,
+			style: {
+				"z-index": 10 
+			},
+			formatter: function () {
+				const pt = this.point;
+				console.log(pt);
+				if (pt.x !== pt.y) {
+					var text =
+						'<table>' +
+						'<tr><td style="text-align:center;font-weight:600">' +
+							'Trailing correlation between ' +
+							'<span style="font-weight:700;">' + pt.series.xAxis.categories[pt.x] + '</span>' +
+							' and ' +
+							'<span style="font-weight:700;">' + pt.series.yAxis.categories[pt.y] + '</span>' +
+							' : ' +
+							'<span style="font-weight:700;color:' +  (pt.value > 0 ? 'rgba(255,0,0,1)' : 'rgba(0,0,255,1)') + '">' + (pt.value > 0 ? '+' : '') + pt.value + '</span>' +
+						'</td></tr>' +
+						'</table>';
+					console.log(text);
+					return text;
+				}
+				else return false;
+			}
+		},
 		series: [{
 			name: 'Correlation',
 			borderColor: 'rgba(255,255,255,0)',
 			borderWidth: 1,
 			type: 'heatmap',
 			animation: {
-				duration: 500
+				duration: 2000
 			},
-			data: acSeries[seriesDate].map(x => [x.order1, x.order2, x.value]),
+			data: acSeries.map(x => [x.order1, x.order2, x.value]),
 			turboThreshold: 100
 		}]
 	});
@@ -433,59 +465,67 @@ function drawHeatmap(acFund, acFundSeriesMap, acSeries, seriesDate) {
 }
 
 
-/*** ***/
-function updateCharts(chartHM,chartHMDates) {
-    var timeStart = new Date().getTime();
-
-    var data = getData();
+/*** Update Heatmap ***/
+function updateHeatmap() {
+	const ud = getData('userData');
+	const hm = $('#heatmap-container').highcharts();
+	if (ud.acSeriesDates === undefined || ud.playIndex === undefined) return;
+	const timeStart = new Date().getTime();
   
-    if (data.hmDates === undefined || data.playIndex === undefined) return;
-    var date = data.hmDates[data.playIndex];
-    updatePlotLine(chartHMDates,new Date(date).getTime());
+	/* Get the new active date */
+    const acActiveDate = ud.acSeriesDates[ud.playIndex];
     
+	/* Update data */
+	console.log('Updating data...', acActiveDate);
+	hm.showLoading();
+	const getAcSeriesDfd = getAcSeries(acActiveDate, ud.acFundSeriesMap.map(x => x.id), ud.fundIdOrderMap);
+	
+	getAcSeriesDfd.done(function(acSeries) {
+		if (acSeries == null) return;
+		console.log('acseries', acSeries);
+		/* Update chart data */
+		hm.series[0].setData(acSeries);
+		
+		/* Update chart title*/
+		$('#heatmap-subtitle-date').text(moment(acActiveDate).format('MMM D YY'));
 
-    var ajaxGetHistCorrel = getAJAX(
-                                    ['get_hist_correl_by_date'],[],['tagsCorrel',],
-                                    {"date": date, "category": data.dataInfo.category, "corr_type": data.dataInfo.corr_type, "freq": data.dataInfo.freq, "trail": data.dataInfo.trail},
-                                    20000,'disabled');
+		/* Handle pause/unpause */
+		//If at end or beginning, auto-pause
+		if (ud.playIndex <= 0 ) {
+		  ud.playState = 'pause';
+		  ud.playIndex = 0;
+		}
+		else if (ud.playIndex >= ud.acSeriesDates.length - 1) {
+		  ud.playState = 'pause';
+		  ud.playIndex = ud.acSeriesDates.length - 1;
+		}
+		else {
+		  if (ud.playState === 'forward')  ud.playIndex = ud.playIndex + 5; //skip by week
+		  else ud.playIndex = ud.playIndex - 5; //skip by week
+		}
+		
+		/* Update buttons */
+		const buttons = $('#heatmap-subtitle-group').find('button.heatmap-subtitle').removeClass('active').prop('disabled',false).end();
 
-    ajaxGetHistCorrel.done(function(res) {
-            if (JSON.parse(res).tagsCorrel.length == null) return;
-            
-            var tagsCorrelDate = JSON.parse(res).tagsCorrel;
-            var hm = drawHeatMap(data.tagsSeries,tagsCorrelDate,1);
-            
-            for (j=0;j<hm.data.length;j++) {
-                chartHM.series[0].data[j].update(hm.data[j],false);
-            }
-            chartHM.redraw();
-            $('#heatmap-subtitle-date').text(Highcharts.dateFormat('%m/%d/%Y',new Date(date).getTime()));
-            
-                      
-            //If at end or beginning, auto-pause
-            
-            if (data.playIndex <= 0 ) {
-              data.playState = 'pause';
-              data.playIndex = 0;
-            }
-            
-            else if (data.playIndex >= data.hmDates.length - 1) {
-              data.playState = 'pause';
-              data.playIndex = data.hmDates.length - 1;
-            }
-            
-            else {
-              if (data.playState === 'forward')  data.playIndex = data.playIndex + 5; //skip by week
-              else data.playIndex = data.playIndex - 5; //skip by week
-            }
-            
-            setData(data);
-            
-            updateHMButtons();
-            var timeEnd = new Date().getTime();
-            var timeWait = timeEnd-timeStart < 500 ? 500 - (timeEnd-timeStart) : 500;
-          
-            if (data.playState !== 'pause') setTimeout(function() { updateCharts(chartHM,chartHMDates); }, timeWait);
-            
-    });
+		if (ud.playIndex === 0) buttons.find('[data-dir="start"],[data-dir="back"]').prop('disabled',true);
+		else if (ud.playIndex === ud.acSeriesDates.length-1) buttons.find('[data-dir="end"],[data-dir="forward"]').prop('disabled',true);
+		else if (ud.playState === 'pause') buttons.find('[data-dir="pause"]').addClass('active',true);
+		else if (ud.playState === 'back') buttons.find('[data-dir="back"]').addClass('active',true);
+		else if (ud.playState === 'forward') buttons.find('[data-dir="forward"]').addClass('active',true)
+
+		
+		/* Hide loading */
+		hm.hideLoading(0);
+
+		/* Update userdata */
+		setData('userData', $.extend(true, ud, {acActiveDate: acActiveDate}));
+		
+		//updateHMButtons();
+
+		const timeEnd = new Date().getTime();
+		const timeWait = timeEnd - timeStart < 1000 ? 1000 - (timeEnd - timeStart) : 1000;
+	  
+		if (ud.playState !== 'pause') setTimeout(function() {updateHeatmap();}, timeWait);
+	});
+	
 }

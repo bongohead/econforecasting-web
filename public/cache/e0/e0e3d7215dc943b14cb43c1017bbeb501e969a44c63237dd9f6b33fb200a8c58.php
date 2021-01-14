@@ -63,24 +63,6 @@ class __TwigTemplate_cdb9808708d2617c531bf046cbef5077e274f6210b1538aab933205c548
         $macros = $this->macros;
         // line 13
         echo "    
-    
-<div class=\"row justify-content-center\" style =\"max-width:1200px\">
-\t<div class=\"col-lg-12\">
-\t\t<form class=\"form-inline justify-content-center\" method=\"post\" action=\"\" id=\"corrselector\">
-\t\t\t<div class = \"form-group\">
-\t\t\t\t<label for=\"freqtrail\" style=\"font-weight:600\" >Data frequency</label>
-\t\t\t\t<select class=\"form-control form-control-sm\" id=\"freqtrail\"></select>
-\t\t\t\t<input type=\"hidden\" id=\"freq\" name=\"freq\">
-\t\t\t\t<input type=\"hidden\" id=\"trail\" name=\"trail\">
-\t\t\t</div>
-\t\t\t<div class = \"form-group\" style=\"margin-left:10px\">
-\t\t\t\t<label for=\"corr_type\" style=\"font-weight:600\" >Correlation Type</label>
-\t\t\t\t<select class=\"form-control form-control-sm\" name=\"corr_type\" id=\"corr_type\"></select>
-\t\t\t\t<button class=\"btn btn-primary btn-sm\" type=\"submit\" id=\"submitcorrselector\" >Change</button>
-\t\t\t</div>
-\t\t</form>
-\t</div>
-</div>
 
 <div class=\"row\" style =\"max-width:1200px\">
 \t<div class=\"col-lg-12\">
@@ -88,12 +70,30 @@ class __TwigTemplate_cdb9808708d2617c531bf046cbef5077e274f6210b1538aab933205c548
 \t</div>
 </div>
 
+<!--
 <div class=\"row\">
 \t<div class=\"col-lg-12\">
 \t\t<div id=\"heatmap-dates\"></div>
 \t</div>
 </div>
-    
+-->
+
+<div class=\"row justify-content-end\" style =\"max-width:1200px\">
+\t<div class=\"col-lg-3\">
+\t\t<form class=\"form-row justify-content-center\" method=\"post\" action=\"\" id=\"corrselector\">
+\t\t  <div class=\"input-group input-group-sm\">
+\t\t\t<div class=\"input-group-prepend\">
+\t\t\t  <div class=\"input-group-text\">Change Roll Window:</div>
+\t\t\t</div>
+\t\t\t<select class=\"form-control form-control-sm\" id=\"roll\">
+\t\t\t\t<option value=\"30\">30</option>
+\t\t\t\t<option value=\"90\">90</option>
+\t\t\t\t<option value=\"180\">180</option>
+\t\t\t</select>
+\t\t</div>
+\t\t</form>
+\t</div>
+</div>
     
 
     
@@ -130,24 +130,6 @@ class __TwigTemplate_cdb9808708d2617c531bf046cbef5077e274f6210b1538aab933205c548
 
 {% block content %}
     
-    
-<div class=\"row justify-content-center\" style =\"max-width:1200px\">
-\t<div class=\"col-lg-12\">
-\t\t<form class=\"form-inline justify-content-center\" method=\"post\" action=\"\" id=\"corrselector\">
-\t\t\t<div class = \"form-group\">
-\t\t\t\t<label for=\"freqtrail\" style=\"font-weight:600\" >Data frequency</label>
-\t\t\t\t<select class=\"form-control form-control-sm\" id=\"freqtrail\"></select>
-\t\t\t\t<input type=\"hidden\" id=\"freq\" name=\"freq\">
-\t\t\t\t<input type=\"hidden\" id=\"trail\" name=\"trail\">
-\t\t\t</div>
-\t\t\t<div class = \"form-group\" style=\"margin-left:10px\">
-\t\t\t\t<label for=\"corr_type\" style=\"font-weight:600\" >Correlation Type</label>
-\t\t\t\t<select class=\"form-control form-control-sm\" name=\"corr_type\" id=\"corr_type\"></select>
-\t\t\t\t<button class=\"btn btn-primary btn-sm\" type=\"submit\" id=\"submitcorrselector\" >Change</button>
-\t\t\t</div>
-\t\t</form>
-\t</div>
-</div>
 
 <div class=\"row\" style =\"max-width:1200px\">
 \t<div class=\"col-lg-12\">
@@ -155,12 +137,30 @@ class __TwigTemplate_cdb9808708d2617c531bf046cbef5077e274f6210b1538aab933205c548
 \t</div>
 </div>
 
+<!--
 <div class=\"row\">
 \t<div class=\"col-lg-12\">
 \t\t<div id=\"heatmap-dates\"></div>
 \t</div>
 </div>
-    
+-->
+
+<div class=\"row justify-content-end\" style =\"max-width:1200px\">
+\t<div class=\"col-lg-3\">
+\t\t<form class=\"form-row justify-content-center\" method=\"post\" action=\"\" id=\"corrselector\">
+\t\t  <div class=\"input-group input-group-sm\">
+\t\t\t<div class=\"input-group-prepend\">
+\t\t\t  <div class=\"input-group-text\">Change Roll Window:</div>
+\t\t\t</div>
+\t\t\t<select class=\"form-control form-control-sm\" id=\"roll\">
+\t\t\t\t<option value=\"30\">30</option>
+\t\t\t\t<option value=\"90\">90</option>
+\t\t\t\t<option value=\"180\">180</option>
+\t\t\t</select>
+\t\t</div>
+\t\t</form>
+\t</div>
+</div>
     
 
     

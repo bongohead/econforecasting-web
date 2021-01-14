@@ -49,12 +49,12 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
         echo "</title>
     <link rel=\"icon\" type=image/ico href=\"/static/favicon.ico\"/>
     <meta name=description content=\"Content.\" />
-    <meta name=keywords content=\"keyword1 keyword2 keyword3 keyword4\" />
-    
+    <meta name=keywords content=\"financial contagion, financial contagion index, cross-asset contagion, cross-asset contagion\" />
+\t
     <link rel=\"stylesheet\" type=\"text/css\" href=\"/static/style.css\">
 \t<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css\" integrity=\"sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2\" crossorigin=\"anonymous\">
 \t
-\t<link rel=\"stylesheet\" type=\"text/css\" href=\"//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css\">
+\t<link rel=\"stylesheet\" type=\"text/css\" href=\"https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css\">
 \t<!--<link rel=\"stylesheet\" type=\"text/css\" href=\"//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css\"/> -->
 
 \t<script src=\"https://code.jquery.com/jquery-3.5.1.min.js\" integrity=\"sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=\" crossorigin=\"anonymous\"></script>
@@ -87,21 +87,25 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 <body>
 \t<header>
 \t\t<div class=\"container-fluid\" style=\"height:.25rem;background-color:rgb(37, 48, 10);\"></div>
+
 \t\t<nav class=\"navbar navbar-expand-md navbar-dark sticky-top\">
 \t\t\t<a class=\"navbar-brand\" href=\"/\">
 \t\t\t\t<img src=\"/static/logo.png\" class=\"py-0\" height=\"30\" width=\"30\">
-\t\t\t\t<span class=\"navbar-brand my-0 py-0 h2\">ECONFORECASTING.COM</span>
+\t\t\t\t<span class=\"navbar-brand my-0 py-0 h2\">econforecasting.com</span>
 \t\t\t</a>
 \t\t\t<button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#collapsingNavbarLg\"><span class=\"navbar-toggler-icon\"></span></button>
 \t\t\t
 \t\t\t<div class=\"navbar-collapse collapse\" id=\"collapsingNavbarLg\">
 \t\t\t\t<ul class=\"navbar-nav\">\t\t\t\t\t\t
 \t\t\t\t\t<li class=\"nav-item\">
-\t\t\t\t\t\t<a class=\"nav-link\" href=\"/about\"><span class=\"fa fa-bank fa-fw mr-2\"></span>GDP FORECASTS</a>
+\t\t\t\t\t\t<a class=\"nav-link\" href=\"/about\"><span class=\"fa fa-bank fa-fw mr-2\"></span>GDP Forecasts</a>
+\t\t\t\t\t</li>
+\t\t\t\t\t<li class=\"nav-item\">
+\t\t\t\t\t\t<a class=\"nav-link\" href=\"/about\"><span class=\"fa fa-bank fa-fw mr-2\"></span>Asset Correlation</a>
 \t\t\t\t\t</li>
 \t\t\t\t\t<li class=\"nav-item dropdown\">
 \t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbar-detailed-accounts-label\" role=\"button\" data-toggle=\"dropdown\">
-\t\t\t\t\t\t\t<span class=\"fa fa-list fa-fw mr-2\"></span>OTHER FORECASTS...
+\t\t\t\t\t\t\t<span class=\"fa fa-list fa-fw mr-2\"></span>Other Forecasts...
 \t\t\t\t\t\t</a>
 \t\t\t\t\t\t<div class=\"dropdown-menu\" id=\"navbar-detailed-accounts\">
 \t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/transactions?account=\"><span style=\"margin-left: 1rem\">Rates</span></a>
@@ -169,15 +173,15 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
        </ul>
     </nav>
       
-\t\t<main class=\"col-md-9 col-lg-10 ml-sm-auto pt-3 px-2\" id=\"main\">
+\t\t<main class=\"col-md-9 col-lg-10 ml-sm-auto pt-4 px-2\" id=\"main\">
       ";
-        // line 126
+        // line 130
         $this->displayBlock('content', $context, $blocks);
-        // line 128
+        // line 132
         echo "    </main>
 \t</div>
 \t\t<div class=\"row flex-xl-nowrap\">
-\t\t\t<div class=\"col-12 font-small pt-4\" style=\"background: rgba(10, 24, 66,1);\">
+\t\t\t<div class=\"col-12 font-small pt-4\" style=\"background-color: rgb(37, 48, 10);\">
 \t\t\t\t<div class=\"row\">
 \t\t
 \t\t\t\t\t<div class=\"col-md-6 mt-md-0 mt-3\">
@@ -235,7 +239,7 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 
 <script>
   ";
-        // line 188
+        // line 192
         echo ($context["bodyScript"] ?? null);
         echo "
 </script>
@@ -251,11 +255,11 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
         $macros = $this->macros;
     }
 
-    // line 126
+    // line 130
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 127
+        // line 131
         echo "      ";
     }
 
@@ -271,7 +275,7 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 
     public function getDebugInfo()
     {
-        return array (  259 => 127,  255 => 126,  249 => 37,  239 => 188,  177 => 128,  175 => 126,  85 => 38,  83 => 37,  78 => 35,  48 => 8,  39 => 1,);
+        return array (  263 => 131,  259 => 130,  253 => 37,  243 => 192,  181 => 132,  179 => 130,  85 => 38,  83 => 37,  78 => 35,  48 => 8,  39 => 1,);
     }
 
     public function getSourceContext()
@@ -286,12 +290,12 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
     <title>{{ title|e }}</title>
     <link rel=\"icon\" type=image/ico href=\"/static/favicon.ico\"/>
     <meta name=description content=\"Content.\" />
-    <meta name=keywords content=\"keyword1 keyword2 keyword3 keyword4\" />
-    
+    <meta name=keywords content=\"financial contagion, financial contagion index, cross-asset contagion, cross-asset contagion\" />
+\t
     <link rel=\"stylesheet\" type=\"text/css\" href=\"/static/style.css\">
 \t<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css\" integrity=\"sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2\" crossorigin=\"anonymous\">
 \t
-\t<link rel=\"stylesheet\" type=\"text/css\" href=\"//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css\">
+\t<link rel=\"stylesheet\" type=\"text/css\" href=\"https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css\">
 \t<!--<link rel=\"stylesheet\" type=\"text/css\" href=\"//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css\"/> -->
 
 \t<script src=\"https://code.jquery.com/jquery-3.5.1.min.js\" integrity=\"sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=\" crossorigin=\"anonymous\"></script>
@@ -318,21 +322,25 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 <body>
 \t<header>
 \t\t<div class=\"container-fluid\" style=\"height:.25rem;background-color:rgb(37, 48, 10);\"></div>
+
 \t\t<nav class=\"navbar navbar-expand-md navbar-dark sticky-top\">
 \t\t\t<a class=\"navbar-brand\" href=\"/\">
 \t\t\t\t<img src=\"/static/logo.png\" class=\"py-0\" height=\"30\" width=\"30\">
-\t\t\t\t<span class=\"navbar-brand my-0 py-0 h2\">ECONFORECASTING.COM</span>
+\t\t\t\t<span class=\"navbar-brand my-0 py-0 h2\">econforecasting.com</span>
 \t\t\t</a>
 \t\t\t<button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#collapsingNavbarLg\"><span class=\"navbar-toggler-icon\"></span></button>
 \t\t\t
 \t\t\t<div class=\"navbar-collapse collapse\" id=\"collapsingNavbarLg\">
 \t\t\t\t<ul class=\"navbar-nav\">\t\t\t\t\t\t
 \t\t\t\t\t<li class=\"nav-item\">
-\t\t\t\t\t\t<a class=\"nav-link\" href=\"/about\"><span class=\"fa fa-bank fa-fw mr-2\"></span>GDP FORECASTS</a>
+\t\t\t\t\t\t<a class=\"nav-link\" href=\"/about\"><span class=\"fa fa-bank fa-fw mr-2\"></span>GDP Forecasts</a>
+\t\t\t\t\t</li>
+\t\t\t\t\t<li class=\"nav-item\">
+\t\t\t\t\t\t<a class=\"nav-link\" href=\"/about\"><span class=\"fa fa-bank fa-fw mr-2\"></span>Asset Correlation</a>
 \t\t\t\t\t</li>
 \t\t\t\t\t<li class=\"nav-item dropdown\">
 \t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbar-detailed-accounts-label\" role=\"button\" data-toggle=\"dropdown\">
-\t\t\t\t\t\t\t<span class=\"fa fa-list fa-fw mr-2\"></span>OTHER FORECASTS...
+\t\t\t\t\t\t\t<span class=\"fa fa-list fa-fw mr-2\"></span>Other Forecasts...
 \t\t\t\t\t\t</a>
 \t\t\t\t\t\t<div class=\"dropdown-menu\" id=\"navbar-detailed-accounts\">
 \t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/transactions?account=\"><span style=\"margin-left: 1rem\">Rates</span></a>
@@ -400,13 +408,13 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
        </ul>
     </nav>
       
-\t\t<main class=\"col-md-9 col-lg-10 ml-sm-auto pt-3 px-2\" id=\"main\">
+\t\t<main class=\"col-md-9 col-lg-10 ml-sm-auto pt-4 px-2\" id=\"main\">
       {% block content %}
       {% endblock %}
     </main>
 \t</div>
 \t\t<div class=\"row flex-xl-nowrap\">
-\t\t\t<div class=\"col-12 font-small pt-4\" style=\"background: rgba(10, 24, 66,1);\">
+\t\t\t<div class=\"col-12 font-small pt-4\" style=\"background-color: rgb(37, 48, 10);\">
 \t\t\t\t<div class=\"row\">
 \t\t
 \t\t\t\t\t<div class=\"col-md-6 mt-md-0 mt-3\">
