@@ -12,8 +12,8 @@ use Twig\Sandbox\SecurityNotAllowedFunctionError;
 use Twig\Source;
 use Twig\Template;
 
-/* ac-regions-hm.html */
-class __TwigTemplate_cdb9808708d2617c531bf046cbef5077e274f6210b1538aab933205c548c6f09 extends \Twig\Template
+/* ac-assets-hm.html */
+class __TwigTemplate_20ec55ccb91cd0b0ed20e3476920df3c687e3396f2b7fa73120a4a49610f894d extends \Twig\Template
 {
     private $source;
     private $macros = [];
@@ -39,7 +39,7 @@ class __TwigTemplate_cdb9808708d2617c531bf046cbef5077e274f6210b1538aab933205c548
     protected function doDisplay(array $context, array $blocks = [])
     {
         $macros = $this->macros;
-        $this->parent = $this->loadTemplate("base.html", "ac-regions-hm.html", 1);
+        $this->parent = $this->loadTemplate("base.html", "ac-assets-hm.html", 1);
         $this->parent->display($context, array_merge($this->blocks, $blocks));
     }
 
@@ -60,7 +60,7 @@ class __TwigTemplate_cdb9808708d2617c531bf046cbef5077e274f6210b1538aab933205c548
         echo "    
 ";
         // line 9
-        $this->loadTemplate("ac-sidebar.html", "ac-regions-hm.html", 9)->display($context);
+        $this->loadTemplate("ac-sidebar.html", "ac-assets-hm.html", 9)->display($context);
         // line 10
         echo "<main class=\"col-md-9 col-lg-10 ml-sm-auto pt-4 px-2\" id=\"main\">
 
@@ -95,7 +95,7 @@ class __TwigTemplate_cdb9808708d2617c531bf046cbef5077e274f6210b1538aab933205c548
 
     public function getTemplateName()
     {
-        return "ac-regions-hm.html";
+        return "ac-assets-hm.html";
     }
 
     public function isTraitable()
@@ -147,6 +147,6 @@ class __TwigTemplate_cdb9808708d2617c531bf046cbef5077e274f6210b1538aab933205c548
 </main>
 
     
-{% endblock %}", "ac-regions-hm.html", "/var/www/econforecasting.com/public/templates/ac-regions-hm.html");
+{% endblock %}", "ac-assets-hm.html", "/var/www/econforecasting.com/public/templates/ac-assets-hm.html");
     }
 }

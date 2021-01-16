@@ -2,6 +2,10 @@ Description TBA
 
 # CHANGELOG
 
+## 2021-01-14 [v0.03]
+- Added code for non-region correlation matrices
+- Added in-development code for S&P 500 daily correlation extraction
+
 ## 2021-01-13 [v0.02]
 - Added code for finalizing heatmap
 - Added code for time-traveling heatmap

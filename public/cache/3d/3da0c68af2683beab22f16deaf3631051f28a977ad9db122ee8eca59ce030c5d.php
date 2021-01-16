@@ -54,7 +54,9 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
     <link rel=\"stylesheet\" type=\"text/css\" href=\"/static/style.css\">
 \t<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css\" integrity=\"sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2\" crossorigin=\"anonymous\">
 \t
-\t<link rel=\"stylesheet\" type=\"text/css\" href=\"https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css\">
+\t
+\t  <link rel=\"stylesheet\" href=\"https://use.fontawesome.com/releases/v5.6.3/css/all.css\" integrity=\"sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/\" crossorigin=\"anonymous\"></head>
+
 \t<!--<link rel=\"stylesheet\" type=\"text/css\" href=\"//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css\"/> -->
 
 \t<script src=\"https://code.jquery.com/jquery-3.5.1.min.js\" integrity=\"sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=\" crossorigin=\"anonymous\"></script>
@@ -74,14 +76,14 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t<script src=\"https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js\"></script>
 \t-->
     ";
-        // line 35
+        // line 37
         echo ($context["pageJS"] ?? null);
         echo "
 
     ";
-        // line 37
+        // line 39
         $this->displayBlock('staticlinks', $context, $blocks);
-        // line 38
+        // line 40
         echo "</head>
 
 <body>
@@ -98,10 +100,16 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t\t\t<div class=\"navbar-collapse collapse\" id=\"collapsingNavbarLg\">
 \t\t\t\t<ul class=\"navbar-nav\">\t\t\t\t\t\t
 \t\t\t\t\t<li class=\"nav-item\">
-\t\t\t\t\t\t<a class=\"nav-link\" href=\"/about\"><span class=\"fa fa-bank fa-fw mr-2\"></span>GDP Forecasts</a>
+\t\t\t\t\t\t<a class=\"nav-link\" href=\"/about\"><span class=\"fas fa-chart-line mr-2\"></span>GDP Forecasts</a>
 \t\t\t\t\t</li>
-\t\t\t\t\t<li class=\"nav-item\">
-\t\t\t\t\t\t<a class=\"nav-link\" href=\"/about\"><span class=\"fa fa-bank fa-fw mr-2\"></span>Asset Correlation</a>
+\t\t\t\t\t<li class=\"nav-item dropdown\">
+\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbar-detailed-accounts-label\" role=\"button\" data-toggle=\"dropdown\">
+\t\t\t\t\t\t\t<span class=\"fab fa-connectdevelop mr-2\"></span>Asset Correlation
+\t\t\t\t\t\t</a>
+\t\t\t\t\t\t<div class=\"dropdown-menu\" id=\"navbar-detailed-accounts\">
+\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/ac-regions-hm\"><span style=\"margin-left: 1rem\">Cross-Regional Equity Correlation</span></a>
+\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/transactions?account=\"><span style=\"margin-left: 1rem\">Equity Correlation Index</span></a>
+\t\t\t\t\t\t</div>
 \t\t\t\t\t</li>
 \t\t\t\t\t<li class=\"nav-item dropdown\">
 \t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbar-detailed-accounts-label\" role=\"button\" data-toggle=\"dropdown\">
@@ -129,84 +137,73 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t\t\t</div>
 \t\t</nav>
 \t</header>
-    
+\t
+
 \t<div class=\"container-fluid\">
-\t<div class=\"row flex-xl-nowrap\">
-\t\t<nav class=\"sidebar col-md-3 col-lg-2 d-none d-md-block px-0 py-2\" id=\"sidebar\"> <!-- Hide Sidebar for XS and S Devices -->
-\t\t\t<ul class=\"list-group\">
-\t\t\t\t<a href=\"/accounts\" class=\"font-weight-bold list-group-item list-group-item-action flex-column bg-transparent\">
-\t\t\t\t\t<div class=\"d-flex w-100 justify-content-start align-items-center\">
-\t\t\t\t\t\t<span class=\"fa fa-bank fa-fw mr-3\"></span> 
-\t\t\t\t\t\t<span>Accounts Summary</span>
-\t\t\t\t\t</div>
-\t\t\t\t</a>
-\t\t\t\t
-\t\t\t\t<a href=\"#transactions-links\" data-toggle=\"collapse\" class=\"nav-link font-weight-bold list-group-item list-group-item-action flex-column align-items-start bg-transparent\">
-\t\t\t\t\t<div class=\"d-flex w-100 justify-content-start align-items-center\">
-\t\t\t\t\t\t<span class=\"fa fa-list fa-fw mr-3\"></span> 
-\t\t\t\t\t\t<span class=\"menu-collapsed\">Detailed Accounts</span>
-\t\t\t\t\t\t<span class=\"submenu-icon ml-auto\"></span>
-\t\t\t\t\t</div>
-\t\t\t\t</a>
-\t\t\t\t<div id='transactions-links' class=\"collapse sidebar-submenu\">
-\t\t\t\t\t<!--<a class=\"list-group-item list-group-item-action\" href=\"/transactions\"><span>Transactions 1</span></a>-->
-\t\t\t\t</div>\t\t\t\t
-\t\t\t\t<!--
-\t\t\t\t<a href=\"/construction\" class=\"nav-link font-weight-bold list-group-item list-group-item-action flex-column align-items-start bg-transparent\">
-\t\t\t\t\t<img height=\"14\" width=\"16\" class=\"mr-3\" src=\"https://img.icons8.com/ios-filled/50/000000/normal-distribution-histogram.png\">
-\t\t\t\t\t<span>Monthly Budget</span>
-\t\t\t\t</a>
-\t\t\t\t-->
-\t\t\t\t<a href=\"/error\" class=\"font-weight-bold list-group-item list-group-item-action flex-column bg-transparent\">
-\t\t\t\t\t<div class=\"d-flex w-100 justify-content-start align-items-center\">
-\t\t\t\t\t\t<span class=\"fa fa-money fa-fw mr-3\"></span> 
-\t\t\t\t\t\t<span>Monthly Budget</span>
-\t\t\t\t\t</div>
-\t\t\t\t</a>
-\t\t\t\t
-\t\t\t\t<a href=\"/login\" class=\"font-weight-bold list-group-item list-group-item-action flex-column bg-transparent\">
-\t\t\t\t\t<div class=\"d-flex w-100 justify-content-start align-items-center\">
-\t\t\t\t\t\t<span class=\"fa fa-power-off fa-fw mr-3\"></span> 
-\t\t\t\t\t\t<span>Log Out</span>
-\t\t\t\t\t</div>
-\t\t\t\t</a>
-       </ul>
-    </nav>
-      
-\t\t<main class=\"col-md-9 col-lg-10 ml-sm-auto pt-4 px-2\" id=\"main\">
-      ";
-        // line 130
+\t<div class=\"row flex-xl-nowrap justify-content-center\">
+\t\t\t";
+        // line 97
         $this->displayBlock('content', $context, $blocks);
-        // line 132
-        echo "    </main>
+        // line 99
+        echo "\t</div>
 \t</div>
-\t\t<div class=\"row flex-xl-nowrap\">
-\t\t\t<div class=\"col-12 font-small pt-4\" style=\"background-color: rgb(37, 48, 10);\">
-\t\t\t\t<div class=\"row\">
-\t\t
-\t\t\t\t\t<div class=\"col-md-6 mt-md-0 mt-3\">
-\t\t\t\t\t\t<h5 class=\"text-uppercase\">CHIMPS v5.2</h5>
-\t\t\t\t\t\t<p>Under development</p>
-\t\t\t\t\t</div>\t\t
-\t\t\t\t\t<div class=\"col-md-6 mb-md-0 mb-3\">
-\t\t\t\t\t\t<h5 class=\"text-uppercase\">Links</h5>
-\t\t\t\t\t\t<ul class=\"list-unstyled\">
-\t\t\t\t\t\t\t<li>
-\t\t\t\t\t\t\t\t<a href=\"#!\">Link 1</a>
-\t\t\t\t\t\t\t</li>
-\t\t\t\t\t\t</ul>
-\t\t\t\t\t</div>
-\t\t\t\t</div>
 
-\t\t\t\t<div class=\"footer-copyright text-center\">© 2019
-\t\t\t\t\t<a href=\"test\">Email</a>
-\t\t\t\t</div>\t\t\t
-\t\t\t</div>
+\t<footer class=\"container-fluid bg-secondary text-white text-center text-lg-start\">
+\t  <!-- Grid container -->
+\t  <div class=\"container p-4\">
+\t\t<!--Grid row-->
+\t\t<div class=\"row\">
+\t\t  <!--Grid column-->
+\t\t  <!--
+\t\t  <div class=\"col-lg-6 col-md-12 mb-4 mb-md-0\">
+\t\t\t<h5 class=\"text-uppercase\">Footer Content</h5>
+
+\t\t\t<p>
+\t\t\t  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
+\t\t\t  molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae aliquam
+\t\t\t  voluptatem veniam, est atque cumque eum delectus sint!
+\t\t\t</p>
+\t\t  </div>
+\t\t  -->
+\t\t  <!--Grid column-->
+
+\t\t  <!--Grid column-->
+\t\t  <div class=\"col-6 mb-4 mb-md-0\">
+\t\t\t<h5 class=\"text-uppercase\">Links</h5>
+
+\t\t\t<ul class=\"list-unstyled mb-0\">
+\t\t\t  <li>
+\t\t\t\t<a href=\"https://cmefi.com\" class=\"text-white\">Center for Macroeconomic Forecasting and Insights</a>
+\t\t\t  </li>
+\t\t\t</ul>
+\t\t  </div>
+\t\t  <!--Grid column-->
+
+\t\t  <!--Grid column-->
+\t\t  <div class=\"col-6 mb-4 mb-md-0\">
+\t\t\t<h5 class=\"text-uppercase mb-0\">CONTACT</h5>
+
+\t\t\t<ul class=\"list-unstyled\">
+\t\t\t  <li>
+\t\t\t\t<a href=\"mailto:charles@cmefi.com\" class=\"text-white\">Email: charles (at) cmefi (dotcom)</a>
+\t\t\t  </li>
+\t\t\t</ul>
+\t\t  </div>
+\t\t  <!--Grid column-->
 \t\t</div>
-\t\t\t
-\t\t\t
+\t\t<!--Grid row-->
+\t  </div>
+\t  <!-- Grid container -->
 
-\t</div>
+\t  <!-- Copyright -->
+\t  <div class=\"text-center p-3\" style=\"background-color: rgba(0, 0, 0, 0.2)\">
+\t\t© 2021 Copyright:
+\t\t<a class=\"text-white\" href=\"mailto:charles@cmefi.com\">C. YE</a>
+\t  </div>
+\t  <!-- Copyright -->
+\t</footer>
+
+\t
 
         
         
@@ -239,7 +236,7 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 
 <script>
   ";
-        // line 192
+        // line 189
         echo ($context["bodyScript"] ?? null);
         echo "
 </script>
@@ -249,18 +246,18 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 </html>";
     }
 
-    // line 37
+    // line 39
     public function block_staticlinks($context, array $blocks = [])
     {
         $macros = $this->macros;
     }
 
-    // line 130
+    // line 97
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 131
-        echo "      ";
+        // line 98
+        echo "\t\t\t";
     }
 
     public function getTemplateName()
@@ -275,7 +272,7 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 
     public function getDebugInfo()
     {
-        return array (  263 => 131,  259 => 130,  253 => 37,  243 => 192,  181 => 132,  179 => 130,  85 => 38,  83 => 37,  78 => 35,  48 => 8,  39 => 1,);
+        return array (  260 => 98,  256 => 97,  250 => 39,  240 => 189,  148 => 99,  146 => 97,  87 => 40,  85 => 39,  80 => 37,  48 => 8,  39 => 1,);
     }
 
     public function getSourceContext()
@@ -295,7 +292,9 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
     <link rel=\"stylesheet\" type=\"text/css\" href=\"/static/style.css\">
 \t<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css\" integrity=\"sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2\" crossorigin=\"anonymous\">
 \t
-\t<link rel=\"stylesheet\" type=\"text/css\" href=\"https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css\">
+\t
+\t  <link rel=\"stylesheet\" href=\"https://use.fontawesome.com/releases/v5.6.3/css/all.css\" integrity=\"sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/\" crossorigin=\"anonymous\"></head>
+
 \t<!--<link rel=\"stylesheet\" type=\"text/css\" href=\"//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css\"/> -->
 
 \t<script src=\"https://code.jquery.com/jquery-3.5.1.min.js\" integrity=\"sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=\" crossorigin=\"anonymous\"></script>
@@ -333,10 +332,16 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t\t\t<div class=\"navbar-collapse collapse\" id=\"collapsingNavbarLg\">
 \t\t\t\t<ul class=\"navbar-nav\">\t\t\t\t\t\t
 \t\t\t\t\t<li class=\"nav-item\">
-\t\t\t\t\t\t<a class=\"nav-link\" href=\"/about\"><span class=\"fa fa-bank fa-fw mr-2\"></span>GDP Forecasts</a>
+\t\t\t\t\t\t<a class=\"nav-link\" href=\"/about\"><span class=\"fas fa-chart-line mr-2\"></span>GDP Forecasts</a>
 \t\t\t\t\t</li>
-\t\t\t\t\t<li class=\"nav-item\">
-\t\t\t\t\t\t<a class=\"nav-link\" href=\"/about\"><span class=\"fa fa-bank fa-fw mr-2\"></span>Asset Correlation</a>
+\t\t\t\t\t<li class=\"nav-item dropdown\">
+\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbar-detailed-accounts-label\" role=\"button\" data-toggle=\"dropdown\">
+\t\t\t\t\t\t\t<span class=\"fab fa-connectdevelop mr-2\"></span>Asset Correlation
+\t\t\t\t\t\t</a>
+\t\t\t\t\t\t<div class=\"dropdown-menu\" id=\"navbar-detailed-accounts\">
+\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/ac-regions-hm\"><span style=\"margin-left: 1rem\">Cross-Regional Equity Correlation</span></a>
+\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/transactions?account=\"><span style=\"margin-left: 1rem\">Equity Correlation Index</span></a>
+\t\t\t\t\t\t</div>
 \t\t\t\t\t</li>
 \t\t\t\t\t<li class=\"nav-item dropdown\">
 \t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbar-detailed-accounts-label\" role=\"button\" data-toggle=\"dropdown\">
@@ -364,82 +369,71 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t\t\t</div>
 \t\t</nav>
 \t</header>
-    
+\t
+
 \t<div class=\"container-fluid\">
-\t<div class=\"row flex-xl-nowrap\">
-\t\t<nav class=\"sidebar col-md-3 col-lg-2 d-none d-md-block px-0 py-2\" id=\"sidebar\"> <!-- Hide Sidebar for XS and S Devices -->
-\t\t\t<ul class=\"list-group\">
-\t\t\t\t<a href=\"/accounts\" class=\"font-weight-bold list-group-item list-group-item-action flex-column bg-transparent\">
-\t\t\t\t\t<div class=\"d-flex w-100 justify-content-start align-items-center\">
-\t\t\t\t\t\t<span class=\"fa fa-bank fa-fw mr-3\"></span> 
-\t\t\t\t\t\t<span>Accounts Summary</span>
-\t\t\t\t\t</div>
-\t\t\t\t</a>
-\t\t\t\t
-\t\t\t\t<a href=\"#transactions-links\" data-toggle=\"collapse\" class=\"nav-link font-weight-bold list-group-item list-group-item-action flex-column align-items-start bg-transparent\">
-\t\t\t\t\t<div class=\"d-flex w-100 justify-content-start align-items-center\">
-\t\t\t\t\t\t<span class=\"fa fa-list fa-fw mr-3\"></span> 
-\t\t\t\t\t\t<span class=\"menu-collapsed\">Detailed Accounts</span>
-\t\t\t\t\t\t<span class=\"submenu-icon ml-auto\"></span>
-\t\t\t\t\t</div>
-\t\t\t\t</a>
-\t\t\t\t<div id='transactions-links' class=\"collapse sidebar-submenu\">
-\t\t\t\t\t<!--<a class=\"list-group-item list-group-item-action\" href=\"/transactions\"><span>Transactions 1</span></a>-->
-\t\t\t\t</div>\t\t\t\t
-\t\t\t\t<!--
-\t\t\t\t<a href=\"/construction\" class=\"nav-link font-weight-bold list-group-item list-group-item-action flex-column align-items-start bg-transparent\">
-\t\t\t\t\t<img height=\"14\" width=\"16\" class=\"mr-3\" src=\"https://img.icons8.com/ios-filled/50/000000/normal-distribution-histogram.png\">
-\t\t\t\t\t<span>Monthly Budget</span>
-\t\t\t\t</a>
-\t\t\t\t-->
-\t\t\t\t<a href=\"/error\" class=\"font-weight-bold list-group-item list-group-item-action flex-column bg-transparent\">
-\t\t\t\t\t<div class=\"d-flex w-100 justify-content-start align-items-center\">
-\t\t\t\t\t\t<span class=\"fa fa-money fa-fw mr-3\"></span> 
-\t\t\t\t\t\t<span>Monthly Budget</span>
-\t\t\t\t\t</div>
-\t\t\t\t</a>
-\t\t\t\t
-\t\t\t\t<a href=\"/login\" class=\"font-weight-bold list-group-item list-group-item-action flex-column bg-transparent\">
-\t\t\t\t\t<div class=\"d-flex w-100 justify-content-start align-items-center\">
-\t\t\t\t\t\t<span class=\"fa fa-power-off fa-fw mr-3\"></span> 
-\t\t\t\t\t\t<span>Log Out</span>
-\t\t\t\t\t</div>
-\t\t\t\t</a>
-       </ul>
-    </nav>
-      
-\t\t<main class=\"col-md-9 col-lg-10 ml-sm-auto pt-4 px-2\" id=\"main\">
-      {% block content %}
-      {% endblock %}
-    </main>
+\t<div class=\"row flex-xl-nowrap justify-content-center\">
+\t\t\t{% block content %}
+\t\t\t{% endblock %}
 \t</div>
-\t\t<div class=\"row flex-xl-nowrap\">
-\t\t\t<div class=\"col-12 font-small pt-4\" style=\"background-color: rgb(37, 48, 10);\">
-\t\t\t\t<div class=\"row\">
-\t\t
-\t\t\t\t\t<div class=\"col-md-6 mt-md-0 mt-3\">
-\t\t\t\t\t\t<h5 class=\"text-uppercase\">CHIMPS v5.2</h5>
-\t\t\t\t\t\t<p>Under development</p>
-\t\t\t\t\t</div>\t\t
-\t\t\t\t\t<div class=\"col-md-6 mb-md-0 mb-3\">
-\t\t\t\t\t\t<h5 class=\"text-uppercase\">Links</h5>
-\t\t\t\t\t\t<ul class=\"list-unstyled\">
-\t\t\t\t\t\t\t<li>
-\t\t\t\t\t\t\t\t<a href=\"#!\">Link 1</a>
-\t\t\t\t\t\t\t</li>
-\t\t\t\t\t\t</ul>
-\t\t\t\t\t</div>
-\t\t\t\t</div>
+\t</div>
 
-\t\t\t\t<div class=\"footer-copyright text-center\">© 2019
-\t\t\t\t\t<a href=\"test\">Email</a>
-\t\t\t\t</div>\t\t\t
-\t\t\t</div>
+\t<footer class=\"container-fluid bg-secondary text-white text-center text-lg-start\">
+\t  <!-- Grid container -->
+\t  <div class=\"container p-4\">
+\t\t<!--Grid row-->
+\t\t<div class=\"row\">
+\t\t  <!--Grid column-->
+\t\t  <!--
+\t\t  <div class=\"col-lg-6 col-md-12 mb-4 mb-md-0\">
+\t\t\t<h5 class=\"text-uppercase\">Footer Content</h5>
+
+\t\t\t<p>
+\t\t\t  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
+\t\t\t  molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae aliquam
+\t\t\t  voluptatem veniam, est atque cumque eum delectus sint!
+\t\t\t</p>
+\t\t  </div>
+\t\t  -->
+\t\t  <!--Grid column-->
+
+\t\t  <!--Grid column-->
+\t\t  <div class=\"col-6 mb-4 mb-md-0\">
+\t\t\t<h5 class=\"text-uppercase\">Links</h5>
+
+\t\t\t<ul class=\"list-unstyled mb-0\">
+\t\t\t  <li>
+\t\t\t\t<a href=\"https://cmefi.com\" class=\"text-white\">Center for Macroeconomic Forecasting and Insights</a>
+\t\t\t  </li>
+\t\t\t</ul>
+\t\t  </div>
+\t\t  <!--Grid column-->
+
+\t\t  <!--Grid column-->
+\t\t  <div class=\"col-6 mb-4 mb-md-0\">
+\t\t\t<h5 class=\"text-uppercase mb-0\">CONTACT</h5>
+
+\t\t\t<ul class=\"list-unstyled\">
+\t\t\t  <li>
+\t\t\t\t<a href=\"mailto:charles@cmefi.com\" class=\"text-white\">Email: charles (at) cmefi (dotcom)</a>
+\t\t\t  </li>
+\t\t\t</ul>
+\t\t  </div>
+\t\t  <!--Grid column-->
 \t\t</div>
-\t\t\t
-\t\t\t
+\t\t<!--Grid row-->
+\t  </div>
+\t  <!-- Grid container -->
 
-\t</div>
+\t  <!-- Copyright -->
+\t  <div class=\"text-center p-3\" style=\"background-color: rgba(0, 0, 0, 0.2)\">
+\t\t© 2021 Copyright:
+\t\t<a class=\"text-white\" href=\"mailto:charles@cmefi.com\">C. YE</a>
+\t  </div>
+\t  <!-- Copyright -->
+\t</footer>
+
+\t
 
         
         

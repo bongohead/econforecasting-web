@@ -5,10 +5,6 @@ body {
 	font-size: 0.9rem !important;
 }
 
-#main {
-	background-color: rgba(255, 235, 205,.1) !important;
-}
-
 .container {
 	max-width:1440px !important;
 }
@@ -19,7 +15,7 @@ header {
     right: 0;
     left: 0;
     z-index: 100;
-	height: 4rem;
+	height: 3.5rem;
 }
 
 /* Sticky header on larger screen sizes -> This is the same size at which the navbar disappears! */
@@ -41,12 +37,7 @@ footer {
 
 /* Top Navbar */
 nav.navbar {
-    /*padding: 10px 20px;*/
-    /*background-color: rgb(48, 58, 86);*/
 	background-color: rgb(58, 79, 11);
-    -webkit-box-shadow: 0 8px 6px -6px #999;
-    -moz-box-shadow: 0 8px 6px -6px #333;
-    box-shadow: 0 8px 6px -6px #333;
 }
 
 nav.navbar li.nav-item {
@@ -58,24 +49,25 @@ nav.navbar li.nav-item a.nav-link {
 }
 
 
-nav.navbar li.nav-item.active {
-    border-bottom:3px solid rgb(162, 177, 219);
+nav.navbar a.activepage {
     font-weight:600;
+	color: white !important;
 }
 
 nav.navbar li.nav-item.dropdown > div.dropdown-menu {
     background-color: rgb(78, 99, 31);
-	color: rgba(255,255,255,.75);
+	color: rgba(255,255,255,.8);
 }
 
 nav.navbar li.nav-item.dropdown > div.dropdown-menu > a, span {
 	color:inherit;
 }
-nav.navbar li.nav-item.dropdown > div.dropdown-menu > span:hover {
-    background-color: rgb(98, 119, 51);
-}
 nav.navbar li.nav-item.dropdown > div.dropdown-menu > a:hover {
     background-color: rgb(98, 119, 51);
+}
+
+.dropdown-menu {
+	font-size: 0.9rem !important;
 }
 
 /* Inputs */
@@ -192,7 +184,7 @@ ul.nav-tabs > li.nav-item > a.nav-link:not(.active) {
 /** Sidebar **/
 nav.sidebar {
   position: sticky !important;
-  top: 4rem;
+  top: 3.5rem;
 	height: calc(100vh - 4rem);
   z-index: 99;
   padding: 20px;
@@ -207,27 +199,13 @@ nav.sidebar a, nav.sidebar span {
 }
 
 nav.sidebar .list-group-item {
-  border: 1px solid lightgray;
   padding: .5rem 1.25rem;
-  color: black;
 }
 
-nav.sidebar .list-group-item[aria-expanded="false"] .submenu-icon::after {
-  content: " \f0d7";
-  font-family: FontAwesome;
-  display: inline;
-  text-align: right;
-  padding-left: 10px;
-}
-
-
-
-nav.sidebar .list-group-item[aria-expanded="true"] .submenu-icon::after {
-  content: " \f0da";
-  font-family: FontAwesome;
-  display: inline;
-  text-align: right;
-  padding-left: 10px;
+/* Main Menu Links */
+nav.sidebar a.nav-link {
+	background-color: transparent;
+	font-weight: bolder;
 }
 
 /* Submenu */
@@ -236,9 +214,8 @@ div.sidebar-submenu > a > span {
   padding-left: 2.5rem;
 }
 
-
-div.sidebar-submenu {
-  background-color: white !important;
+nav.sidebar div.sidebar-submenu > a.activepage {
+  background-color: rgb(240, 255, 220);
 }
 
 
@@ -384,50 +361,6 @@ div.sidebar-submenu {
   }
 }
 
-
-/** Jquery-UI Autocomplete **/
-.ui-helper-hidden-accessible {
-    border: 0;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-}
-
-#stock:hover {
-    cursor: pointer;
-}
-#stock:active {
-    box-shadow: 0 0 30px #96f226
-}
-
-.ui-autocomplete {
-    background: #f0f8ff;
-    border-radius: 0px;
-    max-width:500px;
-    list-style-type: none;
-    padding: 0px;
-}
-.ui-autocomplete.source:hover {
-    background: #454545;
-    cursor: pointer;
-}
-
-.ui-autocomplete .ui-menu-item{
-    padding:3px 15px;
-    line-height:2em;
-    font-size:.8em;
-    margin:0px;
-}
-
-.ui-menu-item .ui-state-active {
-        background:darkblue !important;
-        color:white !important;
-        cursor: pointer;
-}
 
 
 

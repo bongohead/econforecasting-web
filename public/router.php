@@ -19,9 +19,9 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 		$toScript = [],
 		$jsDir = __DIR__.'/../js',
 		$routes = [
-			['template' => 'home', 'request' => ['', 'home'], 'title' => 'ECONFORECASTING.COM', 'models' => [], 'js' => []],
-			['template' => 'ac-regions-hm', 'request' => ['ac-regions-hm'], 'title' => 'Regional Cross-Correlation', 'models' => [], 'js' => ['ac-regions-hm']],
-			['template' => 'transactions', 'request' => ['transactions'], 'title' => 'Transactions Log', 'models' => [], 'js' => ['init', 'transactions']]
+			['template' => 'home', 'request' => ['', 'home'], 'title' => 'ECONFORECASTING.COM', 'models' => [], 'js' => ['init']],
+			['template' => 'ac-regions-hm', 'request' => ['ac-regions-hm'], 'title' => 'Regional Cross-Correlation', 'models' => [], 'js' => ['init', 'ac-regions-hm']],
+			['template' => 'ac-assets-hm', 'request' => ['ac-assets-hm'], 'title' => 'Asset Cross-Correlation', 'models' => [], 'js' => ['init', 'ac-assets-hm']],
 		],
 		$errorRoute = ['template' => 'error', 'request' => 'error', 'title' => 'Error', 'js' => []],
 		$baseJsFiles = ['functions', 'moment.min'],

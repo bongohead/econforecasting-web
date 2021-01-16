@@ -27,7 +27,6 @@ class __TwigTemplate_710270983adcc09738b676ae0aa9f631d7546b8f5ecc27a1fc7187d5e4a
         $this->blocks = [
             'staticlinks' => [$this, 'block_staticlinks'],
             'content' => [$this, 'block_content'],
-            'description' => [$this, 'block_description'],
         ];
     }
 
@@ -73,146 +72,101 @@ class __TwigTemplate_710270983adcc09738b676ae0aa9f631d7546b8f5ecc27a1fc7187d5e4a
     {
         $macros = $this->macros;
         // line 24
-        echo "    <div class=\"overlay\">
+        echo "
+<main>
+
+  <!-- Main jumbotron for a primary marketing message or call to action -->
+  <div class=\"jumbotron\" style=\"background:url('/static/bg001.jpg'); background-position: bottom; background-size: 100% auto\">
+    <div class=\"container-fluid\">
+\t\t<div class=\"container\">
+\t\t  <!--<h1 class=\"display-3\">!</h1>-->
+\t\t  <p style=\"font-size:1.2rem\"><strong>econforecasting.com</strong> is a non-partisan think tank working to democratize macroeconomic knowledge by making the necessary tools, data, and insights more available for all.</p>
+\t\t</div>
     </div>
-    
-    <section class=\"container\">
-        ";
-        // line 28
-        $this->displayBlock('description', $context, $blocks);
-        // line 29
-        echo "    </section>
-    
-    
-    <section class=\"container\" id=\"spinnercontainer\" style=\"\">
-        <div class=\"row\">
-            <div class=\"text-center col-12\"><h4 style=\"text-align:center\" id=\"loadmessage\">Loading data and making graphs...</h4></div>
-        </div>
-        <div class=\"row\">
-            <div class=\"sk-circle\">
-                <div class=\"sk-circle1 sk-child\"></div>
-                <div class=\"sk-circle2 sk-child\"></div>
-                <div class=\"sk-circle3 sk-child\"></div>
-                <div class=\"sk-circle4 sk-child\"></div>
-                <div class=\"sk-circle5 sk-child\"></div>
-                <div class=\"sk-circle6 sk-child\"></div>
-                <div class=\"sk-circle7 sk-child\"></div>
-                <div class=\"sk-circle8 sk-child\"></div>
-                <div class=\"sk-circle9 sk-child\"></div>
-                <div class=\"sk-circle10 sk-child\"></div>
-                <div class=\"sk-circle11 sk-child\"></div>
-                <div class=\"sk-circle12 sk-child\"></div>
-            </div>
-        </div>
-    </section>
-    
-    <section class=\"container\" style=\"margin-bottom:20px\">
-        <form class=\"form-inline\" method=\"post\" action=\"\" id=\"corrselector\">
-            <div class = \"form-group\">
-                <label for=\"freqtrail\" style=\"font-weight:600\" >Data frequency</label>
-                <select class=\"form-control form-control-sm\" id=\"freqtrail\"></select>
-                <input type=\"hidden\" id=\"freq\" name=\"freq\"></input>
-                <input type=\"hidden\" id=\"trail\" name=\"trail\"></input>
-            </div>
-            <div class = \"form-group\" style=\"margin-left:10px\">
-                <label for=\"corr_type\" style=\"font-weight:600\" >Correlation Type</label>
-                <select class=\"form-control form-control-sm\" name=\"corr_type\" id=\"corr_type\"></select>
-                <button class=\"btn btn-primary btn-sm\" type=\"submit\" id=\"submitcorrselector\" >Change</button>
-            </div>
-        </form>
-    </section>
+  </div>
 
-    <section class=\"container\" id=\"resultscontainer\">
-        <ul class=\"nav nav-tabs\" id=\"myTab\" role=\"tablist\">
-            
-          <li class=\"nav-item\">
-            <a class=\"nav-link active\" data-toggle=\"tab\" href=\"#heatmaptab\" role=\"tab\" aria-selected=\"true\">Correlation Matrix</a>
-          </li>
 
-            
-          <li class=\"nav-item\">
-            <a class=\"nav-link\" data-toggle=\"tab\" href=\"#maptab\" role=\"tab\">Correlation Map</a>
-          </li>
-          
-          <li class=\"nav-item\">
-            <a class=\"nav-link\" data-toggle=\"tab\" href=\"#tstab\" role=\"tab\">Historical Correlation Data</a>
-          </li>
+  <div class=\"container\">
+\t  <div class=\"row mb-2\">
+\t\t<div class=\"col-md-4\">
+\t\t  <div class=\"row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-200 position-relative\">
+\t\t\t<div class=\"col p-4 d-flex flex-column position-static\">
+\t\t\t  <strong class=\"d-inline-block mb-2 text-primary\">Data</strong>
+\t\t\t  <h3 class=\"mb-0\">GDP Forecasts</h3>
+\t\t\t  <div class=\"mb-1 text-muted\">Jan 2021</div>
+\t\t\t  <p class=\"card-text mb-auto\">Aggregated real GDP forecasts now available.</p>
+\t\t\t  <a href=\"#\" class=\"stretched-link\">Click to go</a>
+\t\t\t</div>
+\t\t\t<div class=\"col-auto d-none d-lg-block\">
+\t\t\t  <svg class=\"bd-placeholder-img\" width=\"200\" height=\"200\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" role=\"img\">
+\t\t\t\t  <image href=\"/static/thumb001.jpg\" height=\"200\" width=\"200\" />
+\t\t\t  </svg>
+\t\t\t</div>
+\t\t  </div>
+\t\t</div>
+\t\t<div class=\"col-md-4\">
+\t\t  <div class=\"row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-200 position-relative\">
+\t\t\t<div class=\"col p-4 d-flex flex-column position-static\">
+\t\t\t  <strong class=\"d-inline-block mb-2 text-primary\">Data</strong>
+\t\t\t  <h3 class=\"mb-0\">Featured post</h3>
+\t\t\t  <div class=\"mb-1 text-muted\">Nov 12</div>
+\t\t\t  <p class=\"card-text mb-auto\">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+\t\t\t  <a href=\"#\" class=\"stretched-link\">Continue reading</a>
+\t\t\t</div>
+\t\t\t<div class=\"col-auto d-none d-lg-block\">
+\t\t\t  <svg class=\"bd-placeholder-img\" width=\"200\" height=\"200\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\" role=\"img\" aria-label=\"Placeholder: Thumbnail\"><title>Placeholder</title><rect width=\"100%\" height=\"100%\" fill=\"#55595c\"/><text x=\"50%\" y=\"50%\" fill=\"#eceeef\" dy=\".3em\">Thumbnail</text></svg>
+\t\t\t</div>
+\t\t  </div>
+\t\t</div>
 
-        </ul>
-        
-        
-        <div class=\"tab-content\" id=\"myTabContent\">
-            
-          <div class=\"tab-pane fade show active\" id=\"heatmaptab\" role=\"tabpanel\" >
-            <div class=\"container\">    
-                <div class=\"row\">
-                    <div class=\"col-lg-12\">
-                        <div id=\"heatmap\"></div>
-                    </div>
-                </div>
-            </div>
-          </div>
+\t\t<div class=\"col-md-4\">
+\t\t  <div class=\"row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-200 position-relative\">
+\t\t\t<div class=\"col p-4 d-flex flex-column position-static\">
+\t\t\t  <strong class=\"d-inline-block mb-2 text-success\">Insights</strong>
+\t\t\t  <h3 class=\"mb-0\">Post title</h3>
+\t\t\t  <div class=\"mb-1 text-muted\">Nov 11</div>
+\t\t\t  <p class=\"mb-auto\">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+\t\t\t  <a href=\"#\" class=\"stretched-link\">Continue reading</a>
+\t\t\t</div>
+\t\t\t<div class=\"col-auto d-none d-lg-block\">
+\t\t\t  <svg class=\"bd-placeholder-img\" width=\"200\" height=\"200\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\" role=\"img\" aria-label=\"Placeholder: Thumbnail\"><title>Placeholder</title><rect width=\"100%\" height=\"100%\" fill=\"#55595c\"/><text x=\"50%\" y=\"50%\" fill=\"#eceeef\" dy=\".3em\">Thumbnail</text></svg>
+\t\t\t</div>
+\t\t  </div>
+\t\t</div>
+\t  </div>
 
-            
-          <div class=\"tab-pane fade\" id=\"maptab\" role=\"tabpanel\" style=\"background:url('static/bg-parchment.png') no-repeat center center fixed;background-size: cover;\">
-                <form class=\"form-inline\">
-                    <div class = \"form-group\">
-                        <label for=\"showLines\" style=\"font-weight:600\" >Draw connections between closely correlated countries?</label>
-                        <input type=\"checkbox\" checked=\"checked\" name=\"showLines\" id=\"showLines\">
-                    </div>
-                </form>
-                <form class=\"form-inline\">
-                    <div class = \"form-group\">
-                        <label for=\"minLines\"  style=\"font-weight:600\"  >Minimum correlation (0 to 1):</label>
-                        <input type=\"text\" class=\"form-control form-control-sm\" id=\"minLines\" value=\"0.75\" style=\"max-width:80px\">
-                        <button class=\"btn btn-primary btn-sm\" type=\"button\" id=\"submitLines\" >Submit</button>
-                        <div id=\"errormessageLines\" class=\"invalid-feedback\">Error Message!</div>
-                    </div>
-                </form>
-                <div class=\"row\">
-                    <div class=\"col-lg-12\" id=\"highMap\"></div>
-                </div>
-                
-                <div class=\"row\">
-                    <div></div>
-                    <div class=\"col-lg-12 float-right\" id=\"highMapEurope\"></div>
-                </div>
-          </div>
-          
-          <div class=\"tab-pane fade\" id=\"tstab\" role=\"tabpanel\" style=\"\">
-                <form class=\"form-inline\">
-                    <div class = \"form-group\">
-                        <label for=\"corr_1\" style=\"font-weight:600\" >Get historical correlation for: </label>
-                        <select class=\"selectcorr form-control form-control-sm\" id=\"corr_1\">
-                        </select>
-                        <label for=\"corr_2\" style=\"font-weight:600\" > and </label>
-                        <select class=\"selectcorr form-control form-control-sm\" id=\"corr_2\">
-                        </select>
-                        <button class=\"btn btn-primary btn-sm\" type=\"button\" id=\"submitTS\" >Go</button>
-                        <div id=\"errormessageTS\" class=\"invalid-feedback\">Error Message!</div>
-                    </div>
-                </form>
-                
-                
-                <div class=\"row\">
-                    <div class=\"col-lg-12\" id=\"tsChart\"></div>
-                </div>
-          </div>
-          
+  </div> <!-- /container -->
+  
+  <div class=\"my-3 p-3 bg-white rounded shadow-sm\">
+    <h6 class=\"border-bottom border-gray pb-2 mb-0\">Recent updates</h6>
+    <div class=\"media text-muted pt-3\">
+      <svg class=\"bd-placeholder-img mr-2 rounded\" width=\"32\" height=\"32\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\" role=\"img\" aria-label=\"Placeholder: 32x32\"><title>Placeholder</title><rect width=\"100%\" height=\"100%\" fill=\"#007bff\"/><text x=\"50%\" y=\"50%\" fill=\"#007bff\" dy=\".3em\">32x32</text></svg>
+      <p class=\"media-body pb-3 mb-0 small lh-125 border-bottom border-gray\">
+        <strong class=\"d-block text-gray-dark\">@username</strong>
+        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+      </p>
+    </div>
+    <div class=\"media text-muted pt-3\">
+      <svg class=\"bd-placeholder-img mr-2 rounded\" width=\"32\" height=\"32\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\" role=\"img\" aria-label=\"Placeholder: 32x32\"><title>Placeholder</title><rect width=\"100%\" height=\"100%\" fill=\"#e83e8c\"/><text x=\"50%\" y=\"50%\" fill=\"#e83e8c\" dy=\".3em\">32x32</text></svg>
+      <p class=\"media-body pb-3 mb-0 small lh-125 border-bottom border-gray\">
+        <strong class=\"d-block text-gray-dark\">@username</strong>
+        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+      </p>
+    </div>
+    <div class=\"media text-muted pt-3\">
+      <svg class=\"bd-placeholder-img mr-2 rounded\" width=\"32\" height=\"32\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\" role=\"img\" aria-label=\"Placeholder: 32x32\"><title>Placeholder</title><rect width=\"100%\" height=\"100%\" fill=\"#6f42c1\"/><text x=\"50%\" y=\"50%\" fill=\"#6f42c1\" dy=\".3em\">32x32</text></svg>
+      <p class=\"media-body pb-3 mb-0 small lh-125 border-bottom border-gray\">
+        <strong class=\"d-block text-gray-dark\">@username</strong>
+        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+      </p>
+    </div>
+    <small class=\"d-block text-right mt-3\">
+      <a href=\"#\">All updates</a>
+    </small>
+  </div>
+</main>
 
-          
-        </div>
-    </section>
-    
-    <section class=\"container\">
-    </section>
 ";
-    }
-
-    // line 28
-    public function block_description($context, array $blocks = [])
-    {
-        $macros = $this->macros;
     }
 
     public function getTemplateName()
@@ -227,7 +181,7 @@ class __TwigTemplate_710270983adcc09738b676ae0aa9f631d7546b8f5ecc27a1fc7187d5e4a
 
     public function getDebugInfo()
     {
-        return array (  213 => 28,  84 => 29,  82 => 28,  76 => 24,  72 => 23,  52 => 4,  48 => 3,  37 => 1,);
+        return array (  75 => 24,  71 => 23,  51 => 4,  47 => 3,  36 => 1,);
     }
 
     public function getSourceContext()
@@ -255,136 +209,100 @@ class __TwigTemplate_710270983adcc09738b676ae0aa9f631d7546b8f5ecc27a1fc7187d5e4a
 
 
 {% block content %}
-    <div class=\"overlay\">
+
+<main>
+
+  <!-- Main jumbotron for a primary marketing message or call to action -->
+  <div class=\"jumbotron\" style=\"background:url('/static/bg001.jpg'); background-position: bottom; background-size: 100% auto\">
+    <div class=\"container-fluid\">
+\t\t<div class=\"container\">
+\t\t  <!--<h1 class=\"display-3\">!</h1>-->
+\t\t  <p style=\"font-size:1.2rem\"><strong>econforecasting.com</strong> is a non-partisan think tank working to democratize macroeconomic knowledge by making the necessary tools, data, and insights more available for all.</p>
+\t\t</div>
     </div>
-    
-    <section class=\"container\">
-        {% block description %}{% endblock %}
-    </section>
-    
-    
-    <section class=\"container\" id=\"spinnercontainer\" style=\"\">
-        <div class=\"row\">
-            <div class=\"text-center col-12\"><h4 style=\"text-align:center\" id=\"loadmessage\">Loading data and making graphs...</h4></div>
-        </div>
-        <div class=\"row\">
-            <div class=\"sk-circle\">
-                <div class=\"sk-circle1 sk-child\"></div>
-                <div class=\"sk-circle2 sk-child\"></div>
-                <div class=\"sk-circle3 sk-child\"></div>
-                <div class=\"sk-circle4 sk-child\"></div>
-                <div class=\"sk-circle5 sk-child\"></div>
-                <div class=\"sk-circle6 sk-child\"></div>
-                <div class=\"sk-circle7 sk-child\"></div>
-                <div class=\"sk-circle8 sk-child\"></div>
-                <div class=\"sk-circle9 sk-child\"></div>
-                <div class=\"sk-circle10 sk-child\"></div>
-                <div class=\"sk-circle11 sk-child\"></div>
-                <div class=\"sk-circle12 sk-child\"></div>
-            </div>
-        </div>
-    </section>
-    
-    <section class=\"container\" style=\"margin-bottom:20px\">
-        <form class=\"form-inline\" method=\"post\" action=\"\" id=\"corrselector\">
-            <div class = \"form-group\">
-                <label for=\"freqtrail\" style=\"font-weight:600\" >Data frequency</label>
-                <select class=\"form-control form-control-sm\" id=\"freqtrail\"></select>
-                <input type=\"hidden\" id=\"freq\" name=\"freq\"></input>
-                <input type=\"hidden\" id=\"trail\" name=\"trail\"></input>
-            </div>
-            <div class = \"form-group\" style=\"margin-left:10px\">
-                <label for=\"corr_type\" style=\"font-weight:600\" >Correlation Type</label>
-                <select class=\"form-control form-control-sm\" name=\"corr_type\" id=\"corr_type\"></select>
-                <button class=\"btn btn-primary btn-sm\" type=\"submit\" id=\"submitcorrselector\" >Change</button>
-            </div>
-        </form>
-    </section>
+  </div>
 
-    <section class=\"container\" id=\"resultscontainer\">
-        <ul class=\"nav nav-tabs\" id=\"myTab\" role=\"tablist\">
-            
-          <li class=\"nav-item\">
-            <a class=\"nav-link active\" data-toggle=\"tab\" href=\"#heatmaptab\" role=\"tab\" aria-selected=\"true\">Correlation Matrix</a>
-          </li>
 
-            
-          <li class=\"nav-item\">
-            <a class=\"nav-link\" data-toggle=\"tab\" href=\"#maptab\" role=\"tab\">Correlation Map</a>
-          </li>
-          
-          <li class=\"nav-item\">
-            <a class=\"nav-link\" data-toggle=\"tab\" href=\"#tstab\" role=\"tab\">Historical Correlation Data</a>
-          </li>
+  <div class=\"container\">
+\t  <div class=\"row mb-2\">
+\t\t<div class=\"col-md-4\">
+\t\t  <div class=\"row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-200 position-relative\">
+\t\t\t<div class=\"col p-4 d-flex flex-column position-static\">
+\t\t\t  <strong class=\"d-inline-block mb-2 text-primary\">Data</strong>
+\t\t\t  <h3 class=\"mb-0\">GDP Forecasts</h3>
+\t\t\t  <div class=\"mb-1 text-muted\">Jan 2021</div>
+\t\t\t  <p class=\"card-text mb-auto\">Aggregated real GDP forecasts now available.</p>
+\t\t\t  <a href=\"#\" class=\"stretched-link\">Click to go</a>
+\t\t\t</div>
+\t\t\t<div class=\"col-auto d-none d-lg-block\">
+\t\t\t  <svg class=\"bd-placeholder-img\" width=\"200\" height=\"200\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" role=\"img\">
+\t\t\t\t  <image href=\"/static/thumb001.jpg\" height=\"200\" width=\"200\" />
+\t\t\t  </svg>
+\t\t\t</div>
+\t\t  </div>
+\t\t</div>
+\t\t<div class=\"col-md-4\">
+\t\t  <div class=\"row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-200 position-relative\">
+\t\t\t<div class=\"col p-4 d-flex flex-column position-static\">
+\t\t\t  <strong class=\"d-inline-block mb-2 text-primary\">Data</strong>
+\t\t\t  <h3 class=\"mb-0\">Featured post</h3>
+\t\t\t  <div class=\"mb-1 text-muted\">Nov 12</div>
+\t\t\t  <p class=\"card-text mb-auto\">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+\t\t\t  <a href=\"#\" class=\"stretched-link\">Continue reading</a>
+\t\t\t</div>
+\t\t\t<div class=\"col-auto d-none d-lg-block\">
+\t\t\t  <svg class=\"bd-placeholder-img\" width=\"200\" height=\"200\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\" role=\"img\" aria-label=\"Placeholder: Thumbnail\"><title>Placeholder</title><rect width=\"100%\" height=\"100%\" fill=\"#55595c\"/><text x=\"50%\" y=\"50%\" fill=\"#eceeef\" dy=\".3em\">Thumbnail</text></svg>
+\t\t\t</div>
+\t\t  </div>
+\t\t</div>
 
-        </ul>
-        
-        
-        <div class=\"tab-content\" id=\"myTabContent\">
-            
-          <div class=\"tab-pane fade show active\" id=\"heatmaptab\" role=\"tabpanel\" >
-            <div class=\"container\">    
-                <div class=\"row\">
-                    <div class=\"col-lg-12\">
-                        <div id=\"heatmap\"></div>
-                    </div>
-                </div>
-            </div>
-          </div>
+\t\t<div class=\"col-md-4\">
+\t\t  <div class=\"row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-200 position-relative\">
+\t\t\t<div class=\"col p-4 d-flex flex-column position-static\">
+\t\t\t  <strong class=\"d-inline-block mb-2 text-success\">Insights</strong>
+\t\t\t  <h3 class=\"mb-0\">Post title</h3>
+\t\t\t  <div class=\"mb-1 text-muted\">Nov 11</div>
+\t\t\t  <p class=\"mb-auto\">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+\t\t\t  <a href=\"#\" class=\"stretched-link\">Continue reading</a>
+\t\t\t</div>
+\t\t\t<div class=\"col-auto d-none d-lg-block\">
+\t\t\t  <svg class=\"bd-placeholder-img\" width=\"200\" height=\"200\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\" role=\"img\" aria-label=\"Placeholder: Thumbnail\"><title>Placeholder</title><rect width=\"100%\" height=\"100%\" fill=\"#55595c\"/><text x=\"50%\" y=\"50%\" fill=\"#eceeef\" dy=\".3em\">Thumbnail</text></svg>
+\t\t\t</div>
+\t\t  </div>
+\t\t</div>
+\t  </div>
 
-            
-          <div class=\"tab-pane fade\" id=\"maptab\" role=\"tabpanel\" style=\"background:url('static/bg-parchment.png') no-repeat center center fixed;background-size: cover;\">
-                <form class=\"form-inline\">
-                    <div class = \"form-group\">
-                        <label for=\"showLines\" style=\"font-weight:600\" >Draw connections between closely correlated countries?</label>
-                        <input type=\"checkbox\" checked=\"checked\" name=\"showLines\" id=\"showLines\">
-                    </div>
-                </form>
-                <form class=\"form-inline\">
-                    <div class = \"form-group\">
-                        <label for=\"minLines\"  style=\"font-weight:600\"  >Minimum correlation (0 to 1):</label>
-                        <input type=\"text\" class=\"form-control form-control-sm\" id=\"minLines\" value=\"0.75\" style=\"max-width:80px\">
-                        <button class=\"btn btn-primary btn-sm\" type=\"button\" id=\"submitLines\" >Submit</button>
-                        <div id=\"errormessageLines\" class=\"invalid-feedback\">Error Message!</div>
-                    </div>
-                </form>
-                <div class=\"row\">
-                    <div class=\"col-lg-12\" id=\"highMap\"></div>
-                </div>
-                
-                <div class=\"row\">
-                    <div></div>
-                    <div class=\"col-lg-12 float-right\" id=\"highMapEurope\"></div>
-                </div>
-          </div>
-          
-          <div class=\"tab-pane fade\" id=\"tstab\" role=\"tabpanel\" style=\"\">
-                <form class=\"form-inline\">
-                    <div class = \"form-group\">
-                        <label for=\"corr_1\" style=\"font-weight:600\" >Get historical correlation for: </label>
-                        <select class=\"selectcorr form-control form-control-sm\" id=\"corr_1\">
-                        </select>
-                        <label for=\"corr_2\" style=\"font-weight:600\" > and </label>
-                        <select class=\"selectcorr form-control form-control-sm\" id=\"corr_2\">
-                        </select>
-                        <button class=\"btn btn-primary btn-sm\" type=\"button\" id=\"submitTS\" >Go</button>
-                        <div id=\"errormessageTS\" class=\"invalid-feedback\">Error Message!</div>
-                    </div>
-                </form>
-                
-                
-                <div class=\"row\">
-                    <div class=\"col-lg-12\" id=\"tsChart\"></div>
-                </div>
-          </div>
-          
+  </div> <!-- /container -->
+  
+  <div class=\"my-3 p-3 bg-white rounded shadow-sm\">
+    <h6 class=\"border-bottom border-gray pb-2 mb-0\">Recent updates</h6>
+    <div class=\"media text-muted pt-3\">
+      <svg class=\"bd-placeholder-img mr-2 rounded\" width=\"32\" height=\"32\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\" role=\"img\" aria-label=\"Placeholder: 32x32\"><title>Placeholder</title><rect width=\"100%\" height=\"100%\" fill=\"#007bff\"/><text x=\"50%\" y=\"50%\" fill=\"#007bff\" dy=\".3em\">32x32</text></svg>
+      <p class=\"media-body pb-3 mb-0 small lh-125 border-bottom border-gray\">
+        <strong class=\"d-block text-gray-dark\">@username</strong>
+        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+      </p>
+    </div>
+    <div class=\"media text-muted pt-3\">
+      <svg class=\"bd-placeholder-img mr-2 rounded\" width=\"32\" height=\"32\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\" role=\"img\" aria-label=\"Placeholder: 32x32\"><title>Placeholder</title><rect width=\"100%\" height=\"100%\" fill=\"#e83e8c\"/><text x=\"50%\" y=\"50%\" fill=\"#e83e8c\" dy=\".3em\">32x32</text></svg>
+      <p class=\"media-body pb-3 mb-0 small lh-125 border-bottom border-gray\">
+        <strong class=\"d-block text-gray-dark\">@username</strong>
+        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+      </p>
+    </div>
+    <div class=\"media text-muted pt-3\">
+      <svg class=\"bd-placeholder-img mr-2 rounded\" width=\"32\" height=\"32\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\" role=\"img\" aria-label=\"Placeholder: 32x32\"><title>Placeholder</title><rect width=\"100%\" height=\"100%\" fill=\"#6f42c1\"/><text x=\"50%\" y=\"50%\" fill=\"#6f42c1\" dy=\".3em\">32x32</text></svg>
+      <p class=\"media-body pb-3 mb-0 small lh-125 border-bottom border-gray\">
+        <strong class=\"d-block text-gray-dark\">@username</strong>
+        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+      </p>
+    </div>
+    <small class=\"d-block text-right mt-3\">
+      <a href=\"#\">All updates</a>
+    </small>
+  </div>
+</main>
 
-          
-        </div>
-    </section>
-    
-    <section class=\"container\">
-    </section>
 {% endblock %}", "home.html", "/var/www/econforecasting.com/public/templates/home.html");
     }
 }

@@ -15,7 +15,7 @@ $(document).ready(function() {
 		const ud = {
 			...udPrev,
 			... {
-					usage: 'reg',
+					usage: 'ass',
 					method: udPrev.method || 'p',
 					roll: udPrev.roll || 30
 				}
@@ -227,7 +227,7 @@ function drawHeatmap(acFund, acFundSeriesMap, acSeries, acActiveDate) {
 			marginTop: 110,
 			marginRight: 130,
 			marginBottom: 200,
-			marginLeft: 130,
+			marginLeft: 200,
 			plotBorderWidth: 1,
 			backgroundColor: null,
 			style: {
@@ -266,8 +266,9 @@ function drawHeatmap(acFund, acFundSeriesMap, acSeries, acActiveDate) {
 					const color = groups.filter(x => x.countries.includes(this.value))[0].color;
 					return '<span style="font-weight:bolder;color:' + color + '">' + this.value  + '</span>';
 				},
-				rotation: -90,
-				y:15
+				rotation: -45,
+				y:15,
+				x:10
 			}
 		},
 		yAxis: {
@@ -279,7 +280,7 @@ function drawHeatmap(acFund, acFundSeriesMap, acSeries, acActiveDate) {
 					const color = groups.filter(x => x.countries.includes(this.value))[0].color;
 					return '<span style="font-weight:bolder;color:' + color + '">' + this.value  + '</span>';
 				},
-                rotation: -45
+                rotation: 0
              }
 		},
 		colorAxis: {
