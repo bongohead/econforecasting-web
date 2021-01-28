@@ -2,6 +2,10 @@ Description TBA
 
 # CHANGELOG
 
+## 2021-01-28 [v0.04]
+- Updated from Bootstrap 4.5.3 to Bootstrap 5.0.0-beta1
+- Added Google Analytics tracking
+
 ## 2021-01-14 [v0.03]
 - Added code for non-region correlation matrices
 - Added in-development code for S&P 500 daily correlation extraction

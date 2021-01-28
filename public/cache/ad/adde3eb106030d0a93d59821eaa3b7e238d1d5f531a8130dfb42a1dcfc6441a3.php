@@ -73,23 +73,18 @@ class __TwigTemplate_710270983adcc09738b676ae0aa9f631d7546b8f5ecc27a1fc7187d5e4a
         $macros = $this->macros;
         // line 24
         echo "
-<main>
-
-  <!-- Main jumbotron for a primary marketing message or call to action -->
-  <div class=\"jumbotron\" style=\"background:url('/static/bg001.jpg'); background-position: bottom; background-size: 100% auto\">
-    <div class=\"container-fluid\">
-\t\t<div class=\"container\">
-\t\t  <!--<h1 class=\"display-3\">!</h1>-->
-\t\t  <p style=\"font-size:1.2rem\"><strong>econforecasting.com</strong> is a non-partisan think tank working to democratize macroeconomic knowledge by making the necessary tools, data, and insights more available for all.</p>
+<div class=\"container\">
+\t<div class=\"p-4 p-md-5 mb-4 text-white rounded bg-dark\"  style=\"background:url('/static/bg001.jpg'); background-position: bottom; background-size: 100% auto\">
+\t\t\t<div class=\"col-md-6 px-0\">
+\t\t\t<p class=\"lead my-3\">econforecasting.com is a non-partisan think tank working to democratize macroeconomic knowledge by making the necessary tools, data, and insights more available for all.</p>
+\t\t\t<p class=\"lead mb-0\"><a href=\"#\" class=\"text-white fw-bold\">Continue reading...</a></p>
 \t\t</div>
-    </div>
-  </div>
+\t</div>
 
 
-  <div class=\"container\">
 \t  <div class=\"row mb-2\">
 \t\t<div class=\"col-md-4\">
-\t\t  <div class=\"row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-200 position-relative\">
+\t\t  <div class=\"row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-150 position-relative\">
 \t\t\t<div class=\"col p-4 d-flex flex-column position-static\">
 \t\t\t  <strong class=\"d-inline-block mb-2 text-primary\">Data</strong>
 \t\t\t  <h3 class=\"mb-0\">GDP Forecasts</h3>
@@ -98,14 +93,14 @@ class __TwigTemplate_710270983adcc09738b676ae0aa9f631d7546b8f5ecc27a1fc7187d5e4a
 \t\t\t  <a href=\"#\" class=\"stretched-link\">Click to go</a>
 \t\t\t</div>
 \t\t\t<div class=\"col-auto d-none d-lg-block\">
-\t\t\t  <svg class=\"bd-placeholder-img\" width=\"200\" height=\"200\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" role=\"img\">
-\t\t\t\t  <image href=\"/static/thumb001.jpg\" height=\"200\" width=\"200\" />
+\t\t\t  <svg class=\"bd-placeholder-img\" width=\"150\" height=\"150\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" role=\"img\">
+\t\t\t\t  <image href=\"/static/thumb001.jpg\" height=\"150\" width=\"150\" />
 \t\t\t  </svg>
 \t\t\t</div>
 \t\t  </div>
 \t\t</div>
 \t\t<div class=\"col-md-4\">
-\t\t  <div class=\"row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-200 position-relative\">
+\t\t  <div class=\"row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-200 position-relative\">
 \t\t\t<div class=\"col p-4 d-flex flex-column position-static\">
 \t\t\t  <strong class=\"d-inline-block mb-2 text-primary\">Data</strong>
 \t\t\t  <h3 class=\"mb-0\">Featured post</h3>
@@ -114,13 +109,13 @@ class __TwigTemplate_710270983adcc09738b676ae0aa9f631d7546b8f5ecc27a1fc7187d5e4a
 \t\t\t  <a href=\"#\" class=\"stretched-link\">Continue reading</a>
 \t\t\t</div>
 \t\t\t<div class=\"col-auto d-none d-lg-block\">
-\t\t\t  <svg class=\"bd-placeholder-img\" width=\"200\" height=\"200\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\" role=\"img\" aria-label=\"Placeholder: Thumbnail\"><title>Placeholder</title><rect width=\"100%\" height=\"100%\" fill=\"#55595c\"/><text x=\"50%\" y=\"50%\" fill=\"#eceeef\" dy=\".3em\">Thumbnail</text></svg>
+\t\t\t  <svg class=\"bd-placeholder-img\" width=\"150\" height=\"150\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\" role=\"img\" aria-label=\"Placeholder: Thumbnail\"><title>Placeholder</title><rect width=\"100%\" height=\"100%\" fill=\"#55595c\"/><text x=\"50%\" y=\"50%\" fill=\"#eceeef\" dy=\".3em\">Thumbnail</text></svg>
 \t\t\t</div>
 \t\t  </div>
 \t\t</div>
 
 \t\t<div class=\"col-md-4\">
-\t\t  <div class=\"row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-200 position-relative\">
+\t\t  <div class=\"row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-200 position-relative\">
 \t\t\t<div class=\"col p-4 d-flex flex-column position-static\">
 \t\t\t  <strong class=\"d-inline-block mb-2 text-success\">Insights</strong>
 \t\t\t  <h3 class=\"mb-0\">Post title</h3>
@@ -129,43 +124,14 @@ class __TwigTemplate_710270983adcc09738b676ae0aa9f631d7546b8f5ecc27a1fc7187d5e4a
 \t\t\t  <a href=\"#\" class=\"stretched-link\">Continue reading</a>
 \t\t\t</div>
 \t\t\t<div class=\"col-auto d-none d-lg-block\">
-\t\t\t  <svg class=\"bd-placeholder-img\" width=\"200\" height=\"200\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\" role=\"img\" aria-label=\"Placeholder: Thumbnail\"><title>Placeholder</title><rect width=\"100%\" height=\"100%\" fill=\"#55595c\"/><text x=\"50%\" y=\"50%\" fill=\"#eceeef\" dy=\".3em\">Thumbnail</text></svg>
+\t\t\t  <svg class=\"bd-placeholder-img\" width=\"150\" height=\"150\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\" role=\"img\" aria-label=\"Placeholder: Thumbnail\"><title>Placeholder</title><rect width=\"100%\" height=\"100%\" fill=\"#55595c\"/><text x=\"50%\" y=\"50%\" fill=\"#eceeef\" dy=\".3em\">Thumbnail</text></svg>
 \t\t\t</div>
 \t\t  </div>
 \t\t</div>
 \t  </div>
 
-  </div> <!-- /container -->
   
-  <div class=\"my-3 p-3 bg-white rounded shadow-sm\">
-    <h6 class=\"border-bottom border-gray pb-2 mb-0\">Recent updates</h6>
-    <div class=\"media text-muted pt-3\">
-      <svg class=\"bd-placeholder-img mr-2 rounded\" width=\"32\" height=\"32\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\" role=\"img\" aria-label=\"Placeholder: 32x32\"><title>Placeholder</title><rect width=\"100%\" height=\"100%\" fill=\"#007bff\"/><text x=\"50%\" y=\"50%\" fill=\"#007bff\" dy=\".3em\">32x32</text></svg>
-      <p class=\"media-body pb-3 mb-0 small lh-125 border-bottom border-gray\">
-        <strong class=\"d-block text-gray-dark\">@username</strong>
-        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-      </p>
-    </div>
-    <div class=\"media text-muted pt-3\">
-      <svg class=\"bd-placeholder-img mr-2 rounded\" width=\"32\" height=\"32\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\" role=\"img\" aria-label=\"Placeholder: 32x32\"><title>Placeholder</title><rect width=\"100%\" height=\"100%\" fill=\"#e83e8c\"/><text x=\"50%\" y=\"50%\" fill=\"#e83e8c\" dy=\".3em\">32x32</text></svg>
-      <p class=\"media-body pb-3 mb-0 small lh-125 border-bottom border-gray\">
-        <strong class=\"d-block text-gray-dark\">@username</strong>
-        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-      </p>
-    </div>
-    <div class=\"media text-muted pt-3\">
-      <svg class=\"bd-placeholder-img mr-2 rounded\" width=\"32\" height=\"32\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\" role=\"img\" aria-label=\"Placeholder: 32x32\"><title>Placeholder</title><rect width=\"100%\" height=\"100%\" fill=\"#6f42c1\"/><text x=\"50%\" y=\"50%\" fill=\"#6f42c1\" dy=\".3em\">32x32</text></svg>
-      <p class=\"media-body pb-3 mb-0 small lh-125 border-bottom border-gray\">
-        <strong class=\"d-block text-gray-dark\">@username</strong>
-        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-      </p>
-    </div>
-    <small class=\"d-block text-right mt-3\">
-      <a href=\"#\">All updates</a>
-    </small>
-  </div>
-</main>
-
+</div>
 ";
     }
 
@@ -210,23 +176,18 @@ class __TwigTemplate_710270983adcc09738b676ae0aa9f631d7546b8f5ecc27a1fc7187d5e4a
 
 {% block content %}
 
-<main>
-
-  <!-- Main jumbotron for a primary marketing message or call to action -->
-  <div class=\"jumbotron\" style=\"background:url('/static/bg001.jpg'); background-position: bottom; background-size: 100% auto\">
-    <div class=\"container-fluid\">
-\t\t<div class=\"container\">
-\t\t  <!--<h1 class=\"display-3\">!</h1>-->
-\t\t  <p style=\"font-size:1.2rem\"><strong>econforecasting.com</strong> is a non-partisan think tank working to democratize macroeconomic knowledge by making the necessary tools, data, and insights more available for all.</p>
+<div class=\"container\">
+\t<div class=\"p-4 p-md-5 mb-4 text-white rounded bg-dark\"  style=\"background:url('/static/bg001.jpg'); background-position: bottom; background-size: 100% auto\">
+\t\t\t<div class=\"col-md-6 px-0\">
+\t\t\t<p class=\"lead my-3\">econforecasting.com is a non-partisan think tank working to democratize macroeconomic knowledge by making the necessary tools, data, and insights more available for all.</p>
+\t\t\t<p class=\"lead mb-0\"><a href=\"#\" class=\"text-white fw-bold\">Continue reading...</a></p>
 \t\t</div>
-    </div>
-  </div>
+\t</div>
 
 
-  <div class=\"container\">
 \t  <div class=\"row mb-2\">
 \t\t<div class=\"col-md-4\">
-\t\t  <div class=\"row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-200 position-relative\">
+\t\t  <div class=\"row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-150 position-relative\">
 \t\t\t<div class=\"col p-4 d-flex flex-column position-static\">
 \t\t\t  <strong class=\"d-inline-block mb-2 text-primary\">Data</strong>
 \t\t\t  <h3 class=\"mb-0\">GDP Forecasts</h3>
@@ -235,14 +196,14 @@ class __TwigTemplate_710270983adcc09738b676ae0aa9f631d7546b8f5ecc27a1fc7187d5e4a
 \t\t\t  <a href=\"#\" class=\"stretched-link\">Click to go</a>
 \t\t\t</div>
 \t\t\t<div class=\"col-auto d-none d-lg-block\">
-\t\t\t  <svg class=\"bd-placeholder-img\" width=\"200\" height=\"200\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" role=\"img\">
-\t\t\t\t  <image href=\"/static/thumb001.jpg\" height=\"200\" width=\"200\" />
+\t\t\t  <svg class=\"bd-placeholder-img\" width=\"150\" height=\"150\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" role=\"img\">
+\t\t\t\t  <image href=\"/static/thumb001.jpg\" height=\"150\" width=\"150\" />
 \t\t\t  </svg>
 \t\t\t</div>
 \t\t  </div>
 \t\t</div>
 \t\t<div class=\"col-md-4\">
-\t\t  <div class=\"row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-200 position-relative\">
+\t\t  <div class=\"row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-200 position-relative\">
 \t\t\t<div class=\"col p-4 d-flex flex-column position-static\">
 \t\t\t  <strong class=\"d-inline-block mb-2 text-primary\">Data</strong>
 \t\t\t  <h3 class=\"mb-0\">Featured post</h3>
@@ -251,13 +212,13 @@ class __TwigTemplate_710270983adcc09738b676ae0aa9f631d7546b8f5ecc27a1fc7187d5e4a
 \t\t\t  <a href=\"#\" class=\"stretched-link\">Continue reading</a>
 \t\t\t</div>
 \t\t\t<div class=\"col-auto d-none d-lg-block\">
-\t\t\t  <svg class=\"bd-placeholder-img\" width=\"200\" height=\"200\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\" role=\"img\" aria-label=\"Placeholder: Thumbnail\"><title>Placeholder</title><rect width=\"100%\" height=\"100%\" fill=\"#55595c\"/><text x=\"50%\" y=\"50%\" fill=\"#eceeef\" dy=\".3em\">Thumbnail</text></svg>
+\t\t\t  <svg class=\"bd-placeholder-img\" width=\"150\" height=\"150\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\" role=\"img\" aria-label=\"Placeholder: Thumbnail\"><title>Placeholder</title><rect width=\"100%\" height=\"100%\" fill=\"#55595c\"/><text x=\"50%\" y=\"50%\" fill=\"#eceeef\" dy=\".3em\">Thumbnail</text></svg>
 \t\t\t</div>
 \t\t  </div>
 \t\t</div>
 
 \t\t<div class=\"col-md-4\">
-\t\t  <div class=\"row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-200 position-relative\">
+\t\t  <div class=\"row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-200 position-relative\">
 \t\t\t<div class=\"col p-4 d-flex flex-column position-static\">
 \t\t\t  <strong class=\"d-inline-block mb-2 text-success\">Insights</strong>
 \t\t\t  <h3 class=\"mb-0\">Post title</h3>
@@ -266,43 +227,14 @@ class __TwigTemplate_710270983adcc09738b676ae0aa9f631d7546b8f5ecc27a1fc7187d5e4a
 \t\t\t  <a href=\"#\" class=\"stretched-link\">Continue reading</a>
 \t\t\t</div>
 \t\t\t<div class=\"col-auto d-none d-lg-block\">
-\t\t\t  <svg class=\"bd-placeholder-img\" width=\"200\" height=\"200\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\" role=\"img\" aria-label=\"Placeholder: Thumbnail\"><title>Placeholder</title><rect width=\"100%\" height=\"100%\" fill=\"#55595c\"/><text x=\"50%\" y=\"50%\" fill=\"#eceeef\" dy=\".3em\">Thumbnail</text></svg>
+\t\t\t  <svg class=\"bd-placeholder-img\" width=\"150\" height=\"150\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\" role=\"img\" aria-label=\"Placeholder: Thumbnail\"><title>Placeholder</title><rect width=\"100%\" height=\"100%\" fill=\"#55595c\"/><text x=\"50%\" y=\"50%\" fill=\"#eceeef\" dy=\".3em\">Thumbnail</text></svg>
 \t\t\t</div>
 \t\t  </div>
 \t\t</div>
 \t  </div>
 
-  </div> <!-- /container -->
   
-  <div class=\"my-3 p-3 bg-white rounded shadow-sm\">
-    <h6 class=\"border-bottom border-gray pb-2 mb-0\">Recent updates</h6>
-    <div class=\"media text-muted pt-3\">
-      <svg class=\"bd-placeholder-img mr-2 rounded\" width=\"32\" height=\"32\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\" role=\"img\" aria-label=\"Placeholder: 32x32\"><title>Placeholder</title><rect width=\"100%\" height=\"100%\" fill=\"#007bff\"/><text x=\"50%\" y=\"50%\" fill=\"#007bff\" dy=\".3em\">32x32</text></svg>
-      <p class=\"media-body pb-3 mb-0 small lh-125 border-bottom border-gray\">
-        <strong class=\"d-block text-gray-dark\">@username</strong>
-        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-      </p>
-    </div>
-    <div class=\"media text-muted pt-3\">
-      <svg class=\"bd-placeholder-img mr-2 rounded\" width=\"32\" height=\"32\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\" role=\"img\" aria-label=\"Placeholder: 32x32\"><title>Placeholder</title><rect width=\"100%\" height=\"100%\" fill=\"#e83e8c\"/><text x=\"50%\" y=\"50%\" fill=\"#e83e8c\" dy=\".3em\">32x32</text></svg>
-      <p class=\"media-body pb-3 mb-0 small lh-125 border-bottom border-gray\">
-        <strong class=\"d-block text-gray-dark\">@username</strong>
-        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-      </p>
-    </div>
-    <div class=\"media text-muted pt-3\">
-      <svg class=\"bd-placeholder-img mr-2 rounded\" width=\"32\" height=\"32\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\" role=\"img\" aria-label=\"Placeholder: 32x32\"><title>Placeholder</title><rect width=\"100%\" height=\"100%\" fill=\"#6f42c1\"/><text x=\"50%\" y=\"50%\" fill=\"#6f42c1\" dy=\".3em\">32x32</text></svg>
-      <p class=\"media-body pb-3 mb-0 small lh-125 border-bottom border-gray\">
-        <strong class=\"d-block text-gray-dark\">@username</strong>
-        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-      </p>
-    </div>
-    <small class=\"d-block text-right mt-3\">
-      <a href=\"#\">All updates</a>
-    </small>
-  </div>
-</main>
-
+</div>
 {% endblock %}", "home.html", "/var/www/econforecasting.com/public/templates/home.html");
     }
 }

@@ -10,8 +10,8 @@ $(document).ready(function() {
 			navbar.querySelectorAll('a').forEach(function(x) {
 				if (x.getAttribute('href') == pathname) {
 					x.classList.add('activepage');
-					if (x.parentElement.classList.contains('dropdown-menu')) {
-						x.parentElement.parentElement.childNodes[1].classList.add('activepage');
+					if (x.parentElement.parentElement.classList.contains('dropdown-menu')) {
+						x.parentElement.parentElement.parentElement.childNodes[1].classList.add('activepage');
 					}
 				};
 				return;

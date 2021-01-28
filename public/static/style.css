@@ -5,17 +5,10 @@ body {
 	font-size: 0.9rem !important;
 }
 
-.container {
-	max-width:1440px !important;
-}
-
 header {
     background-color: rgba(245, 245, 248, 1) !important;
     top: 0;
-    right: 0;
-    left: 0;
     z-index: 100;
-	height: 3.5rem;
 }
 
 /* Sticky header on larger screen sizes -> This is the same size at which the navbar disappears! */
@@ -31,6 +24,8 @@ footer {
 	-webkit-box-shadow: 0 -8px 6px -6px #999;
 	-moz-box-shadow: 0 -8px 6px -6px #999;
 	box-shadow: 0 -8px 6px -6px #999;
+	position: relative;
+	z-index: 96;
 }
 
 
@@ -40,53 +35,29 @@ nav.navbar {
 	background-color: rgb(58, 79, 11);
 }
 
-nav.navbar li.nav-item {
-    padding-top:2px;
-}
-
 nav.navbar li.nav-item a.nav-link {
-	color: rgba(255, 255, 255, .8);
+	color: rgba(255, 255, 255, .9);
 }
-
 
 nav.navbar a.activepage {
-    font-weight:600;
+    font-weight: 600;
 	color: white !important;
 }
 
-nav.navbar li.nav-item.dropdown > div.dropdown-menu {
+nav.navbar li.nav-item.dropdown > ul.dropdown-menu {
     background-color: rgb(78, 99, 31);
-	color: rgba(255,255,255,.8);
+	color: rgba(255, 255, 255, .9);
 }
 
-nav.navbar li.nav-item.dropdown > div.dropdown-menu > a, span {
+nav.navbar li.nav-item.dropdown > ul.dropdown-menu > li > a, span {
 	color:inherit;
 }
-nav.navbar li.nav-item.dropdown > div.dropdown-menu > a:hover {
+nav.navbar li.nav-item.dropdown > ul.dropdown-menu > li > a:hover {
     background-color: rgb(98, 119, 51);
 }
 
 .dropdown-menu {
 	font-size: 0.9rem !important;
-}
-
-/* Inputs */
-div.input-group {
-  margin-top: 1rem;
-  margin-bottom:1rem;
-}
-
-
-/* Tabs */
-
-div.tab-content {
-    background-color: rgba(245,245,248,.8);
-    min-height: 200px;
-}
-
-div.tab-pane {
-    background-color: rgba(245,245,248,.8);
-    padding: 10px 15px 15px 40px;
 }
 
 
@@ -117,81 +88,18 @@ ul.nav-tabs > li.nav-item > a.nav-link:not(.active) {
 
 
 
-.bs-callout {
-    padding: 10px;
-    margin: 5px 0;
-    border: 1px solid #eee;
-    border-left-width: 5px;
-    border-radius: 3px;
-}
-.bs-callout h4 {
-    margin-top: 0;
-    margin-bottom: 5px;
-}
-.bs-callout p:last-child {
-    margin-bottom: 0;
-}
-.bs-callout code {
-    border-radius: 3px;
-}
-.bs-callout+.bs-callout {
-    margin-top: -5px;
-}
-.bs-callout-default {
-    border-left-color: #777;
-}
-.bs-callout-default h4 {
-    color: #777;
-}
-.bs-callout-primary {
-    border-left-color: #428bca;
-}
-.bs-callout-primary h4 {
-    color: #428bca;
-}
-.bs-callout-success {
-    border-left-color: #5cb85c;
-}
-.bs-callout-success h4 {
-    color: #5cb85c;
-}
-.bs-callout-danger {
-    border-left-color: #d9534f;
-}
-.bs-callout-danger h4 {
-    color: #d9534f;
-}
-.bs-callout-warning {
-    border-left-color: #f0ad4e;
-}
-.bs-callout-warning h4 {
-    color: #f0ad4e;
-}
-.bs-callout-info {
-    border-left-color: #5bc0de;
-}
-.bs-callout-info h4 {
-    color: #5bc0de;
-}
-
-.btn-adddata {
-    white-space:normal !important;
-    word-wrap: break-word;
-    margin: 10px 0px;
-}
-
-
 /** Sidebar **/
 nav.sidebar {
-  position: sticky !important;
-  top: 3.5rem;
+	position: fixed;
+	top: 3.5rem;
 	height: calc(100vh - 4rem);
-  z-index: 99;
-  padding: 20px;
-  overflow-x: hidden;
-  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-  border-right: 1px solid #eee;
-  background-color: rgb(241, 241, 241)
+	z-index: 95;
+	padding: 20px;
+	overflow-x: hidden;
+	overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+	border-right: 1px solid #eee;
+	background-color: rgb(241, 241, 241);
+	max-width: 300px;
 }
 
 nav.sidebar a, nav.sidebar span {
@@ -240,10 +148,10 @@ nav.sidebar div.sidebar-submenu > a.activepage {
 
 .sk-circle {
   margin: 100px auto;
-  width: 100px;
+  width: 100px !important;
   height: 100px;
   position: relative;
-  z-index:99;
+  z-index: 99;
 }
 .sk-circle .sk-child {
   width: 100%;

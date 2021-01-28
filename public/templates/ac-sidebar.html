@@ -1,65 +1,35 @@
-		<nav class="sidebar col-md-3 col-lg-2 d-none d-md-block px-0 py-2" id="sidebar"> <!-- Hide Sidebar for XS and S Devices -->
-			<ul class="list-group">
-				<!--
-				<a href="/accounts" class="font-weight-bold list-group-item list-group-item-action flex-column bg-transparent">
-					<div class="d-flex w-100 justify-content-start align-items-center">
-						<span class="fa fa-bank fa-fw mr-3"></span> 
-						<span>Cross-Asset Correlation</span>
-					</div>
-				</a>
-				-->
-				<a href="#cross-asset" data-toggle="collapse" class="nav-link">
-					<div class="d-flex w-100 justify-content-start align-items-center">
-						<span class="fa fa-list fa-fw mr-3"></span> 
-						<span class="menu-collapsed">Cross Asset Correlation</span>
-						<span class="fas fa-caret-down ml-auto"></span>
-					</div>
-				</a>
-				<div id='cross-asset' class="collapse show sidebar-submenu">
-					<a class="list-group-item list-group-item-action py-1 text-truncate" href="/ac-assets-hm">
-						<span class="fas fa-chart-area"></span><span class="pl-2">Index Data</span>
-					</a>
-					<a class="list-group-item list-group-item-action py-1 text-truncate" href="/ac-assets-hm">
-						<span class="fas fa-table"></span><span class="pl-2">Heatmap</span>
-					</a>
-				</div>				
-				
-				<a href="#cross-region" data-toggle="collapse" class="nav-link">
-					<div class="d-flex w-100 justify-content-start align-items-center">
-						<span class="fas fa-globe-americas fas-fw mr-3"></span> 
-						<span class="menu-collapsed">Cross Region Correlation</span>
-						<span class="fas fa-caret-down ml-auto"></span>
-					</div>
-				</a>
-				<div id='cross-region' class="collapse show sidebar-submenu">
-					<a class="list-group-item list-group-item-action bg-none py-1 text-truncate" href="/ac-regions-hm">
-						<span class="fas fa-chart-area"></span><span class="pl-2">Index Data</span>
-					</a>
-					<a class="list-group-item list-group-item-action bg-none py-1 text-truncate" href="/ac-regions-hm">
-						<span class="fas fa-table"></span><span class="pl-2">Heatmap</span>
-					</a>
-				</div>				
-				<!--
-				<a href="/construction" class="nav-link font-weight-bold list-group-item list-group-item-action flex-column align-items-start bg-transparent">
-					<img height="14" width="16" class="mr-3" src="https://img.icons8.com/ios-filled/50/000000/normal-distribution-histogram.png">
-					<span>Monthly Budget</span>
-				</a>
-				-->
-				<!--
-				<a href="/error" class="font-weight-bold list-group-item list-group-item-action flex-column bg-transparent">
-					<div class="d-flex w-100 justify-content-start align-items-center">
-						<span class="fa fa-money fa-fw mr-3"></span> 
-						<span>Monthly Budget</span>
-					</div>
-				</a>
-				-->
-				<!--
-				<a href="/login" class="font-weight-bold list-group-item list-group-item-action flex-column bg-transparent">
-					<div class="d-flex w-100 justify-content-start align-items-center">
-						<span class="fa fa-power-off fa-fw mr-3"></span> 
-						<span>Log Out</span>
-					</div>
-				</a>
-				--->
-			</ul>
-		</nav>
+<nav class="sidebar col-md-3 col-xl-2 d-none d-md-block px-0 py-2" id="sidebar"> <!-- Hide Sidebar for XS and S Devices -->
+	<ul class="nav flex-column">
+		<a href="#cross-asset" data-bs-toggle="collapse" class="nav-link">
+			<div>
+				<span class="fa fa-list fa-fw mx-2"></span> 
+				<span>Cross Asset Correlation</span>
+				<span class="fas fa-caret-down ms-auto"></span>
+			</div>
+		</a>
+		<div id='cross-asset' class="collapse show sidebar-submenu">
+			<a class="list-group-item list-group-item-action py-1 text-truncate" href="/ac-assets-hm">
+				<span class="fas fa-chart-area"></span><span class="ps-2">Index Data</span>
+			</a>
+			<a class="list-group-item list-group-item-action py-1 text-truncate" href="/ac-assets-hm">
+				<span class="fas fa-table"></span><span class="ps-2">Heatmap</span>
+			</a>
+		</div>				
+		
+		<a href="#cross-region" data-bs-toggle="collapse" class="nav-link">
+			<div>
+				<span class="fas fa-globe-americas fas-fw mx-2"></span> 
+				<span>Cross Region Correlation</span>
+				<span class="fas fa-caret-down ml-auto"></span>
+			</div>
+		</a>
+		<div id='cross-region' class="collapse show sidebar-submenu">
+			<a class="list-group-item list-group-item-action py-1 text-truncate" href="/ac-regions-hm">
+				<span class="fas fa-chart-area"></span><span class="ps-2">Index Data</span>
+			</a>
+			<a class="list-group-item list-group-item-action py-1 text-truncate" href="/ac-regions-hm">
+				<span class="fas fa-table"></span><span class="ps-2">Heatmap</span>
+			</a>
+		</div>				
+	</ul>
+</nav>
