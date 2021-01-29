@@ -67,21 +67,22 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t<script src=\"//cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js\"></script>
 \t<script src=\"//cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js\"></script> <!-- HTML export buttons -->
 \t
-    <script src=\"https//code.highcharts.com/stock/highstock.js\"></script>
+    <script src=\"https://code.highcharts.com/stock/highstock.js\"></script>
 \t<script src=\"https://cye131.github.io/gradient.js/gradient-min.js\"></script>
+\t<script src=\"https://code.highcharts.com/modules/boost.js\"></script>
 \t<!--
 \t<link href=\"https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css\" rel=\"stylesheet\">
 \t<script src=\"https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js\"></script>
 \t-->
     ";
-        // line 35
+        // line 36
         echo ($context["pageJS"] ?? null);
         echo "
 
     ";
-        // line 37
-        $this->displayBlock('staticlinks', $context, $blocks);
         // line 38
+        $this->displayBlock('staticlinks', $context, $blocks);
+        // line 39
         echo "\t<!-- Global site tag (gtag.js) - Google Analytics -->
 \t<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-5JBMJCQQD7\"></script>
 \t<script>
@@ -112,11 +113,11 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t\t\t\t\t\t</li>
 \t\t\t\t\t\t<li class=\"nav-item dropdown\">
 \t\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-bs-toggle=\"dropdown\">
-\t\t\t\t\t\t\t\t<i class=\"bi bi-gear-wide-connected me-1\"></i>Asset Correlation
+\t\t\t\t\t\t\t\t<i class=\"bi bi-gear-wide-connected me-1\"></i>Indicators and Indices
 \t\t\t\t\t\t\t</a>
 \t\t\t\t\t\t\t<ul class=\"dropdown-menu\">
-\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/ac-regions-hm\"><span style=\"margin-left: 1rem\">Cross-Regional Equity Correlation</span></a></li>
-\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/transactions?account=\"><span style=\"margin-left: 1rem\">Equity Correlation Index</span></a></li>
+\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/ac-regions-hm\"><span style=\"margin-left: 1rem\">Asset Correlation Index</span></a></li>
+\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/transactions?account=\"><span style=\"margin-left: 1rem\">Regional Correlation Index</span></a></li>
 \t\t\t\t\t\t\t</ul>
 \t\t\t\t\t\t</li>
 \t\t\t\t\t\t<li class=\"nav-item dropdown\">
@@ -137,9 +138,9 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t
 \t<main class=\"flex-shrink-0 min-vh-100\">
 \t\t";
-        // line 92
+        // line 93
         $this->displayBlock('content', $context, $blocks);
-        // line 94
+        // line 95
         echo "\t</main>
 
 \t<footer class=\"container-fluid bg-secondary text-white text-center text-lg-start\">
@@ -230,7 +231,7 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 
 \t<script>
 \t  ";
-        // line 183
+        // line 184
         echo ($context["bodyScript"] ?? null);
         echo "
 \t</script>
@@ -239,17 +240,17 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 </html>";
     }
 
-    // line 37
+    // line 38
     public function block_staticlinks($context, array $blocks = [])
     {
         $macros = $this->macros;
     }
 
-    // line 92
+    // line 93
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 93
+        // line 94
         echo "\t\t";
     }
 
@@ -265,7 +266,7 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 
     public function getDebugInfo()
     {
-        return array (  253 => 93,  249 => 92,  243 => 37,  234 => 183,  143 => 94,  141 => 92,  85 => 38,  83 => 37,  78 => 35,  50 => 10,  39 => 1,);
+        return array (  254 => 94,  250 => 93,  244 => 38,  235 => 184,  144 => 95,  142 => 93,  86 => 39,  84 => 38,  79 => 36,  50 => 10,  39 => 1,);
     }
 
     public function getSourceContext()
@@ -298,8 +299,9 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t<script src=\"//cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js\"></script>
 \t<script src=\"//cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js\"></script> <!-- HTML export buttons -->
 \t
-    <script src=\"https//code.highcharts.com/stock/highstock.js\"></script>
+    <script src=\"https://code.highcharts.com/stock/highstock.js\"></script>
 \t<script src=\"https://cye131.github.io/gradient.js/gradient-min.js\"></script>
+\t<script src=\"https://code.highcharts.com/modules/boost.js\"></script>
 \t<!--
 \t<link href=\"https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css\" rel=\"stylesheet\">
 \t<script src=\"https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js\"></script>
@@ -337,11 +339,11 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t\t\t\t\t\t</li>
 \t\t\t\t\t\t<li class=\"nav-item dropdown\">
 \t\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-bs-toggle=\"dropdown\">
-\t\t\t\t\t\t\t\t<i class=\"bi bi-gear-wide-connected me-1\"></i>Asset Correlation
+\t\t\t\t\t\t\t\t<i class=\"bi bi-gear-wide-connected me-1\"></i>Indicators and Indices
 \t\t\t\t\t\t\t</a>
 \t\t\t\t\t\t\t<ul class=\"dropdown-menu\">
-\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/ac-regions-hm\"><span style=\"margin-left: 1rem\">Cross-Regional Equity Correlation</span></a></li>
-\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/transactions?account=\"><span style=\"margin-left: 1rem\">Equity Correlation Index</span></a></li>
+\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/ac-regions-hm\"><span style=\"margin-left: 1rem\">Asset Correlation Index</span></a></li>
+\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/transactions?account=\"><span style=\"margin-left: 1rem\">Regional Correlation Index</span></a></li>
 \t\t\t\t\t\t\t</ul>
 \t\t\t\t\t\t</li>
 \t\t\t\t\t\t<li class=\"nav-item dropdown\">

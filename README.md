@@ -2,9 +2,17 @@ Description TBA
 
 # CHANGELOG
 
+## 2021-01-28 [v0.05]
+- Added roll-change option in heatmap title
+- Added code to make getAcSeriesDates() pull the dates of the series with the latest obs_start of each usage group
+- Added correlation index page and chart
+- Improved heatmap appearance significantly
+- Improved various formatting issues related to BS5 upgrade
+- Fixed bug with buttons not working correctly in heatmap
+
 ## 2021-01-28 [v0.04]
-- Updated from Bootstrap 4.5.3 to Bootstrap 5.0.0-beta1
 - Added Google Analytics tracking
+- Updated from Bootstrap 4.5.3 to Bootstrap 5.0.0-beta1
 
 ## 2021-01-14 [v0.03]
 - Added code for non-region correlation matrices

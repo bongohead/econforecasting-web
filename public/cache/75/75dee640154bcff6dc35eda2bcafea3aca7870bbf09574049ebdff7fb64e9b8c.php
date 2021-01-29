@@ -44,7 +44,7 @@ class __TwigTemplate_33e6f4caac112b2e2d2aad661e5d10a5339da8ff4d7c4f9f7158f2a55c8
 \t\t\t</div>
 \t\t</a>
 \t\t<div id='cross-asset' class=\"collapse show sidebar-submenu\">
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/ac-assets-hm\">
+\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/ac-assets\">
 \t\t\t\t<span class=\"fas fa-chart-area\"></span><span class=\"ps-2\">Index Data</span>
 \t\t\t</a>
 \t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/ac-assets-hm\">
@@ -94,7 +94,7 @@ class __TwigTemplate_33e6f4caac112b2e2d2aad661e5d10a5339da8ff4d7c4f9f7158f2a55c8
 \t\t\t</div>
 \t\t</a>
 \t\t<div id='cross-asset' class=\"collapse show sidebar-submenu\">
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/ac-assets-hm\">
+\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/ac-assets\">
 \t\t\t\t<span class=\"fas fa-chart-area\"></span><span class=\"ps-2\">Index Data</span>
 \t\t\t</a>
 \t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/ac-assets-hm\">

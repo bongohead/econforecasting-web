@@ -12,8 +12,8 @@ use Twig\Sandbox\SecurityNotAllowedFunctionError;
 use Twig\Source;
 use Twig\Template;
 
-/* ac-regions-hm.html */
-class __TwigTemplate_cdb9808708d2617c531bf046cbef5077e274f6210b1538aab933205c548c6f09 extends \Twig\Template
+/* ac-assets.html */
+class __TwigTemplate_e302131279aad8628c1f934c2467b206e8abc97669846bf344b960b10e43308b extends \Twig\Template
 {
     private $source;
     private $macros = [];
@@ -39,7 +39,7 @@ class __TwigTemplate_cdb9808708d2617c531bf046cbef5077e274f6210b1538aab933205c548
     protected function doDisplay(array $context, array $blocks = [])
     {
         $macros = $this->macros;
-        $this->parent = $this->loadTemplate("base.html", "ac-regions-hm.html", 1);
+        $this->parent = $this->loadTemplate("base.html", "ac-assets.html", 1);
         $this->parent->display($context, array_merge($this->blocks, $blocks));
     }
 
@@ -60,13 +60,13 @@ class __TwigTemplate_cdb9808708d2617c531bf046cbef5077e274f6210b1538aab933205c548
         echo "<div class=\"row\">
 \t";
         // line 9
-        $this->loadTemplate("ac-sidebar.html", "ac-regions-hm.html", 9)->display($context);
+        $this->loadTemplate("ac-sidebar.html", "ac-assets.html", 9)->display($context);
         // line 10
         echo "\t<div class=\"col-md-9 col-xl-10 ms-auto pt-4 px-2\">
 
 \t\t<div class=\"row justify-content-center\">
 \t\t\t<div class=\"container\" style=\"max-width:1200px\">
-\t\t\t\t<div id=\"heatmap-container\"></div>
+\t\t\t\t<div id=\"chart-container\"></div>
 \t\t\t</div>
 \t\t</div>
 
@@ -78,7 +78,7 @@ class __TwigTemplate_cdb9808708d2617c531bf046cbef5077e274f6210b1538aab933205c548
 
     public function getTemplateName()
     {
-        return "ac-regions-hm.html";
+        return "ac-assets.html";
     }
 
     public function isTraitable()
@@ -106,13 +106,13 @@ class __TwigTemplate_cdb9808708d2617c531bf046cbef5077e274f6210b1538aab933205c548
 
 \t\t<div class=\"row justify-content-center\">
 \t\t\t<div class=\"container\" style=\"max-width:1200px\">
-\t\t\t\t<div id=\"heatmap-container\"></div>
+\t\t\t\t<div id=\"chart-container\"></div>
 \t\t\t</div>
 \t\t</div>
 
 \t\t
 \t</div>
 </div>
-{% endblock %}", "ac-regions-hm.html", "/var/www/econforecasting.com/public/templates/ac-regions-hm.html");
+{% endblock %}", "ac-assets.html", "/var/www/econforecasting.com/public/templates/ac-assets.html");
     }
 }

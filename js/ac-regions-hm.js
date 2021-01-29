@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+/*** ac-assets-hm.js and ac-regions-hm.js are identical except for initialization & width/height multiplier (30 for assets, 20 for regions) ***/
 
 
 
@@ -22,9 +22,7 @@ $(document).ready(function() {
 		}
 
 		setData('userData', ud);
-		
-		document.querySelector('#roll').value = ud.roll;
-	
+			
 	})();
 
 
@@ -35,7 +33,7 @@ $(document).ready(function() {
 	 */
     const loadData = $.Deferred(function(dfd) {
 		const ud = getData('userData');
-		const getAcSeriesDatesDfd = getAcSeriesDates();
+		const getAcSeriesDatesDfd = getAcSeriesDates(usage = ud.usage);
 		const getAcFundDfd = getAcFund(usage = ud.usage);
 		const getAcFundSeriesMapDfd = getAcFundSeriesMap(usage = ud.usage, method = ud.method, roll = ud.roll);
 
@@ -90,42 +88,53 @@ $(document).ready(function() {
 		const clickedPlayDirection = $(this).data('dir');
 		if (ud.playState == null) return;
            
-		if (clickedPlayDirection === 'pause') var newPlayState = 'pause';
-      
-		if (clickedPlayDirection === 'start' || clickedPlayDirection === 'end') {
+		if (clickedPlayDirection === 'pause') {
+			var newPlayState = 'pause';
+			var newPlayIndex = ud.playIndex;
+		}
+		else if (clickedPlayDirection === 'start' || clickedPlayDirection === 'end') {
 			var newPlayState = 'pause';
 			var newPlayIndex = (clickedPlayDirection === 'start') ? 0 : ud.acSeriesDates.length - 1;
 		}
-		
 		/* If click back & index greater than 5, head back by 5, otherwise 0 */
 		else if (clickedPlayDirection === 'back' || clickedPlayDirection === 'forward') {
 			var newPlayState = clickedPlayDirection;
 			if (clickedPlayDirection === 'back') var newPlayIndex = (ud.playIndex >= 5) ? ud.playIndex - 5 : 0;
-			else var newPlayIndex = (ud.playIndex + 5 <= ud.acSeries.length - 1) ? ud.playIndex + 5 : ud.acSeries.length;
+			else var newPlayIndex = (ud.playIndex + 5 <= ud.acSeriesDates.length - 1) ? ud.playIndex + 5 : ud.acSeriesDates.length;
 		}
-           
+		console.log('clicked', clickedPlayDirection, newPlayState, newPlayIndex);
+				           
 		setData('userData', {...getData('userData'), ...{playState: newPlayState, playIndex: newPlayIndex}});
 		if (clickedPlayDirection !== 'pause') updateHeatmap();
+		else updateButtons(newPlayState, newPlayIndex, ud.acSeriesDates);
+		
 		return;
     });
 	
 	
 	
 	/********** EVENT LISTENER FOR CORRELATION TYPE **********/
-
-	document.querySelector('#roll').addEventListener('change', (event) => {
+	/*document.querySelector('#roll').addEventListener('change', (event) => {
 		console.log('changed', event.target.value);
 		setData('userData', {...getData('userData'), ...{roll: parseInt(event.target.value)}});
 		location.reload(true);
 	});
+	*/
+	document.querySelector('#heatmap-container').addEventListener('click', (event) => {
+		const clickedElement = event.target.classList;
+		console.log(clickedElement);
+		if (event.target.classList.contains('roll-select')) {
+			setData('userData', {...getData('userData'), ...{roll: parseInt(event.target.innerText)}});
+			location.reload(true);
+		}
+	});
 
-	
 });
 
 /*** Get series dates as array ***/
-function getAcSeriesDates() {
+function getAcSeriesDates(usage) {
 	const dfd = $.Deferred();
-	getAJAX('getAcSeriesDates', toScript = ['acSeriesDates']).done(function(ajaxRes) {
+	getAJAX('getAcSeriesDates', toScript = ['acSeriesDates'], fromAjax = {usage: usage}).done(function(ajaxRes) {
 		const acSeriesDates = JSON.parse(ajaxRes).acSeriesDates.map(x => x.date);
 		dfd.resolve(acSeriesDates);
 		});
@@ -203,6 +212,8 @@ function getAcSeries(acActiveDate, fundSeriesMapIds, fundIdOrderMap) {
 /*** Get series data - from fund data ***/
 function drawHeatmap(acFund, acFundSeriesMap, acSeries, acActiveDate) {
 	
+	$('#heatmap-subtitle-group').find('button.heatmap-subtitle').prop('disabled', true);
+	 
 	/* Get groups */
 	const groups = [...new Set(acFund.map(x => x.category.split('.')[0]))].map(function(x, i) {
 		const y = {
@@ -223,11 +234,12 @@ function drawHeatmap(acFund, acFundSeriesMap, acSeries, acActiveDate) {
 	console.log('acActiveDate', acActiveDate);
 	const chart = Highcharts.chart('heatmap-container', {
 		chart: {
-			height: 1060,
+			height: Math.floor(acFund.length * 22),
+			width: Math.floor(acFund.length * 22) + 80,
 			marginTop: 110,
-			marginRight: 130,
-			marginBottom: 200,
-			marginLeft: 130,
+			marginRight: 100,
+			marginBottom: 150,
+			marginLeft: 150,
 			plotBorderWidth: 1,
 			backgroundColor: null,
 			style: {
@@ -235,7 +247,18 @@ function drawHeatmap(acFund, acFundSeriesMap, acSeries, acActiveDate) {
 			}
 		},
 		title: {
-			text: 'Correlation Matrix - Major Region Equities (' + acFundSeriesMap[0].roll + 'd rolling window)' 
+			text: 
+			`<div class="input-group">
+			  <span class="input-group-text bg-transparent py-0" style="font-size:1.1rem">Cross-Asset Correlation by Region (</span>
+			  <button class="btn btn-outline-secondary dropdown-toggle py-0" type="button" data-bs-toggle="dropdown">${acFundSeriesMap[0].roll}</button>
+			  <ul class="dropdown-menu dropdown-menu-end">
+				<li><a class="dropdown-item roll-select">30</a></li>
+				<li><a class="dropdown-item roll-select">90</a></li>
+				<li><a class="dropdown-item roll-select">180</a></li>
+			  </ul>
+			  <span class="input-group-text bg-transparent py-0" style="font-size:1.1rem">-day rolling window)</span>
+			</div>`,
+			useHTML: true
 		},
 		subtitle: {
 			enabled: true,
@@ -244,9 +267,10 @@ function drawHeatmap(acFund, acFundSeriesMap, acSeries, acActiveDate) {
 				width: '100%',
 				"z-index": 1
 			},
-			text: '<div class="row text-center"><div class="col-12 d-inline-block">'+
-			'<h4><span class="badge badge-primary">*Data for&nbsp;<span id="heatmap-subtitle-date">'+ moment(acActiveDate).format('MMM D YY') +'</span></span></h4>'+
-			'</div></div>'+
+			text: 
+			'<div class="row text-center justify-content-center">'+
+				'<div class="alert alert-primary my-0 py-1" style="max-width:360px">*data as of&nbsp;<h5 class="d-inline" id="heatmap-subtitle-date">'+ moment(acActiveDate).format('MMM D YY') +'</h5></div>'+
+			'</div>'+
 			'<div class="row text-center"><div class="col-12 btn-group d-inline-block" role="group" id="heatmap-subtitle-group">' +
 				'<button class="btn btn-secondary btn-sm" style="font-size:.8rem" type="button" disabled>Click to show changes over time&nbsp;</button>'+
 				'<button class="btn btn-primary btn-sm heatmap-subtitle" style="font-size:.8rem" type="button" data-dir="start" style="letter-spacing:-2px">&#10074;&#9664;&#9664;</button>' +
@@ -264,10 +288,11 @@ function drawHeatmap(acFund, acFundSeriesMap, acSeries, acActiveDate) {
 			labels: {
 				formatter: function () {
 					const color = groups.filter(x => x.countries.includes(this.value))[0].color;
-					return '<span style="font-weight:bolder;color:' + color + '">' + this.value  + '</span>';
+					return '<span style="color:' + color + '">' + this.value  + '</span>';
 				},
 				rotation: -90,
 				y:15
+				//x:10
 			}
 		},
 		yAxis: {
@@ -277,9 +302,9 @@ function drawHeatmap(acFund, acFundSeriesMap, acSeries, acActiveDate) {
             labels: {
 				formatter: function () {
 					const color = groups.filter(x => x.countries.includes(this.value))[0].color;
-					return '<span style="font-weight:bolder;color:' + color + '">' + this.value  + '</span>';
+					return '<span style="color:' + color + '">' + this.value  + '</span>';
 				},
-                rotation: -45
+                rotation: 0
              }
 		},
 		colorAxis: {
@@ -303,8 +328,11 @@ function drawHeatmap(acFund, acFundSeriesMap, acSeries, acActiveDate) {
 			align: 'right',
 			verticalAlign: 'top',
 			reversed: true,
-			symbolHeight: 800,
-			y: 40
+			symbolHeight: 300,
+			y: 90,
+			title: {
+				text: 'Correlation'
+			}
 		},
 		tooltip: {
 			useHTML: true,
@@ -466,6 +494,7 @@ function drawHeatmap(acFund, acFundSeriesMap, acSeries, acActiveDate) {
 function updateHeatmap() {
 	const ud = getData('userData');
 	const hm = $('#heatmap-container').highcharts();
+	/* Return if playstate = paused; this is necessary to shut off the auto-repeating nature of this function */
 	if (ud.acSeriesDates === undefined || ud.playIndex === undefined) return;
 	const timeStart = new Date().getTime();
   
@@ -479,7 +508,7 @@ function updateHeatmap() {
 	
 	getAcSeriesDfd.done(function(acSeries) {
 		if (acSeries == null) return;
-		console.log('acseries', acSeries);
+		console.log('acseries', acSeries); 
 		/* Update chart data */
 		hm.series[0].setData(acSeries);
 		
@@ -501,28 +530,36 @@ function updateHeatmap() {
 		  else ud.playIndex = ud.playIndex - 5; //skip by week
 		}
 		
-		/* Update buttons */
-		const buttons = $('#heatmap-subtitle-group').find('button.heatmap-subtitle').removeClass('active').prop('disabled',false).end();
+		updateButtons(ud.playState, ud.playIndex, ud.acSeriesDates);
 
-		if (ud.playIndex === 0) buttons.find('[data-dir="start"],[data-dir="back"]').prop('disabled',true);
-		else if (ud.playIndex === ud.acSeriesDates.length-1) buttons.find('[data-dir="end"],[data-dir="forward"]').prop('disabled',true);
-		else if (ud.playState === 'pause') buttons.find('[data-dir="pause"]').addClass('active',true);
-		else if (ud.playState === 'back') buttons.find('[data-dir="back"]').addClass('active',true);
-		else if (ud.playState === 'forward') buttons.find('[data-dir="forward"]').addClass('active',true)
-
-		
 		/* Hide loading */
 		hm.hideLoading(0);
+		
+		console.log('ud', ud);
 
 		/* Update userdata */
 		setData('userData', {...ud, ...{acActiveDate: acActiveDate}});
 		
-		//updateHMButtons();
-
 		const timeEnd = new Date().getTime();
-		const timeWait = timeEnd - timeStart < 1000 ? 1000 - (timeEnd - timeStart) : 1000;
+		const timeWait = 2000 /*timeEnd - timeStart < 5000 ? 5000 - (timeEnd - timeStart) : 5000*/;
 	  
 		if (ud.playState !== 'pause') setTimeout(function() {updateHeatmap();}, timeWait);
+		return;
 	});
+	return;
+}
+
+
+function updateButtons(playState, playIndex, acSeriesDates) {
 	
+	/* Update buttons */
+	const buttons = $('#heatmap-subtitle-group').find('button.heatmap-subtitle').removeClass('active').prop('disabled', false).end();
+	console.log('updateButtons', playState, playIndex, acSeriesDates.length - 1, buttons);
+
+	if (playIndex === 0) buttons.find('[data-dir="start"],[data-dir="back"]').prop('disabled', true);
+	else if (playIndex === acSeriesDates.length - 1) buttons.find('[data-dir="end"],[data-dir="forward"]').prop('disabled', true);
+	else if (playState === 'pause') buttons.find('[data-dir="pause"]').addClass('active', true);
+	else if (playState === 'back') buttons.find('[data-dir="back"]').addClass('active', true);
+	else if (playState === 'forward') buttons.find('[data-dir="forward"]').addClass('active', true);
+	else buttons.find('[data-dir="forward"]').addClass('active', true);
 }
