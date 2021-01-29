@@ -73,61 +73,61 @@ class __TwigTemplate_710270983adcc09738b676ae0aa9f631d7546b8f5ecc27a1fc7187d5e4a
         $macros = $this->macros;
         // line 24
         echo "
-<div class=\"container\">
-\t<div class=\"p-4 p-md-5 mb-4 text-white rounded bg-dark\"  style=\"background:url('/static/bg001.jpg'); background-position: bottom; background-size: 100% auto\">
-\t\t\t<div class=\"col-md-6 px-0\">
-\t\t\t<p class=\"lead my-3\">econforecasting.com is a non-partisan think tank working to democratize macroeconomic knowledge by making the necessary tools, data, and insights more available for all.</p>
+<div class=\"container\" style=\"max-width:1400px\">
+\t<div class=\"rounded bg-dark\"  style=\"background:url('static/bank.jpg'); background-position: top; background-size: 100% auto\">
+\t\t<div class=\"col-md-6 px-0 p-4 p-md-5 mb-4 text-white\">
+\t\t\t<p class=\"lead my-3\">The Center for Macroeconomic Forecasting & Insights is a non-partisan think tank working to democratize macroeconomic knowledge by making the necessary tools, data, and insights more available for all.</p>
 \t\t\t<p class=\"lead mb-0\"><a href=\"#\" class=\"text-white fw-bold\">Continue reading...</a></p>
+\t\t</div>
+\t\t<div class=\"col-md-6 p-0 col-sm-0\">
 \t\t</div>
 \t</div>
 
 
 \t  <div class=\"row mb-2\">
 \t\t<div class=\"col-md-4\">
-\t\t  <div class=\"row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-150 position-relative\">
-\t\t\t<div class=\"col p-4 d-flex flex-column position-static\">
-\t\t\t  <strong class=\"d-inline-block mb-2 text-primary\">Data</strong>
-\t\t\t  <h3 class=\"mb-0\">GDP Forecasts</h3>
-\t\t\t  <div class=\"mb-1 text-muted\">Jan 2021</div>
-\t\t\t  <p class=\"card-text mb-auto\">Aggregated real GDP forecasts now available.</p>
-\t\t\t  <a href=\"#\" class=\"stretched-link\">Click to go</a>
+\t\t  <div class=\"row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-150 position-relative p-3\">
+\t\t\t<div class=\"row\">
+\t\t\t\t<div class=\"col-12\">
+\t\t\t\t\t<strong class=\"d-inline-block mb-2 text-danger\">Indicators & Indices</strong>
+\t\t\t\t\t<h3 class=\"mb-0\">Asset Correlation Index</h3>
+\t\t\t\t</div>
 \t\t\t</div>
-\t\t\t<div class=\"col-auto d-none d-lg-block\">
-\t\t\t  <svg class=\"bd-placeholder-img\" width=\"150\" height=\"150\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" role=\"img\">
-\t\t\t\t  <image href=\"/static/thumb001.jpg\" height=\"150\" width=\"150\" />
-\t\t\t  </svg>
+\t\t\t<div class=\"row\">
+\t\t\t\t<div class=\"col-md-8\">
+\t\t\t\t\t<div class=\"mb-1 text-muted\">Feb 2021</div>
+\t\t\t\t\t<p class=\"card-text mb-auto\">Historical data for the Asset Correlation Index is now available online.</p>
+\t\t\t\t\t<a href=\"ac-assets\" class=\"stretched-link\">Click to go</a>
+\t\t\t\t</div>
+\t\t\t\t<div class=\"col-md-4 border rounded\" style=\"background:url('/static/probabilistic-forecasting-graph.png'); background-position:bottom; background-size:100% auto;   background-repeat: no-repeat;\">
+\t\t\t\t</div>
 \t\t\t</div>
 \t\t  </div>
 \t\t</div>
+\t\t
+\t\t
 \t\t<div class=\"col-md-4\">
-\t\t  <div class=\"row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-200 position-relative\">
-\t\t\t<div class=\"col p-4 d-flex flex-column position-static\">
-\t\t\t  <strong class=\"d-inline-block mb-2 text-primary\">Data</strong>
-\t\t\t  <h3 class=\"mb-0\">Featured post</h3>
-\t\t\t  <div class=\"mb-1 text-muted\">Nov 12</div>
-\t\t\t  <p class=\"card-text mb-auto\">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-\t\t\t  <a href=\"#\" class=\"stretched-link\">Continue reading</a>
+\t\t  <div class=\"row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-150 position-relative p-3\">
+\t\t\t<div class=\"row\">
+\t\t\t\t<div class=\"col-12\">
+\t\t\t\t\t<strong class=\"d-inline-block mb-2 text-danger\">Indicators & Indices</strong>
+\t\t\t\t\t<h3 class=\"mb-0\">Regional Correlation Index</h3>
+\t\t\t\t</div>
 \t\t\t</div>
-\t\t\t<div class=\"col-auto d-none d-lg-block\">
-\t\t\t  <svg class=\"bd-placeholder-img\" width=\"150\" height=\"150\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\" role=\"img\" aria-label=\"Placeholder: Thumbnail\"><title>Placeholder</title><rect width=\"100%\" height=\"100%\" fill=\"#55595c\"/><text x=\"50%\" y=\"50%\" fill=\"#eceeef\" dy=\".3em\">Thumbnail</text></svg>
+\t\t\t<div class=\"row\">
+\t\t\t\t<div class=\"col-md-8\">
+\t\t\t\t\t<div class=\"mb-1 text-muted\">Feb 2021</div>
+\t\t\t\t\t<p class=\"card-text mb-auto\">Historical data for the Regional Correlation Index is now available online.</p>
+\t\t\t\t\t<a href=\"ac-regions\" class=\"stretched-link\">Click to go</a>
+\t\t\t\t</div>
+\t\t\t\t<div class=\"col-md-4 border rounded\" style=\"background:url('/static/thumb003.png'); background-position:bottom; background-size:100% auto;   background-repeat: no-repeat;\">
+\t\t\t\t</div>
 \t\t\t</div>
 \t\t  </div>
 \t\t</div>
 
-\t\t<div class=\"col-md-4\">
-\t\t  <div class=\"row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-200 position-relative\">
-\t\t\t<div class=\"col p-4 d-flex flex-column position-static\">
-\t\t\t  <strong class=\"d-inline-block mb-2 text-success\">Insights</strong>
-\t\t\t  <h3 class=\"mb-0\">Post title</h3>
-\t\t\t  <div class=\"mb-1 text-muted\">Nov 11</div>
-\t\t\t  <p class=\"mb-auto\">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-\t\t\t  <a href=\"#\" class=\"stretched-link\">Continue reading</a>
-\t\t\t</div>
-\t\t\t<div class=\"col-auto d-none d-lg-block\">
-\t\t\t  <svg class=\"bd-placeholder-img\" width=\"150\" height=\"150\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\" role=\"img\" aria-label=\"Placeholder: Thumbnail\"><title>Placeholder</title><rect width=\"100%\" height=\"100%\" fill=\"#55595c\"/><text x=\"50%\" y=\"50%\" fill=\"#eceeef\" dy=\".3em\">Thumbnail</text></svg>
-\t\t\t</div>
-\t\t  </div>
-\t\t</div>
+\t\t
+\t\t
 \t  </div>
 
   
@@ -176,61 +176,61 @@ class __TwigTemplate_710270983adcc09738b676ae0aa9f631d7546b8f5ecc27a1fc7187d5e4a
 
 {% block content %}
 
-<div class=\"container\">
-\t<div class=\"p-4 p-md-5 mb-4 text-white rounded bg-dark\"  style=\"background:url('/static/bg001.jpg'); background-position: bottom; background-size: 100% auto\">
-\t\t\t<div class=\"col-md-6 px-0\">
-\t\t\t<p class=\"lead my-3\">econforecasting.com is a non-partisan think tank working to democratize macroeconomic knowledge by making the necessary tools, data, and insights more available for all.</p>
+<div class=\"container\" style=\"max-width:1400px\">
+\t<div class=\"rounded bg-dark\"  style=\"background:url('static/bank.jpg'); background-position: top; background-size: 100% auto\">
+\t\t<div class=\"col-md-6 px-0 p-4 p-md-5 mb-4 text-white\">
+\t\t\t<p class=\"lead my-3\">The Center for Macroeconomic Forecasting & Insights is a non-partisan think tank working to democratize macroeconomic knowledge by making the necessary tools, data, and insights more available for all.</p>
 \t\t\t<p class=\"lead mb-0\"><a href=\"#\" class=\"text-white fw-bold\">Continue reading...</a></p>
+\t\t</div>
+\t\t<div class=\"col-md-6 p-0 col-sm-0\">
 \t\t</div>
 \t</div>
 
 
 \t  <div class=\"row mb-2\">
 \t\t<div class=\"col-md-4\">
-\t\t  <div class=\"row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-150 position-relative\">
-\t\t\t<div class=\"col p-4 d-flex flex-column position-static\">
-\t\t\t  <strong class=\"d-inline-block mb-2 text-primary\">Data</strong>
-\t\t\t  <h3 class=\"mb-0\">GDP Forecasts</h3>
-\t\t\t  <div class=\"mb-1 text-muted\">Jan 2021</div>
-\t\t\t  <p class=\"card-text mb-auto\">Aggregated real GDP forecasts now available.</p>
-\t\t\t  <a href=\"#\" class=\"stretched-link\">Click to go</a>
+\t\t  <div class=\"row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-150 position-relative p-3\">
+\t\t\t<div class=\"row\">
+\t\t\t\t<div class=\"col-12\">
+\t\t\t\t\t<strong class=\"d-inline-block mb-2 text-danger\">Indicators & Indices</strong>
+\t\t\t\t\t<h3 class=\"mb-0\">Asset Correlation Index</h3>
+\t\t\t\t</div>
 \t\t\t</div>
-\t\t\t<div class=\"col-auto d-none d-lg-block\">
-\t\t\t  <svg class=\"bd-placeholder-img\" width=\"150\" height=\"150\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" role=\"img\">
-\t\t\t\t  <image href=\"/static/thumb001.jpg\" height=\"150\" width=\"150\" />
-\t\t\t  </svg>
+\t\t\t<div class=\"row\">
+\t\t\t\t<div class=\"col-md-8\">
+\t\t\t\t\t<div class=\"mb-1 text-muted\">Feb 2021</div>
+\t\t\t\t\t<p class=\"card-text mb-auto\">Historical data for the Asset Correlation Index is now available online.</p>
+\t\t\t\t\t<a href=\"ac-assets\" class=\"stretched-link\">Click to go</a>
+\t\t\t\t</div>
+\t\t\t\t<div class=\"col-md-4 border rounded\" style=\"background:url('/static/probabilistic-forecasting-graph.png'); background-position:bottom; background-size:100% auto;   background-repeat: no-repeat;\">
+\t\t\t\t</div>
 \t\t\t</div>
 \t\t  </div>
 \t\t</div>
+\t\t
+\t\t
 \t\t<div class=\"col-md-4\">
-\t\t  <div class=\"row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-200 position-relative\">
-\t\t\t<div class=\"col p-4 d-flex flex-column position-static\">
-\t\t\t  <strong class=\"d-inline-block mb-2 text-primary\">Data</strong>
-\t\t\t  <h3 class=\"mb-0\">Featured post</h3>
-\t\t\t  <div class=\"mb-1 text-muted\">Nov 12</div>
-\t\t\t  <p class=\"card-text mb-auto\">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-\t\t\t  <a href=\"#\" class=\"stretched-link\">Continue reading</a>
+\t\t  <div class=\"row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-150 position-relative p-3\">
+\t\t\t<div class=\"row\">
+\t\t\t\t<div class=\"col-12\">
+\t\t\t\t\t<strong class=\"d-inline-block mb-2 text-danger\">Indicators & Indices</strong>
+\t\t\t\t\t<h3 class=\"mb-0\">Regional Correlation Index</h3>
+\t\t\t\t</div>
 \t\t\t</div>
-\t\t\t<div class=\"col-auto d-none d-lg-block\">
-\t\t\t  <svg class=\"bd-placeholder-img\" width=\"150\" height=\"150\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\" role=\"img\" aria-label=\"Placeholder: Thumbnail\"><title>Placeholder</title><rect width=\"100%\" height=\"100%\" fill=\"#55595c\"/><text x=\"50%\" y=\"50%\" fill=\"#eceeef\" dy=\".3em\">Thumbnail</text></svg>
+\t\t\t<div class=\"row\">
+\t\t\t\t<div class=\"col-md-8\">
+\t\t\t\t\t<div class=\"mb-1 text-muted\">Feb 2021</div>
+\t\t\t\t\t<p class=\"card-text mb-auto\">Historical data for the Regional Correlation Index is now available online.</p>
+\t\t\t\t\t<a href=\"ac-regions\" class=\"stretched-link\">Click to go</a>
+\t\t\t\t</div>
+\t\t\t\t<div class=\"col-md-4 border rounded\" style=\"background:url('/static/thumb003.png'); background-position:bottom; background-size:100% auto;   background-repeat: no-repeat;\">
+\t\t\t\t</div>
 \t\t\t</div>
 \t\t  </div>
 \t\t</div>
 
-\t\t<div class=\"col-md-4\">
-\t\t  <div class=\"row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-200 position-relative\">
-\t\t\t<div class=\"col p-4 d-flex flex-column position-static\">
-\t\t\t  <strong class=\"d-inline-block mb-2 text-success\">Insights</strong>
-\t\t\t  <h3 class=\"mb-0\">Post title</h3>
-\t\t\t  <div class=\"mb-1 text-muted\">Nov 11</div>
-\t\t\t  <p class=\"mb-auto\">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-\t\t\t  <a href=\"#\" class=\"stretched-link\">Continue reading</a>
-\t\t\t</div>
-\t\t\t<div class=\"col-auto d-none d-lg-block\">
-\t\t\t  <svg class=\"bd-placeholder-img\" width=\"150\" height=\"150\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\" role=\"img\" aria-label=\"Placeholder: Thumbnail\"><title>Placeholder</title><rect width=\"100%\" height=\"100%\" fill=\"#55595c\"/><text x=\"50%\" y=\"50%\" fill=\"#eceeef\" dy=\".3em\">Thumbnail</text></svg>
-\t\t\t</div>
-\t\t  </div>
-\t\t</div>
+\t\t
+\t\t
 \t  </div>
 
   

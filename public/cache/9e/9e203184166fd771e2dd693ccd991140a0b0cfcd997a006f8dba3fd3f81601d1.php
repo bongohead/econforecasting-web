@@ -63,6 +63,17 @@ class __TwigTemplate_20ec55ccb91cd0b0ed20e3476920df3c687e3396f2b7fa73120a4a49610
         $this->loadTemplate("ac-sidebar.html", "ac-assets-hm.html", 9)->display($context);
         // line 10
         echo "\t<div class=\"col-md-9 col-xl-10 ms-auto pt-4 px-2\">
+\t
+\t\t<div class=\"row justify-content-center py-2\">
+\t\t\t<div class=\"card px-0\" style=\"max-width: 1200px\">
+\t\t\t\t<div class=\"card-body\">
+\t\t\t\t\t<h5 class=\"card-title\">Asset Class Correlation Heatmap</h5>
+\t\t\t\t\t<p class=\"card-text\">
+\t\t\t\t\tThis heatmap measures the correlation between returns of the world's major asset classes. Click the arrow buttons to see how cross-asset correlation has changed over time.
+\t\t\t\t\t</p>
+\t\t\t\t</div>
+\t\t\t</div>
+\t\t</div>
 
 \t\t<div class=\"row justify-content-center\">
 \t\t\t<div class=\"container\" style=\"max-width:1200px\">
@@ -103,6 +114,17 @@ class __TwigTemplate_20ec55ccb91cd0b0ed20e3476920df3c687e3396f2b7fa73120a4a49610
 <div class=\"row\">
 \t{% include 'ac-sidebar.html' %}
 \t<div class=\"col-md-9 col-xl-10 ms-auto pt-4 px-2\">
+\t
+\t\t<div class=\"row justify-content-center py-2\">
+\t\t\t<div class=\"card px-0\" style=\"max-width: 1200px\">
+\t\t\t\t<div class=\"card-body\">
+\t\t\t\t\t<h5 class=\"card-title\">Asset Class Correlation Heatmap</h5>
+\t\t\t\t\t<p class=\"card-text\">
+\t\t\t\t\tThis heatmap measures the correlation between returns of the world's major asset classes. Click the arrow buttons to see how cross-asset correlation has changed over time.
+\t\t\t\t\t</p>
+\t\t\t\t</div>
+\t\t\t</div>
+\t\t</div>
 
 \t\t<div class=\"row justify-content-center\">
 \t\t\t<div class=\"container\" style=\"max-width:1200px\">

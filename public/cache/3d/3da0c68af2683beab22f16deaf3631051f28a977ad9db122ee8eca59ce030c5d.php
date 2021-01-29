@@ -49,40 +49,41 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
         // line 10
         echo twig_escape_filter($this->env, ($context["title"] ?? null));
         echo "</title>
-    <link rel=\"icon\" type=image/ico href=\"/static/favicon.ico\"/>
+    <link rel=\"icon\" type=image/ico href=\"/static/cmefi_short.png\"/>
 \t
     <link rel=\"stylesheet\" type=\"text/css\" href=\"/static/style.css\">
 \t<link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1\" crossorigin=\"anonymous\">
 \t<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css\">
 \t<link rel=\"stylesheet\" href=\"https://use.fontawesome.com/releases/v5.6.3/css/all.css\" integrity=\"sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/\" crossorigin=\"anonymous\"></head>
 
-\t<!--<link rel=\"stylesheet\" type=\"text/css\" href=\"//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css\"/> -->
+\t<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap5.min.css\"/>
 
 \t<script src=\"https://code.jquery.com/jquery-3.5.1.min.js\" integrity=\"sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=\" crossorigin=\"anonymous\"></script>
 \t<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js\" integrity=\"sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW\" crossorigin=\"anonymous\"></script>
-\t<!--
-\t<script src=\"//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js\"></script>
-\t<script src=\"//cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js\"></script>
+
+\t<script src=\"https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js\"></script>
+\t<script src=\"https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap5.min.js\"></script>
 \t
-\t<script src=\"//cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js\"></script>
-\t<script src=\"//cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js\"></script> <!-- HTML export buttons -->
+\t<script src=\"https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js\"></script>
+\t<script src=\"https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js\"></script> <!-- HTML export buttons -->
 \t
     <script src=\"https://code.highcharts.com/stock/highstock.js\"></script>
-\t<script src=\"https://cye131.github.io/gradient.js/gradient-min.js\"></script>
 \t<script src=\"https://code.highcharts.com/modules/boost.js\"></script>
+\t
+\t<script src=\"https://cye131.github.io/gradient.js/gradient-min.js\"></script>
 \t<!--
 \t<link href=\"https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css\" rel=\"stylesheet\">
 \t<script src=\"https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js\"></script>
 \t-->
     ";
-        // line 36
+        // line 37
         echo ($context["pageJS"] ?? null);
         echo "
 
     ";
-        // line 38
-        $this->displayBlock('staticlinks', $context, $blocks);
         // line 39
+        $this->displayBlock('staticlinks', $context, $blocks);
+        // line 40
         echo "\t<!-- Global site tag (gtag.js) - Google Analytics -->
 \t<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-5JBMJCQQD7\"></script>
 \t<script>
@@ -98,11 +99,11 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t<header>
 \t\t<div class=\"container-fluid\" style=\"height:.25rem;background-color:rgb(37, 48, 10);\"></div>
 
-\t\t<nav class=\"navbar navbar-expand-md navbar-dark sticky-top\">
+\t\t<nav class=\"navbar navbar-expand-md navbar-dark sticky-top py-1\">
 \t\t\t<div class=\"container-fluid\">
-\t\t\t\t<a class=\"navbar-brand\" href=\"/\">
-\t\t\t\t\t<img src=\"/static/logo.png\" class=\"py-0\" height=\"30\" width=\"30\">
-\t\t\t\t\t<span class=\"navbar-brand my-0 py-0 h2\">econforecasting.com</span>
+\t\t\t\t<a class=\"navbar-brand py-0 ps-3\" href=\"/\">
+\t\t\t\t\t<img src=\"/static/cmefi_full_inverted.png\" class=\"py-0\" height=\"50\">
+\t\t\t\t\t<!--<span class=\"navbar-brand my-0 py-0 h2\">The Center for Macroeconomic Forecasts & Insights</span>-->
 \t\t\t\t</a>
 \t\t\t\t<button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#collapsingNavbarLg\"><span class=\"navbar-toggler-icon\"></span></button>
 \t\t\t\t
@@ -116,8 +117,8 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t\t\t\t\t\t\t\t<i class=\"bi bi-gear-wide-connected me-1\"></i>Indicators and Indices
 \t\t\t\t\t\t\t</a>
 \t\t\t\t\t\t\t<ul class=\"dropdown-menu\">
-\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/ac-regions-hm\"><span style=\"margin-left: 1rem\">Asset Correlation Index</span></a></li>
-\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/transactions?account=\"><span style=\"margin-left: 1rem\">Regional Correlation Index</span></a></li>
+\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/ac-assets\"><span style=\"margin-left: 1rem\">Asset Correlation Index</span></a></li>
+\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/ac-regions\"><span style=\"margin-left: 1rem\">Regional Correlation Index</span></a></li>
 \t\t\t\t\t\t\t</ul>
 \t\t\t\t\t\t</li>
 \t\t\t\t\t\t<li class=\"nav-item dropdown\">
@@ -138,9 +139,9 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t
 \t<main class=\"flex-shrink-0 min-vh-100\">
 \t\t";
-        // line 93
+        // line 94
         $this->displayBlock('content', $context, $blocks);
-        // line 95
+        // line 96
         echo "\t</main>
 
 \t<footer class=\"container-fluid bg-secondary text-white text-center text-lg-start\">
@@ -231,7 +232,7 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 
 \t<script>
 \t  ";
-        // line 184
+        // line 185
         echo ($context["bodyScript"] ?? null);
         echo "
 \t</script>
@@ -240,17 +241,17 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 </html>";
     }
 
-    // line 38
+    // line 39
     public function block_staticlinks($context, array $blocks = [])
     {
         $macros = $this->macros;
     }
 
-    // line 93
+    // line 94
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 94
+        // line 95
         echo "\t\t";
     }
 
@@ -266,7 +267,7 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 
     public function getDebugInfo()
     {
-        return array (  254 => 94,  250 => 93,  244 => 38,  235 => 184,  144 => 95,  142 => 93,  86 => 39,  84 => 38,  79 => 36,  50 => 10,  39 => 1,);
+        return array (  255 => 95,  251 => 94,  245 => 39,  236 => 185,  145 => 96,  143 => 94,  87 => 40,  85 => 39,  80 => 37,  50 => 10,  39 => 1,);
     }
 
     public function getSourceContext()
@@ -281,27 +282,28 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
     <meta name=keywords content=\"financial contagion, financial contagion index, cross-asset contagion, cross-asset contagion\" />
 
     <title>{{ title|e }}</title>
-    <link rel=\"icon\" type=image/ico href=\"/static/favicon.ico\"/>
+    <link rel=\"icon\" type=image/ico href=\"/static/cmefi_short.png\"/>
 \t
     <link rel=\"stylesheet\" type=\"text/css\" href=\"/static/style.css\">
 \t<link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1\" crossorigin=\"anonymous\">
 \t<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css\">
 \t<link rel=\"stylesheet\" href=\"https://use.fontawesome.com/releases/v5.6.3/css/all.css\" integrity=\"sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/\" crossorigin=\"anonymous\"></head>
 
-\t<!--<link rel=\"stylesheet\" type=\"text/css\" href=\"//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css\"/> -->
+\t<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap5.min.css\"/>
 
 \t<script src=\"https://code.jquery.com/jquery-3.5.1.min.js\" integrity=\"sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=\" crossorigin=\"anonymous\"></script>
 \t<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js\" integrity=\"sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW\" crossorigin=\"anonymous\"></script>
-\t<!--
-\t<script src=\"//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js\"></script>
-\t<script src=\"//cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js\"></script>
+
+\t<script src=\"https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js\"></script>
+\t<script src=\"https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap5.min.js\"></script>
 \t
-\t<script src=\"//cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js\"></script>
-\t<script src=\"//cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js\"></script> <!-- HTML export buttons -->
+\t<script src=\"https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js\"></script>
+\t<script src=\"https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js\"></script> <!-- HTML export buttons -->
 \t
     <script src=\"https://code.highcharts.com/stock/highstock.js\"></script>
-\t<script src=\"https://cye131.github.io/gradient.js/gradient-min.js\"></script>
 \t<script src=\"https://code.highcharts.com/modules/boost.js\"></script>
+\t
+\t<script src=\"https://cye131.github.io/gradient.js/gradient-min.js\"></script>
 \t<!--
 \t<link href=\"https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css\" rel=\"stylesheet\">
 \t<script src=\"https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js\"></script>
@@ -324,11 +326,11 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t<header>
 \t\t<div class=\"container-fluid\" style=\"height:.25rem;background-color:rgb(37, 48, 10);\"></div>
 
-\t\t<nav class=\"navbar navbar-expand-md navbar-dark sticky-top\">
+\t\t<nav class=\"navbar navbar-expand-md navbar-dark sticky-top py-1\">
 \t\t\t<div class=\"container-fluid\">
-\t\t\t\t<a class=\"navbar-brand\" href=\"/\">
-\t\t\t\t\t<img src=\"/static/logo.png\" class=\"py-0\" height=\"30\" width=\"30\">
-\t\t\t\t\t<span class=\"navbar-brand my-0 py-0 h2\">econforecasting.com</span>
+\t\t\t\t<a class=\"navbar-brand py-0 ps-3\" href=\"/\">
+\t\t\t\t\t<img src=\"/static/cmefi_full_inverted.png\" class=\"py-0\" height=\"50\">
+\t\t\t\t\t<!--<span class=\"navbar-brand my-0 py-0 h2\">The Center for Macroeconomic Forecasts & Insights</span>-->
 \t\t\t\t</a>
 \t\t\t\t<button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#collapsingNavbarLg\"><span class=\"navbar-toggler-icon\"></span></button>
 \t\t\t\t
@@ -342,8 +344,8 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t\t\t\t\t\t\t\t<i class=\"bi bi-gear-wide-connected me-1\"></i>Indicators and Indices
 \t\t\t\t\t\t\t</a>
 \t\t\t\t\t\t\t<ul class=\"dropdown-menu\">
-\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/ac-regions-hm\"><span style=\"margin-left: 1rem\">Asset Correlation Index</span></a></li>
-\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/transactions?account=\"><span style=\"margin-left: 1rem\">Regional Correlation Index</span></a></li>
+\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/ac-assets\"><span style=\"margin-left: 1rem\">Asset Correlation Index</span></a></li>
+\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/ac-regions\"><span style=\"margin-left: 1rem\">Regional Correlation Index</span></a></li>
 \t\t\t\t\t\t\t</ul>
 \t\t\t\t\t\t</li>
 \t\t\t\t\t\t<li class=\"nav-item dropdown\">

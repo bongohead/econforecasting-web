@@ -13,7 +13,7 @@ $(document).ready(function() {
 		const ud = {
 			...udPrev,
 			... {
-					usage: 'ass'
+					usage: 'reg'
 				}
 		}
 
@@ -93,7 +93,7 @@ function drawChart(acIndex) {
             enabled: false  
         },
         title: {
-            text: 'Cross-Asset Correlation Index'
+            text: 'Cross-Region Correlation Index'
         },
 		subtitle: {
 			text: 'Last updated ' + moment(acIndex[acIndex.length - 1].date).format('MM/DD/YYYY')

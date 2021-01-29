@@ -8,10 +8,41 @@
 <div class="row">
 	{% include 'ac-sidebar.html' %}
 	<div class="col-md-9 col-xl-10 ms-auto pt-4 px-2">
-
-		<div class="row justify-content-center">
+	
+		<div class="row justify-content-center py-2">
+			<div class="card px-0" style="max-width: 1200px">
+				<h5 class="card-header">Model Overview</h5>
+				<div class="card-body">
+					<h5 class="card-title">Cross-Asset Correlation Index</h5>
+					<p class="card-text">
+					<strong>What does this index measure?</strong><br>
+					This index tracks the level of correlation between different asset classes in the macroeconomy; e.g. the correlation between stocks and bonds, bonds and real estate, and so on. The full list of tracked asset classes is available <a href='ac-assets-hm'>here</a>. When the index level is high, it means that different asset classes are moving closely with one another.
+					</p>
+					<p class="card-text">
+					<strong>Why is this useful?</strong><br>
+					In economic downturns, a sell-off in one asset class can trigger broader sell-offs in other asset classes, causing a contagion effect triggering a larger financial crisis. For example, during the global financial crisis, declines in real estate prices triggered sell-offs in mortgage-backed bonds and later equity prices. This index measures the degree of "danger" that a crisis in one asset class may infect the broader financial market.
+					<br>
+					Additionally, the level of cross-asset correlation in the economy is a leading indicator for bubbles and economic downturns. Cross-asset correlations are typically high when investors are "searching for yield" - i.e., the demand for one asset has spilled over into general markets, which can lead to a general bubble in financial assets.
+					</p>
+					<p class="card-text">
+					<strong>How do I interpret this index?</strong><br>
+					This index tracks the strength of cross-asset correlations between major asset classes in the international economy. The index is normalized to a level between zero and one hundred. High index values indicate that cross-asset return correlations are unusually high and the risk of a broad financial crash is high.
+					</p>
+					<a href="#chart-container" class="btn btn-primary">Historical index data</a>
+					<a href="ac-assets-hm" class="btn btn-danger">Component heatmap</a>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row justify-content-center bg-light">
 			<div class="container" style="max-width:1200px">
 				<div id="chart-container"></div>
+			</div>
+		</div>
+		<div class="row justify-content-center pt-2">
+			<div class="col-auto" style="max-width:1200px">
+				<h2 class="display-8">Historical Data</h2>
+				<table id="table-container" class="display" width="500px"></table>
 			</div>
 		</div>
 

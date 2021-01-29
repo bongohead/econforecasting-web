@@ -63,6 +63,16 @@ class __TwigTemplate_cdb9808708d2617c531bf046cbef5077e274f6210b1538aab933205c548
         $this->loadTemplate("ac-sidebar.html", "ac-regions-hm.html", 9)->display($context);
         // line 10
         echo "\t<div class=\"col-md-9 col-xl-10 ms-auto pt-4 px-2\">
+\t\t<div class=\"row justify-content-center py-2\">
+\t\t\t<div class=\"card px-0\" style=\"max-width: 1200px\">
+\t\t\t\t<div class=\"card-body\">
+\t\t\t\t\t<h5 class=\"card-title\">Cross Regional Correlation Heatmap</h5>
+\t\t\t\t\t<p class=\"card-text\">
+\t\t\t\t\tThis heatmap measures the correlation between stock market returns of the world's largest economies. Exchange traded funds (ETFs) are used as a proxy for our data source. Click the arrow buttons to see how cross-regional correlation has changed over time.
+\t\t\t\t\t</p>
+\t\t\t\t</div>
+\t\t\t</div>
+\t\t</div>
 
 \t\t<div class=\"row justify-content-center\">
 \t\t\t<div class=\"container\" style=\"max-width:1200px\">
@@ -103,6 +113,16 @@ class __TwigTemplate_cdb9808708d2617c531bf046cbef5077e274f6210b1538aab933205c548
 <div class=\"row\">
 \t{% include 'ac-sidebar.html' %}
 \t<div class=\"col-md-9 col-xl-10 ms-auto pt-4 px-2\">
+\t\t<div class=\"row justify-content-center py-2\">
+\t\t\t<div class=\"card px-0\" style=\"max-width: 1200px\">
+\t\t\t\t<div class=\"card-body\">
+\t\t\t\t\t<h5 class=\"card-title\">Cross Regional Correlation Heatmap</h5>
+\t\t\t\t\t<p class=\"card-text\">
+\t\t\t\t\tThis heatmap measures the correlation between stock market returns of the world's largest economies. Exchange traded funds (ETFs) are used as a proxy for our data source. Click the arrow buttons to see how cross-regional correlation has changed over time.
+\t\t\t\t\t</p>
+\t\t\t\t</div>
+\t\t\t</div>
+\t\t</div>
 
 \t\t<div class=\"row justify-content-center\">
 \t\t\t<div class=\"container\" style=\"max-width:1200px\">

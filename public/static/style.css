@@ -127,6 +127,60 @@ nav.sidebar div.sidebar-submenu > a.activepage {
 }
 
 
+
+/* Datatable */
+table.dataTable th {
+	background-color: rgba(21, 34, 155, 1);
+	padding: .5rem .5rem;
+	font-size: 0.9rem;
+	color: white;
+}
+
+table.dataTable td {
+    padding: .25rem .5rem;
+    font-size: 0.75rem;
+}
+
+table.dataTable .dt-center {
+	text-align: center;
+}
+
+table.dataTable .dt-left {
+	text-align: left;
+}
+
+table.dataTable thead {
+	border-bottom: 1px solid black;
+}
+
+table.dataTable tbody {
+	border-bottom: 2px solid black;
+}
+
+table.dataTable tr.odd {
+    background-color: rgba(200, 230, 245, .4);
+}
+
+table.dataTable tr.even:hover {
+  background-color: rgba(0, 0, 158, .7) !important;
+	color: white !important;
+}
+
+table.dataTable tr.odd:hover {
+    background-color: rgba(0, 0, 158, .7) !important;
+	color: white !important;
+}
+
+table.dataTable tr:hover {
+	color: white !important;
+}
+
+table.dataTable thead .sorting:before, table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:before, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:before, table.dataTable thead .sorting_desc:after, table.dataTable thead .sorting_asc_disabled:before, table.dataTable thead .sorting_asc_disabled:after, table.dataTable thead .sorting_desc_disabled:before, table.dataTable thead .sorting_desc_disabled:after {
+  position: static !important;
+  display: inline !important;
+  font-size: 1.0rem;
+}
+
 /** Loading Spinner **/
 .overlay {
     background: #D3D3D3;
@@ -313,79 +367,3 @@ a.multicol:hover {
   cursor: pointer;
 }
 
-/** Highmaps **/
-
-/** Datatables - General **/
-
-table.dataTable th {
-  background-color: rgba(21, 34, 155, 1);
-	padding: .5rem .5rem;
-  font-size: 1.1rem;
-	color: white;
-}
-
-table.dataTable td {
-    padding: .25rem .5rem;
-    font-size: 1.0rem;
-}
-
-table.dataTable .dt-center {
-	text-align: center;
-}
-
-table.dataTable .dt-left {
-	text-align: left;
-}
-
-table.dataTable thead {
-	border-bottom: 1px solid black;
-}
-
-table.dataTable tbody {
-	border-bottom: 2px solid black;
-}
-
-table.dataTable tr.odd {
-    background-color: rgba(200, 230, 245, .4);
-}
-
-table.dataTable tr.even:hover {
-  background-color: rgba(0, 0, 158, .7) !important;
-	color: white !important;
-}
-
-table.dataTable tr.odd:hover {
-    background-color: rgba(0, 0, 158, .7) !important;
-	color: white !important;
-}
-
-table.dataTable tr:hover {
-	color: white !important;
-}
-
-
-table.dataTable thead .sorting:before, table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:before, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:before, table.dataTable thead .sorting_desc:after, table.dataTable thead .sorting_asc_disabled:before, table.dataTable thead .sorting_asc_disabled:after, table.dataTable thead .sorting_desc_disabled:before, table.dataTable thead .sorting_desc_disabled:after {
-  position: static !important;
-  display: inline !important;
-  font-size: 1.1rem;
-}
-/* for scorllX
-.dataTables_scrollBody thead tr[role="row"]{
-    visibility: collapse !important;
-}
-*/
-
-/** Datatables - Specific **/
-
-#transactions-table td,th {
-	font-family: Tahoma, Verdana, Segoe, sans-serif;
-
-}
-#transactions-table td {
-	font-size: .95rem;
-	padding: .25rem .25rem;
-}
-#transactions-table th {
-	font-size: .95rem;
-	padding-right: 0px;
-}
