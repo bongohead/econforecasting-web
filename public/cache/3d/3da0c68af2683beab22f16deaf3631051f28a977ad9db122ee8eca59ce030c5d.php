@@ -71,19 +71,15 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t<script src=\"https://code.highcharts.com/modules/boost.js\"></script>
 \t
 \t<script src=\"https://cye131.github.io/gradient.js/gradient-min.js\"></script>
-\t<!--
-\t<link href=\"https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css\" rel=\"stylesheet\">
-\t<script src=\"https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js\"></script>
-\t-->
     ";
-        // line 37
+        // line 33
         echo ($context["pageJS"] ?? null);
         echo "
 
     ";
-        // line 39
+        // line 35
         $this->displayBlock('staticlinks', $context, $blocks);
-        // line 40
+        // line 36
         echo "\t<!-- Global site tag (gtag.js) - Google Analytics -->
 \t<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-5JBMJCQQD7\"></script>
 \t<script>
@@ -102,7 +98,7 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t\t<nav class=\"navbar navbar-expand-md navbar-dark sticky-top py-1\">
 \t\t\t<div class=\"container-fluid\">
 \t\t\t\t<a class=\"navbar-brand py-0 ps-3\" href=\"/\">
-\t\t\t\t\t<img src=\"/static/cmefi_full_inverted.png\" class=\"py-0\" height=\"50\">
+\t\t\t\t\t<img src=\"/static/cmefi_full_inverted.png\" class=\"py-0\" height=\"55\">
 \t\t\t\t\t<!--<span class=\"navbar-brand my-0 py-0 h2\">The Center for Macroeconomic Forecasts & Insights</span>-->
 \t\t\t\t</a>
 \t\t\t\t<button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#collapsingNavbarLg\"><span class=\"navbar-toggler-icon\"></span></button>
@@ -114,20 +110,20 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t\t\t\t\t\t</li>
 \t\t\t\t\t\t<li class=\"nav-item dropdown\">
 \t\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-bs-toggle=\"dropdown\">
-\t\t\t\t\t\t\t\t<i class=\"bi bi-gear-wide-connected me-1\"></i>Indicators and Indices
-\t\t\t\t\t\t\t</a>
-\t\t\t\t\t\t\t<ul class=\"dropdown-menu\">
-\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/ac-assets\"><span style=\"margin-left: 1rem\">Asset Correlation Index</span></a></li>
-\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/ac-regions\"><span style=\"margin-left: 1rem\">Regional Correlation Index</span></a></li>
-\t\t\t\t\t\t\t</ul>
-\t\t\t\t\t\t</li>
-\t\t\t\t\t\t<li class=\"nav-item dropdown\">
-\t\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-bs-toggle=\"dropdown\">
 \t\t\t\t\t\t\t\t<i class=\"bi bi-bar-chart-steps me-1\"></i>Other Forecasts...
 \t\t\t\t\t\t\t</a>
 \t\t\t\t\t\t\t<ul class=\"dropdown-menu\">
 \t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/transactions?account=\"><span style=\"margin-left: 1rem\">Rates</span></a></li>
 \t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/transactions?account=\"><span style=\"margin-left: 1rem\">Rates2</span></a></li>
+\t\t\t\t\t\t\t</ul>
+\t\t\t\t\t\t</li>
+\t\t\t\t\t\t<li class=\"nav-item dropdown\">
+\t\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-bs-toggle=\"dropdown\">
+\t\t\t\t\t\t\t\t<i class=\"bi bi-gear-wide-connected me-1\"></i>Indicators and Indices
+\t\t\t\t\t\t\t</a>
+\t\t\t\t\t\t\t<ul class=\"dropdown-menu\">
+\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/ac-assets\"><span style=\"margin-left: 1rem\">Asset Correlation Index</span></a></li>
+\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/ac-regions\"><span style=\"margin-left: 1rem\">Regional Correlation Index</span></a></li>
 \t\t\t\t\t\t\t</ul>
 \t\t\t\t\t\t</li>
 \t\t\t\t\t\t
@@ -137,36 +133,21 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t\t</nav>
 \t</header>
 \t
-\t<main class=\"flex-shrink-0 min-vh-100\">
+\t<main class=\"flex-shrink-0 min-vh-100 pb-5\">
 \t\t";
-        // line 94
+        // line 90
         $this->displayBlock('content', $context, $blocks);
-        // line 96
+        // line 92
         echo "\t</main>
 
-\t<footer class=\"container-fluid bg-secondary text-white text-center text-lg-start\">
+\t<footer class=\"container-fluid bg-secondary text-white text-center text-lg-start px-0\">
 \t  <!-- Grid container -->
 \t  <div class=\"container p-4\">
 \t\t<!--Grid row-->
 \t\t<div class=\"row\">
 \t\t  <!--Grid column-->
-\t\t  <!--
-\t\t  <div class=\"col-lg-6 col-md-12 mb-4 mb-md-0\">
-\t\t\t<h5 class=\"text-uppercase\">Footer Content</h5>
-
-\t\t\t<p>
-\t\t\t  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
-\t\t\t  molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae aliquam
-\t\t\t  voluptatem veniam, est atque cumque eum delectus sint!
-\t\t\t</p>
-\t\t  </div>
-\t\t  -->
-\t\t  <!--Grid column-->
-
-\t\t  <!--Grid column-->
-\t\t  <div class=\"col-6 mb-4 mb-md-0\">
+\t\t  <div class=\"col-6 mb-2 mb-md-0\">
 \t\t\t<h5 class=\"text-uppercase\">Links</h5>
-
 \t\t\t<ul class=\"list-unstyled mb-0\">
 \t\t\t  <li>
 \t\t\t\t<a href=\"https://cmefi.com\" class=\"text-white\">Center for Macroeconomic Forecasting and Insights</a>
@@ -176,7 +157,7 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t\t  <!--Grid column-->
 
 \t\t  <!--Grid column-->
-\t\t  <div class=\"col-6 mb-4 mb-md-0\">
+\t\t  <div class=\"col-6 mb-2 mb-md-0 text-end\">
 \t\t\t<h5 class=\"text-uppercase mb-0\">CONTACT</h5>
 
 \t\t\t<ul class=\"list-unstyled\">
@@ -192,9 +173,8 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t  <!-- Grid container -->
 
 \t  <!-- Copyright -->
-\t  <div class=\"text-center p-3\" style=\"background-color: rgba(0, 0, 0, 0.2)\">
-\t\t© 2021 Copyright:
-\t\t<a class=\"text-white\" href=\"mailto:charles@cmefi.com\">C. YE</a>
+\t  <div class=\"text-end p-3\" style=\"background-color: rgba(0, 0, 0, 0.2)\">
+\t\t<span>© 2021 The Center for Macroeconomic Forecasts & Insights</span>
 \t  </div>
 \t  <!-- Copyright -->
 \t</footer>
@@ -232,7 +212,7 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 
 \t<script>
 \t  ";
-        // line 185
+        // line 165
         echo ($context["bodyScript"] ?? null);
         echo "
 \t</script>
@@ -241,17 +221,17 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 </html>";
     }
 
-    // line 39
+    // line 35
     public function block_staticlinks($context, array $blocks = [])
     {
         $macros = $this->macros;
     }
 
-    // line 94
+    // line 90
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 95
+        // line 91
         echo "\t\t";
     }
 
@@ -267,7 +247,7 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 
     public function getDebugInfo()
     {
-        return array (  255 => 95,  251 => 94,  245 => 39,  236 => 185,  145 => 96,  143 => 94,  87 => 40,  85 => 39,  80 => 37,  50 => 10,  39 => 1,);
+        return array (  235 => 91,  231 => 90,  225 => 35,  216 => 165,  141 => 92,  139 => 90,  83 => 36,  81 => 35,  76 => 33,  50 => 10,  39 => 1,);
     }
 
     public function getSourceContext()
@@ -304,10 +284,6 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t<script src=\"https://code.highcharts.com/modules/boost.js\"></script>
 \t
 \t<script src=\"https://cye131.github.io/gradient.js/gradient-min.js\"></script>
-\t<!--
-\t<link href=\"https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css\" rel=\"stylesheet\">
-\t<script src=\"https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js\"></script>
-\t-->
     {{ pageJS | raw }}
 
     {% block staticlinks %}{% endblock %}
@@ -329,7 +305,7 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t\t<nav class=\"navbar navbar-expand-md navbar-dark sticky-top py-1\">
 \t\t\t<div class=\"container-fluid\">
 \t\t\t\t<a class=\"navbar-brand py-0 ps-3\" href=\"/\">
-\t\t\t\t\t<img src=\"/static/cmefi_full_inverted.png\" class=\"py-0\" height=\"50\">
+\t\t\t\t\t<img src=\"/static/cmefi_full_inverted.png\" class=\"py-0\" height=\"55\">
 \t\t\t\t\t<!--<span class=\"navbar-brand my-0 py-0 h2\">The Center for Macroeconomic Forecasts & Insights</span>-->
 \t\t\t\t</a>
 \t\t\t\t<button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#collapsingNavbarLg\"><span class=\"navbar-toggler-icon\"></span></button>
@@ -341,20 +317,20 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t\t\t\t\t\t</li>
 \t\t\t\t\t\t<li class=\"nav-item dropdown\">
 \t\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-bs-toggle=\"dropdown\">
-\t\t\t\t\t\t\t\t<i class=\"bi bi-gear-wide-connected me-1\"></i>Indicators and Indices
-\t\t\t\t\t\t\t</a>
-\t\t\t\t\t\t\t<ul class=\"dropdown-menu\">
-\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/ac-assets\"><span style=\"margin-left: 1rem\">Asset Correlation Index</span></a></li>
-\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/ac-regions\"><span style=\"margin-left: 1rem\">Regional Correlation Index</span></a></li>
-\t\t\t\t\t\t\t</ul>
-\t\t\t\t\t\t</li>
-\t\t\t\t\t\t<li class=\"nav-item dropdown\">
-\t\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-bs-toggle=\"dropdown\">
 \t\t\t\t\t\t\t\t<i class=\"bi bi-bar-chart-steps me-1\"></i>Other Forecasts...
 \t\t\t\t\t\t\t</a>
 \t\t\t\t\t\t\t<ul class=\"dropdown-menu\">
 \t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/transactions?account=\"><span style=\"margin-left: 1rem\">Rates</span></a></li>
 \t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/transactions?account=\"><span style=\"margin-left: 1rem\">Rates2</span></a></li>
+\t\t\t\t\t\t\t</ul>
+\t\t\t\t\t\t</li>
+\t\t\t\t\t\t<li class=\"nav-item dropdown\">
+\t\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-bs-toggle=\"dropdown\">
+\t\t\t\t\t\t\t\t<i class=\"bi bi-gear-wide-connected me-1\"></i>Indicators and Indices
+\t\t\t\t\t\t\t</a>
+\t\t\t\t\t\t\t<ul class=\"dropdown-menu\">
+\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/ac-assets\"><span style=\"margin-left: 1rem\">Asset Correlation Index</span></a></li>
+\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/ac-regions\"><span style=\"margin-left: 1rem\">Regional Correlation Index</span></a></li>
 \t\t\t\t\t\t\t</ul>
 \t\t\t\t\t\t</li>
 \t\t\t\t\t\t
@@ -364,34 +340,19 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t\t</nav>
 \t</header>
 \t
-\t<main class=\"flex-shrink-0 min-vh-100\">
+\t<main class=\"flex-shrink-0 min-vh-100 pb-5\">
 \t\t{% block content %}
 \t\t{% endblock %}
 \t</main>
 
-\t<footer class=\"container-fluid bg-secondary text-white text-center text-lg-start\">
+\t<footer class=\"container-fluid bg-secondary text-white text-center text-lg-start px-0\">
 \t  <!-- Grid container -->
 \t  <div class=\"container p-4\">
 \t\t<!--Grid row-->
 \t\t<div class=\"row\">
 \t\t  <!--Grid column-->
-\t\t  <!--
-\t\t  <div class=\"col-lg-6 col-md-12 mb-4 mb-md-0\">
-\t\t\t<h5 class=\"text-uppercase\">Footer Content</h5>
-
-\t\t\t<p>
-\t\t\t  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
-\t\t\t  molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae aliquam
-\t\t\t  voluptatem veniam, est atque cumque eum delectus sint!
-\t\t\t</p>
-\t\t  </div>
-\t\t  -->
-\t\t  <!--Grid column-->
-
-\t\t  <!--Grid column-->
-\t\t  <div class=\"col-6 mb-4 mb-md-0\">
+\t\t  <div class=\"col-6 mb-2 mb-md-0\">
 \t\t\t<h5 class=\"text-uppercase\">Links</h5>
-
 \t\t\t<ul class=\"list-unstyled mb-0\">
 \t\t\t  <li>
 \t\t\t\t<a href=\"https://cmefi.com\" class=\"text-white\">Center for Macroeconomic Forecasting and Insights</a>
@@ -401,7 +362,7 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t\t  <!--Grid column-->
 
 \t\t  <!--Grid column-->
-\t\t  <div class=\"col-6 mb-4 mb-md-0\">
+\t\t  <div class=\"col-6 mb-2 mb-md-0 text-end\">
 \t\t\t<h5 class=\"text-uppercase mb-0\">CONTACT</h5>
 
 \t\t\t<ul class=\"list-unstyled\">
@@ -417,9 +378,8 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t  <!-- Grid container -->
 
 \t  <!-- Copyright -->
-\t  <div class=\"text-center p-3\" style=\"background-color: rgba(0, 0, 0, 0.2)\">
-\t\t© 2021 Copyright:
-\t\t<a class=\"text-white\" href=\"mailto:charles@cmefi.com\">C. YE</a>
+\t  <div class=\"text-end p-3\" style=\"background-color: rgba(0, 0, 0, 0.2)\">
+\t\t<span>© 2021 The Center for Macroeconomic Forecasts & Insights</span>
 \t  </div>
 \t  <!-- Copyright -->
 \t</footer>

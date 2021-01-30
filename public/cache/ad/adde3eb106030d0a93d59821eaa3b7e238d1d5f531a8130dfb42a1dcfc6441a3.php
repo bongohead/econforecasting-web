@@ -75,7 +75,7 @@ class __TwigTemplate_710270983adcc09738b676ae0aa9f631d7546b8f5ecc27a1fc7187d5e4a
         echo "
 <div class=\"container\" style=\"max-width:1400px\">
 \t<div class=\"rounded bg-dark\"  style=\"background:url('static/bank.jpg'); background-position: top; background-size: 100% auto\">
-\t\t<div class=\"col-md-6 px-0 p-4 p-md-5 mb-4 text-white\">
+\t\t<div class=\"col-md-6 px-2 p-4 p-md-5 mb-4 text-white\">
 \t\t\t<p class=\"lead my-3\">The Center for Macroeconomic Forecasting & Insights is a non-partisan think tank working to democratize macroeconomic knowledge by making the necessary tools, data, and insights more available for all.</p>
 \t\t\t<p class=\"lead mb-0\"><a href=\"#\" class=\"text-white fw-bold\">Continue reading...</a></p>
 \t\t</div>
@@ -178,7 +178,7 @@ class __TwigTemplate_710270983adcc09738b676ae0aa9f631d7546b8f5ecc27a1fc7187d5e4a
 
 <div class=\"container\" style=\"max-width:1400px\">
 \t<div class=\"rounded bg-dark\"  style=\"background:url('static/bank.jpg'); background-position: top; background-size: 100% auto\">
-\t\t<div class=\"col-md-6 px-0 p-4 p-md-5 mb-4 text-white\">
+\t\t<div class=\"col-md-6 px-2 p-4 p-md-5 mb-4 text-white\">
 \t\t\t<p class=\"lead my-3\">The Center for Macroeconomic Forecasting & Insights is a non-partisan think tank working to democratize macroeconomic knowledge by making the necessary tools, data, and insights more available for all.</p>
 \t\t\t<p class=\"lead mb-0\"><a href=\"#\" class=\"text-white fw-bold\">Continue reading...</a></p>
 \t\t</div>

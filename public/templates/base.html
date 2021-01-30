@@ -30,10 +30,6 @@
 	<script src="https://code.highcharts.com/modules/boost.js"></script>
 	
 	<script src="https://cye131.github.io/gradient.js/gradient-min.js"></script>
-	<!--
-	<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
-	<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
-	-->
     {{ pageJS | raw }}
 
     {% block staticlinks %}{% endblock %}
@@ -55,7 +51,7 @@
 		<nav class="navbar navbar-expand-md navbar-dark sticky-top py-1">
 			<div class="container-fluid">
 				<a class="navbar-brand py-0 ps-3" href="/">
-					<img src="/static/cmefi_full_inverted.png" class="py-0" height="50">
+					<img src="/static/cmefi_full_inverted.png" class="py-0" height="55">
 					<!--<span class="navbar-brand my-0 py-0 h2">The Center for Macroeconomic Forecasts & Insights</span>-->
 				</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsingNavbarLg"><span class="navbar-toggler-icon"></span></button>
@@ -67,20 +63,20 @@
 						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-								<i class="bi bi-gear-wide-connected me-1"></i>Indicators and Indices
-							</a>
-							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="/ac-assets"><span style="margin-left: 1rem">Asset Correlation Index</span></a></li>
-								<li><a class="dropdown-item" href="/ac-regions"><span style="margin-left: 1rem">Regional Correlation Index</span></a></li>
-							</ul>
-						</li>
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
 								<i class="bi bi-bar-chart-steps me-1"></i>Other Forecasts...
 							</a>
 							<ul class="dropdown-menu">
 								<li><a class="dropdown-item" href="/transactions?account="><span style="margin-left: 1rem">Rates</span></a></li>
 								<li><a class="dropdown-item" href="/transactions?account="><span style="margin-left: 1rem">Rates2</span></a></li>
+							</ul>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+								<i class="bi bi-gear-wide-connected me-1"></i>Indicators and Indices
+							</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="/ac-assets"><span style="margin-left: 1rem">Asset Correlation Index</span></a></li>
+								<li><a class="dropdown-item" href="/ac-regions"><span style="margin-left: 1rem">Regional Correlation Index</span></a></li>
 							</ul>
 						</li>
 						
@@ -90,34 +86,19 @@
 		</nav>
 	</header>
 	
-	<main class="flex-shrink-0 min-vh-100">
+	<main class="flex-shrink-0 min-vh-100 pb-5">
 		{% block content %}
 		{% endblock %}
 	</main>
 
-	<footer class="container-fluid bg-secondary text-white text-center text-lg-start">
+	<footer class="container-fluid bg-secondary text-white text-center text-lg-start px-0">
 	  <!-- Grid container -->
 	  <div class="container p-4">
 		<!--Grid row-->
 		<div class="row">
 		  <!--Grid column-->
-		  <!--
-		  <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
-			<h5 class="text-uppercase">Footer Content</h5>
-
-			<p>
-			  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
-			  molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae aliquam
-			  voluptatem veniam, est atque cumque eum delectus sint!
-			</p>
-		  </div>
-		  -->
-		  <!--Grid column-->
-
-		  <!--Grid column-->
-		  <div class="col-6 mb-4 mb-md-0">
+		  <div class="col-6 mb-2 mb-md-0">
 			<h5 class="text-uppercase">Links</h5>
-
 			<ul class="list-unstyled mb-0">
 			  <li>
 				<a href="https://cmefi.com" class="text-white">Center for Macroeconomic Forecasting and Insights</a>
@@ -127,7 +108,7 @@
 		  <!--Grid column-->
 
 		  <!--Grid column-->
-		  <div class="col-6 mb-4 mb-md-0">
+		  <div class="col-6 mb-2 mb-md-0 text-end">
 			<h5 class="text-uppercase mb-0">CONTACT</h5>
 
 			<ul class="list-unstyled">
@@ -143,9 +124,8 @@
 	  <!-- Grid container -->
 
 	  <!-- Copyright -->
-	  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-		© 2021 Copyright:
-		<a class="text-white" href="mailto:charles@cmefi.com">C. YE</a>
+	  <div class="text-end p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+		<span>© 2021 The Center for Macroeconomic Forecasts & Insights</span>
 	  </div>
 	  <!-- Copyright -->
 	</footer>
