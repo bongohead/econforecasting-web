@@ -25,6 +25,7 @@ class __TwigTemplate_710270983adcc09738b676ae0aa9f631d7546b8f5ecc27a1fc7187d5e4a
         $this->source = $this->getSourceContext();
 
         $this->blocks = [
+            'meta' => [$this, 'block_meta'],
             'staticlinks' => [$this, 'block_staticlinks'],
             'content' => [$this, 'block_content'],
         ];
@@ -44,10 +45,19 @@ class __TwigTemplate_710270983adcc09738b676ae0aa9f631d7546b8f5ecc27a1fc7187d5e4a
     }
 
     // line 3
-    public function block_staticlinks($context, array $blocks = [])
+    public function block_meta($context, array $blocks = [])
     {
         $macros = $this->macros;
         // line 4
+        echo "<meta name=\"description\" content=\"Get aggregated macroeconomic data, forecasts, models, and insights including GDP forecasts, interest rate forecasts, and Treasury yield forecasts.\"/>
+";
+    }
+
+    // line 7
+    public function block_staticlinks($context, array $blocks = [])
+    {
+        $macros = $this->macros;
+        // line 8
         echo "<!--<script src=\"//code.highcharts.com/stock/highstock.js\"></script>
 <script src=\"//code.highcharts.com/modules/heatmap.js\"></script>
 
@@ -67,11 +77,11 @@ class __TwigTemplate_710270983adcc09738b676ae0aa9f631d7546b8f5ecc27a1fc7187d5e4a
 ";
     }
 
-    // line 23
+    // line 27
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 24
+        // line 28
         echo "
 <div class=\"container\" style=\"max-width:1400px\">
 \t<div class=\"rounded bg-dark\"  style=\"background:url('static/bank.jpg'); background-position: top; background-size: 100% auto\">
@@ -147,12 +157,16 @@ class __TwigTemplate_710270983adcc09738b676ae0aa9f631d7546b8f5ecc27a1fc7187d5e4a
 
     public function getDebugInfo()
     {
-        return array (  75 => 24,  71 => 23,  51 => 4,  47 => 3,  36 => 1,);
+        return array (  85 => 28,  81 => 27,  61 => 8,  57 => 7,  52 => 4,  48 => 3,  37 => 1,);
     }
 
     public function getSourceContext()
     {
         return new Source("{% extends \"base.html\" %}
+
+{% block meta %}
+<meta name=\"description\" content=\"Get aggregated macroeconomic data, forecasts, models, and insights including GDP forecasts, interest rate forecasts, and Treasury yield forecasts.\"/>
+{% endblock %}
 
 {% block staticlinks %}
 <!--<script src=\"//code.highcharts.com/stock/highstock.js\"></script>

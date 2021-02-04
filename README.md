@@ -2,6 +2,13 @@ Description TBA
 
 # CHANGELOG
 
+## 2021-02-03 [v0.07] (SEO & First Forecasts)
+- Added robots.txt
+- Added sitemap.xml
+- Added meta description
+- Fixed bug in HTML code
+- Removed meta keywords
+
 ## 2021-01-29 [v0.06]
 - Added description of asset contagion indices
 - Added datatables of asset contagion indices

@@ -25,6 +25,7 @@ class __TwigTemplate_e302131279aad8628c1f934c2467b206e8abc97669846bf344b960b10e4
         $this->source = $this->getSourceContext();
 
         $this->blocks = [
+            'meta' => [$this, 'block_meta'],
             'staticlinks' => [$this, 'block_staticlinks'],
             'content' => [$this, 'block_content'],
         ];
@@ -44,24 +45,33 @@ class __TwigTemplate_e302131279aad8628c1f934c2467b206e8abc97669846bf344b960b10e4
     }
 
     // line 3
-    public function block_staticlinks($context, array $blocks = [])
+    public function block_meta($context, array $blocks = [])
     {
         $macros = $this->macros;
         // line 4
-        echo "<script src=\"https://code.highcharts.com/modules/heatmap.js\"></script>
+        echo "<meta name=\"description\" content=\"The asset cross-correlation index measures the degree to which different asset classes prices affect other asset class prices. In general, it is a measure of the level of systemic risk in the economy.\"/>
 ";
     }
 
     // line 7
-    public function block_content($context, array $blocks = [])
+    public function block_staticlinks($context, array $blocks = [])
     {
         $macros = $this->macros;
         // line 8
+        echo "<script src=\"https://code.highcharts.com/modules/heatmap.js\"></script>
+";
+    }
+
+    // line 11
+    public function block_content($context, array $blocks = [])
+    {
+        $macros = $this->macros;
+        // line 12
         echo "<div class=\"row\">
 \t";
-        // line 9
-        $this->loadTemplate("ac-sidebar.html", "ac-assets.html", 9)->display($context);
-        // line 10
+        // line 13
+        $this->loadTemplate("ac-sidebar.html", "ac-assets.html", 13)->display($context);
+        // line 14
         echo "\t<div class=\"col-md-9 col-xl-10 ms-auto pt-4 px-2\">
 \t
 \t\t<div class=\"row justify-content-center py-2\">
@@ -119,12 +129,16 @@ class __TwigTemplate_e302131279aad8628c1f934c2467b206e8abc97669846bf344b960b10e4
 
     public function getDebugInfo()
     {
-        return array (  65 => 10,  63 => 9,  60 => 8,  56 => 7,  51 => 4,  47 => 3,  36 => 1,);
+        return array (  75 => 14,  73 => 13,  70 => 12,  66 => 11,  61 => 8,  57 => 7,  52 => 4,  48 => 3,  37 => 1,);
     }
 
     public function getSourceContext()
     {
         return new Source("{% extends \"base.html\" %}
+
+{% block meta %}
+<meta name=\"description\" content=\"The asset cross-correlation index measures the degree to which different asset classes prices affect other asset class prices. In general, it is a measure of the level of systemic risk in the economy.\"/>
+{% endblock %}
 
 {% block staticlinks %}
 <script src=\"https://code.highcharts.com/modules/heatmap.js\"></script>
