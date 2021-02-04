@@ -5,12 +5,11 @@
 {% endblock %}
 
 {% block staticlinks %}
-<script src="https://code.highcharts.com/modules/heatmap.js"></script>
 {% endblock %}
 
 {% block content %}
 <div class="row">
-	{% include 'ac-sidebar.html' %}
+	{% include 'fc-rates-sidebar.html' %}
 	<div class="col-md-9 col-xl-10 ms-auto pt-4 px-2">
 	
 		<div class="row justify-content-center py-2">
@@ -43,7 +42,7 @@
 		</div>
 		<div class="row justify-content-center pt-2">
 			<div class="col-auto" style="max-width:1200px">
-				<h2 class="display-8">Historical Data</h2>
+				<h2 class="display-8">Forecast Data</h2>
 				<table id="table-container" class="display" style="width:500px"></table>
 			</div>
 		</div>

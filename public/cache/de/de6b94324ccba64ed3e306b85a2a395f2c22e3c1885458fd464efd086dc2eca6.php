@@ -12,8 +12,8 @@ use Twig\Sandbox\SecurityNotAllowedFunctionError;
 use Twig\Source;
 use Twig\Template;
 
-/* ac-regions.html */
-class __TwigTemplate_1575465283698c84790ce20c32eed00c32604c364e4c6eb6fdb1e1af47d77cb7 extends \Twig\Template
+/* fc-rates-t.html */
+class __TwigTemplate_8f448e5d5f904aeb1fc9d9ddceaac66c271ef3e423a82818eb76f85b55bcd216 extends \Twig\Template
 {
     private $source;
     private $macros = [];
@@ -40,7 +40,7 @@ class __TwigTemplate_1575465283698c84790ce20c32eed00c32604c364e4c6eb6fdb1e1af47d
     protected function doDisplay(array $context, array $blocks = [])
     {
         $macros = $this->macros;
-        $this->parent = $this->loadTemplate("base.html", "ac-regions.html", 1);
+        $this->parent = $this->loadTemplate("base.html", "fc-rates-t.html", 1);
         $this->parent->display($context, array_merge($this->blocks, $blocks));
     }
 
@@ -57,21 +57,18 @@ class __TwigTemplate_1575465283698c84790ce20c32eed00c32604c364e4c6eb6fdb1e1af47d
     public function block_staticlinks($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 8
-        echo "<script src=\"https://code.highcharts.com/modules/heatmap.js\"></script>
-";
     }
 
-    // line 11
+    // line 10
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 12
+        // line 11
         echo "<div class=\"row\">
 \t";
+        // line 12
+        $this->loadTemplate("fc-rates-sidebar.html", "fc-rates-t.html", 12)->display($context);
         // line 13
-        $this->loadTemplate("ac-sidebar.html", "ac-regions.html", 13)->display($context);
-        // line 14
         echo "\t<div class=\"col-md-9 col-xl-10 ms-auto pt-4 px-2\">
 \t
 \t\t<div class=\"row justify-content-center py-2\">
@@ -104,7 +101,7 @@ class __TwigTemplate_1575465283698c84790ce20c32eed00c32604c364e4c6eb6fdb1e1af47d
 \t\t</div>
 \t\t<div class=\"row justify-content-center pt-2\">
 \t\t\t<div class=\"col-auto\" style=\"max-width:1200px\">
-\t\t\t\t<h2 class=\"display-8\">Historical Data</h2>
+\t\t\t\t<h2 class=\"display-8\">Forecast Data</h2>
 \t\t\t\t<table id=\"table-container\" class=\"display\" style=\"width:500px\"></table>
 \t\t\t</div>
 \t\t</div>
@@ -117,7 +114,7 @@ class __TwigTemplate_1575465283698c84790ce20c32eed00c32604c364e4c6eb6fdb1e1af47d
 
     public function getTemplateName()
     {
-        return "ac-regions.html";
+        return "fc-rates-t.html";
     }
 
     public function isTraitable()
@@ -127,7 +124,7 @@ class __TwigTemplate_1575465283698c84790ce20c32eed00c32604c364e4c6eb6fdb1e1af47d
 
     public function getDebugInfo()
     {
-        return array (  75 => 14,  73 => 13,  70 => 12,  66 => 11,  61 => 8,  57 => 7,  52 => 4,  48 => 3,  37 => 1,);
+        return array (  72 => 13,  70 => 12,  67 => 11,  63 => 10,  57 => 7,  52 => 4,  48 => 3,  37 => 1,);
     }
 
     public function getSourceContext()
@@ -139,12 +136,11 @@ class __TwigTemplate_1575465283698c84790ce20c32eed00c32604c364e4c6eb6fdb1e1af47d
 {% endblock %}
 
 {% block staticlinks %}
-<script src=\"https://code.highcharts.com/modules/heatmap.js\"></script>
 {% endblock %}
 
 {% block content %}
 <div class=\"row\">
-\t{% include 'ac-sidebar.html' %}
+\t{% include 'fc-rates-sidebar.html' %}
 \t<div class=\"col-md-9 col-xl-10 ms-auto pt-4 px-2\">
 \t
 \t\t<div class=\"row justify-content-center py-2\">
@@ -177,7 +173,7 @@ class __TwigTemplate_1575465283698c84790ce20c32eed00c32604c364e4c6eb6fdb1e1af47d
 \t\t</div>
 \t\t<div class=\"row justify-content-center pt-2\">
 \t\t\t<div class=\"col-auto\" style=\"max-width:1200px\">
-\t\t\t\t<h2 class=\"display-8\">Historical Data</h2>
+\t\t\t\t<h2 class=\"display-8\">Forecast Data</h2>
 \t\t\t\t<table id=\"table-container\" class=\"display\" style=\"width:500px\"></table>
 \t\t\t</div>
 \t\t</div>
@@ -185,6 +181,6 @@ class __TwigTemplate_1575465283698c84790ce20c32eed00c32604c364e4c6eb6fdb1e1af47d
 \t\t
 \t</div>
 </div>
-{% endblock %}", "ac-regions.html", "/var/www/econforecasting.com/public/templates/ac-regions.html");
+{% endblock %}", "fc-rates-t.html", "/var/www/econforecasting.com/public/templates/fc-rates-t.html");
     }
 }

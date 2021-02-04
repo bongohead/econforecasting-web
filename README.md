@@ -6,7 +6,7 @@ Description TBA
 - Added robots.txt
 - Added sitemap.xml
 - Added meta description
-- Fixed bug in HTML code
+- Fixed various HTML syntax errors
 - Removed meta keywords
 
 ## 2021-01-29 [v0.06]

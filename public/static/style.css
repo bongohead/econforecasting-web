@@ -1,6 +1,7 @@
 /** Bootstrap Style Changes **/
 @import url(//fonts.googleapis.com/css?family='Open Sans');
 @import url(//fonts.googleapis.com/css?family=Molengo);
+@import url(//fonts.googleapis.com/css?family=Assistant);
 
 body {
 	font-family: 'Open Sans', sans-serif !important;
@@ -38,7 +39,7 @@ nav.navbar {
 
 nav.navbar li.nav-item a.nav-link {
 	color: rgba(255, 255, 255, .9);
-	font-size: 1.05rem;
+	font-size: 1.0rem;
 }
 
 nav.navbar a.activepage {
@@ -51,9 +52,9 @@ nav.navbar li.nav-item.dropdown > ul.dropdown-menu {
 	color: rgba(255, 255, 255, .9);
 }
 
-nav.navbar li.nav-item.dropdown > ul.dropdown-menu > li > a, span {
+nav.navbar li.nav-item.dropdown > ul.dropdown-menu > li > a {
 	color:inherit;
-	font-size: 1.0rem;
+	font-size: 0.95rem;
 }
 nav.navbar li.nav-item.dropdown > ul.dropdown-menu > li > a:hover {
     background-color: rgb(98, 119, 51);

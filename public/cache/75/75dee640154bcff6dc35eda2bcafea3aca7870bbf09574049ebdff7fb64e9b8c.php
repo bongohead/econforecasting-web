@@ -35,7 +35,7 @@ class __TwigTemplate_33e6f4caac112b2e2d2aad661e5d10a5339da8ff4d7c4f9f7158f2a55c8
         $macros = $this->macros;
         // line 1
         echo "<nav class=\"sidebar col-md-3 col-xl-2 d-none d-md-block px-0 py-2\" id=\"sidebar\"> <!-- Hide Sidebar for XS and S Devices -->
-\t<ul class=\"nav flex-column\">
+\t<div class=\"nav flex-column\">
 \t\t<a href=\"#cross-asset\" data-bs-toggle=\"collapse\" class=\"nav-link\">
 \t\t\t<div>
 \t\t\t\t<span class=\"fa fa-list fa-fw mx-2\"></span> 
@@ -73,7 +73,7 @@ class __TwigTemplate_33e6f4caac112b2e2d2aad661e5d10a5339da8ff4d7c4f9f7158f2a55c8
 \t\t\t\t<span class=\"fas fa-table\"></span><span class=\"ps-2\">Regional Heatmap</span>
 \t\t\t</a>
 \t\t</div>\t\t\t\t
-\t</ul>
+\t</div>
 </nav>
 ";
     }
@@ -91,7 +91,7 @@ class __TwigTemplate_33e6f4caac112b2e2d2aad661e5d10a5339da8ff4d7c4f9f7158f2a55c8
     public function getSourceContext()
     {
         return new Source("<nav class=\"sidebar col-md-3 col-xl-2 d-none d-md-block px-0 py-2\" id=\"sidebar\"> <!-- Hide Sidebar for XS and S Devices -->
-\t<ul class=\"nav flex-column\">
+\t<div class=\"nav flex-column\">
 \t\t<a href=\"#cross-asset\" data-bs-toggle=\"collapse\" class=\"nav-link\">
 \t\t\t<div>
 \t\t\t\t<span class=\"fa fa-list fa-fw mx-2\"></span> 
@@ -129,7 +129,7 @@ class __TwigTemplate_33e6f4caac112b2e2d2aad661e5d10a5339da8ff4d7c4f9f7158f2a55c8
 \t\t\t\t<span class=\"fas fa-table\"></span><span class=\"ps-2\">Regional Heatmap</span>
 \t\t\t</a>
 \t\t</div>\t\t\t\t
-\t</ul>
+\t</div>
 </nav>
 ", "ac-sidebar.html", "/var/www/econforecasting.com/public/templates/ac-sidebar.html");
     }

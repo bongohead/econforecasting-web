@@ -107,7 +107,7 @@ class __TwigTemplate_e302131279aad8628c1f934c2467b206e8abc97669846bf344b960b10e4
 \t\t<div class=\"row justify-content-center pt-2\">
 \t\t\t<div class=\"col-auto\" style=\"max-width:1200px\">
 \t\t\t\t<h2 class=\"display-8\">Historical Data</h2>
-\t\t\t\t<table id=\"table-container\" class=\"display\" width=\"500px\"></table>
+\t\t\t\t<table id=\"table-container\" class=\"display\" style=\"width:500px\"></table>
 \t\t\t</div>
 \t\t</div>
 
@@ -182,7 +182,7 @@ class __TwigTemplate_e302131279aad8628c1f934c2467b206e8abc97669846bf344b960b10e4
 \t\t<div class=\"row justify-content-center pt-2\">
 \t\t\t<div class=\"col-auto\" style=\"max-width:1200px\">
 \t\t\t\t<h2 class=\"display-8\">Historical Data</h2>
-\t\t\t\t<table id=\"table-container\" class=\"display\" width=\"500px\"></table>
+\t\t\t\t<table id=\"table-container\" class=\"display\" style=\"width:500px\"></table>
 \t\t\t</div>
 \t\t</div>
 

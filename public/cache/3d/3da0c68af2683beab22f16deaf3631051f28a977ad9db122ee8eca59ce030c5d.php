@@ -42,19 +42,15 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 
 <head>
 \t<meta charset=\"utf-8\">
-    <meta name=\"description\" content=\"";
-        // line 6
-        echo twig_escape_filter($this->env, ($context["description"] ?? null));
-        echo "\"/>
 \t<meta name=\"robots\" content=\"index, follow\" />
     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">
     ";
-        // line 9
+        // line 8
         $this->displayBlock('meta', $context, $blocks);
-        // line 10
+        // line 9
         echo "
     <title>";
-        // line 11
+        // line 10
         echo twig_escape_filter($this->env, ($context["title"] ?? null));
         echo "</title>
     <link rel=\"icon\" type=image/ico href=\"/static/cmefi_short.png\"/>
@@ -80,14 +76,14 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t
 \t<script src=\"https://cye131.github.io/gradient.js/gradient-min.js\"></script>
     ";
-        // line 34
+        // line 33
         echo ($context["pageJS"] ?? null);
         echo "
 
     ";
-        // line 36
+        // line 35
         $this->displayBlock('staticlinks', $context, $blocks);
-        // line 37
+        // line 36
         echo "\t<!-- Global site tag (gtag.js) - Google Analytics -->
 \t<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-5JBMJCQQD7\"></script>
 \t<script>
@@ -143,9 +139,9 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t
 \t<main class=\"flex-shrink-0 min-vh-100 pb-5\">
 \t\t";
-        // line 91
+        // line 90
         $this->displayBlock('content', $context, $blocks);
-        // line 93
+        // line 92
         echo "\t</main>
 
 \t<footer class=\"container-fluid bg-secondary text-white text-center text-lg-start px-0\">
@@ -220,7 +216,7 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 
 \t<script>
 \t  ";
-        // line 166
+        // line 165
         echo ($context["bodyScript"] ?? null);
         echo "
 \t</script>
@@ -229,23 +225,23 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 </html>";
     }
 
-    // line 9
+    // line 8
     public function block_meta($context, array $blocks = [])
     {
         $macros = $this->macros;
     }
 
-    // line 36
+    // line 35
     public function block_staticlinks($context, array $blocks = [])
     {
         $macros = $this->macros;
     }
 
-    // line 91
+    // line 90
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 92
+        // line 91
         echo "\t\t";
     }
 
@@ -261,7 +257,7 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 
     public function getDebugInfo()
     {
-        return array (  249 => 92,  245 => 91,  239 => 36,  233 => 9,  224 => 166,  149 => 93,  147 => 91,  91 => 37,  89 => 36,  84 => 34,  58 => 11,  55 => 10,  53 => 9,  47 => 6,  40 => 1,);
+        return array (  245 => 91,  241 => 90,  235 => 35,  229 => 8,  220 => 165,  145 => 92,  143 => 90,  87 => 36,  85 => 35,  80 => 33,  54 => 10,  51 => 9,  49 => 8,  40 => 1,);
     }
 
     public function getSourceContext()
@@ -271,7 +267,6 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 
 <head>
 \t<meta charset=\"utf-8\">
-    <meta name=\"description\" content=\"{{ description | e}}\"/>
 \t<meta name=\"robots\" content=\"index, follow\" />
     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">
     {% block meta %}{% endblock %}
