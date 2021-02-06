@@ -50,28 +50,29 @@ class __TwigTemplate_20ec55ccb91cd0b0ed20e3476920df3c687e3396f2b7fa73120a4a49610
         $macros = $this->macros;
         // line 4
         echo "<meta name=\"description\" content=\"The asset cross-correlation index measures the degree to which different asset classes prices affect other asset class prices. In general, it is a measure of the level of systemic risk in the economy.\"/>
+<link rel=\"canonical\" href=\"https://econforecasting.com/ac-assets-hm\">
 ";
     }
 
-    // line 7
+    // line 8
     public function block_staticlinks($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 8
-        echo "<script src=\"https://code.highcharts.com/modules/heatmap.js\"></script>
+        // line 9
+        echo "<script src=\"https://code.highcharts.com/8.2/modules/heatmap.js\"></script>
 ";
     }
 
-    // line 11
+    // line 12
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 12
+        // line 13
         echo "<div class=\"row\">
 \t";
-        // line 13
-        $this->loadTemplate("ac-sidebar.html", "ac-assets-hm.html", 13)->display($context);
         // line 14
+        $this->loadTemplate("ac-sidebar.html", "ac-assets-hm.html", 14)->display($context);
+        // line 15
         echo "\t<div class=\"col-md-9 col-xl-10 ms-auto pt-4 px-2\">
 \t
 \t\t<div class=\"row justify-content-center py-2\">
@@ -109,7 +110,7 @@ class __TwigTemplate_20ec55ccb91cd0b0ed20e3476920df3c687e3396f2b7fa73120a4a49610
 
     public function getDebugInfo()
     {
-        return array (  75 => 14,  73 => 13,  70 => 12,  66 => 11,  61 => 8,  57 => 7,  52 => 4,  48 => 3,  37 => 1,);
+        return array (  76 => 15,  74 => 14,  71 => 13,  67 => 12,  62 => 9,  58 => 8,  52 => 4,  48 => 3,  37 => 1,);
     }
 
     public function getSourceContext()
@@ -118,10 +119,11 @@ class __TwigTemplate_20ec55ccb91cd0b0ed20e3476920df3c687e3396f2b7fa73120a4a49610
 
 {% block meta %}
 <meta name=\"description\" content=\"The asset cross-correlation index measures the degree to which different asset classes prices affect other asset class prices. In general, it is a measure of the level of systemic risk in the economy.\"/>
+<link rel=\"canonical\" href=\"https://econforecasting.com/ac-assets-hm\">
 {% endblock %}
 
 {% block staticlinks %}
-<script src=\"https://code.highcharts.com/modules/heatmap.js\"></script>
+<script src=\"https://code.highcharts.com/8.2/modules/heatmap.js\"></script>
 {% endblock %}
 
 {% block content %}

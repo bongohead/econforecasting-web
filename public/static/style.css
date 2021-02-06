@@ -133,18 +133,17 @@ nav.sidebar div.sidebar-submenu > a.activepage {
 
 
 /* Datatable */
+
 table.dataTable th {
-	background-color: rgba(21, 34, 155, 1);
-	padding: .5rem .5rem;
-	font-size: 0.9rem;
+	background-color: rgb(48, 79, 11);
 	color: white;
 }
 
 table.dataTable td {
     padding: .25rem .5rem;
     font-size: 0.75rem;
+	border: none;
 }
-
 table.dataTable .dt-center {
 	text-align: center;
 }
@@ -161,28 +160,17 @@ table.dataTable tbody {
 	border-bottom: 2px solid black;
 }
 
+table.dataTable tr {
+	border: none;
+}
+
 table.dataTable tr.odd {
-    background-color: rgba(200, 230, 245, .4);
-}
-
-table.dataTable tr.even:hover {
-  background-color: rgba(0, 0, 158, .7) !important;
-	color: white !important;
-}
-
-table.dataTable tr.odd:hover {
-    background-color: rgba(0, 0, 158, .7) !important;
-	color: white !important;
+    background-color: rgba(200, 230, 245, .2);
 }
 
 table.dataTable tr:hover {
+	background-color: rgba(0, 0, 158, .7) !important;
 	color: white !important;
-}
-
-table.dataTable thead .sorting:before, table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:before, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:before, table.dataTable thead .sorting_desc:after, table.dataTable thead .sorting_asc_disabled:before, table.dataTable thead .sorting_asc_disabled:after, table.dataTable thead .sorting_desc_disabled:before, table.dataTable thead .sorting_desc_disabled:after {
-  position: static !important;
-  display: inline !important;
-  font-size: 1.0rem;
 }
 
 /** Loading Spinner **/

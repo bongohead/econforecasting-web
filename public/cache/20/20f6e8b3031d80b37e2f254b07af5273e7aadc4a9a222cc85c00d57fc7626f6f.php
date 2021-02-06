@@ -50,16 +50,14 @@ class __TwigTemplate_e302131279aad8628c1f934c2467b206e8abc97669846bf344b960b10e4
         $macros = $this->macros;
         // line 4
         echo "<meta name=\"description\" content=\"The asset cross-correlation index measures the degree to which different asset classes prices affect other asset class prices. In general, it is a measure of the level of systemic risk in the economy.\"/>
+<link rel=\"canonical\" href=\"https://econforecasting.com/ac-assets\">
 ";
     }
 
-    // line 7
+    // line 8
     public function block_staticlinks($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 8
-        echo "<script src=\"https://code.highcharts.com/modules/heatmap.js\"></script>
-";
     }
 
     // line 11
@@ -105,9 +103,9 @@ class __TwigTemplate_e302131279aad8628c1f934c2467b206e8abc97669846bf344b960b10e4
 \t\t\t</div>
 \t\t</div>
 \t\t<div class=\"row justify-content-center pt-2\">
-\t\t\t<div class=\"col-auto\" style=\"max-width:1200px\">
+\t\t\t<div class=\"col-auto\" style=\"\">
 \t\t\t\t<h2 class=\"display-8\">Historical Data</h2>
-\t\t\t\t<table id=\"table-container\" class=\"display\" style=\"width:500px\"></table>
+\t\t\t\t<table id=\"table-container\" class=\"table\" style=\"min-width:25rem\"></table>
 \t\t\t</div>
 \t\t</div>
 
@@ -129,7 +127,7 @@ class __TwigTemplate_e302131279aad8628c1f934c2467b206e8abc97669846bf344b960b10e4
 
     public function getDebugInfo()
     {
-        return array (  75 => 14,  73 => 13,  70 => 12,  66 => 11,  61 => 8,  57 => 7,  52 => 4,  48 => 3,  37 => 1,);
+        return array (  73 => 14,  71 => 13,  68 => 12,  64 => 11,  58 => 8,  52 => 4,  48 => 3,  37 => 1,);
     }
 
     public function getSourceContext()
@@ -138,10 +136,10 @@ class __TwigTemplate_e302131279aad8628c1f934c2467b206e8abc97669846bf344b960b10e4
 
 {% block meta %}
 <meta name=\"description\" content=\"The asset cross-correlation index measures the degree to which different asset classes prices affect other asset class prices. In general, it is a measure of the level of systemic risk in the economy.\"/>
+<link rel=\"canonical\" href=\"https://econforecasting.com/ac-assets\">
 {% endblock %}
 
 {% block staticlinks %}
-<script src=\"https://code.highcharts.com/modules/heatmap.js\"></script>
 {% endblock %}
 
 {% block content %}
@@ -180,9 +178,9 @@ class __TwigTemplate_e302131279aad8628c1f934c2467b206e8abc97669846bf344b960b10e4
 \t\t\t</div>
 \t\t</div>
 \t\t<div class=\"row justify-content-center pt-2\">
-\t\t\t<div class=\"col-auto\" style=\"max-width:1200px\">
+\t\t\t<div class=\"col-auto\" style=\"\">
 \t\t\t\t<h2 class=\"display-8\">Historical Data</h2>
-\t\t\t\t<table id=\"table-container\" class=\"display\" style=\"width:500px\"></table>
+\t\t\t\t<table id=\"table-container\" class=\"table\" style=\"min-width:25rem\"></table>
 \t\t\t</div>
 \t\t</div>
 

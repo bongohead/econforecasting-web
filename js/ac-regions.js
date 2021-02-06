@@ -234,9 +234,9 @@ function drawTable(acIndex) {
 		columns: dtCols,
 		iDisplayLength: 50,
 		dom:
-			"<'row'<'col-12 justify-content-end d-flex'B>>" +
-			"<'row'<'col-12 px-0'tr>>" +
-			"<'row'<'col-6'i><'col-6'p>>",
+			"<'row justify-content-end'<'col-auto'B>>" +
+			"<'row justify-content-center'<'col-auto'tr>>" +
+			"<'row justify-content-end'<'col-auto'p>>",
 		buttons: [
 			{extend: 'copyHtml5', text: 'Copy to clipboard', exportOptions: {columns: [0, 1]}, className: 'btn btn-sm btn-secondary'},
 			{extend: 'csvHtml5', text: 'Export to CSV', exportOptions: {columns: [0, 1]}, className: 'btn btn-sm btn-secondary'}

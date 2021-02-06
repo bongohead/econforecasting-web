@@ -59,7 +59,7 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t<link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1\" crossorigin=\"anonymous\">
 \t<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css\">
 \t<link rel=\"stylesheet\" href=\"https://use.fontawesome.com/releases/v5.6.3/css/all.css\" integrity=\"sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/\" crossorigin=\"anonymous\">
-
+\t
 \t<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap5.min.css\"/>
 
 \t<script src=\"https://code.jquery.com/jquery-3.5.1.min.js\" integrity=\"sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=\" crossorigin=\"anonymous\"></script>
@@ -71,19 +71,20 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t<script src=\"https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js\"></script>
 \t<script src=\"https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js\"></script> <!-- HTML export buttons -->
 \t
-    <script src=\"https://code.highcharts.com/stock/highstock.js\"></script>
-\t<script src=\"https://code.highcharts.com/modules/boost.js\"></script>
+\t<!-- Bug with v9.0 stripping data-dir attributes from buttons -->
+    <script src=\"https://code.highcharts.com/stock/8.2/highstock.js\"></script>
+\t<script src=\"https://code.highcharts.com/8.2/modules/boost.js\"></script>
 \t
 \t<script src=\"https://cye131.github.io/gradient.js/gradient-min.js\"></script>
     ";
-        // line 33
+        // line 34
         echo ($context["pageJS"] ?? null);
         echo "
 
     ";
-        // line 35
-        $this->displayBlock('staticlinks', $context, $blocks);
         // line 36
+        $this->displayBlock('staticlinks', $context, $blocks);
+        // line 37
         echo "\t<!-- Global site tag (gtag.js) - Google Analytics -->
 \t<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-5JBMJCQQD7\"></script>
 \t<script>
@@ -139,9 +140,9 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t
 \t<main class=\"flex-shrink-0 min-vh-100 pb-5\">
 \t\t";
-        // line 90
+        // line 91
         $this->displayBlock('content', $context, $blocks);
-        // line 92
+        // line 93
         echo "\t</main>
 
 \t<footer class=\"container-fluid bg-secondary text-white text-center text-lg-start px-0\">
@@ -216,7 +217,7 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 
 \t<script>
 \t  ";
-        // line 165
+        // line 166
         echo ($context["bodyScript"] ?? null);
         echo "
 \t</script>
@@ -231,17 +232,17 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
         $macros = $this->macros;
     }
 
-    // line 35
+    // line 36
     public function block_staticlinks($context, array $blocks = [])
     {
         $macros = $this->macros;
     }
 
-    // line 90
+    // line 91
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 91
+        // line 92
         echo "\t\t";
     }
 
@@ -257,7 +258,7 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 
     public function getDebugInfo()
     {
-        return array (  245 => 91,  241 => 90,  235 => 35,  229 => 8,  220 => 165,  145 => 92,  143 => 90,  87 => 36,  85 => 35,  80 => 33,  54 => 10,  51 => 9,  49 => 8,  40 => 1,);
+        return array (  246 => 92,  242 => 91,  236 => 36,  230 => 8,  221 => 166,  146 => 93,  144 => 91,  88 => 37,  86 => 36,  81 => 34,  54 => 10,  51 => 9,  49 => 8,  40 => 1,);
     }
 
     public function getSourceContext()
@@ -278,7 +279,7 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t<link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1\" crossorigin=\"anonymous\">
 \t<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css\">
 \t<link rel=\"stylesheet\" href=\"https://use.fontawesome.com/releases/v5.6.3/css/all.css\" integrity=\"sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/\" crossorigin=\"anonymous\">
-
+\t
 \t<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap5.min.css\"/>
 
 \t<script src=\"https://code.jquery.com/jquery-3.5.1.min.js\" integrity=\"sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=\" crossorigin=\"anonymous\"></script>
@@ -290,8 +291,9 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t<script src=\"https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js\"></script>
 \t<script src=\"https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js\"></script> <!-- HTML export buttons -->
 \t
-    <script src=\"https://code.highcharts.com/stock/highstock.js\"></script>
-\t<script src=\"https://code.highcharts.com/modules/boost.js\"></script>
+\t<!-- Bug with v9.0 stripping data-dir attributes from buttons -->
+    <script src=\"https://code.highcharts.com/stock/8.2/highstock.js\"></script>
+\t<script src=\"https://code.highcharts.com/8.2/modules/boost.js\"></script>
 \t
 \t<script src=\"https://cye131.github.io/gradient.js/gradient-min.js\"></script>
     {{ pageJS | raw }}

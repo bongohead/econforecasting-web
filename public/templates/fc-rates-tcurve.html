@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block meta %}
+<meta name="description" content="Monthly 3-month, 6-month, 1-year, 5-year, 10-year, 20-year, and 30-year Treasury yield forecasts and historical data."/>
+{% endblock %}
+
+{% block staticlinks %}
+<script src="https://code.highcharts.com/8.2/highcharts-more.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+	{% include 'fc-rates-sidebar.html' %}
+	<div class="col-md-9 col-xl-10 ms-auto pt-0 px-2">
+	
+		<div class="row justify-content-center bg-light">
+			<div id="chart-container" class="col-xl-9 col-lg-10 col-12-md">
+			</div>
+			<div id="chart-container-2" class="col-xl-9 col-lg-10 col-12-md">
+			</div>
+		</div>
+		<div class="row justify-content-center pt-3">
+			<div class="card border-secondary border-2 m-2 col-xl-4 col-md-6 col-sm-8">
+				<div class="card-body">
+				<h5 class="card-title">Historical Data</h5>
+				<h6 class="card-subtitle mb-2 text-muted">Daily Frequency</h6>
+				<table id="table-container" class="table w-100"></table>
+				</div>
+			</div>
+			<div class="card border-secondary border-2 m-2 col-xl-4 col-md-6 col-sm-8">
+				<div class="card-body">
+				<h5 class="card-title text-danger">Forecast Data</h5>
+				<h6 class="card-subtitle mb-2 text-muted">Monthly Frequency</h6>
+				<table id="table-container-2" class="table w-100"></table>
+				</div>
+			</div>
+
+		</div>
+		
+
+		
+	</div>
+</div>
+{% endblock %}

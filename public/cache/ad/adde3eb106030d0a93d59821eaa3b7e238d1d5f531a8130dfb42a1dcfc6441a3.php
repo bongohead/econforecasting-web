@@ -50,14 +50,15 @@ class __TwigTemplate_710270983adcc09738b676ae0aa9f631d7546b8f5ecc27a1fc7187d5e4a
         $macros = $this->macros;
         // line 4
         echo "<meta name=\"description\" content=\"Get aggregated macroeconomic data, forecasts, models, and insights including GDP forecasts, interest rate forecasts, and Treasury yield forecasts.\"/>
+<link rel=\"canonical\" href=\"https://econforecasting.com\">
 ";
     }
 
-    // line 7
+    // line 8
     public function block_staticlinks($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 8
+        // line 9
         echo "<!--<script src=\"//code.highcharts.com/stock/highstock.js\"></script>
 <script src=\"//code.highcharts.com/modules/heatmap.js\"></script>
 
@@ -77,11 +78,11 @@ class __TwigTemplate_710270983adcc09738b676ae0aa9f631d7546b8f5ecc27a1fc7187d5e4a
 ";
     }
 
-    // line 27
+    // line 28
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 28
+        // line 29
         echo "
 <div class=\"container\" style=\"max-width:1400px\">
 \t<div class=\"rounded bg-dark\"  style=\"background:url('static/bank.jpg'); background-position: top; background-size: 100% auto\">
@@ -157,7 +158,7 @@ class __TwigTemplate_710270983adcc09738b676ae0aa9f631d7546b8f5ecc27a1fc7187d5e4a
 
     public function getDebugInfo()
     {
-        return array (  85 => 28,  81 => 27,  61 => 8,  57 => 7,  52 => 4,  48 => 3,  37 => 1,);
+        return array (  86 => 29,  82 => 28,  62 => 9,  58 => 8,  52 => 4,  48 => 3,  37 => 1,);
     }
 
     public function getSourceContext()
@@ -166,6 +167,7 @@ class __TwigTemplate_710270983adcc09738b676ae0aa9f631d7546b8f5ecc27a1fc7187d5e4a
 
 {% block meta %}
 <meta name=\"description\" content=\"Get aggregated macroeconomic data, forecasts, models, and insights including GDP forecasts, interest rate forecasts, and Treasury yield forecasts.\"/>
+<link rel=\"canonical\" href=\"https://econforecasting.com\">
 {% endblock %}
 
 {% block staticlinks %}

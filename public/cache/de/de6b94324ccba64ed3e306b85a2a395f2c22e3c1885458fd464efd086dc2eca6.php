@@ -49,7 +49,7 @@ class __TwigTemplate_8f448e5d5f904aeb1fc9d9ddceaac66c271ef3e423a82818eb76f85b55b
     {
         $macros = $this->macros;
         // line 4
-        echo "<meta name=\"description\" content=\"The region cross-correlation index measures the degree to which different asset prices in one country affect asset prices in other countries. In general, it is a measure of the level of systemic risk in the global economy.\"/>
+        echo "<meta name=\"description\" content=\"Monthly 3-month, 6-month, 1-year, 5-year, 10-year, 20-year, and 30-year Treasury yield forecasts and historical data.\"/>
 ";
     }
 
@@ -69,8 +69,9 @@ class __TwigTemplate_8f448e5d5f904aeb1fc9d9ddceaac66c271ef3e423a82818eb76f85b55b
         // line 12
         $this->loadTemplate("fc-rates-sidebar.html", "fc-rates-t.html", 12)->display($context);
         // line 13
-        echo "\t<div class=\"col-md-9 col-xl-10 ms-auto pt-4 px-2\">
+        echo "\t<div class=\"col-md-9 col-xl-10 ms-auto pt-0 px-2\">
 \t
+\t<!--
 \t\t<div class=\"row justify-content-center py-2\">
 \t\t\t<div class=\"card px-0\" style=\"max-width: 1200px\">
 \t\t\t\t<h5 class=\"card-header\">Model Overview</h5>
@@ -93,18 +94,35 @@ class __TwigTemplate_8f448e5d5f904aeb1fc9d9ddceaac66c271ef3e423a82818eb76f85b55b
 \t\t\t\t</div>
 \t\t\t</div>
 \t\t</div>
-\t\t
+\t-->
 \t\t<div class=\"row justify-content-center bg-light\">
-\t\t\t<div class=\"container\" style=\"max-width:1200px\">
-\t\t\t\t<div id=\"chart-container\"></div>
+\t\t\t<div id=\"chart-container\" class=\"col-xl-9 col-lg-10 col-12-md\">
 \t\t\t</div>
 \t\t</div>
-\t\t<div class=\"row justify-content-center pt-2\">
-\t\t\t<div class=\"col-auto\" style=\"max-width:1200px\">
-\t\t\t\t<h2 class=\"display-8\">Forecast Data</h2>
-\t\t\t\t<table id=\"table-container\" class=\"display\" style=\"width:500px\"></table>
+\t\t<div class=\"row justify-content-center pt-3\">
+\t\t<!--
+\t\t\t<div class=\"col-auto bd-callout bd-callout-info\" style=\"\">
+\t\t\t\t<h2 class=\"display-8\">Historical Data</h2>
+\t\t\t\t<table id=\"table-container\" class=\"display\" style=\"min-width:25rem\"></table>
 \t\t\t</div>
+\t\t-->
+\t\t\t<div class=\"card border-secondary border-2 m-2 col-xl-4 col-md-6 col-sm-8\">
+\t\t\t\t<div class=\"card-body\">
+\t\t\t\t<h5 class=\"card-title\">Historical Data</h5>
+\t\t\t\t<h6 class=\"card-subtitle mb-2 text-muted\">Daily Frequency</h6>
+\t\t\t\t<table id=\"table-container\" class=\"table w-100\"></table>
+\t\t\t\t</div>
+\t\t\t</div>
+\t\t\t<div class=\"card border-secondary border-2 m-2 col-xl-4 col-md-6 col-sm-8\">
+\t\t\t\t<div class=\"card-body\">
+\t\t\t\t<h5 class=\"card-title text-danger\">Forecast Data</h5>
+\t\t\t\t<h6 class=\"card-subtitle mb-2 text-muted\">Monthly Frequency</h6>
+\t\t\t\t<table id=\"table-container-2\" class=\"table w-100\"></table>
+\t\t\t\t</div>
+\t\t\t</div>
+
 \t\t</div>
+\t\t
 
 \t\t
 \t</div>
@@ -132,7 +150,7 @@ class __TwigTemplate_8f448e5d5f904aeb1fc9d9ddceaac66c271ef3e423a82818eb76f85b55b
         return new Source("{% extends \"base.html\" %}
 
 {% block meta %}
-<meta name=\"description\" content=\"The region cross-correlation index measures the degree to which different asset prices in one country affect asset prices in other countries. In general, it is a measure of the level of systemic risk in the global economy.\"/>
+<meta name=\"description\" content=\"Monthly 3-month, 6-month, 1-year, 5-year, 10-year, 20-year, and 30-year Treasury yield forecasts and historical data.\"/>
 {% endblock %}
 
 {% block staticlinks %}
@@ -141,8 +159,9 @@ class __TwigTemplate_8f448e5d5f904aeb1fc9d9ddceaac66c271ef3e423a82818eb76f85b55b
 {% block content %}
 <div class=\"row\">
 \t{% include 'fc-rates-sidebar.html' %}
-\t<div class=\"col-md-9 col-xl-10 ms-auto pt-4 px-2\">
+\t<div class=\"col-md-9 col-xl-10 ms-auto pt-0 px-2\">
 \t
+\t<!--
 \t\t<div class=\"row justify-content-center py-2\">
 \t\t\t<div class=\"card px-0\" style=\"max-width: 1200px\">
 \t\t\t\t<h5 class=\"card-header\">Model Overview</h5>
@@ -165,18 +184,35 @@ class __TwigTemplate_8f448e5d5f904aeb1fc9d9ddceaac66c271ef3e423a82818eb76f85b55b
 \t\t\t\t</div>
 \t\t\t</div>
 \t\t</div>
-\t\t
+\t-->
 \t\t<div class=\"row justify-content-center bg-light\">
-\t\t\t<div class=\"container\" style=\"max-width:1200px\">
-\t\t\t\t<div id=\"chart-container\"></div>
+\t\t\t<div id=\"chart-container\" class=\"col-xl-9 col-lg-10 col-12-md\">
 \t\t\t</div>
 \t\t</div>
-\t\t<div class=\"row justify-content-center pt-2\">
-\t\t\t<div class=\"col-auto\" style=\"max-width:1200px\">
-\t\t\t\t<h2 class=\"display-8\">Forecast Data</h2>
-\t\t\t\t<table id=\"table-container\" class=\"display\" style=\"width:500px\"></table>
+\t\t<div class=\"row justify-content-center pt-3\">
+\t\t<!--
+\t\t\t<div class=\"col-auto bd-callout bd-callout-info\" style=\"\">
+\t\t\t\t<h2 class=\"display-8\">Historical Data</h2>
+\t\t\t\t<table id=\"table-container\" class=\"display\" style=\"min-width:25rem\"></table>
 \t\t\t</div>
+\t\t-->
+\t\t\t<div class=\"card border-secondary border-2 m-2 col-xl-4 col-md-6 col-sm-8\">
+\t\t\t\t<div class=\"card-body\">
+\t\t\t\t<h5 class=\"card-title\">Historical Data</h5>
+\t\t\t\t<h6 class=\"card-subtitle mb-2 text-muted\">Daily Frequency</h6>
+\t\t\t\t<table id=\"table-container\" class=\"table w-100\"></table>
+\t\t\t\t</div>
+\t\t\t</div>
+\t\t\t<div class=\"card border-secondary border-2 m-2 col-xl-4 col-md-6 col-sm-8\">
+\t\t\t\t<div class=\"card-body\">
+\t\t\t\t<h5 class=\"card-title text-danger\">Forecast Data</h5>
+\t\t\t\t<h6 class=\"card-subtitle mb-2 text-muted\">Monthly Frequency</h6>
+\t\t\t\t<table id=\"table-container-2\" class=\"table w-100\"></table>
+\t\t\t\t</div>
+\t\t\t</div>
+
 \t\t</div>
+\t\t
 
 \t\t
 \t</div>

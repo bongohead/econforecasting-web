@@ -50,28 +50,29 @@ class __TwigTemplate_cdb9808708d2617c531bf046cbef5077e274f6210b1538aab933205c548
         $macros = $this->macros;
         // line 4
         echo "<meta name=\"description\" content=\"The region cross-correlation index measures the degree to which different asset prices in one country affect asset prices in other countries. In general, it is a measure of the level of systemic risk in the global economy.\"/>
+<link rel=\"canonical\" href=\"https://econforecasting.com/ac-regions-hm\">
 ";
     }
 
-    // line 7
+    // line 8
     public function block_staticlinks($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 8
-        echo "<script src=\"https://code.highcharts.com/modules/heatmap.js\"></script>
+        // line 9
+        echo "<script src=\"https://code.highcharts.com/8.2/modules/heatmap.js\"></script>
 ";
     }
 
-    // line 11
+    // line 12
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 12
+        // line 13
         echo "<div class=\"row\">
 \t";
-        // line 13
-        $this->loadTemplate("ac-sidebar.html", "ac-regions-hm.html", 13)->display($context);
         // line 14
+        $this->loadTemplate("ac-sidebar.html", "ac-regions-hm.html", 14)->display($context);
+        // line 15
         echo "\t<div class=\"col-md-9 col-xl-10 ms-auto pt-4 px-2\">
 \t\t<div class=\"row justify-content-center py-2\">
 \t\t\t<div class=\"card px-0\" style=\"max-width: 1200px\">
@@ -108,7 +109,7 @@ class __TwigTemplate_cdb9808708d2617c531bf046cbef5077e274f6210b1538aab933205c548
 
     public function getDebugInfo()
     {
-        return array (  75 => 14,  73 => 13,  70 => 12,  66 => 11,  61 => 8,  57 => 7,  52 => 4,  48 => 3,  37 => 1,);
+        return array (  76 => 15,  74 => 14,  71 => 13,  67 => 12,  62 => 9,  58 => 8,  52 => 4,  48 => 3,  37 => 1,);
     }
 
     public function getSourceContext()
@@ -117,10 +118,11 @@ class __TwigTemplate_cdb9808708d2617c531bf046cbef5077e274f6210b1538aab933205c548
 
 {% block meta %}
 <meta name=\"description\" content=\"The region cross-correlation index measures the degree to which different asset prices in one country affect asset prices in other countries. In general, it is a measure of the level of systemic risk in the global economy.\"/>
+<link rel=\"canonical\" href=\"https://econforecasting.com/ac-regions-hm\">
 {% endblock %}
 
 {% block staticlinks %}
-<script src=\"https://code.highcharts.com/modules/heatmap.js\"></script>
+<script src=\"https://code.highcharts.com/8.2/modules/heatmap.js\"></script>
 {% endblock %}
 
 {% block content %}
