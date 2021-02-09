@@ -13,12 +13,12 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 	);
 } else {
 	routePage(
-		$templatesDir = __DIR__.'/templates',
-		$templatesCacheDir = __DIR__.'/cache',
-		$modelsDir = __DIR__.'/../php-models',
-		$toScript = [],
-		$jsDir = __DIR__.'/../js',
-		$routes = [
+		templatesDir: __DIR__.'/templates',
+		templatesCacheDir: __DIR__.'/cache',
+		modelsDir: __DIR__.'/../php-models',
+		toScript: [],
+		jsDir: __DIR__.'/../js',
+		routes: [
 			['template' => 'home', 'request' => ['', 'home'], 'title' => 'The Center for Macroeconomic Forecasting & Insights', 'models' => [], 'js' => ['init']],
 			['template' => 'ac-assets', 'request' => ['ac-assets'], 'title' => 'Asset Cross-Correlation Index | Center for Macroeconomic Forecasting & Insights', 'models' => [], 'js' => ['init', 'ac-assets']],
 			['template' => 'ac-assets-hm', 'request' => ['ac-assets-hm'], 'title' => 'Asset Cross-Correlation | Center for Macroeconomic Forecasting & Insights', 'models' => [], 'js' => ['init', 'ac-assets-hm']],
@@ -26,12 +26,12 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 			['template' => 'ac-regions-hm', 'request' => ['ac-regions-hm'], 'title' => 'Treasury Yield Forecasts | Center for Macroeconomic Forecasting & Insights', 'models' => [], 'js' => ['init', 'ac-regions-hm']],
 			['template' => 'fc-rates-t', 'request' => ['fc-rates-t-3m', 'fc-rates-t-6m', 'fc-rates-t-1y', 'fc-rates-t-2y', 'fc-rates-t-5y', 'fc-rates-t-10y', 'fc-rates-t-20y', 'fc-rates-t-30y'], 'title' => 'Treasury Yield Economic Forecasts', 'models' => [], 'js' => ['init', 'fc-rates-t']],
 			['template' => 'fc-rates-tcurve', 'request' => ['fc-rates-tcurve'], 'title' => 'Treasury Yield Curve Forecasts | Center for Macroeconomic Forecasting & Insights', 'models' => [], 'js' => ['init', 'fc-rates-tcurve']],
-			['template' => 'fc-rates-t-info', 'request' => ['fc-rates-t-info'], 'title' => 'Treasury Yield Curve Forecasts | Center for Macroeconomic Forecasting & Insights', 'models' => [], 'js' => ['init', 'fc-rates-t-info']],
-			['template' => 'fc-rates-desc', 'request' => ['fc-rates-desc'], 'title' => 'CMEFI Rate Forecast Model', 'models' => [], 'js' => ['init', '']],
+			['template' => 'fc-rates-t-info', 'request' => ['fc-rates-t-info'], 'title' => 'Treasury Yield Curve Forecast Model | Center for Macroeconomic Forecasting & Insights', 'models' => [], 'js' => ['init', 'fc-rates-t-info']],
+			['template' => 'fc-rates-ffr', 'request' => ['fc-rates-ffr'], 'title' => 'Federal Funds Rate Forecasts', 'models' => [], 'js' => ['init', 'fc-rates-ffr']],
 		],
-		$errorRoute = ['template' => 'error', 'request' => 'error', 'title' => 'Error', 'js' => []],
-		$baseJsFiles = ['functions', 'moment.min'],
-		$devMode = TRUE,
-		$db = 'ef'
+		errorRoute: ['template' => 'error', 'request' => 'error', 'title' => 'Error', 'js' => []],
+		baseJsFiles: ['functions', 'moment.min', 'gradient-min'],
+		devMode:  ($_SERVER['REMOTE_ADDR'] === '24.42.246.68') ? true : false,
+		db: 'ef'
 	);
 }

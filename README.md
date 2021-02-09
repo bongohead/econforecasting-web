@@ -2,6 +2,10 @@ Description TBA
 
 # CHANGELOG
 
+## 2021-02-10 [v0.08] (More General Forecasts)
+- Added API model for selecting all last vintage models by date
+- Added SCSS compiling code for modifing Bootstrap theming
+
 ## 2021-02-09 [v0.07] (SEO & First Forecasts)
 - Added robots.txt
 - Added sitemap.xml

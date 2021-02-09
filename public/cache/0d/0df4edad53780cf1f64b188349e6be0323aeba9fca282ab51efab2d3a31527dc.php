@@ -85,10 +85,10 @@ class __TwigTemplate_8ec843f340c7e6021b42b9bb627f31c2b7a876786ec018468028554566f
 \t\t\t</div>
 \t\t</a>
 \t\t<div id='ffr' class=\"collapse show sidebar-submenu\">
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/ac-assets-hm\">
+\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/error\">
 \t\t\t\t<span class=\"fas fa-info-circle\"></span><span class=\"ps-2\">Model Information</span>
 \t\t\t</a>
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/ac-assets\">
+\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/error\">
 \t\t\t\t<span class=\"fas fa-chart-line\"></span><span class=\"ps-2\">Fed Funds Rate Forecast</span>
 \t\t\t</a>
 \t\t</div>
@@ -161,10 +161,10 @@ class __TwigTemplate_8ec843f340c7e6021b42b9bb627f31c2b7a876786ec018468028554566f
 \t\t\t</div>
 \t\t</a>
 \t\t<div id='ffr' class=\"collapse show sidebar-submenu\">
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/ac-assets-hm\">
+\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/error\">
 \t\t\t\t<span class=\"fas fa-info-circle\"></span><span class=\"ps-2\">Model Information</span>
 \t\t\t</a>
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/ac-assets\">
+\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/error\">
 \t\t\t\t<span class=\"fas fa-chart-line\"></span><span class=\"ps-2\">Fed Funds Rate Forecast</span>
 \t\t\t</a>
 \t\t</div>

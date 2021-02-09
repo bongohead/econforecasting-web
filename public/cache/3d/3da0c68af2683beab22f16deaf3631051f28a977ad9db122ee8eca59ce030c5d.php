@@ -58,11 +58,11 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
     <link rel=\"stylesheet\" type=\"text/css\" href=\"/static/style.css\">
 \t<link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1\" crossorigin=\"anonymous\">
 \t<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css\">
-\t<link rel=\"stylesheet\" href=\"https://use.fontawesome.com/releases/v5.6.3/css/all.css\" integrity=\"sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/\" crossorigin=\"anonymous\">
+\t<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.6.3/css/all.min.css\" integrity=\"sha512-f2MWjotY+JCWDlE0+QAshlykvZUtIm35A6RHwfYZPdxKgLJpL8B+VVxjpHJwZDsZaWdyHVhlIHoblFYGkmrbhg==\" crossorigin=\"anonymous\" />
 \t
 \t<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap5.min.css\"/>
 
-\t<script src=\"https://code.jquery.com/jquery-3.5.1.min.js\" integrity=\"sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=\" crossorigin=\"anonymous\"></script>
+\t<script src=\"https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js\"></script>
 \t<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js\" integrity=\"sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW\" crossorigin=\"anonymous\"></script>
 
 \t<script src=\"https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js\"></script>
@@ -74,17 +74,15 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t<!-- Bug with v9.0 stripping data-dir attributes from buttons -->
     <script src=\"https://code.highcharts.com/stock/8.2/highstock.js\"></script>
 \t<script src=\"https://code.highcharts.com/8.2/modules/boost.js\"></script>
-\t
-\t<script src=\"https://cye131.github.io/gradient.js/gradient-min.js\"></script>
     ";
-        // line 34
+        // line 32
         echo ($context["pageJS"] ?? null);
         echo "
 
     ";
-        // line 36
+        // line 34
         $this->displayBlock('staticlinks', $context, $blocks);
-        // line 37
+        // line 35
         echo "\t<!-- Global site tag (gtag.js) - Google Analytics -->
 \t<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-5JBMJCQQD7\"></script>
 \t<script>
@@ -157,9 +155,9 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t
 \t<main class=\"flex-shrink-0 min-vh-100 pb-5\">
 \t\t";
-        // line 108
+        // line 106
         $this->displayBlock('content', $context, $blocks);
-        // line 110
+        // line 108
         echo "\t</main>
 
 \t<footer class=\"container-fluid bg-secondary text-white text-center text-lg-start px-0\">
@@ -234,7 +232,7 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 
 \t<script>
 \t  ";
-        // line 183
+        // line 181
         echo ($context["bodyScript"] ?? null);
         echo "
 \t</script>
@@ -249,17 +247,17 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
         $macros = $this->macros;
     }
 
-    // line 36
+    // line 34
     public function block_staticlinks($context, array $blocks = [])
     {
         $macros = $this->macros;
     }
 
-    // line 108
+    // line 106
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 109
+        // line 107
         echo "\t\t";
     }
 
@@ -275,7 +273,7 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 
     public function getDebugInfo()
     {
-        return array (  263 => 109,  259 => 108,  253 => 36,  247 => 8,  238 => 183,  163 => 110,  161 => 108,  88 => 37,  86 => 36,  81 => 34,  54 => 10,  51 => 9,  49 => 8,  40 => 1,);
+        return array (  261 => 107,  257 => 106,  251 => 34,  245 => 8,  236 => 181,  161 => 108,  159 => 106,  86 => 35,  84 => 34,  79 => 32,  54 => 10,  51 => 9,  49 => 8,  40 => 1,);
     }
 
     public function getSourceContext()
@@ -289,17 +287,17 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">
     {% block meta %}{% endblock %}
 
-    <title>{{ title|e }}</title>
+    <title>{{title|e}}</title>
     <link rel=\"icon\" type=image/ico href=\"/static/cmefi_short.png\"/>
 \t
     <link rel=\"stylesheet\" type=\"text/css\" href=\"/static/style.css\">
 \t<link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1\" crossorigin=\"anonymous\">
 \t<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css\">
-\t<link rel=\"stylesheet\" href=\"https://use.fontawesome.com/releases/v5.6.3/css/all.css\" integrity=\"sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/\" crossorigin=\"anonymous\">
+\t<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.6.3/css/all.min.css\" integrity=\"sha512-f2MWjotY+JCWDlE0+QAshlykvZUtIm35A6RHwfYZPdxKgLJpL8B+VVxjpHJwZDsZaWdyHVhlIHoblFYGkmrbhg==\" crossorigin=\"anonymous\" />
 \t
 \t<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap5.min.css\"/>
 
-\t<script src=\"https://code.jquery.com/jquery-3.5.1.min.js\" integrity=\"sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=\" crossorigin=\"anonymous\"></script>
+\t<script src=\"https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js\"></script>
 \t<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js\" integrity=\"sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW\" crossorigin=\"anonymous\"></script>
 
 \t<script src=\"https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js\"></script>
@@ -311,8 +309,6 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t<!-- Bug with v9.0 stripping data-dir attributes from buttons -->
     <script src=\"https://code.highcharts.com/stock/8.2/highstock.js\"></script>
 \t<script src=\"https://code.highcharts.com/8.2/modules/boost.js\"></script>
-\t
-\t<script src=\"https://cye131.github.io/gradient.js/gradient-min.js\"></script>
     {{ pageJS | raw }}
 
     {% block staticlinks %}{% endblock %}

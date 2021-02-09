@@ -1,0 +1,28 @@
+/* SCSS setup: (1) Extract Github release to SASS to homedir and set the location in PATH in .bashrc
+ * (2) Run sass inputdir/location.scss outputdir/location.css 
+ * Useful for overriding default bootstrap 5 variables
+ * Rename css files as scss to import
+ */
+ 
+// Required imports
+
+@import "bootstrap-5.0.0/_functions";
+@import "bootstrap-5.0.0/_variables";
+@import "bootstrap-5.0.0/_mixins";
+
+
+// Create your own map
+$custom-colors: (
+	econgreen: rgb(48, 79, 1),
+	econlightgreen: rgb(124, 155, 77),
+	econdarkgreen: rgb(37, 48, 10),
+	econred: #B11B1B,
+);
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+
+$font-size-base: .90rem;
+$font-family-sans-serif: 'Assistant', Arial, 'sans-serif';
+
+// Now re-import again with variable overrides - Must be at end
+@import "bootstrap-5.0.0/bootstrap";

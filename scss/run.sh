@@ -1,0 +1,1 @@
+sass style-bs.scss ../public/static/style-bs.css

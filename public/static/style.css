@@ -1,6 +1,5 @@
 /** Bootstrap Style Changes **/
 @import url(//fonts.googleapis.com/css?family='Open Sans');
-@import url(//fonts.googleapis.com/css?family=Molengo);
 @import url(//fonts.googleapis.com/css?family=Assistant);
 
 :root {
@@ -10,8 +9,6 @@
 }
 
 body {
-	font-family: 'Assistant', sans-serif !important;
-	font-size: 0.9rem !important;
 }
 
 header {

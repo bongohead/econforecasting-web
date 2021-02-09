@@ -238,8 +238,8 @@ function drawTable(acIndex) {
 			"<'row justify-content-center'<'col-auto'tr>>" +
 			"<'row justify-content-end'<'col-auto'p>>",
 		buttons: [
-			{extend: 'copyHtml5', text: 'Copy to clipboard', exportOptions: {columns: [0, 1]}, className: 'btn btn-sm btn-secondary'},
-			{extend: 'csvHtml5', text: 'Export to CSV', exportOptions: {columns: [0, 1]}, className: 'btn btn-sm btn-secondary'}
+			{extend: 'copyHtml5', text: 'Copy', exportOptions: {columns: [0, 1]}, className: 'btn btn-sm btn-secondary'},
+			{extend: 'csvHtml5', text: 'Download', exportOptions: {columns: [0, 1]}, className: 'btn btn-sm btn-secondary'}
 		],
 		order: [[0, 'asc']],
 		language: {
