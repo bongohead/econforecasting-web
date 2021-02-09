@@ -11,16 +11,18 @@ $(document).ready(function() {
 		const tVarname = 't' + window.location.pathname.split('-').pop().padStart(3, '0');
 		const tFullname =
 			tVarname === 't03m' ? '3-Month Treasury Bill Yield' 
-			: tVarname === 't06' ? '6-Month Treasury Bill Yield'
-			: tVarname === 't1y' ? '1-Year Treasury Note Yield'
-			: tVarname === 't2y' ? '2-Year Treasury Note Yield'
-			: tVarname === 't5y' ? '5-Year Treasury Note Yield'
+			: tVarname === 't06m' ? '6-Month Treasury Bill Yield'
+			: tVarname === 't01y' ? '1-Year Treasury Note Yield'
+			: tVarname === 't02y' ? '2-Year Treasury Note Yield'
+			: tVarname === 't05y' ? '5-Year Treasury Note Yield'
 			: tVarname === 't10y' ? '10-Year Treasury Note Yield'
 			: tVarname === 't20y' ? '20-Year Treasury Bill Yield'
 			: tVarname === 't30y' ? '30-Year Treasury Bill Yield'
 			: 'NA'
 			
 		document.querySelector('meta[name="description"]').setAttribute('content', '5-year monthly forecasts and historical data for ' + tFullname + '.');
+		document.querySelectorAll('span.t-varname').forEach(x => x.textContent = tFullname);
+
 		document.title  = tFullname + ' Forecast';
 
 		const udPrev = getAllData().userData || {};

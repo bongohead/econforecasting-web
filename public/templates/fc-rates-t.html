@@ -10,34 +10,25 @@
 {% block content %}
 <div class="row">
 	{% include 'fc-rates-sidebar.html' %}
-	<div class="col-md-9 col-xl-10 ms-auto pt-0 px-2">
-	
-	<!--
-		<div class="row justify-content-center py-2">
-			<div class="card px-0" style="max-width: 1200px">
-				<h5 class="card-header">Model Overview</h5>
-				<div class="card-body">
-					<h5 class="card-title">Cross-Region Correlation Index</h5>
-					<p class="card-text">
-					<strong>What does this index measure?</strong><br>
-					This index tracks the level of correlation between stock prices in different international economies; e.g. the correlation between the U.S. stock market and the Chinese stck market, and so on. The full list of tracked regions is available <a href='ac-regions-hm'>here</a>. When the index level is high, it means that different regional financial markets are moving closely with one another.
-					</p>
-					<p class="card-text">
-					<strong>Why is this useful?</strong><br>
-					In economic downturns, a sell-off in one country's stock market can trigger broader sell-offs in other countries, causing a contagion effect triggering a larger financial crisis. For example, during the global financial crisis, the crash in the U.S. stock market spread to infect countries globally. This index measures the degree of "danger" that a crisis in one country may infect the broader international financial market.
-					</p>
-					<p class="card-text">
-					<strong>How do I interpret this index?</strong><br>
-					This index tracks the strength of cross-regional stock market correlations between the world's major economies. The index is normalized to a level between zero and one hundred. High index values indicate that cross-regional return correlations are unusually high and the risk of a global financial crash is elevated.
-					</p>
-					<a href="#chart-container" class="btn btn-primary">Historical index data</a>
-					<a href="ac-regions-hm" class="btn btn-danger">Component heatmap</a>
+	<div class="col-md-9 col-xl-10 ms-auto pt-0 px-3">
+		<div class="row justify-content-center">
+			<div class="col-md-10 col-xl-9 py-2">
+				<div class="card mt-2">
+					<h5 class="card-header text-white" style="background-color:var(--econlightgreen)"><span class="t-varname"></span> Forecast - 10 Years</h5>
+					<div class="card-body">
+						<p class="card-text">
+						This forecast predicts the monthly average values of the <span class="t-varname"></span> for the next 10 years.
+						</p>
+						<p class="card-text">
+						These values can be interpreted as a 'market consensus' forecast - the forecasts are derived from a model which uses spot and futures market prices to directly estimate market-implied Treasury prices, using minimal extraneous assumptions during the modeling process. For technical details, see <a href="/fc-rates-t-info">the documentation</a>. For forecasts for other Treasury maturities, click <a href="/fc-rates-tcurve">here</a>.
+						</p>
+					</div>
 				</div>
 			</div>
+
 		</div>
-	-->
 		<div class="row justify-content-center bg-light">
-			<div id="chart-container" class="col-xl-9 col-lg-10 col-12-md">
+			<div id="chart-container" class="col-xl-8 col-lg-9 col-12-md">
 			</div>
 		</div>
 		<div class="row justify-content-center pt-3">
@@ -51,14 +42,14 @@
 				<div class="card-body">
 				<h5 class="card-title">Historical Data</h5>
 				<h6 class="card-subtitle mb-2 text-muted">Daily Frequency</h6>
-				<table id="table-container" class="table w-100"></table>
+				<table id="table-container" class="table data-table w-100"></table>
 				</div>
 			</div>
 			<div class="card border-secondary border-2 m-2 col-xl-4 col-md-6 col-sm-8">
 				<div class="card-body">
 				<h5 class="card-title text-danger">Forecast Data</h5>
 				<h6 class="card-subtitle mb-2 text-muted">Monthly Frequency</h6>
-				<table id="table-container-2" class="table w-100"></table>
+				<table id="table-container-2" class="table data-table w-100"></table>
 				</div>
 			</div>
 

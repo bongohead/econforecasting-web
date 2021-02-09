@@ -10,10 +10,8 @@ $(document).ready(function() {
 			navbar.querySelectorAll('a').forEach(function(x) {
 				if (x.getAttribute('href') == pathname) {
 					x.classList.add('activepage');
-					if (x.parentElement.parentElement.classList.contains('dropdown-menu')) {
-						x.parentElement.parentElement.parentElement.childNodes[1].classList.add('activepage');
-					}
-				};
+					x.closest('.dropdown-menu').parentNode.querySelector('a.nav-link').classList.add('activepage');
+					};
 				return;
 			});
 
@@ -28,6 +26,11 @@ $(document).ready(function() {
 		}
 		// Enables tooltips
 		//$('[data-toggle="tooltip"]').tooltip();
+		
+		var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+		var toastList = toastElList.map(function (toastEl) {
+		  return new bootstrap.Toast(toastEl, option)
+		})
 	})();
 	
 });

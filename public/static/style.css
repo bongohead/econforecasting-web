@@ -3,8 +3,14 @@
 @import url(//fonts.googleapis.com/css?family=Molengo);
 @import url(//fonts.googleapis.com/css?family=Assistant);
 
+:root {
+	--econgreen: rgb(48, 79, 1);
+	--econlightgreen: rgb(124, 155, 77);
+	--econred: #B11B1B;
+}
+
 body {
-	font-family: 'Open Sans', sans-serif !important;
+	font-family: 'Assistant', sans-serif !important;
 	font-size: 0.9rem !important;
 }
 
@@ -34,39 +40,51 @@ footer {
 
 /* Top Navbar */
 nav.navbar {
-	background-color: rgb(48, 79, 11);
+	background-color: var(--econgreen);
 }
 
-nav.navbar li.nav-item a.nav-link {
+/* Top-level dropdown links */
+nav.navbar li.nav-item > a.nav-link {
 	color: rgba(255, 255, 255, .9);
-	font-size: 1.0rem;
+	font-size: .95rem;
+	border-color: var(--econgreen);
+	border-radius: .25rem;
+	border-width: 1px;
 }
 
-nav.navbar a.activepage {
-    font-weight: 600;
-	color: white !important;
-}
-
-nav.navbar li.nav-item.dropdown > ul.dropdown-menu {
-    background-color: rgb(48, 79, 1);
-	color: rgba(255, 255, 255, .9);
-}
-
-nav.navbar li.nav-item.dropdown > ul.dropdown-menu > li > a {
-	color:inherit;
-	font-size: 0.95rem;
-}
-nav.navbar li.nav-item.dropdown > ul.dropdown-menu > li > a:hover {
-    background-color: rgb(98, 119, 51);
-}
-
-.dropdown-menu {
-	font-size: 0.9rem !important;
+/* When dropdown is opened */
+nav.navbar li.nav-item > a.nav-link.show {
+	background-color: rgba(255, 255, 255, .9);
+	color: var(--econgreen);
+	border-color: rgba(255, 255, 255, .9);
 }
 
 
+/* Dropdown items */
 
+nav.navbar ul.dropdown-menu, nav.navbar div.dropdown-menu {
+	color: var(--econgreen);
+	background-color: var(--bs-light);
+	border-color: var(--econgreen);
+	border-radius: .25rem;
+	border-width: 1px;
+	font-size: .9rem;
+}
 
+nav.navbar ul.dropdown-menu a:hover, nav.navbar div.dropdown-menu a:hover {
+	background-color: var(--econgreen);
+	color: var(--bs-light);
+}
+
+/* Dropdown items when active */
+nav.navbar a.dropdown-item.activepage {
+	background-color: lightgray;
+}
+
+/* Top-level nav link when dropdown subitem is active */
+nav.navbar a.nav-link.activepage {
+	background-color: var(--econlightgreen);
+}
 
 ul.nav-tabs > li.nav-item > a.nav-link.active {
     background-color: rgba(245,245,255,.8) !important;
@@ -123,7 +141,7 @@ nav.sidebar a.nav-link {
 /* Submenu */
 div.sidebar-submenu > a > span {
   font-size: 0.9rem;
-  padding-left: 2.5rem;
+  padding-left: 1.5rem;
 }
 
 nav.sidebar div.sidebar-submenu > a.activepage {
@@ -139,11 +157,18 @@ table.dataTable th {
 	color: white;
 }
 
-table.dataTable td {
+table.dataTable.data-table td {
     padding: .25rem .5rem;
-    font-size: 0.75rem;
+    font-size: 0.82rem;
 	border: none;
 }
+
+table.dataTable.summary-table td {
+    padding: .25rem .25rem;
+    font-size: 0.95rem;
+	border: none;
+}
+
 table.dataTable .dt-center {
 	text-align: center;
 }

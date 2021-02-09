@@ -52,24 +52,41 @@
 		<nav class="navbar navbar-expand-md navbar-dark sticky-top py-1">
 			<div class="container-fluid">
 				<a class="navbar-brand py-0 ps-3" href="/">
-					<img src="/static/cmefi_full_inverted.png" alt="CMEFI Logo" class="py-0" height="55">
+					<img src="/static/cmefi_full_inverted.png" alt="CMEFI Logo" class="py-0" height="45">
 					<!--<span class="navbar-brand my-0 py-0 h2">The Center for Macroeconomic Forecasts & Insights</span>-->
 				</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsingNavbarLg"><span class="navbar-toggler-icon"></span></button>
-				
+
 				<div class="navbar-collapse collapse" id="collapsingNavbarLg">
 					<ul class="navbar-nav me-auto">						
-						<li class="nav-item">
+						<!--<li class="nav-item">
 							<a class="nav-link" href="/about"><i class="bi bi-bar-chart me-1"></i>GDP Forecasts</a>
 						</li>
+						-->
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-								<i class="bi bi-bar-chart-steps me-1"></i>Other Forecasts...
+								<i class="bi bi-bar-chart-steps me-1"></i>Forecast Models
 							</a>
-							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="/transactions?account="><span style="margin-left: 1rem">Rates</span></a></li>
-								<li><a class="dropdown-item" href="/transactions?account="><span style="margin-left: 1rem">Rates2</span></a></li>
-							</ul>
+							<div class="dropdown-menu">
+								<div class="d-md-flex align-items-start justify-content-start">
+									<div>   
+										<div class="dropdown-header">TREASURY YIELDS</div>
+										<a class="dropdown-item" href="/fc-rates-t-info">Overview and Methodology</a>
+										<a class="dropdown-item" href="/fc-rates-tcurve">Full Treasury Yield Forecast</a>
+										<a class="dropdown-item" href="/fc-rates-t-3m">3 Month T-Bill Forecast</a>
+										<a class="dropdown-item" href="/fc-rates-t-1y">1 Year T-Note Forecast</a>
+										<a class="dropdown-item" href="/fc-rates-t-10y">10 Year T-Note Forecast</a>
+										<a class="dropdown-item" href="/fc-rates-t-30y">30 Year T-Bond Forecast</a>
+									</div>
+									<div>
+										<div class="dropdown-header">WIP</div>
+										<a class="dropdown-item" href="#">WIP</a>
+										<a class="dropdown-item" href="#">WIP</a>
+										<a class="dropdown-item" href="#">WIP</a>
+									</div>
+								</div>
+								 <div class="dropdown-divider"></div>
+							</div>
 						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">

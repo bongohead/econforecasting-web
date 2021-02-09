@@ -77,7 +77,7 @@ $(document).ready(function() {
 	loadData.done(function() {
 		const ud = getData('userData');
 		drawChart(ud.fcDataParsed, ud.playIndex);
-		/*drawTable(ud.fcHistory, ud.fcForecast);*/
+		drawTable(ud.fcDataParsed, ud.playIndex);
 		$('#overlay').hide();
 	});
 	
@@ -216,7 +216,8 @@ function drawChart(fcDataParsed, playIndex) {
 			title: {
 				text: null
 			},
-			min: 0
+			min: 0,
+			max: 8
 		},
 		legend: {
 			enabled: false
@@ -224,32 +225,33 @@ function drawChart(fcDataParsed, playIndex) {
         tooltip: {
             useHTML: true,
 			shared: true,
-			/*formatter: function () {
-				const pt = this.point;
-				//console.log(pt);
-				if (pt.x !== pt.y) {
-					var text =
-						'<table>' +
-						'<tr><td style="text-align:center;font-weight:600">' +
-							'Trailing correlation between ' +
-							'<span style="font-weight:700;">' + pt.series.xAxis.categories[pt.x] + '</span>' +
-							' and ' +
-							'<span style="font-weight:700;">' + pt.series.yAxis.categories[pt.y] + '</span>' +
-							' : ' +
-							'<span style="font-weight:700;color:' +  (pt.value > 0 ? 'rgba(255,0,0,1)' : 'rgba(0,0,255,1)') + '">' + (pt.value > 0 ? '+' : '') + pt.value + '</span>' +
-						'</td></tr>' +
-						'</table>';
-					//console.log(text);
-					return text;
-				}
-				else return false;
-			}*/
+			formatter: function () {
+				//console.log(this);
+				const points = this.points; // SOlves issue of tooltip not updating correctly with chart
+				if (points.length !== 2) return false;
+				const tVarname = points[0].x >= 12 ? points[0].x/12 + ' Year Treasury' : points[0].x + ' Month Treasury Yield'
+				//console.log(tVarname);
+				const text =
+					'<table>' +
+					'<tr style="border-bottom:1px solid black"><td style="text-align:center;font-weight:600">' +
+						tVarname +
+					'</td></tr>' +
+					'<tr><td style="text-align:center;font-weight:600;color:'+points[0].color+'">' +
+						points[0].y.toFixed(2) + '%' +
+					'</td></tr>' +
+					'<tr><td style="text-align:center;font-weight:600;color:'+points[1].color+'">' +
+						points[1].y.toFixed(2) + '%' +
+					'</td></tr>' +
+					'</table>';
+				//console.log(text);
+				return text;
+			}
         },
         series: [{
             data: fcDataParsed[playIndex].data,
 			name: 'Yield',
             type: 'area',
-            color: '#c1dfe7',
+            color: 'rgb(33, 177, 151)',
 			/*
 			fillColor: {
                 linearGradient: [0, 0, 0, 300],
@@ -334,7 +336,7 @@ function drawChart(fcDataParsed, playIndex) {
 		tooltip: {
             useHTML: true,
             formatter: function () {
-				console.log(this);
+				//console.log(this);
                 return '<h6 class="text-center;" style="font-weight:bold; color:black">' +
 					moment(this.point.x).format('MMM YYYY') +
 				'</h6>Click to set!';
@@ -433,13 +435,40 @@ function drawChart(fcDataParsed, playIndex) {
 
 
 
-function drawTable(fcHistory, fcForecast) {
-		
+function drawTable(fcDataParsed, playIndex) {
+	
+	console.log('fcDataParsed', fcDataParsed);
+	
+	// Get list of ttm's present in data as array of form [{num: 1, fmt: '1m'}, {num: 3, fmt: '3m'}, ...]
+	const ttmsList =
+		[...new Set(fcDataParsed.map(x => (x.data.map(y => y[0]))).flat(1))].sort((a, b) => a > b ? 1 : -1)
+		.map(x => ({num: x, fmt: (x >= 12 ? x/12 + 'y' : x + 'm')}));
+	
+	// Get obj of form 1m: 1, 3m: 3, 6m: 6, etc..
+	/*
+	const ttmVarnameMap = [... new Set(histTtms.concat(forecastTtms)].reduce((accum, x) => Object.assign(accum, {[(x >= 12 ? x/12 + 'y' : x + 'm')]: x}), {});
+	*/
+	// Create array of objects with each object of form {date: , 1m: , 3m: , ...,} returning null if data is unavailable
+	const fcDataTable =
+		fcDataParsed.map(function(x) {
+			let res = {
+				date: moment(x.date).format('YYYY-MM'),
+				type: x.type
+			};
+			ttmsList.forEach(function(ttm) {
+				res[ttm.fmt] = (x.data.filter(x => x[0] === ttm.num).length === 0 ? null : x.data.filter(x => x[0] === ttm.num)[0][1].toFixed(2));
+				return;
+			});
+			return res;
+		});
+	console.log('fcDataTable', fcDataTable, ttmsList);
+	
 	const dtCols =
 		[
-			{title: 'Date', data: 'obs_date'},
-			{title: 'Value', data: 'value'},
-		].map(function(x, i) {
+			{title: 'Date', data: 'date'},
+		]
+		.concat(ttmsList.map(ttm => ({title: ttm.fmt, data: ttm.fmt}))) // title and object property name are the same 
+		.map(function(x, i) {
 			return {...x, ...{
 				visible: true,
 				orderable: true,
@@ -449,9 +478,9 @@ function drawTable(fcHistory, fcForecast) {
 				className: 'dt-center'
 			}};
 		});
-		
+	console.log('dtCols', dtCols, fcDataTable.filter(x => x.type === 'history'));
 	const o = {
-		data: fcHistory,
+		data: fcDataTable.filter(x => x.type === 'history'),
 		columns: dtCols,
 		iDisplayLength: 25,
 		dom:
@@ -468,14 +497,24 @@ function drawTable(fcHistory, fcForecast) {
 		pagingType: 'numbers',
 		language: {
 			search: "Filter By Date:",
-			searchPlaceholder: "YYYY-MM-DD"
+			searchPlaceholder: "YYYY-MM"
+		},
+		responsive: true
+	}
+	
+	const o2 = {
+		...o,
+		...{
+			data: fcDataTable.filter(x => x.type === 'forecast'),
+			order: [[0, 'asc']]
 		}
 	}
 	
 	$('#table-container').DataTable(o).draw();
+	$('#table-container-2').DataTable(o2).draw();
+
 	
-	
-	
+	/*
 			
 	const o2 = {
 		data: fcForecast,
@@ -500,7 +539,7 @@ function drawTable(fcHistory, fcForecast) {
 	}
 	
 	$('#table-container-2').DataTable(o2).draw();
-
+*/
 	return;
 }
 
@@ -522,8 +561,8 @@ function updateChart() {
 	//console.log('Updating data...', newData);
 	
 	/* Update chart data and colors */
-	chart.series[0].setData(newData);
-	chart.series[0].update({color: (ud.fcDataParsed[ud.playIndex].type === 'forecast' ? '#c1dfe7' : '#3333A2')})
+	chart.series[0].setData(newData, redraw = true, animation = {duration: 250}, updatePoints = true);
+	chart.series[0].update({color: (ud.fcDataParsed[ud.playIndex].type === 'forecast' ? 'rgb(33, 177, 151)' : '#3333A2')})
 	
 	/* Update chart title*/
 	if (ud.fcDataParsed[ud.playIndex].type === 'history') {
@@ -587,7 +626,7 @@ function updateButtons() {
 	const ud = getData('userData');
 	/* Update buttons */
 	const buttons = $('#chart-subtitle-group').find('button.chart-subtitle').removeClass('active').prop('disabled', false).end();
-	console.log('updateButtons', ud.playState, ud.playIndex, ud.fcDataParsed.length - 1, buttons);
+	//console.log('updateButtons', ud.playState, ud.playIndex, ud.fcDataParsed.length - 1, buttons);
 
 	if (ud.playIndex === 0) buttons.find('[data-dir="start"],[data-dir="back"]').prop('disabled', true);
 	else if (ud.playIndex === ud.fcDataParsed.length - 1) buttons.find('[data-dir="end"],[data-dir="forward"]').prop('disabled', true);

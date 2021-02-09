@@ -95,8 +95,10 @@ class __TwigTemplate_710270983adcc09738b676ae0aa9f631d7546b8f5ecc27a1fc7187d5e4a
 \t</div>
 
 
+\t<hr>
+\t<h1 style=\"color:var(--econgreen)\">New Releases</h1>
 \t  <div class=\"row mb-2\">
-\t\t<div class=\"col-md-4\">
+\t\t<div class=\"col-md-4 col-sm-6\">
 \t\t  <div class=\"row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-150 position-relative p-3\">
 \t\t\t<div class=\"row\">
 \t\t\t\t<div class=\"col-12\">
@@ -105,19 +107,19 @@ class __TwigTemplate_710270983adcc09738b676ae0aa9f631d7546b8f5ecc27a1fc7187d5e4a
 \t\t\t\t</div>
 \t\t\t</div>
 \t\t\t<div class=\"row\">
-\t\t\t\t<div class=\"col-md-8\">
+\t\t\t\t<div class=\"col\">
 \t\t\t\t\t<div class=\"mb-1 text-muted\">Feb 2021</div>
 \t\t\t\t\t<p class=\"card-text mb-auto\">Historical data for the Asset Correlation Index is now available online.</p>
 \t\t\t\t\t<a href=\"ac-assets\" class=\"stretched-link\">Click to go</a>
 \t\t\t\t</div>
-\t\t\t\t<div class=\"col-md-4 border rounded\" style=\"background:url('/static/probabilistic-forecasting-graph.png'); background-position:bottom; background-size:100% auto;   background-repeat: no-repeat;\">
+\t\t\t\t<div class=\"d-none d-lg-block col-lg-4 border rounded\" style=\"background:url('/static/probabilistic-forecasting-graph.png'); background-position:bottom; background-size:100% auto;   background-repeat: no-repeat;\">
 \t\t\t\t</div>
 \t\t\t</div>
 \t\t  </div>
 \t\t</div>
 \t\t
 \t\t
-\t\t<div class=\"col-md-4\">
+\t\t<div class=\"col-md-4 col-sm-6\">
 \t\t  <div class=\"row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-150 position-relative p-3\">
 \t\t\t<div class=\"row\">
 \t\t\t\t<div class=\"col-12\">
@@ -126,12 +128,12 @@ class __TwigTemplate_710270983adcc09738b676ae0aa9f631d7546b8f5ecc27a1fc7187d5e4a
 \t\t\t\t</div>
 \t\t\t</div>
 \t\t\t<div class=\"row\">
-\t\t\t\t<div class=\"col-md-8\">
+\t\t\t\t<div class=\"col\">
 \t\t\t\t\t<div class=\"mb-1 text-muted\">Feb 2021</div>
 \t\t\t\t\t<p class=\"card-text mb-auto\">Historical data for the Regional Correlation Index is now available online.</p>
 \t\t\t\t\t<a href=\"ac-regions\" class=\"stretched-link\">Click to go</a>
 \t\t\t\t</div>
-\t\t\t\t<div class=\"col-md-4 border rounded\" style=\"background:url('/static/thumb003.png'); background-position:bottom; background-size:100% auto;   background-repeat: no-repeat;\">
+\t\t\t\t<div class=\"d-none d-lg-block col-lg-4 border rounded\" style=\"background:url('/static/thumb003.png'); background-position:bottom; background-size:100% auto;   background-repeat: no-repeat;\">
 \t\t\t\t</div>
 \t\t\t</div>
 \t\t  </div>
@@ -203,8 +205,10 @@ class __TwigTemplate_710270983adcc09738b676ae0aa9f631d7546b8f5ecc27a1fc7187d5e4a
 \t</div>
 
 
+\t<hr>
+\t<h1 style=\"color:var(--econgreen)\">New Releases</h1>
 \t  <div class=\"row mb-2\">
-\t\t<div class=\"col-md-4\">
+\t\t<div class=\"col-md-4 col-sm-6\">
 \t\t  <div class=\"row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-150 position-relative p-3\">
 \t\t\t<div class=\"row\">
 \t\t\t\t<div class=\"col-12\">
@@ -213,19 +217,19 @@ class __TwigTemplate_710270983adcc09738b676ae0aa9f631d7546b8f5ecc27a1fc7187d5e4a
 \t\t\t\t</div>
 \t\t\t</div>
 \t\t\t<div class=\"row\">
-\t\t\t\t<div class=\"col-md-8\">
+\t\t\t\t<div class=\"col\">
 \t\t\t\t\t<div class=\"mb-1 text-muted\">Feb 2021</div>
 \t\t\t\t\t<p class=\"card-text mb-auto\">Historical data for the Asset Correlation Index is now available online.</p>
 \t\t\t\t\t<a href=\"ac-assets\" class=\"stretched-link\">Click to go</a>
 \t\t\t\t</div>
-\t\t\t\t<div class=\"col-md-4 border rounded\" style=\"background:url('/static/probabilistic-forecasting-graph.png'); background-position:bottom; background-size:100% auto;   background-repeat: no-repeat;\">
+\t\t\t\t<div class=\"d-none d-lg-block col-lg-4 border rounded\" style=\"background:url('/static/probabilistic-forecasting-graph.png'); background-position:bottom; background-size:100% auto;   background-repeat: no-repeat;\">
 \t\t\t\t</div>
 \t\t\t</div>
 \t\t  </div>
 \t\t</div>
 \t\t
 \t\t
-\t\t<div class=\"col-md-4\">
+\t\t<div class=\"col-md-4 col-sm-6\">
 \t\t  <div class=\"row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-150 position-relative p-3\">
 \t\t\t<div class=\"row\">
 \t\t\t\t<div class=\"col-12\">
@@ -234,12 +238,12 @@ class __TwigTemplate_710270983adcc09738b676ae0aa9f631d7546b8f5ecc27a1fc7187d5e4a
 \t\t\t\t</div>
 \t\t\t</div>
 \t\t\t<div class=\"row\">
-\t\t\t\t<div class=\"col-md-8\">
+\t\t\t\t<div class=\"col\">
 \t\t\t\t\t<div class=\"mb-1 text-muted\">Feb 2021</div>
 \t\t\t\t\t<p class=\"card-text mb-auto\">Historical data for the Regional Correlation Index is now available online.</p>
 \t\t\t\t\t<a href=\"ac-regions\" class=\"stretched-link\">Click to go</a>
 \t\t\t\t</div>
-\t\t\t\t<div class=\"col-md-4 border rounded\" style=\"background:url('/static/thumb003.png'); background-position:bottom; background-size:100% auto;   background-repeat: no-repeat;\">
+\t\t\t\t<div class=\"d-none d-lg-block col-lg-4 border rounded\" style=\"background:url('/static/thumb003.png'); background-position:bottom; background-size:100% auto;   background-repeat: no-repeat;\">
 \t\t\t\t</div>
 \t\t\t</div>
 \t\t  </div>

@@ -49,7 +49,7 @@ class __TwigTemplate_27075bda472814d76ace8357e2feb7ad9af1e1a33f41779ced050bb2484
     {
         $macros = $this->macros;
         // line 4
-        echo "<meta name=\"description\" content=\"Monthly 3-month, 6-month, 1-year, 5-year, 10-year, 20-year, and 30-year Treasury yield forecasts and historical data.\"/>
+        echo "<meta name=\"description\" content=\"Monthly 3-month, 6-month, 1-year, 5-year, 10-year, 20-year, and 30-year Treasury yield forecasts and historical data are provided using our model.\"/>
 ";
     }
 
@@ -59,40 +59,44 @@ class __TwigTemplate_27075bda472814d76ace8357e2feb7ad9af1e1a33f41779ced050bb2484
         $macros = $this->macros;
         // line 8
         echo "<script src=\"https://code.highcharts.com/8.2/highcharts-more.js\"></script>
+<script src=\"https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js\"></script>
 ";
     }
 
-    // line 11
+    // line 12
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 12
+        // line 13
         echo "<div class=\"row\">
 \t";
-        // line 13
-        $this->loadTemplate("fc-rates-sidebar.html", "fc-rates-tcurve.html", 13)->display($context);
         // line 14
-        echo "\t<div class=\"col-md-9 col-xl-10 ms-auto pt-0 px-2\">
+        $this->loadTemplate("fc-rates-sidebar.html", "fc-rates-tcurve.html", 14)->display($context);
+        // line 15
+        echo "\t<div class=\"col-md-9 col-xl-10 ms-auto pt-0 px-0\">
 \t
-\t\t<div class=\"row justify-content-center bg-light\">
+\t\t<div class=\"row justify-content-center\" style=\"background-color:rgba(25, 50, 20, 0.1)\">
 \t\t\t<div id=\"chart-container\" class=\"col-xl-9 col-lg-10 col-12-md\">
 \t\t\t</div>
 \t\t\t<div id=\"chart-container-2\" class=\"col-xl-9 col-lg-10 col-12-md\">
 \t\t\t</div>
 \t\t</div>
 \t\t<div class=\"row justify-content-center pt-3\">
-\t\t\t<div class=\"card border-secondary border-2 m-2 col-xl-4 col-md-6 col-sm-8\">
+
+\t\t\t<div class=\"card border-secondary border-2 m-2 col-xl-8 col-md-10 col-sm-12\">
 \t\t\t\t<div class=\"card-body\">
-\t\t\t\t<h5 class=\"card-title\">Historical Data</h5>
-\t\t\t\t<h6 class=\"card-subtitle mb-2 text-muted\">Daily Frequency</h6>
-\t\t\t\t<table id=\"table-container\" class=\"table w-100\"></table>
+\t\t\t\t<h5 class=\"card-title\" style=\"color:rgb(33, 177, 151)\">Treasury Curve Forecast Data</h5>
+\t\t\t\t<h6 class=\"card-subtitle mb-2 text-muted fst-italic\">monthly frequency represents average of daily values</h6>
+\t\t\t\t<table id=\"table-container-2\" class=\"table data-table w-100\"></table>
 \t\t\t\t</div>
 \t\t\t</div>
-\t\t\t<div class=\"card border-secondary border-2 m-2 col-xl-4 col-md-6 col-sm-8\">
+
+\t\t
+\t\t\t<div class=\"card border-secondary border-2 m-2 col-xl-8 col-md-10 col-sm-12\">
 \t\t\t\t<div class=\"card-body\">
-\t\t\t\t<h5 class=\"card-title text-danger\">Forecast Data</h5>
-\t\t\t\t<h6 class=\"card-subtitle mb-2 text-muted\">Monthly Frequency</h6>
-\t\t\t\t<table id=\"table-container-2\" class=\"table w-100\"></table>
+\t\t\t\t<h5 class=\"card-title\" style=\"color: darkblue\">Treasury Curve Historical Data</h5>
+\t\t\t\t<h6 class=\"card-subtitle mb-2 text-muted fst-italic\">monthly frequency represents average of daily values</h6>
+\t\t\t\t<table id=\"table-container\" class=\"table data-table w-100\"></table>
 \t\t\t\t</div>
 \t\t\t</div>
 
@@ -117,7 +121,7 @@ class __TwigTemplate_27075bda472814d76ace8357e2feb7ad9af1e1a33f41779ced050bb2484
 
     public function getDebugInfo()
     {
-        return array (  75 => 14,  73 => 13,  70 => 12,  66 => 11,  61 => 8,  57 => 7,  52 => 4,  48 => 3,  37 => 1,);
+        return array (  76 => 15,  74 => 14,  71 => 13,  67 => 12,  61 => 8,  57 => 7,  52 => 4,  48 => 3,  37 => 1,);
     }
 
     public function getSourceContext()
@@ -125,37 +129,41 @@ class __TwigTemplate_27075bda472814d76ace8357e2feb7ad9af1e1a33f41779ced050bb2484
         return new Source("{% extends \"base.html\" %}
 
 {% block meta %}
-<meta name=\"description\" content=\"Monthly 3-month, 6-month, 1-year, 5-year, 10-year, 20-year, and 30-year Treasury yield forecasts and historical data.\"/>
+<meta name=\"description\" content=\"Monthly 3-month, 6-month, 1-year, 5-year, 10-year, 20-year, and 30-year Treasury yield forecasts and historical data are provided using our model.\"/>
 {% endblock %}
 
 {% block staticlinks %}
 <script src=\"https://code.highcharts.com/8.2/highcharts-more.js\"></script>
+<script src=\"https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js\"></script>
 {% endblock %}
 
 {% block content %}
 <div class=\"row\">
 \t{% include 'fc-rates-sidebar.html' %}
-\t<div class=\"col-md-9 col-xl-10 ms-auto pt-0 px-2\">
+\t<div class=\"col-md-9 col-xl-10 ms-auto pt-0 px-0\">
 \t
-\t\t<div class=\"row justify-content-center bg-light\">
+\t\t<div class=\"row justify-content-center\" style=\"background-color:rgba(25, 50, 20, 0.1)\">
 \t\t\t<div id=\"chart-container\" class=\"col-xl-9 col-lg-10 col-12-md\">
 \t\t\t</div>
 \t\t\t<div id=\"chart-container-2\" class=\"col-xl-9 col-lg-10 col-12-md\">
 \t\t\t</div>
 \t\t</div>
 \t\t<div class=\"row justify-content-center pt-3\">
-\t\t\t<div class=\"card border-secondary border-2 m-2 col-xl-4 col-md-6 col-sm-8\">
+
+\t\t\t<div class=\"card border-secondary border-2 m-2 col-xl-8 col-md-10 col-sm-12\">
 \t\t\t\t<div class=\"card-body\">
-\t\t\t\t<h5 class=\"card-title\">Historical Data</h5>
-\t\t\t\t<h6 class=\"card-subtitle mb-2 text-muted\">Daily Frequency</h6>
-\t\t\t\t<table id=\"table-container\" class=\"table w-100\"></table>
+\t\t\t\t<h5 class=\"card-title\" style=\"color:rgb(33, 177, 151)\">Treasury Curve Forecast Data</h5>
+\t\t\t\t<h6 class=\"card-subtitle mb-2 text-muted fst-italic\">monthly frequency represents average of daily values</h6>
+\t\t\t\t<table id=\"table-container-2\" class=\"table data-table w-100\"></table>
 \t\t\t\t</div>
 \t\t\t</div>
-\t\t\t<div class=\"card border-secondary border-2 m-2 col-xl-4 col-md-6 col-sm-8\">
+
+\t\t
+\t\t\t<div class=\"card border-secondary border-2 m-2 col-xl-8 col-md-10 col-sm-12\">
 \t\t\t\t<div class=\"card-body\">
-\t\t\t\t<h5 class=\"card-title text-danger\">Forecast Data</h5>
-\t\t\t\t<h6 class=\"card-subtitle mb-2 text-muted\">Monthly Frequency</h6>
-\t\t\t\t<table id=\"table-container-2\" class=\"table w-100\"></table>
+\t\t\t\t<h5 class=\"card-title\" style=\"color: darkblue\">Treasury Curve Historical Data</h5>
+\t\t\t\t<h6 class=\"card-subtitle mb-2 text-muted fst-italic\">monthly frequency represents average of daily values</h6>
+\t\t\t\t<table id=\"table-container\" class=\"table data-table w-100\"></table>
 \t\t\t\t</div>
 \t\t\t</div>
 

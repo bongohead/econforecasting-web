@@ -2,15 +2,18 @@ Description TBA
 
 # CHANGELOG
 
-## 2021-02-05 [v0.07] (SEO & First Forecasts)
+## 2021-02-09 [v0.07] (SEO & First Forecasts)
 - Added robots.txt
 - Added sitemap.xml
 - Added meta description
 - Added individual yield curve pages, graphs, and tables
 - Added Treasury yield curve pages and graphs
+- Added methodology page
+- Fixed toolbar color formatting
 - Fixed various HTML syntax errors
 - Fixed ac-regions and ac-assets table appearance on mobile
 - Fixed heatmap bug caused by highcharts upgrade
+- Improved frontpage CSS appearance on mobile
 - Removed meta keywords
 
 ## 2021-01-29 [v0.06]

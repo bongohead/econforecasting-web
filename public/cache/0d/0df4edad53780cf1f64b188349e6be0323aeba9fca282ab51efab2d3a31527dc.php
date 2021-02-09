@@ -45,7 +45,10 @@ class __TwigTemplate_8ec843f340c7e6021b42b9bb627f31c2b7a876786ec018468028554566f
 \t\t</a>
 \t\t<div id='t' class=\"collapse show sidebar-submenu\">
 \t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/fc-rates-t-info\">
-\t\t\t\t<span class=\"fas fa-info-circle\"></span><span class=\"ps-2\">Model Information</span>
+\t\t\t\t<span class=\"fas fa-info-circle\"></span><span class=\"ps-2\">Overview and Methodology</span>
+\t\t\t</a>
+\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/fc-rates-tcurve\">
+\t\t\t\t<span class=\"fas fa-chart-area\"></span><span class=\"ps-2\">Full Yield Curve</span>
 \t\t\t</a>
 \t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/fc-rates-t-3m\">
 \t\t\t\t<span class=\"fas fa-chart-line\"></span><span class=\"ps-2\">3-Month T-Bill</span>
@@ -71,9 +74,7 @@ class __TwigTemplate_8ec843f340c7e6021b42b9bb627f31c2b7a876786ec018468028554566f
 \t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/fc-rates-t-30y\">
 \t\t\t\t<span class=\"fas fa-chart-line\"></span><span class=\"ps-2\">30-Year T-Bond</span>
 \t\t\t</a>
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/fc-rates-tcurve\">
-\t\t\t\t<span class=\"fas fa-chart-area\"></span><span class=\"ps-2\">Full Yield Curve</span>
-\t\t\t</a>
+
 \t\t</div>\t\t\t\t
 \t\t
 \t\t<a href=\"#ffr\" data-bs-toggle=\"collapse\" class=\"nav-link\">
@@ -120,7 +121,10 @@ class __TwigTemplate_8ec843f340c7e6021b42b9bb627f31c2b7a876786ec018468028554566f
 \t\t</a>
 \t\t<div id='t' class=\"collapse show sidebar-submenu\">
 \t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/fc-rates-t-info\">
-\t\t\t\t<span class=\"fas fa-info-circle\"></span><span class=\"ps-2\">Model Information</span>
+\t\t\t\t<span class=\"fas fa-info-circle\"></span><span class=\"ps-2\">Overview and Methodology</span>
+\t\t\t</a>
+\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/fc-rates-tcurve\">
+\t\t\t\t<span class=\"fas fa-chart-area\"></span><span class=\"ps-2\">Full Yield Curve</span>
 \t\t\t</a>
 \t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/fc-rates-t-3m\">
 \t\t\t\t<span class=\"fas fa-chart-line\"></span><span class=\"ps-2\">3-Month T-Bill</span>
@@ -146,9 +150,7 @@ class __TwigTemplate_8ec843f340c7e6021b42b9bb627f31c2b7a876786ec018468028554566f
 \t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/fc-rates-t-30y\">
 \t\t\t\t<span class=\"fas fa-chart-line\"></span><span class=\"ps-2\">30-Year T-Bond</span>
 \t\t\t</a>
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/fc-rates-tcurve\">
-\t\t\t\t<span class=\"fas fa-chart-area\"></span><span class=\"ps-2\">Full Yield Curve</span>
-\t\t\t</a>
+
 \t\t</div>\t\t\t\t
 \t\t
 \t\t<a href=\"#ffr\" data-bs-toggle=\"collapse\" class=\"nav-link\">

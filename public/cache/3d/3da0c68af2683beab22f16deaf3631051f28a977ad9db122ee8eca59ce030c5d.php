@@ -103,24 +103,41 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t\t<nav class=\"navbar navbar-expand-md navbar-dark sticky-top py-1\">
 \t\t\t<div class=\"container-fluid\">
 \t\t\t\t<a class=\"navbar-brand py-0 ps-3\" href=\"/\">
-\t\t\t\t\t<img src=\"/static/cmefi_full_inverted.png\" alt=\"CMEFI Logo\" class=\"py-0\" height=\"55\">
+\t\t\t\t\t<img src=\"/static/cmefi_full_inverted.png\" alt=\"CMEFI Logo\" class=\"py-0\" height=\"45\">
 \t\t\t\t\t<!--<span class=\"navbar-brand my-0 py-0 h2\">The Center for Macroeconomic Forecasts & Insights</span>-->
 \t\t\t\t</a>
 \t\t\t\t<button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#collapsingNavbarLg\"><span class=\"navbar-toggler-icon\"></span></button>
-\t\t\t\t
+
 \t\t\t\t<div class=\"navbar-collapse collapse\" id=\"collapsingNavbarLg\">
 \t\t\t\t\t<ul class=\"navbar-nav me-auto\">\t\t\t\t\t\t
-\t\t\t\t\t\t<li class=\"nav-item\">
+\t\t\t\t\t\t<!--<li class=\"nav-item\">
 \t\t\t\t\t\t\t<a class=\"nav-link\" href=\"/about\"><i class=\"bi bi-bar-chart me-1\"></i>GDP Forecasts</a>
 \t\t\t\t\t\t</li>
+\t\t\t\t\t\t-->
 \t\t\t\t\t\t<li class=\"nav-item dropdown\">
 \t\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-bs-toggle=\"dropdown\">
-\t\t\t\t\t\t\t\t<i class=\"bi bi-bar-chart-steps me-1\"></i>Other Forecasts...
+\t\t\t\t\t\t\t\t<i class=\"bi bi-bar-chart-steps me-1\"></i>Forecast Models
 \t\t\t\t\t\t\t</a>
-\t\t\t\t\t\t\t<ul class=\"dropdown-menu\">
-\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/transactions?account=\"><span style=\"margin-left: 1rem\">Rates</span></a></li>
-\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/transactions?account=\"><span style=\"margin-left: 1rem\">Rates2</span></a></li>
-\t\t\t\t\t\t\t</ul>
+\t\t\t\t\t\t\t<div class=\"dropdown-menu\">
+\t\t\t\t\t\t\t\t<div class=\"d-md-flex align-items-start justify-content-start\">
+\t\t\t\t\t\t\t\t\t<div>   
+\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header\">TREASURY YIELDS</div>
+\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-info\">Overview and Methodology</a>
+\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-tcurve\">Full Treasury Yield Forecast</a>
+\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-3m\">3 Month T-Bill Forecast</a>
+\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-1y\">1 Year T-Note Forecast</a>
+\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-10y\">10 Year T-Note Forecast</a>
+\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-30y\">30 Year T-Bond Forecast</a>
+\t\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t\t\t<div>
+\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header\">WIP</div>
+\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\">WIP</a>
+\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\">WIP</a>
+\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\">WIP</a>
+\t\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t\t <div class=\"dropdown-divider\"></div>
+\t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t</li>
 \t\t\t\t\t\t<li class=\"nav-item dropdown\">
 \t\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-bs-toggle=\"dropdown\">
@@ -140,9 +157,9 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t
 \t<main class=\"flex-shrink-0 min-vh-100 pb-5\">
 \t\t";
-        // line 91
+        // line 108
         $this->displayBlock('content', $context, $blocks);
-        // line 93
+        // line 110
         echo "\t</main>
 
 \t<footer class=\"container-fluid bg-secondary text-white text-center text-lg-start px-0\">
@@ -217,7 +234,7 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 
 \t<script>
 \t  ";
-        // line 166
+        // line 183
         echo ($context["bodyScript"] ?? null);
         echo "
 \t</script>
@@ -238,11 +255,11 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
         $macros = $this->macros;
     }
 
-    // line 91
+    // line 108
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 92
+        // line 109
         echo "\t\t";
     }
 
@@ -258,7 +275,7 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 
     public function getDebugInfo()
     {
-        return array (  246 => 92,  242 => 91,  236 => 36,  230 => 8,  221 => 166,  146 => 93,  144 => 91,  88 => 37,  86 => 36,  81 => 34,  54 => 10,  51 => 9,  49 => 8,  40 => 1,);
+        return array (  263 => 109,  259 => 108,  253 => 36,  247 => 8,  238 => 183,  163 => 110,  161 => 108,  88 => 37,  86 => 36,  81 => 34,  54 => 10,  51 => 9,  49 => 8,  40 => 1,);
     }
 
     public function getSourceContext()
@@ -317,24 +334,41 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t\t<nav class=\"navbar navbar-expand-md navbar-dark sticky-top py-1\">
 \t\t\t<div class=\"container-fluid\">
 \t\t\t\t<a class=\"navbar-brand py-0 ps-3\" href=\"/\">
-\t\t\t\t\t<img src=\"/static/cmefi_full_inverted.png\" alt=\"CMEFI Logo\" class=\"py-0\" height=\"55\">
+\t\t\t\t\t<img src=\"/static/cmefi_full_inverted.png\" alt=\"CMEFI Logo\" class=\"py-0\" height=\"45\">
 \t\t\t\t\t<!--<span class=\"navbar-brand my-0 py-0 h2\">The Center for Macroeconomic Forecasts & Insights</span>-->
 \t\t\t\t</a>
 \t\t\t\t<button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#collapsingNavbarLg\"><span class=\"navbar-toggler-icon\"></span></button>
-\t\t\t\t
+
 \t\t\t\t<div class=\"navbar-collapse collapse\" id=\"collapsingNavbarLg\">
 \t\t\t\t\t<ul class=\"navbar-nav me-auto\">\t\t\t\t\t\t
-\t\t\t\t\t\t<li class=\"nav-item\">
+\t\t\t\t\t\t<!--<li class=\"nav-item\">
 \t\t\t\t\t\t\t<a class=\"nav-link\" href=\"/about\"><i class=\"bi bi-bar-chart me-1\"></i>GDP Forecasts</a>
 \t\t\t\t\t\t</li>
+\t\t\t\t\t\t-->
 \t\t\t\t\t\t<li class=\"nav-item dropdown\">
 \t\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-bs-toggle=\"dropdown\">
-\t\t\t\t\t\t\t\t<i class=\"bi bi-bar-chart-steps me-1\"></i>Other Forecasts...
+\t\t\t\t\t\t\t\t<i class=\"bi bi-bar-chart-steps me-1\"></i>Forecast Models
 \t\t\t\t\t\t\t</a>
-\t\t\t\t\t\t\t<ul class=\"dropdown-menu\">
-\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/transactions?account=\"><span style=\"margin-left: 1rem\">Rates</span></a></li>
-\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/transactions?account=\"><span style=\"margin-left: 1rem\">Rates2</span></a></li>
-\t\t\t\t\t\t\t</ul>
+\t\t\t\t\t\t\t<div class=\"dropdown-menu\">
+\t\t\t\t\t\t\t\t<div class=\"d-md-flex align-items-start justify-content-start\">
+\t\t\t\t\t\t\t\t\t<div>   
+\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header\">TREASURY YIELDS</div>
+\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-info\">Overview and Methodology</a>
+\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-tcurve\">Full Treasury Yield Forecast</a>
+\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-3m\">3 Month T-Bill Forecast</a>
+\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-1y\">1 Year T-Note Forecast</a>
+\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-10y\">10 Year T-Note Forecast</a>
+\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-30y\">30 Year T-Bond Forecast</a>
+\t\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t\t\t<div>
+\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header\">WIP</div>
+\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\">WIP</a>
+\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\">WIP</a>
+\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\">WIP</a>
+\t\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t\t <div class=\"dropdown-divider\"></div>
+\t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t</li>
 \t\t\t\t\t\t<li class=\"nav-item dropdown\">
 \t\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-bs-toggle=\"dropdown\">
