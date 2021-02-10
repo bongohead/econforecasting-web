@@ -3,14 +3,13 @@
 $varsToBind =
 	array(
 		'varname' => (string) $fromAjax['varname'] ?? '',
-		'freq' => (string) $fromAjax['freq'] ?? ''
+		'freq' => (string) $fromAjax['freq'] ?? NULL
 	);
 
+$freqStr = $varsToBind['freq'] != NULL ? "AND c.freq = :freq": '';
 
-$freqStr = $varsToBind['freq'] !== '' ? "AND c.freq = :freq": ''
-
-$fcHistory = $sql -> select("
-SELECT a.*, c.freq, c.fullname, c.cmefi FROM fc_forecast a
+$fcForecast = $sql -> select("
+SELECT a.vintage_date, a.value, a.obs_date, a.fcname, c.freq, c.fullname, c.cmefi FROM fc_forecast a
 INNER JOIN (
 	SELECT DISTINCT ON (fcname) fcname, vintage_date, varname
 	FROM fc_forecast WHERE varname = :varname
@@ -22,6 +21,6 @@ ON
 	AND a.varname = b.varname
 INNER JOIN fc_forecastnames c
 ON a.fcname = c.fcname
-WHERE a.varname = :varname
 ${freqStr}
 ", $varsToBind);
+

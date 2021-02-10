@@ -3,10 +3,9 @@ function setData(k,d){var data;if(sessionStorage.getItem('data')===null)data={};
 function getAllData(){const raw=sessionStorage.getItem('data');const res=isJson(raw)?JSON.parse(raw):{};return res}
 function setAllData(data){sessionStorage.setItem('data',JSON.stringify(data))}
 function modifyData(data={}){const newData=$.extend(!0,getAllData(),data);setAllData(newData);return newData}
-function isJson(item){item=typeof item!=="string"?JSON.stringify(item):item;try{item=JSON.parse(item)}catch(e){return!1}
-if(typeof item==="object"&&item!==null){return!0}
-return!1}
+function isJson(str){try{return(JSON.parse(str)&&!!str)}catch(e){return!1}}
 function getAJAX(model,toScript,fromAjax,timeout=10000){const timerStart=Date.now();return $.ajax({url:'router.php',type:'POST',data:{model:model,toScript:toScript,fromAjax:fromAjax,isAjax:!0},dataType:'html',cache:!1,timeout:timeout}).fail(function(res){console.log(res);console.log('AJAX Error')}).always(function(res){console.log('AJAX Time: '+(Date.now()-timerStart))})}
+function getFetch(model,toScript,fromAjax,timeout=10000){const timerStart=Date.now();return new Promise((resolve,reject)=>$.ajax({url:'router.php',type:'POST',data:{model:model,toScript:toScript,fromAjax:fromAjax,isAjax:!0},dataType:'html',cache:!1,timeout:timeout}).fail(function(res){console.log('AJAX Error 1',res)}).always(function(res){console.log('AJAX Time: '+(Date.now()-timerStart))}).done(function(res){if(!isJson(res)){console.log('AJAX Error 2: ',res);resolve()}else resolve(JSON.parse(res))}))}
 function getColorArray(){return['#4572A7','#AA4643','#0ba828','#80699B','#3D96AE','#DB843D','#92A8CD','#A47D7C','#B5CA92',"#7cb5ec","#434348","#90ed7d","#f7a35c","#8085e9","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1"]}
 function seq(x,y){let arr=[];for(i=x;i<=y;i++)arr.push(i);return(arr)}
 function getUrlVars(){var vars={};var parts=window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,function(m,key,value){vars[key]=value});return vars}

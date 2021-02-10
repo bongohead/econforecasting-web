@@ -5,6 +5,8 @@ Description TBA
 ## 2021-02-10 [v0.08] (More General Forecasts)
 - Added API model for selecting all last vintage models by date
 - Added SCSS compiling code for modifing Bootstrap theming
+- Added some raw JS promises in lieu of old JQuery promises
+- Added federal funds rate forecast chart
 
 ## 2021-02-09 [v0.07] (SEO & First Forecasts)
 - Added robots.txt
