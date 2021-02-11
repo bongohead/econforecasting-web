@@ -69,7 +69,7 @@ class __TwigTemplate_1e89146a48b8cd5141546927cd1ee93654bf9a9145297c79e344400ff79
         // line 12
         $this->loadTemplate("fc-rates-sidebar.html", "fc-rates-ffr.html", 12)->display($context);
         // line 13
-        echo "\t<div class=\"col-md-9 col-xl-10 ms-auto pt-0 px-0\">
+        echo "\t<div class=\"col-12 col-lg-8 col-xl-9 col-xxl-9 m-auto pt-0 px-2 pb-5\">
 \t
 \t\t<div class=\"row justify-content-center\" style=\"background-color:rgba(25, 50, 20, 0.1)\">
 \t\t\t<div id=\"chart-container\" class=\"col-xl-9 col-lg-10 col-12-md\">
@@ -111,7 +111,7 @@ class __TwigTemplate_1e89146a48b8cd5141546927cd1ee93654bf9a9145297c79e344400ff79
 {% block content %}
 <div class=\"row\">
 \t{% include 'fc-rates-sidebar.html' %}
-\t<div class=\"col-md-9 col-xl-10 ms-auto pt-0 px-0\">
+\t<div class=\"col-12 col-lg-8 col-xl-9 col-xxl-9 m-auto pt-0 px-2 pb-5\">
 \t
 \t\t<div class=\"row justify-content-center\" style=\"background-color:rgba(25, 50, 20, 0.1)\">
 \t\t\t<div id=\"chart-container\" class=\"col-xl-9 col-lg-10 col-12-md\">

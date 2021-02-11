@@ -12,6 +12,7 @@ Description TBA
 - Added consistent SCSS styling and replaced all inline CSS color variables
 - Added consistent color pallette
 - Added banners to homepage
+- Improved sidebar design & grid layout
 
 ## 2021-02-09 [v0.07] (SEO & First Forecasts)
 - Added robots.txt

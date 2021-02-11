@@ -48,6 +48,9 @@ footer {
 		10rem;
 }
 
+#homepage-banner {
+	min-height: 30rem;
+}
 #homepage-banner .list-group {
 	border: 2px solid var(--bs-econblue);
 }

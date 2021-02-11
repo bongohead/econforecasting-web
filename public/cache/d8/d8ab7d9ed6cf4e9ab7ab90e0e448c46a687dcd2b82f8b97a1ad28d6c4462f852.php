@@ -164,8 +164,8 @@ class __TwigTemplate_4848799cd9d7664fb9f430ea315c54eaf57da1e68128344aed928ef98c3
 
 
 <div class=\"container-fluid px-0 pb-5\" style=\"background-image:url(static/svg_bg.svg);background-size:cover;background-position:top left\">
-\t<div class=\"container-fluid mt-5\" style=\"height:2rem;background-image:linear-gradient(45deg, var(--bs-econgreen) 50%, var(--bs-econpale) 50%)\">
-\t\t<div class=\"container px-2 py-0\" style=\"height:2rem;background-image:linear-gradient(45deg, var(--bs-econgreen) 50%, rgba(255, 255, 255, 0) 50%)\">
+\t<div class=\"container-fluid mt-5\" style=\"height:2rem;background-image:linear-gradient(45deg, var(--bs-econblue) 50%, var(--bs-econpale) 50%)\">
+\t\t<div class=\"container px-2 py-0\" style=\"height:2rem;background-image:linear-gradient(45deg, var(--bs-econblue) 50%, rgba(255, 255, 255, 0) 50%)\">
 \t\t\t<h4 class=\"text-white\">Data & Forecasts</h4>
 \t\t</div>
 \t</div>
@@ -219,8 +219,8 @@ class __TwigTemplate_4848799cd9d7664fb9f430ea315c54eaf57da1e68128344aed928ef98c3
 \t\t\t
 \t\t</div>
 \t</div>
-\t<div class=\"container-fluid mt-2\" style=\"height:2rem;background-image:linear-gradient(45deg, var(--bs-econblue) 50%, var(--bs-econpale) 50%)\">
-\t\t<div class=\"container px-2 py-0\" style=\"height:2rem;background-image:linear-gradient(45deg, var(--bs-econblue) 50%, rgba(255, 255, 255, 0) 50%)\">
+\t<div class=\"container-fluid mt-2\" style=\"height:2rem;background-image:linear-gradient(45deg, var(--bs-econorange) 50%, var(--bs-econpale) 50%)\">
+\t\t<div class=\"container px-2 py-0\" style=\"height:2rem;background-image:linear-gradient(45deg, var(--bs-econorange) 50%, rgba(255, 255, 255, 0) 50%)\">
 \t\t\t<h4 class=\"text-white\">About Us</h4>
 \t\t</div>
 \t</div>
@@ -364,8 +364,8 @@ class __TwigTemplate_4848799cd9d7664fb9f430ea315c54eaf57da1e68128344aed928ef98c3
 
 
 <div class=\"container-fluid px-0 pb-5\" style=\"background-image:url(static/svg_bg.svg);background-size:cover;background-position:top left\">
-\t<div class=\"container-fluid mt-5\" style=\"height:2rem;background-image:linear-gradient(45deg, var(--bs-econgreen) 50%, var(--bs-econpale) 50%)\">
-\t\t<div class=\"container px-2 py-0\" style=\"height:2rem;background-image:linear-gradient(45deg, var(--bs-econgreen) 50%, rgba(255, 255, 255, 0) 50%)\">
+\t<div class=\"container-fluid mt-5\" style=\"height:2rem;background-image:linear-gradient(45deg, var(--bs-econblue) 50%, var(--bs-econpale) 50%)\">
+\t\t<div class=\"container px-2 py-0\" style=\"height:2rem;background-image:linear-gradient(45deg, var(--bs-econblue) 50%, rgba(255, 255, 255, 0) 50%)\">
 \t\t\t<h4 class=\"text-white\">Data & Forecasts</h4>
 \t\t</div>
 \t</div>
@@ -419,8 +419,8 @@ class __TwigTemplate_4848799cd9d7664fb9f430ea315c54eaf57da1e68128344aed928ef98c3
 \t\t\t
 \t\t</div>
 \t</div>
-\t<div class=\"container-fluid mt-2\" style=\"height:2rem;background-image:linear-gradient(45deg, var(--bs-econblue) 50%, var(--bs-econpale) 50%)\">
-\t\t<div class=\"container px-2 py-0\" style=\"height:2rem;background-image:linear-gradient(45deg, var(--bs-econblue) 50%, rgba(255, 255, 255, 0) 50%)\">
+\t<div class=\"container-fluid mt-2\" style=\"height:2rem;background-image:linear-gradient(45deg, var(--bs-econorange) 50%, var(--bs-econpale) 50%)\">
+\t\t<div class=\"container px-2 py-0\" style=\"height:2rem;background-image:linear-gradient(45deg, var(--bs-econorange) 50%, rgba(255, 255, 255, 0) 50%)\">
 \t\t\t<h4 class=\"text-white\">About Us</h4>
 \t\t</div>
 \t</div>

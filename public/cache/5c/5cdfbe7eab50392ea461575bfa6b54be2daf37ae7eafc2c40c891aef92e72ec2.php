@@ -160,9 +160,9 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
         // line 108
         echo "\t</main>
 
-\t<footer class=\"container-fluid bg-secondary text-white px-0\">
+\t<footer class=\"container-fluid text-white px-0 bg-dark\">
 \t  <!-- Grid container -->
-\t  <div class=\"container p-4\">
+\t  <div class=\"container py-3\">
 \t\t<!--Grid row-->
 \t\t<div class=\"row\">
 \t\t  <!--Grid column-->
@@ -193,7 +193,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t  <!-- Grid container -->
 
 \t  <!-- Copyright -->
-\t  <div class=\"text-end p-3\" style=\"background-color: rgba(0, 0, 0, 0.2)\">
+\t  <div class=\"text-end p-2\" style=\"background-color: rgba(0, 0, 0, 0.2)\">
 \t\t<span>© 2021 The Center for Macroeconomic Forecasts & Insights</span>
 \t  </div>
 \t  <!-- Copyright -->
@@ -387,9 +387,9 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t{% endblock %}
 \t</main>
 
-\t<footer class=\"container-fluid bg-secondary text-white px-0\">
+\t<footer class=\"container-fluid text-white px-0 bg-dark\">
 \t  <!-- Grid container -->
-\t  <div class=\"container p-4\">
+\t  <div class=\"container py-3\">
 \t\t<!--Grid row-->
 \t\t<div class=\"row\">
 \t\t  <!--Grid column-->
@@ -420,7 +420,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t  <!-- Grid container -->
 
 \t  <!-- Copyright -->
-\t  <div class=\"text-end p-3\" style=\"background-color: rgba(0, 0, 0, 0.2)\">
+\t  <div class=\"text-end p-2\" style=\"background-color: rgba(0, 0, 0, 0.2)\">
 \t\t<span>© 2021 The Center for Macroeconomic Forecasts & Insights</span>
 \t  </div>
 \t  <!-- Copyright -->
