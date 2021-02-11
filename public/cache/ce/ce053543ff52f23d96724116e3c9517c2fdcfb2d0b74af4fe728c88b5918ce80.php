@@ -81,17 +81,17 @@ MathJax = {
         // line 22
         $this->loadTemplate("fc-rates-sidebar.html", "fc-rates-t-info.html", 22)->display($context);
         // line 23
-        echo "\t<div class=\"col-md-9 col-xl-10 ms-auto pt-0 px-0\">
+        echo "\t<div class=\"col-12 col-lg-8 col-xl-9 col-xxl-9 m-auto pt-0 px-2 pb-5\">
 \t
-\t\t<div class=\"row justify-content-center\" style=\"background-color:rgba(25, 50, 20, 0.1)\">
+\t\t<div class=\"row justify-content-center px-3\" style=\"background-color:rgba(25, 50, 20, 0.1)\">
 \t\t\t<div id=\"chart-container\" class=\"col-xl-9 col-lg-10 col-12-md\">
 \t\t\t</div>
 \t\t</div>
-\t\t<div class=\"row justify-content-center pt-3\">
+\t\t<div class=\"row justify-content-center pt-3 px-3\">
 \t\t
 \t\t\t<div class=\"col-xl-7 col-md-7 col-sm-12\">
 \t\t\t\t<h2 class=\"text-decoration-underline\">Overview</h2>
-\t\t\t\t<p>Treasury yields are the return provided by U.S. federal govenrment-issued debt of varying maturity lengths. These returns serve as an important benchmark interest rate in the economy.</p>
+\t\t\t\t<p>Treasury yields are the return provided by U.S. federal government-issued debt of varying maturity lengths. These returns serve as an important benchmark interest rate in the economy.</p>
 \t\t\t\t<p>This model aims to provide monthly Treasury yields using information gleaned from spot yields and futures markets. Since the model is directly built from market rates and uses minimal extraneous assumptions, these forecasts can be interpreted as a market consensus of future Treasury yield rates.</p>
 \t\t\t\t
 \t\t\t\t<h3 class=\"text-decoration-underline\">Methodology</h3>
@@ -166,17 +166,17 @@ MathJax = {
 {% block content %}
 <div class=\"row\">
 \t{% include 'fc-rates-sidebar.html' %}
-\t<div class=\"col-md-9 col-xl-10 ms-auto pt-0 px-0\">
+\t<div class=\"col-12 col-lg-8 col-xl-9 col-xxl-9 m-auto pt-0 px-2 pb-5\">
 \t
-\t\t<div class=\"row justify-content-center\" style=\"background-color:rgba(25, 50, 20, 0.1)\">
+\t\t<div class=\"row justify-content-center px-3\" style=\"background-color:rgba(25, 50, 20, 0.1)\">
 \t\t\t<div id=\"chart-container\" class=\"col-xl-9 col-lg-10 col-12-md\">
 \t\t\t</div>
 \t\t</div>
-\t\t<div class=\"row justify-content-center pt-3\">
+\t\t<div class=\"row justify-content-center pt-3 px-3\">
 \t\t
 \t\t\t<div class=\"col-xl-7 col-md-7 col-sm-12\">
 \t\t\t\t<h2 class=\"text-decoration-underline\">Overview</h2>
-\t\t\t\t<p>Treasury yields are the return provided by U.S. federal govenrment-issued debt of varying maturity lengths. These returns serve as an important benchmark interest rate in the economy.</p>
+\t\t\t\t<p>Treasury yields are the return provided by U.S. federal government-issued debt of varying maturity lengths. These returns serve as an important benchmark interest rate in the economy.</p>
 \t\t\t\t<p>This model aims to provide monthly Treasury yields using information gleaned from spot yields and futures markets. Since the model is directly built from market rates and uses minimal extraneous assumptions, these forecasts can be interpreted as a market consensus of future Treasury yield rates.</p>
 \t\t\t\t
 \t\t\t\t<h3 class=\"text-decoration-underline\">Methodology</h3>

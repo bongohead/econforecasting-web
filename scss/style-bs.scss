@@ -13,10 +13,23 @@
 
 // Create your own map
 $custom-colors: (
-	econgreen: rgb(48, 79, 1),
-	econlightgreen: rgb(124, 155, 77),
-	econdarkgreen: rgb(37, 48, 10),
-	econred: #B11B1B,
+	econgreen: #497901,
+	econpale: #F4F1BB,
+	econorange: #FC8A08,
+	econred: #A20104,
+	econblue: #237CDC,
+	
+	econlgreen: #83D902,
+	econlpale: #F7F5CE,
+	econlorange: #FDA745,
+	econlred: #F90105,
+	econlblue: #5A9DE5,
+	
+	econdgreen: #375B01,
+	econdpale: #E5DE60,
+	econdorange: #C16802,
+	econdred: #7A0103,
+	econdblue: #1A5DA5
 );
 $theme-colors: map-merge($theme-colors, $custom-colors);
 

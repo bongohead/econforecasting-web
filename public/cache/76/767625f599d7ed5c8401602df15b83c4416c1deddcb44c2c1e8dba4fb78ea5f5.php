@@ -34,44 +34,43 @@ class __TwigTemplate_fe94217fbea5b7759b5c4ccabb147284f75f4d6efacd71ad19b5817e39c
     {
         $macros = $this->macros;
         // line 1
-        echo "<nav class=\"sidebar col-md-3 col-xl-2 d-none d-md-block px-0 py-2\" id=\"sidebar\"> <!-- Hide Sidebar for XS and S Devices -->
+        echo "<nav class=\"sidebar col-lg-auto d-none d-lg-block px-0 py-2 bg-light\" id=\"sidebar\"> <!-- Hide Sidebar for XS to M Devices -->
 \t<div class=\"nav flex-column\">
 \t\t<a href=\"#t\" data-bs-toggle=\"collapse\" class=\"nav-link\">
 \t\t\t<div>
-\t\t\t\t<span class=\"fa fa-list-ol fa-fw mx-1\"></span> 
 \t\t\t\t<span>Treasury Yield Forecast</span>
-\t\t\t\t<span class=\"fas fa-caret-down ms-auto\"></span>
+\t\t\t\t<span class=\"fas fa-caret-down ms-1\"></span>
 \t\t\t</div>
 \t\t</a>
 \t\t<div id='t' class=\"collapse show sidebar-submenu\">
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/fc-rates-t-info\">
+\t\t\t<a class=\"text-truncate\" href=\"/fc-rates-t-info\">
 \t\t\t\t<span class=\"fas fa-info-circle\"></span><span class=\"ps-2\">Overview and Methodology</span>
 \t\t\t</a>
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/fc-rates-tcurve\">
+\t\t\t<a class=\"text-truncate\" href=\"/fc-rates-tcurve\">
 \t\t\t\t<span class=\"fas fa-chart-area\"></span><span class=\"ps-2\">Full Yield Curve</span>
 \t\t\t</a>
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/fc-rates-t-3m\">
+\t\t\t<a class=\"text-truncate\" href=\"/fc-rates-t-3m\">
 \t\t\t\t<span class=\"fas fa-chart-line\"></span><span class=\"ps-2\">3-Month T-Bill</span>
 \t\t\t</a>
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/fc-rates-t-6m\">
+\t\t\t<a class=\"text-truncate\" href=\"/fc-rates-t-6m\">
 \t\t\t\t<span class=\"fas fa-chart-line\"></span><span class=\"ps-2\">6-Month T-Bill</span>
 \t\t\t</a>
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/fc-rates-t-1y\">
+\t\t\t<a class=\"text-truncate\" href=\"/fc-rates-t-1y\">
 \t\t\t\t<span class=\"fas fa-chart-line\"></span><span class=\"ps-2\">1-Year T-Note</span>
 \t\t\t</a>
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/fc-rates-t-2y\">
+\t\t\t<a class=\"text-truncate\" href=\"/fc-rates-t-2y\">
 \t\t\t\t<span class=\"fas fa-chart-line\"></span><span class=\"ps-2\">2-Year T-Note</span>
 \t\t\t</a>
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/fc-rates-t-5y\">
+\t\t\t<a class=\"text-truncate\" href=\"/fc-rates-t-5y\">
 \t\t\t\t<span class=\"fas fa-chart-line\"></span><span class=\"ps-2\">5-Year T-Note</span>
 \t\t\t</a>
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/fc-rates-t-10y\">
+\t\t\t<a class=\"text-truncate\" href=\"/fc-rates-t-10y\">
 \t\t\t\t<span class=\"fas fa-chart-line\"></span><span class=\"ps-2\">10-Year T-Note</span>
 \t\t\t</a>
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/fc-rates-t-20y\">
+\t\t\t<a class=\"text-truncate\" href=\"/fc-rates-t-20y\">
 \t\t\t\t<span class=\"fas fa-chart-line\"></span><span class=\"ps-2\">20-Year T-Bond</span>
 \t\t\t</a>
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/fc-rates-t-30y\">
+\t\t\t<a class=\"text-truncate\" href=\"/fc-rates-t-30y\">
 \t\t\t\t<span class=\"fas fa-chart-line\"></span><span class=\"ps-2\">30-Year T-Bond</span>
 \t\t\t</a>
 
@@ -79,16 +78,15 @@ class __TwigTemplate_fe94217fbea5b7759b5c4ccabb147284f75f4d6efacd71ad19b5817e39c
 \t\t
 \t\t<a href=\"#ffr\" data-bs-toggle=\"collapse\" class=\"nav-link\">
 \t\t\t<div>
-\t\t\t\t<span class=\"fas fa-university fas-fw mx-1\"></span> 
 \t\t\t\t<span>Federal Funds Forecast</span>
-\t\t\t\t<span class=\"fas fa-caret-down ml-auto\"></span>
+\t\t\t\t<span class=\"fas fa-caret-down ms-1\"></span>
 \t\t\t</div>
 \t\t</a>
 \t\t<div id='ffr' class=\"collapse show sidebar-submenu\">
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/error\">
+\t\t\t<a class=\"text-truncate\" href=\"/error\">
 \t\t\t\t<span class=\"fas fa-info-circle\"></span><span class=\"ps-2\">Model Information</span>
 \t\t\t</a>
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/error\">
+\t\t\t<a class=\"text-truncate\" href=\"/error\">
 \t\t\t\t<span class=\"fas fa-chart-line\"></span><span class=\"ps-2\">Fed Funds Rate Forecast</span>
 \t\t\t</a>
 \t\t</div>
@@ -110,44 +108,43 @@ class __TwigTemplate_fe94217fbea5b7759b5c4ccabb147284f75f4d6efacd71ad19b5817e39c
 
     public function getSourceContext()
     {
-        return new Source("<nav class=\"sidebar col-md-3 col-xl-2 d-none d-md-block px-0 py-2\" id=\"sidebar\"> <!-- Hide Sidebar for XS and S Devices -->
+        return new Source("<nav class=\"sidebar col-lg-auto d-none d-lg-block px-0 py-2 bg-light\" id=\"sidebar\"> <!-- Hide Sidebar for XS to M Devices -->
 \t<div class=\"nav flex-column\">
 \t\t<a href=\"#t\" data-bs-toggle=\"collapse\" class=\"nav-link\">
 \t\t\t<div>
-\t\t\t\t<span class=\"fa fa-list-ol fa-fw mx-1\"></span> 
 \t\t\t\t<span>Treasury Yield Forecast</span>
-\t\t\t\t<span class=\"fas fa-caret-down ms-auto\"></span>
+\t\t\t\t<span class=\"fas fa-caret-down ms-1\"></span>
 \t\t\t</div>
 \t\t</a>
 \t\t<div id='t' class=\"collapse show sidebar-submenu\">
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/fc-rates-t-info\">
+\t\t\t<a class=\"text-truncate\" href=\"/fc-rates-t-info\">
 \t\t\t\t<span class=\"fas fa-info-circle\"></span><span class=\"ps-2\">Overview and Methodology</span>
 \t\t\t</a>
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/fc-rates-tcurve\">
+\t\t\t<a class=\"text-truncate\" href=\"/fc-rates-tcurve\">
 \t\t\t\t<span class=\"fas fa-chart-area\"></span><span class=\"ps-2\">Full Yield Curve</span>
 \t\t\t</a>
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/fc-rates-t-3m\">
+\t\t\t<a class=\"text-truncate\" href=\"/fc-rates-t-3m\">
 \t\t\t\t<span class=\"fas fa-chart-line\"></span><span class=\"ps-2\">3-Month T-Bill</span>
 \t\t\t</a>
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/fc-rates-t-6m\">
+\t\t\t<a class=\"text-truncate\" href=\"/fc-rates-t-6m\">
 \t\t\t\t<span class=\"fas fa-chart-line\"></span><span class=\"ps-2\">6-Month T-Bill</span>
 \t\t\t</a>
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/fc-rates-t-1y\">
+\t\t\t<a class=\"text-truncate\" href=\"/fc-rates-t-1y\">
 \t\t\t\t<span class=\"fas fa-chart-line\"></span><span class=\"ps-2\">1-Year T-Note</span>
 \t\t\t</a>
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/fc-rates-t-2y\">
+\t\t\t<a class=\"text-truncate\" href=\"/fc-rates-t-2y\">
 \t\t\t\t<span class=\"fas fa-chart-line\"></span><span class=\"ps-2\">2-Year T-Note</span>
 \t\t\t</a>
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/fc-rates-t-5y\">
+\t\t\t<a class=\"text-truncate\" href=\"/fc-rates-t-5y\">
 \t\t\t\t<span class=\"fas fa-chart-line\"></span><span class=\"ps-2\">5-Year T-Note</span>
 \t\t\t</a>
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/fc-rates-t-10y\">
+\t\t\t<a class=\"text-truncate\" href=\"/fc-rates-t-10y\">
 \t\t\t\t<span class=\"fas fa-chart-line\"></span><span class=\"ps-2\">10-Year T-Note</span>
 \t\t\t</a>
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/fc-rates-t-20y\">
+\t\t\t<a class=\"text-truncate\" href=\"/fc-rates-t-20y\">
 \t\t\t\t<span class=\"fas fa-chart-line\"></span><span class=\"ps-2\">20-Year T-Bond</span>
 \t\t\t</a>
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/fc-rates-t-30y\">
+\t\t\t<a class=\"text-truncate\" href=\"/fc-rates-t-30y\">
 \t\t\t\t<span class=\"fas fa-chart-line\"></span><span class=\"ps-2\">30-Year T-Bond</span>
 \t\t\t</a>
 
@@ -155,16 +152,15 @@ class __TwigTemplate_fe94217fbea5b7759b5c4ccabb147284f75f4d6efacd71ad19b5817e39c
 \t\t
 \t\t<a href=\"#ffr\" data-bs-toggle=\"collapse\" class=\"nav-link\">
 \t\t\t<div>
-\t\t\t\t<span class=\"fas fa-university fas-fw mx-1\"></span> 
 \t\t\t\t<span>Federal Funds Forecast</span>
-\t\t\t\t<span class=\"fas fa-caret-down ml-auto\"></span>
+\t\t\t\t<span class=\"fas fa-caret-down ms-1\"></span>
 \t\t\t</div>
 \t\t</a>
 \t\t<div id='ffr' class=\"collapse show sidebar-submenu\">
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/error\">
+\t\t\t<a class=\"text-truncate\" href=\"/error\">
 \t\t\t\t<span class=\"fas fa-info-circle\"></span><span class=\"ps-2\">Model Information</span>
 \t\t\t</a>
-\t\t\t<a class=\"list-group-item list-group-item-action py-1 text-truncate\" href=\"/error\">
+\t\t\t<a class=\"text-truncate\" href=\"/error\">
 \t\t\t\t<span class=\"fas fa-chart-line\"></span><span class=\"ps-2\">Fed Funds Rate Forecast</span>
 \t\t\t</a>
 \t\t</div>

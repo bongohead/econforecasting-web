@@ -26,6 +26,36 @@ $(document).ready(function() {
 				return;
 			})
 		}
+		
+		
+		if (pathname === '/') {
+			document.querySelector('nav.navbar').classList.add('justify-content-center');
+			document.querySelector('header').style.position = 'relative';
+			document.querySelector('nav.navbar > div').classList.add('col-auto');
+			document.querySelector('nav.navbar').style.backgroundColor = 'var(--bs-econdgreen)';
+			document.querySelector('nav.navbar a.navbar-brand').remove();
+			document.querySelectorAll('nav.navbar a.nav-link').forEach(x => x.style.fontSize = '1.1rem');
+
+			const newDiv = document.createElement('div');
+			newDiv.classList.add('bg-econgreen');
+			const newA = document.createElement('a');
+			newA.setAttribute('href', '/');
+			const newImg = document.createElement('img');
+			newImg.setAttribute('src', '/static/cmefi_full_inverted.png');
+			newImg.setAttribute('height', '80');
+			newImg.setAttribute('alt', 'Center for Macroeconomic Forecasts & Insights');
+			newImg.classList.add('mx-auto');
+			newImg.classList.add('d-block');
+			newImg.style.imageRendering = '-webkit-optimize-contrast';
+
+			newDiv.appendChild(newA).appendChild(newImg);
+			
+			document.querySelector('header').insertBefore(newDiv, document.querySelector('nav.navbar'));
+			
+		}
+		
+		
+		
 		// Enables tooltips
 		//$('[data-toggle="tooltip"]').tooltip();
 		

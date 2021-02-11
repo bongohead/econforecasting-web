@@ -69,11 +69,11 @@ class __TwigTemplate_ff1771623a83ffd6bd5b88fc1656ef8efb3f8e421e612460d4b8e6c7c31
         // line 12
         $this->loadTemplate("fc-rates-sidebar.html", "fc-rates-t.html", 12)->display($context);
         // line 13
-        echo "\t<div class=\"col-md-9 col-xl-10 ms-auto pt-0 px-3\">
+        echo "\t<div class=\"col-12 col-lg-8 col-xl-9 col-xxl-9 m-auto pt-0 px-2 pb-5\">
 \t\t<div class=\"row justify-content-center\">
 \t\t\t<div class=\"col-md-10 col-xl-9 py-2\">
 \t\t\t\t<div class=\"card mt-2\">
-\t\t\t\t\t<h5 class=\"card-header text-white\" style=\"background-color:var(--econlightgreen)\"><span class=\"t-varname\"></span> Forecast - 10 Years</h5>
+\t\t\t\t\t<h5 class=\"card-header text-white\" style=\"background-color:var(--bs-econblue)\"><span class=\"t-varname\"></span> Forecast - 10 Years</h5>
 \t\t\t\t\t<div class=\"card-body\">
 \t\t\t\t\t\t<p class=\"card-text\">
 \t\t\t\t\t\tThis forecast predicts the monthly average values of the <span class=\"t-varname\"></span> for the next 10 years.
@@ -150,11 +150,11 @@ class __TwigTemplate_ff1771623a83ffd6bd5b88fc1656ef8efb3f8e421e612460d4b8e6c7c31
 {% block content %}
 <div class=\"row\">
 \t{% include 'fc-rates-sidebar.html' %}
-\t<div class=\"col-md-9 col-xl-10 ms-auto pt-0 px-3\">
+\t<div class=\"col-12 col-lg-8 col-xl-9 col-xxl-9 m-auto pt-0 px-2 pb-5\">
 \t\t<div class=\"row justify-content-center\">
 \t\t\t<div class=\"col-md-10 col-xl-9 py-2\">
 \t\t\t\t<div class=\"card mt-2\">
-\t\t\t\t\t<h5 class=\"card-header text-white\" style=\"background-color:var(--econlightgreen)\"><span class=\"t-varname\"></span> Forecast - 10 Years</h5>
+\t\t\t\t\t<h5 class=\"card-header text-white\" style=\"background-color:var(--bs-econblue)\"><span class=\"t-varname\"></span> Forecast - 10 Years</h5>
 \t\t\t\t\t<div class=\"card-body\">
 \t\t\t\t\t\t<p class=\"card-text\">
 \t\t\t\t\t\tThis forecast predicts the monthly average values of the <span class=\"t-varname\"></span> for the next 10 years.

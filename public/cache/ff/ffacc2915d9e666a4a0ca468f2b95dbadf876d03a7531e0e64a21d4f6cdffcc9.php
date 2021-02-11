@@ -73,7 +73,7 @@ class __TwigTemplate_9572e23f8e70d3002681c2a368d39cc44e79c525e39ebd63542f16e7a84
         // line 14
         $this->loadTemplate("fc-rates-sidebar.html", "fc-rates-tcurve.html", 14)->display($context);
         // line 15
-        echo "\t<div class=\"col-md-9 col-xl-10 ms-auto pt-0 px-0\">
+        echo "\t<div class=\"col-12 col-lg-8 col-xl-9 col-xxl-9 m-auto pt-0 px-2 pb-5\">
 \t
 \t\t<div class=\"row justify-content-center\" style=\"background-color:rgba(25, 50, 20, 0.1)\">
 \t\t\t<div id=\"chart-container\" class=\"col-xl-9 col-lg-10 col-12-md\">
@@ -140,7 +140,7 @@ class __TwigTemplate_9572e23f8e70d3002681c2a368d39cc44e79c525e39ebd63542f16e7a84
 {% block content %}
 <div class=\"row\">
 \t{% include 'fc-rates-sidebar.html' %}
-\t<div class=\"col-md-9 col-xl-10 ms-auto pt-0 px-0\">
+\t<div class=\"col-12 col-lg-8 col-xl-9 col-xxl-9 m-auto pt-0 px-2 pb-5\">
 \t
 \t\t<div class=\"row justify-content-center\" style=\"background-color:rgba(25, 50, 20, 0.1)\">
 \t\t\t<div id=\"chart-container\" class=\"col-xl-9 col-lg-10 col-12-md\">

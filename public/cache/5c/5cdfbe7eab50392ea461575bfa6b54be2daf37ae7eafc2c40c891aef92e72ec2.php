@@ -63,7 +63,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap5.min.css\"/>
 
 \t<script src=\"https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js\"></script>
-\t<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js\" integrity=\"sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW\" crossorigin=\"anonymous\"></script>
+\t<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js\"></script>
 
 \t<script src=\"https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js\"></script>
 \t<script src=\"https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap5.min.js\"></script>
@@ -98,10 +98,10 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t<header>
 \t\t<div class=\"container-fluid\" style=\"height:.25rem;background-color:rgb(37, 48, 10);\"></div>
 
-\t\t<nav class=\"navbar navbar-expand-md navbar-dark sticky-top py-1\">
+\t\t<nav class=\"navbar navbar-expand-md navbar-dark sticky-top py-1 shadow-sm\">
 \t\t\t<div class=\"container-fluid\">
 \t\t\t\t<a class=\"navbar-brand py-0 ps-3\" href=\"/\">
-\t\t\t\t\t<img src=\"/static/cmefi_full_inverted.png\" alt=\"CMEFI Logo\" class=\"py-0\" height=\"45\">
+\t\t\t\t\t<img src=\"/static/cmefi_full_inverted.png\" alt=\"CMEFI Logo\" class=\"py-0\" height=\"45\" style=\"image-rendering:-webkit-optimize-contrast\">
 \t\t\t\t\t<!--<span class=\"navbar-brand my-0 py-0 h2\">The Center for Macroeconomic Forecasts & Insights</span>-->
 \t\t\t\t</a>
 \t\t\t\t<button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#collapsingNavbarLg\"><span class=\"navbar-toggler-icon\"></span></button>
@@ -153,14 +153,14 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t</nav>
 \t</header>
 \t
-\t<main class=\"flex-shrink-0 min-vh-100 pb-5\">
+\t<main >
 \t\t";
         // line 106
         $this->displayBlock('content', $context, $blocks);
         // line 108
         echo "\t</main>
 
-\t<footer class=\"container-fluid bg-secondary text-white text-center text-lg-start px-0\">
+\t<footer class=\"container-fluid bg-secondary text-white px-0\">
 \t  <!-- Grid container -->
 \t  <div class=\"container p-4\">
 \t\t<!--Grid row-->
@@ -298,7 +298,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap5.min.css\"/>
 
 \t<script src=\"https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js\"></script>
-\t<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js\" integrity=\"sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW\" crossorigin=\"anonymous\"></script>
+\t<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js\"></script>
 
 \t<script src=\"https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js\"></script>
 \t<script src=\"https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap5.min.js\"></script>
@@ -327,10 +327,10 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t<header>
 \t\t<div class=\"container-fluid\" style=\"height:.25rem;background-color:rgb(37, 48, 10);\"></div>
 
-\t\t<nav class=\"navbar navbar-expand-md navbar-dark sticky-top py-1\">
+\t\t<nav class=\"navbar navbar-expand-md navbar-dark sticky-top py-1 shadow-sm\">
 \t\t\t<div class=\"container-fluid\">
 \t\t\t\t<a class=\"navbar-brand py-0 ps-3\" href=\"/\">
-\t\t\t\t\t<img src=\"/static/cmefi_full_inverted.png\" alt=\"CMEFI Logo\" class=\"py-0\" height=\"45\">
+\t\t\t\t\t<img src=\"/static/cmefi_full_inverted.png\" alt=\"CMEFI Logo\" class=\"py-0\" height=\"45\" style=\"image-rendering:-webkit-optimize-contrast\">
 \t\t\t\t\t<!--<span class=\"navbar-brand my-0 py-0 h2\">The Center for Macroeconomic Forecasts & Insights</span>-->
 \t\t\t\t</a>
 \t\t\t\t<button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#collapsingNavbarLg\"><span class=\"navbar-toggler-icon\"></span></button>
@@ -382,12 +382,12 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t</nav>
 \t</header>
 \t
-\t<main class=\"flex-shrink-0 min-vh-100 pb-5\">
+\t<main >
 \t\t{% block content %}
 \t\t{% endblock %}
 \t</main>
 
-\t<footer class=\"container-fluid bg-secondary text-white text-center text-lg-start px-0\">
+\t<footer class=\"container-fluid bg-secondary text-white px-0\">
 \t  <!-- Grid container -->
 \t  <div class=\"container p-4\">
 \t\t<!--Grid row-->

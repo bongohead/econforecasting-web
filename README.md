@@ -7,6 +7,11 @@ Description TBA
 - Added SCSS compiling code for modifing Bootstrap theming
 - Added some raw JS promises in lieu of old JQuery promises
 - Added federal funds rate forecast chart
+- Added major overhaul of homepage design
+- Added nice SVG backgrounds
+- Added consistent SCSS styling and replaced all inline CSS color variables
+- Added consistent color pallette
+- Added banners to homepage
 
 ## 2021-02-09 [v0.07] (SEO & First Forecasts)
 - Added robots.txt

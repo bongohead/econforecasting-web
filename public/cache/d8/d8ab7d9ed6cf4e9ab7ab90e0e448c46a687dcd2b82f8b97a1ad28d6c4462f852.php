@@ -84,67 +84,157 @@ class __TwigTemplate_4848799cd9d7664fb9f430ea315c54eaf57da1e68128344aed928ef98c3
         $macros = $this->macros;
         // line 29
         echo "
-<div class=\"container\" style=\"max-width:1400px\">
-\t<div class=\"rounded bg-dark\"  style=\"background:url('static/bank.jpg'); background-position: top; background-size: 100% auto\">
-\t\t<div class=\"col-md-6 px-2 p-4 p-md-5 mb-4 text-white\">
-\t\t\t<p class=\"lead my-3\">The Center for Macroeconomic Forecasting & Insights is a non-partisan think tank working to democratize macroeconomic knowledge by making the necessary tools, data, and insights more available for all.</p>
-\t\t\t<p class=\"lead mb-0\"><a href=\"#\" class=\"text-white fw-bold\">Continue reading...</a></p>
+<div class=\"container-fluid\" id=\"homepage-banner\" >
+\t<div class=\"container px-4\">
+\t<div class=\"row align-items-lg-center pt-2\">
+      <div class=\"col-md-4 order-md-1 col-lg-6 text-center text-md-start\">
+        <h1 class=\"mb-3\" style=\"font-family:Molengo\">The Center for Macroeconomic Forecasting & Insights</h1>
+        <p class=\"lead mb-4\">
+        </p>
+
+\t\t<!--
+        <div class=\"d-flex flex-column flex-md-row\">
+          <a href=\"/docs/5.0/getting-started/introduction/\" class=\"btn btn-lg btn-bd-primary mb-3 me-md-3\" onclick=\"ga('send', 'event', 'Jumbotron actions', 'Get started', 'Get started');\">Get started</a>
+          <a href=\"/docs/5.0/getting-started/download/\" class=\"btn btn-lg btn-outline-secondary mb-3\" onclick=\"ga('send', 'event', 'Jumbotron actions', 'Download', 'Download 5.0.0-beta2');\">Download</a>
+        </div>
+        <p class=\"text-muted mb-0\">
+          Currently <strong>v5.0.0-beta2</strong>
+          <span class=\"px-1\">·</span>
+          <a href=\"https://getbootstrap.com/docs/4.6/getting-started/introduction/\" class=\"link-secondary\">v4.6.x docs</a>
+          <span class=\"px-1\">·</span>
+          <a href=\"/docs/versions/\" class=\"link-secondary\">All releases</a>
+        </p>
+\t\t-->
+      </div>
+
+      <div class=\"col-10 mx-auto col-md-8 order-md-2 col-lg-6 \">
+\t\t<div class=\"p-1 mb-1 bg-econgreen d-inline-block text-white\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" class=\"bi bi-bar-chart-fill\" viewBox=\"0 0 16 16\">
+\t\t  <path d=\"M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z\"/>
+\t\t</svg></div>
+\t\t<div class=\"d-inline\"><span style=\"font-size:1.4rem; color: var(--bs-econgreen)\">New Data Releases</span></div>
+\t\t<div class=\"list-group\">
+\t\t\t<a href=\"/fc-rates-tcurve\" class=\"list-group-item list-group-item-action\" aria-current=\"true\">
+\t\t\t\t<div class=\"d-flex w-100 justify-content-between\">
+\t\t\t\t\t<h5 class=\"mb-1\">Treasury Yield Forecasts Updated</h5>
+\t\t\t\t\t<small>Today</small>
+\t\t\t\t</div>
+\t\t\t\t<p class=\"mb-1\">3-month, 1-year, 5-year, 10-year, 20-year, 30-year Treasury yield forecasts have been updated.</p>
+\t\t\t\t<span class=\"btn btn-sm\">Click to go</span>
+\t\t\t</a>
+
+\t\t\t<a href=\"/ac-assets\" class=\"list-group-item list-group-item-action\" aria-current=\"true\">
+\t\t\t\t<div class=\"d-flex w-100 justify-content-between\">
+\t\t\t\t\t<h5 class=\"mb-1\">Asset Correlation Index Updated</h5>
+\t\t\t\t\t<small>Yesterday</small>
+\t\t\t\t</div>
+\t\t\t\t<p class=\"mb-1\">Historical data for the Asset Correlation Index has been updated</p>
+\t\t\t\t<span class=\"btn btn-sm\">Click to go</span>
+\t\t\t</a>
+\t\t\t
+\t\t\t<a href=\"/ac-regions\" class=\"list-group-item list-group-item-action\" aria-current=\"true\">
+\t\t\t\t<div class=\"d-flex w-100 justify-content-between\">
+\t\t\t\t\t<h5 class=\"mb-1\">Regional Correlation Index Updated</h5>
+\t\t\t\t\t<small>Yesterday</small>
+\t\t\t\t</div>
+\t\t\t\t<p class=\"mb-1\">Historical data for the Asset Correlation Index has been updated</p>
+\t\t\t\t<span class=\"btn btn-sm\">Click to go</span>
+\t\t\t</a>
+
 \t\t</div>
-\t\t<div class=\"col-md-6 p-0 col-sm-0\">
+
+      </div>
+\t  
+
+\t\t<!--
+        <div class=\"d-flex flex-column flex-md-row\">
+          <a href=\"/docs/5.0/getting-started/introduction/\" class=\"btn btn-lg btn-bd-primary mb-3 me-md-3\" onclick=\"ga('send', 'event', 'Jumbotron actions', 'Get started', 'Get started');\">Get started</a>
+          <a href=\"/docs/5.0/getting-started/download/\" class=\"btn btn-lg btn-outline-secondary mb-3\" onclick=\"ga('send', 'event', 'Jumbotron actions', 'Download', 'Download 5.0.0-beta2');\">Download</a>
+        </div>
+        <p class=\"text-muted mb-0\">
+          Currently <strong>v5.0.0-beta2</strong>
+          <span class=\"px-1\">·</span>
+          <a href=\"https://getbootstrap.com/docs/4.6/getting-started/introduction/\" class=\"link-secondary\">v4.6.x docs</a>
+          <span class=\"px-1\">·</span>
+          <a href=\"/docs/versions/\" class=\"link-secondary\">All releases</a>
+        </p>
+\t\t-->
+    </div>
+\t</div>  
+</div>
+
+
+<div class=\"container-fluid px-0 pb-5\" style=\"background-image:url(static/svg_bg.svg);background-size:cover;background-position:top left\">
+\t<div class=\"container-fluid mt-5\" style=\"height:2rem;background-image:linear-gradient(45deg, var(--bs-econgreen) 50%, var(--bs-econpale) 50%)\">
+\t\t<div class=\"container px-2 py-0\" style=\"height:2rem;background-image:linear-gradient(45deg, var(--bs-econgreen) 50%, rgba(255, 255, 255, 0) 50%)\">
+\t\t\t<h4 class=\"text-white\">Data & Forecasts</h4>
 \t\t</div>
 \t</div>
 
+\t<div class=\"container-fluid\">
+\t\t<div class=\"container pt-2 pb-2\">
+\t\t\t<div class=\"row justify-content-center\">
+\t\t\t
+\t\t\t  <div class=\"col-12 col-xl-5 border rounded shadow-sm p-3 mx-1 bg-white\">
+\t\t\t\t\t<h6 class=\"d-inline-block mb-2 text-econred fw-bold\">Interest Rate Forecasts</h6>
+\t\t\t\t\t<div class=\"row row-cols-3 row-cols-sm-4 row-cols-md-5 row-cols-lg-6 row-cols-xl-5\">
+\t\t\t\t\t\t<div class=\"col homepage-links\">
+\t\t\t\t\t\t\t<a href=\"/fc-rates-tcurve\" class=\"d-block text-dark text-decoration-none\" style=\"background-image:linear-gradient(45deg, rgba(255, 255, 255, .9) 50%, rgba(255, 255, 255, .9) 50%), url(/static/svg_fc_rates_tcurve.svg);background-size:100%, 90%;background-repeat:no-repeat;background-position:center center\">
+\t\t\t\t\t\t\t\t<div class=\"text-center rounded border-2 border-econred\">
+\t\t\t\t\t\t\t\t\t<span>Treasury<br>Yield Curve</span>
+\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t</a>
+\t\t\t\t\t\t</div>
+\t\t\t\t\t\t<div class=\"col homepage-links\">
+\t\t\t\t\t\t\t<a href=\"/fc-rates-t-3m\" class=\"d-block text-dark text-decoration-none\" style=\"background-image:linear-gradient(45deg, rgba(255, 255, 255, .9) 50%, rgba(255, 255, 255, .9)50%), url(/static/svg_fc_rates_t.svg);background-size:100%, 90%;background-repeat:no-repeat;background-position:center center\">
+\t\t\t\t\t\t\t\t<div class=\"text-center rounded border-2 border-econred\">
+\t\t\t\t\t\t\t\t\t<span>Treasury<br>Yields</span>
+\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t</a>
+\t\t\t\t\t\t</div>
+\t\t\t\t\t</div>
+\t\t\t  </div>
 
-\t<hr>
-\t<h1 style=\"color:var(--econgreen)\">New Releases</h1>
-\t  <div class=\"row mb-2\">
-\t\t<div class=\"col-md-4 col-sm-6\">
-\t\t  <div class=\"row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-150 position-relative p-3\">
-\t\t\t<div class=\"row\">
-\t\t\t\t<div class=\"col-12\">
-\t\t\t\t\t<strong class=\"d-inline-block mb-2 text-danger\">Indicators & Indices</strong>
-\t\t\t\t\t<h3 class=\"mb-0\">Asset Correlation Index</h3>
-\t\t\t\t</div>
+\t\t\t
+\t\t\t  <div class=\"col-12 col-xl-5 border rounded shadow-sm p-3 mx-1 bg-white\">
+\t\t\t\t\t<h6 class=\"d-inline-block mb-2 text-econgreen fw-bold\">Indicators & Indices</h6>
+\t\t\t\t\t<div class=\"row row-cols-3 row-cols-sm-4 row-cols-md-5 row-cols-lg-6 row-cols-xl-5\">
+\t\t\t\t\t\t<div class=\"col homepage-links\">
+\t\t\t\t\t\t\t<a href=\"/ac-assets\" class=\"d-block text-dark text-decoration-none\" style=\"background-image:linear-gradient(45deg, rgba(255, 255, 255, .9) 50%, rgba(255, 255, 255, .9)50%), url(/static/svg_ac_assets.svg);background-size:100%, 90%;background-repeat:no-repeat;background-position:center center\">
+\t\t\t\t\t\t\t\t<div class=\"text-center rounded\">
+\t\t\t\t\t\t\t\t\t<span>Asset<br>Correlation<br>Index</span>
+\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t</a>
+\t\t\t\t\t\t</div>
+\t\t\t\t\t\t<div class=\"col homepage-links\">
+\t\t\t\t\t\t\t<a href=\"/ac-regions\" class=\"d-block text-dark text-decoration-none\" style=\"background-image:linear-gradient(45deg, rgba(255, 255, 255, .9) 50%, rgba(255, 255, 255, .9)50%), url(/static/svg_ac_regions.svg);background-size:100%, 90%;background-repeat:no-repeat;background-position:center center\">
+\t\t\t\t\t\t\t\t<div class=\"text-center rounded\">
+\t\t\t\t\t\t\t\t\t<span>Regional<br>Correlation<br>Index</span>
+\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t</a>
+\t\t\t\t\t\t</div>
+\t\t\t\t\t</div>
+\t\t\t  </div>
+\t\t\t  
 \t\t\t</div>
-\t\t\t<div class=\"row\">
-\t\t\t\t<div class=\"col\">
-\t\t\t\t\t<div class=\"mb-1 text-muted\">Feb 2021</div>
-\t\t\t\t\t<p class=\"card-text mb-auto\">Historical data for the Asset Correlation Index is now available online.</p>
-\t\t\t\t\t<a href=\"ac-assets\" class=\"stretched-link\">Click to go</a>
-\t\t\t\t</div>
-\t\t\t\t<div class=\"d-none d-lg-block col-lg-4 border rounded\" style=\"background:url('/static/probabilistic-forecasting-graph.png'); background-position:bottom; background-size:100% auto;   background-repeat: no-repeat;\">
-\t\t\t\t</div>
-\t\t\t</div>
-\t\t  </div>
+\t\t\t
 \t\t</div>
-\t\t
-\t\t
-\t\t<div class=\"col-md-4 col-sm-6\">
-\t\t  <div class=\"row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-150 position-relative p-3\">
-\t\t\t<div class=\"row\">
-\t\t\t\t<div class=\"col-12\">
-\t\t\t\t\t<strong class=\"d-inline-block mb-2 text-danger\">Indicators & Indices</strong>
-\t\t\t\t\t<h3 class=\"mb-0\">Regional Correlation Index</h3>
-\t\t\t\t</div>
-\t\t\t</div>
-\t\t\t<div class=\"row\">
-\t\t\t\t<div class=\"col\">
-\t\t\t\t\t<div class=\"mb-1 text-muted\">Feb 2021</div>
-\t\t\t\t\t<p class=\"card-text mb-auto\">Historical data for the Regional Correlation Index is now available online.</p>
-\t\t\t\t\t<a href=\"ac-regions\" class=\"stretched-link\">Click to go</a>
-\t\t\t\t</div>
-\t\t\t\t<div class=\"d-none d-lg-block col-lg-4 border rounded\" style=\"background:url('/static/thumb003.png'); background-position:bottom; background-size:100% auto;   background-repeat: no-repeat;\">
-\t\t\t\t</div>
-\t\t\t</div>
-\t\t  </div>
+\t</div>
+\t<div class=\"container-fluid mt-2\" style=\"height:2rem;background-image:linear-gradient(45deg, var(--bs-econblue) 50%, var(--bs-econpale) 50%)\">
+\t\t<div class=\"container px-2 py-0\" style=\"height:2rem;background-image:linear-gradient(45deg, var(--bs-econblue) 50%, rgba(255, 255, 255, 0) 50%)\">
+\t\t\t<h4 class=\"text-white\">About Us</h4>
 \t\t</div>
-
-\t\t
-\t\t
-\t  </div>
-
-  
+\t</div>
+\t<div class=\"container pt-1\">
+\t<h4>
+\tCMEFI is a non-partisan think tank working to democratize macroeconomic knowledge by making the necessary tools, data, and insights more available for all.
+\t</h4>
+\t</div>
 </div>
+
+
+
+\t
+
 ";
     }
 
@@ -194,67 +284,157 @@ class __TwigTemplate_4848799cd9d7664fb9f430ea315c54eaf57da1e68128344aed928ef98c3
 
 {% block content %}
 
-<div class=\"container\" style=\"max-width:1400px\">
-\t<div class=\"rounded bg-dark\"  style=\"background:url('static/bank.jpg'); background-position: top; background-size: 100% auto\">
-\t\t<div class=\"col-md-6 px-2 p-4 p-md-5 mb-4 text-white\">
-\t\t\t<p class=\"lead my-3\">The Center for Macroeconomic Forecasting & Insights is a non-partisan think tank working to democratize macroeconomic knowledge by making the necessary tools, data, and insights more available for all.</p>
-\t\t\t<p class=\"lead mb-0\"><a href=\"#\" class=\"text-white fw-bold\">Continue reading...</a></p>
+<div class=\"container-fluid\" id=\"homepage-banner\" >
+\t<div class=\"container px-4\">
+\t<div class=\"row align-items-lg-center pt-2\">
+      <div class=\"col-md-4 order-md-1 col-lg-6 text-center text-md-start\">
+        <h1 class=\"mb-3\" style=\"font-family:Molengo\">The Center for Macroeconomic Forecasting & Insights</h1>
+        <p class=\"lead mb-4\">
+        </p>
+
+\t\t<!--
+        <div class=\"d-flex flex-column flex-md-row\">
+          <a href=\"/docs/5.0/getting-started/introduction/\" class=\"btn btn-lg btn-bd-primary mb-3 me-md-3\" onclick=\"ga('send', 'event', 'Jumbotron actions', 'Get started', 'Get started');\">Get started</a>
+          <a href=\"/docs/5.0/getting-started/download/\" class=\"btn btn-lg btn-outline-secondary mb-3\" onclick=\"ga('send', 'event', 'Jumbotron actions', 'Download', 'Download 5.0.0-beta2');\">Download</a>
+        </div>
+        <p class=\"text-muted mb-0\">
+          Currently <strong>v5.0.0-beta2</strong>
+          <span class=\"px-1\">·</span>
+          <a href=\"https://getbootstrap.com/docs/4.6/getting-started/introduction/\" class=\"link-secondary\">v4.6.x docs</a>
+          <span class=\"px-1\">·</span>
+          <a href=\"/docs/versions/\" class=\"link-secondary\">All releases</a>
+        </p>
+\t\t-->
+      </div>
+
+      <div class=\"col-10 mx-auto col-md-8 order-md-2 col-lg-6 \">
+\t\t<div class=\"p-1 mb-1 bg-econgreen d-inline-block text-white\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" class=\"bi bi-bar-chart-fill\" viewBox=\"0 0 16 16\">
+\t\t  <path d=\"M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z\"/>
+\t\t</svg></div>
+\t\t<div class=\"d-inline\"><span style=\"font-size:1.4rem; color: var(--bs-econgreen)\">New Data Releases</span></div>
+\t\t<div class=\"list-group\">
+\t\t\t<a href=\"/fc-rates-tcurve\" class=\"list-group-item list-group-item-action\" aria-current=\"true\">
+\t\t\t\t<div class=\"d-flex w-100 justify-content-between\">
+\t\t\t\t\t<h5 class=\"mb-1\">Treasury Yield Forecasts Updated</h5>
+\t\t\t\t\t<small>Today</small>
+\t\t\t\t</div>
+\t\t\t\t<p class=\"mb-1\">3-month, 1-year, 5-year, 10-year, 20-year, 30-year Treasury yield forecasts have been updated.</p>
+\t\t\t\t<span class=\"btn btn-sm\">Click to go</span>
+\t\t\t</a>
+
+\t\t\t<a href=\"/ac-assets\" class=\"list-group-item list-group-item-action\" aria-current=\"true\">
+\t\t\t\t<div class=\"d-flex w-100 justify-content-between\">
+\t\t\t\t\t<h5 class=\"mb-1\">Asset Correlation Index Updated</h5>
+\t\t\t\t\t<small>Yesterday</small>
+\t\t\t\t</div>
+\t\t\t\t<p class=\"mb-1\">Historical data for the Asset Correlation Index has been updated</p>
+\t\t\t\t<span class=\"btn btn-sm\">Click to go</span>
+\t\t\t</a>
+\t\t\t
+\t\t\t<a href=\"/ac-regions\" class=\"list-group-item list-group-item-action\" aria-current=\"true\">
+\t\t\t\t<div class=\"d-flex w-100 justify-content-between\">
+\t\t\t\t\t<h5 class=\"mb-1\">Regional Correlation Index Updated</h5>
+\t\t\t\t\t<small>Yesterday</small>
+\t\t\t\t</div>
+\t\t\t\t<p class=\"mb-1\">Historical data for the Asset Correlation Index has been updated</p>
+\t\t\t\t<span class=\"btn btn-sm\">Click to go</span>
+\t\t\t</a>
+
 \t\t</div>
-\t\t<div class=\"col-md-6 p-0 col-sm-0\">
+
+      </div>
+\t  
+
+\t\t<!--
+        <div class=\"d-flex flex-column flex-md-row\">
+          <a href=\"/docs/5.0/getting-started/introduction/\" class=\"btn btn-lg btn-bd-primary mb-3 me-md-3\" onclick=\"ga('send', 'event', 'Jumbotron actions', 'Get started', 'Get started');\">Get started</a>
+          <a href=\"/docs/5.0/getting-started/download/\" class=\"btn btn-lg btn-outline-secondary mb-3\" onclick=\"ga('send', 'event', 'Jumbotron actions', 'Download', 'Download 5.0.0-beta2');\">Download</a>
+        </div>
+        <p class=\"text-muted mb-0\">
+          Currently <strong>v5.0.0-beta2</strong>
+          <span class=\"px-1\">·</span>
+          <a href=\"https://getbootstrap.com/docs/4.6/getting-started/introduction/\" class=\"link-secondary\">v4.6.x docs</a>
+          <span class=\"px-1\">·</span>
+          <a href=\"/docs/versions/\" class=\"link-secondary\">All releases</a>
+        </p>
+\t\t-->
+    </div>
+\t</div>  
+</div>
+
+
+<div class=\"container-fluid px-0 pb-5\" style=\"background-image:url(static/svg_bg.svg);background-size:cover;background-position:top left\">
+\t<div class=\"container-fluid mt-5\" style=\"height:2rem;background-image:linear-gradient(45deg, var(--bs-econgreen) 50%, var(--bs-econpale) 50%)\">
+\t\t<div class=\"container px-2 py-0\" style=\"height:2rem;background-image:linear-gradient(45deg, var(--bs-econgreen) 50%, rgba(255, 255, 255, 0) 50%)\">
+\t\t\t<h4 class=\"text-white\">Data & Forecasts</h4>
 \t\t</div>
 \t</div>
 
+\t<div class=\"container-fluid\">
+\t\t<div class=\"container pt-2 pb-2\">
+\t\t\t<div class=\"row justify-content-center\">
+\t\t\t
+\t\t\t  <div class=\"col-12 col-xl-5 border rounded shadow-sm p-3 mx-1 bg-white\">
+\t\t\t\t\t<h6 class=\"d-inline-block mb-2 text-econred fw-bold\">Interest Rate Forecasts</h6>
+\t\t\t\t\t<div class=\"row row-cols-3 row-cols-sm-4 row-cols-md-5 row-cols-lg-6 row-cols-xl-5\">
+\t\t\t\t\t\t<div class=\"col homepage-links\">
+\t\t\t\t\t\t\t<a href=\"/fc-rates-tcurve\" class=\"d-block text-dark text-decoration-none\" style=\"background-image:linear-gradient(45deg, rgba(255, 255, 255, .9) 50%, rgba(255, 255, 255, .9) 50%), url(/static/svg_fc_rates_tcurve.svg);background-size:100%, 90%;background-repeat:no-repeat;background-position:center center\">
+\t\t\t\t\t\t\t\t<div class=\"text-center rounded border-2 border-econred\">
+\t\t\t\t\t\t\t\t\t<span>Treasury<br>Yield Curve</span>
+\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t</a>
+\t\t\t\t\t\t</div>
+\t\t\t\t\t\t<div class=\"col homepage-links\">
+\t\t\t\t\t\t\t<a href=\"/fc-rates-t-3m\" class=\"d-block text-dark text-decoration-none\" style=\"background-image:linear-gradient(45deg, rgba(255, 255, 255, .9) 50%, rgba(255, 255, 255, .9)50%), url(/static/svg_fc_rates_t.svg);background-size:100%, 90%;background-repeat:no-repeat;background-position:center center\">
+\t\t\t\t\t\t\t\t<div class=\"text-center rounded border-2 border-econred\">
+\t\t\t\t\t\t\t\t\t<span>Treasury<br>Yields</span>
+\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t</a>
+\t\t\t\t\t\t</div>
+\t\t\t\t\t</div>
+\t\t\t  </div>
 
-\t<hr>
-\t<h1 style=\"color:var(--econgreen)\">New Releases</h1>
-\t  <div class=\"row mb-2\">
-\t\t<div class=\"col-md-4 col-sm-6\">
-\t\t  <div class=\"row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-150 position-relative p-3\">
-\t\t\t<div class=\"row\">
-\t\t\t\t<div class=\"col-12\">
-\t\t\t\t\t<strong class=\"d-inline-block mb-2 text-danger\">Indicators & Indices</strong>
-\t\t\t\t\t<h3 class=\"mb-0\">Asset Correlation Index</h3>
-\t\t\t\t</div>
+\t\t\t
+\t\t\t  <div class=\"col-12 col-xl-5 border rounded shadow-sm p-3 mx-1 bg-white\">
+\t\t\t\t\t<h6 class=\"d-inline-block mb-2 text-econgreen fw-bold\">Indicators & Indices</h6>
+\t\t\t\t\t<div class=\"row row-cols-3 row-cols-sm-4 row-cols-md-5 row-cols-lg-6 row-cols-xl-5\">
+\t\t\t\t\t\t<div class=\"col homepage-links\">
+\t\t\t\t\t\t\t<a href=\"/ac-assets\" class=\"d-block text-dark text-decoration-none\" style=\"background-image:linear-gradient(45deg, rgba(255, 255, 255, .9) 50%, rgba(255, 255, 255, .9)50%), url(/static/svg_ac_assets.svg);background-size:100%, 90%;background-repeat:no-repeat;background-position:center center\">
+\t\t\t\t\t\t\t\t<div class=\"text-center rounded\">
+\t\t\t\t\t\t\t\t\t<span>Asset<br>Correlation<br>Index</span>
+\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t</a>
+\t\t\t\t\t\t</div>
+\t\t\t\t\t\t<div class=\"col homepage-links\">
+\t\t\t\t\t\t\t<a href=\"/ac-regions\" class=\"d-block text-dark text-decoration-none\" style=\"background-image:linear-gradient(45deg, rgba(255, 255, 255, .9) 50%, rgba(255, 255, 255, .9)50%), url(/static/svg_ac_regions.svg);background-size:100%, 90%;background-repeat:no-repeat;background-position:center center\">
+\t\t\t\t\t\t\t\t<div class=\"text-center rounded\">
+\t\t\t\t\t\t\t\t\t<span>Regional<br>Correlation<br>Index</span>
+\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t</a>
+\t\t\t\t\t\t</div>
+\t\t\t\t\t</div>
+\t\t\t  </div>
+\t\t\t  
 \t\t\t</div>
-\t\t\t<div class=\"row\">
-\t\t\t\t<div class=\"col\">
-\t\t\t\t\t<div class=\"mb-1 text-muted\">Feb 2021</div>
-\t\t\t\t\t<p class=\"card-text mb-auto\">Historical data for the Asset Correlation Index is now available online.</p>
-\t\t\t\t\t<a href=\"ac-assets\" class=\"stretched-link\">Click to go</a>
-\t\t\t\t</div>
-\t\t\t\t<div class=\"d-none d-lg-block col-lg-4 border rounded\" style=\"background:url('/static/probabilistic-forecasting-graph.png'); background-position:bottom; background-size:100% auto;   background-repeat: no-repeat;\">
-\t\t\t\t</div>
-\t\t\t</div>
-\t\t  </div>
+\t\t\t
 \t\t</div>
-\t\t
-\t\t
-\t\t<div class=\"col-md-4 col-sm-6\">
-\t\t  <div class=\"row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-150 position-relative p-3\">
-\t\t\t<div class=\"row\">
-\t\t\t\t<div class=\"col-12\">
-\t\t\t\t\t<strong class=\"d-inline-block mb-2 text-danger\">Indicators & Indices</strong>
-\t\t\t\t\t<h3 class=\"mb-0\">Regional Correlation Index</h3>
-\t\t\t\t</div>
-\t\t\t</div>
-\t\t\t<div class=\"row\">
-\t\t\t\t<div class=\"col\">
-\t\t\t\t\t<div class=\"mb-1 text-muted\">Feb 2021</div>
-\t\t\t\t\t<p class=\"card-text mb-auto\">Historical data for the Regional Correlation Index is now available online.</p>
-\t\t\t\t\t<a href=\"ac-regions\" class=\"stretched-link\">Click to go</a>
-\t\t\t\t</div>
-\t\t\t\t<div class=\"d-none d-lg-block col-lg-4 border rounded\" style=\"background:url('/static/thumb003.png'); background-position:bottom; background-size:100% auto;   background-repeat: no-repeat;\">
-\t\t\t\t</div>
-\t\t\t</div>
-\t\t  </div>
+\t</div>
+\t<div class=\"container-fluid mt-2\" style=\"height:2rem;background-image:linear-gradient(45deg, var(--bs-econblue) 50%, var(--bs-econpale) 50%)\">
+\t\t<div class=\"container px-2 py-0\" style=\"height:2rem;background-image:linear-gradient(45deg, var(--bs-econblue) 50%, rgba(255, 255, 255, 0) 50%)\">
+\t\t\t<h4 class=\"text-white\">About Us</h4>
 \t\t</div>
-
-\t\t
-\t\t
-\t  </div>
-
-  
+\t</div>
+\t<div class=\"container pt-1\">
+\t<h4>
+\tCMEFI is a non-partisan think tank working to democratize macroeconomic knowledge by making the necessary tools, data, and insights more available for all.
+\t</h4>
+\t</div>
 </div>
+
+
+
+\t
+
 {% endblock %}", "home.html", "/var/www/econforecasting.com/public/templates/home.html");
     }
 }
