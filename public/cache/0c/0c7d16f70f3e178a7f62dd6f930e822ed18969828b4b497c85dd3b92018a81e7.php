@@ -65,7 +65,7 @@ class __TwigTemplate_dba252f9fcc5185da0a6ec7b2e973f237c329d44c83056f12bca370c177
     {
         $macros = $this->macros;
         // line 12
-        echo "<div class=\"row\">
+        echo "<div class=\"row gx-0\">
 \t";
         // line 13
         $this->loadTemplate("ac-sidebar.html", "ac-assets.html", 13)->display($context);
@@ -143,7 +143,7 @@ class __TwigTemplate_dba252f9fcc5185da0a6ec7b2e973f237c329d44c83056f12bca370c177
 {% endblock %}
 
 {% block content %}
-<div class=\"row\">
+<div class=\"row gx-0\">
 \t{% include 'ac-sidebar.html' %}
 \t<div class=\"col-12 col-lg-8 col-xl-9 col-xxl-9 m-auto pt-0 px-2 pb-5\">
 \t

@@ -111,14 +111,23 @@ class __TwigTemplate_4848799cd9d7664fb9f430ea315c54eaf57da1e68128344aed928ef98c3
 \t\t<div class=\"p-1 mb-1 bg-econgreen d-inline-block text-white\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" class=\"bi bi-bar-chart-fill\" viewBox=\"0 0 16 16\">
 \t\t  <path d=\"M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z\"/>
 \t\t</svg></div>
-\t\t<div class=\"d-inline\"><span style=\"font-size:1.4rem; color: var(--bs-econgreen)\">New Data Releases</span></div>
+\t\t<div class=\"d-inline\"><span style=\"vertical-align:middle;font-size:1.4rem; color: var(--bs-econgreen)\">New Data Releases</span></div>
 \t\t<div class=\"list-group\">
+\t\t\t<a href=\"/fc-rates-ffr\" class=\"list-group-item list-group-item-action\" aria-current=\"true\">
+\t\t\t\t<div class=\"d-flex w-100 justify-content-between\">
+\t\t\t\t\t<h5 class=\"mb-1\">Federal Funds Rate & SOFR Forecasts Updated</h5>
+\t\t\t\t\t<small>Today</small>
+\t\t\t\t</div>
+\t\t\t\t<p class=\"mb-1\">FFR & SOFR forecasts have been updated using our futures model</p>
+\t\t\t\t<span class=\"btn btn-sm\">Click to go</span>
+\t\t\t</a>
+
 \t\t\t<a href=\"/fc-rates-tcurve\" class=\"list-group-item list-group-item-action\" aria-current=\"true\">
 \t\t\t\t<div class=\"d-flex w-100 justify-content-between\">
 \t\t\t\t\t<h5 class=\"mb-1\">Treasury Yield Forecasts Updated</h5>
 \t\t\t\t\t<small>Today</small>
 \t\t\t\t</div>
-\t\t\t\t<p class=\"mb-1\">3-month, 1-year, 5-year, 10-year, 20-year, 30-year Treasury yield forecasts have been updated.</p>
+\t\t\t\t<p class=\"mb-1\">3-month, 1-year, 5-year, 10-year, 20-year, 30-year Treasury yield forecasts have been updated</p>
 \t\t\t\t<span class=\"btn btn-sm\">Click to go</span>
 \t\t\t</a>
 
@@ -191,6 +200,21 @@ class __TwigTemplate_4848799cd9d7664fb9f430ea315c54eaf57da1e68128344aed928ef98c3
 \t\t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t</a>
 \t\t\t\t\t\t</div>
+\t\t\t\t\t\t<div class=\"col homepage-links\">
+\t\t\t\t\t\t\t<a href=\"/fc-rates-ffr\" class=\"d-block text-dark text-decoration-none\" style=\"background-image:linear-gradient(45deg, rgba(255, 255, 255, .9) 50%, rgba(255, 255, 255, .9)50%), url(/static/svg_fc_rates_ffr.svg);background-size:100%, 90%;background-repeat:no-repeat;background-position:center center\">
+\t\t\t\t\t\t\t\t<div class=\"text-center rounded border-2 border-econred\">
+\t\t\t\t\t\t\t\t\t<span>Federal<br>Funds<br>Rate</span>
+\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t</a>
+\t\t\t\t\t\t</div>
+\t\t\t\t\t\t<div class=\"col homepage-links\">
+\t\t\t\t\t\t\t<a href=\"/fc-rates-sofr\" class=\"d-block text-dark text-decoration-none\" style=\"background-image:linear-gradient(45deg, rgba(255, 255, 255, .9) 50%, rgba(255, 255, 255, .9)50%), url(/static/svg_fc_rates_sofr.svg);background-size:100%, 90%;background-repeat:no-repeat;background-position:center center\">
+\t\t\t\t\t\t\t\t<div class=\"text-center rounded border-2 border-econred\">
+\t\t\t\t\t\t\t\t\t<span>SOFR<br>Rate</span>
+\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t</a>
+\t\t\t\t\t\t</div>
+
 \t\t\t\t\t</div>
 \t\t\t  </div>
 
@@ -311,14 +335,23 @@ class __TwigTemplate_4848799cd9d7664fb9f430ea315c54eaf57da1e68128344aed928ef98c3
 \t\t<div class=\"p-1 mb-1 bg-econgreen d-inline-block text-white\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" class=\"bi bi-bar-chart-fill\" viewBox=\"0 0 16 16\">
 \t\t  <path d=\"M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z\"/>
 \t\t</svg></div>
-\t\t<div class=\"d-inline\"><span style=\"font-size:1.4rem; color: var(--bs-econgreen)\">New Data Releases</span></div>
+\t\t<div class=\"d-inline\"><span style=\"vertical-align:middle;font-size:1.4rem; color: var(--bs-econgreen)\">New Data Releases</span></div>
 \t\t<div class=\"list-group\">
+\t\t\t<a href=\"/fc-rates-ffr\" class=\"list-group-item list-group-item-action\" aria-current=\"true\">
+\t\t\t\t<div class=\"d-flex w-100 justify-content-between\">
+\t\t\t\t\t<h5 class=\"mb-1\">Federal Funds Rate & SOFR Forecasts Updated</h5>
+\t\t\t\t\t<small>Today</small>
+\t\t\t\t</div>
+\t\t\t\t<p class=\"mb-1\">FFR & SOFR forecasts have been updated using our futures model</p>
+\t\t\t\t<span class=\"btn btn-sm\">Click to go</span>
+\t\t\t</a>
+
 \t\t\t<a href=\"/fc-rates-tcurve\" class=\"list-group-item list-group-item-action\" aria-current=\"true\">
 \t\t\t\t<div class=\"d-flex w-100 justify-content-between\">
 \t\t\t\t\t<h5 class=\"mb-1\">Treasury Yield Forecasts Updated</h5>
 \t\t\t\t\t<small>Today</small>
 \t\t\t\t</div>
-\t\t\t\t<p class=\"mb-1\">3-month, 1-year, 5-year, 10-year, 20-year, 30-year Treasury yield forecasts have been updated.</p>
+\t\t\t\t<p class=\"mb-1\">3-month, 1-year, 5-year, 10-year, 20-year, 30-year Treasury yield forecasts have been updated</p>
 \t\t\t\t<span class=\"btn btn-sm\">Click to go</span>
 \t\t\t</a>
 
@@ -391,6 +424,21 @@ class __TwigTemplate_4848799cd9d7664fb9f430ea315c54eaf57da1e68128344aed928ef98c3
 \t\t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t</a>
 \t\t\t\t\t\t</div>
+\t\t\t\t\t\t<div class=\"col homepage-links\">
+\t\t\t\t\t\t\t<a href=\"/fc-rates-ffr\" class=\"d-block text-dark text-decoration-none\" style=\"background-image:linear-gradient(45deg, rgba(255, 255, 255, .9) 50%, rgba(255, 255, 255, .9)50%), url(/static/svg_fc_rates_ffr.svg);background-size:100%, 90%;background-repeat:no-repeat;background-position:center center\">
+\t\t\t\t\t\t\t\t<div class=\"text-center rounded border-2 border-econred\">
+\t\t\t\t\t\t\t\t\t<span>Federal<br>Funds<br>Rate</span>
+\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t</a>
+\t\t\t\t\t\t</div>
+\t\t\t\t\t\t<div class=\"col homepage-links\">
+\t\t\t\t\t\t\t<a href=\"/fc-rates-sofr\" class=\"d-block text-dark text-decoration-none\" style=\"background-image:linear-gradient(45deg, rgba(255, 255, 255, .9) 50%, rgba(255, 255, 255, .9)50%), url(/static/svg_fc_rates_sofr.svg);background-size:100%, 90%;background-repeat:no-repeat;background-position:center center\">
+\t\t\t\t\t\t\t\t<div class=\"text-center rounded border-2 border-econred\">
+\t\t\t\t\t\t\t\t\t<span>SOFR<br>Rate</span>
+\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t</a>
+\t\t\t\t\t\t</div>
+
 \t\t\t\t\t</div>
 \t\t\t  </div>
 

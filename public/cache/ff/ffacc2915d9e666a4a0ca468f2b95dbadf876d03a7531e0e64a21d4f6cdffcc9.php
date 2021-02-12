@@ -68,7 +68,7 @@ class __TwigTemplate_9572e23f8e70d3002681c2a368d39cc44e79c525e39ebd63542f16e7a84
     {
         $macros = $this->macros;
         // line 13
-        echo "<div class=\"row\">
+        echo "<div class=\"row gx-0\">
 \t";
         // line 14
         $this->loadTemplate("fc-rates-sidebar.html", "fc-rates-tcurve.html", 14)->display($context);
@@ -138,7 +138,7 @@ class __TwigTemplate_9572e23f8e70d3002681c2a368d39cc44e79c525e39ebd63542f16e7a84
 {% endblock %}
 
 {% block content %}
-<div class=\"row\">
+<div class=\"row gx-0\">
 \t{% include 'fc-rates-sidebar.html' %}
 \t<div class=\"col-12 col-lg-8 col-xl-9 col-xxl-9 m-auto pt-0 px-2 pb-5\">
 \t

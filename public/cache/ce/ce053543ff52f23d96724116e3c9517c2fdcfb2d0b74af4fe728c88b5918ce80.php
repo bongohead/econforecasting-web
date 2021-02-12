@@ -76,7 +76,7 @@ MathJax = {
     {
         $macros = $this->macros;
         // line 21
-        echo "<div class=\"row\">
+        echo "<div class=\"row gx-0\">
 \t";
         // line 22
         $this->loadTemplate("fc-rates-sidebar.html", "fc-rates-t-info.html", 22)->display($context);
@@ -164,7 +164,7 @@ MathJax = {
 {% endblock %}
 
 {% block content %}
-<div class=\"row\">
+<div class=\"row gx-0\">
 \t{% include 'fc-rates-sidebar.html' %}
 \t<div class=\"col-12 col-lg-8 col-xl-9 col-xxl-9 m-auto pt-0 px-2 pb-5\">
 \t

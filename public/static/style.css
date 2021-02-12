@@ -71,6 +71,25 @@ footer {
 	background-color: var(--bs-econlgreen);
 }
 
+/* Forecast table */
+#li-container {
+	border: 1px solid var(--bs-econblue);
+}
+#li-container > li {
+	font-size: .85rem;
+	line-height: 1.0rem;
+	padding: .5rem;
+	text-align: center;
+}
+#li-container > li:hover {
+	cursor: pointer;
+}
+#li-container > li.active {
+	background-color: var(--bs-econblue);
+}
+
+
+
 /* Homepage links */
 div.homepage-links > a {
 	border: 2px solid var(--bs-econblue);

@@ -12,8 +12,8 @@ use Twig\Sandbox\SecurityNotAllowedFunctionError;
 use Twig\Source;
 use Twig\Template;
 
-/* fc-rates-ffr.html */
-class __TwigTemplate_1e89146a48b8cd5141546927cd1ee93654bf9a9145297c79e344400ff79e760a extends \Twig\Template
+/* fc-rates-other.html */
+class __TwigTemplate_b549a730f034a5202fa5d950e10cc5b02ae39fe49392b69baf99641b104109da extends \Twig\Template
 {
     private $source;
     private $macros = [];
@@ -40,7 +40,7 @@ class __TwigTemplate_1e89146a48b8cd5141546927cd1ee93654bf9a9145297c79e344400ff79
     protected function doDisplay(array $context, array $blocks = [])
     {
         $macros = $this->macros;
-        $this->parent = $this->loadTemplate("base.html", "fc-rates-ffr.html", 1);
+        $this->parent = $this->loadTemplate("base.html", "fc-rates-other.html", 1);
         $this->parent->display($context, array_merge($this->blocks, $blocks));
     }
 
@@ -67,7 +67,7 @@ class __TwigTemplate_1e89146a48b8cd5141546927cd1ee93654bf9a9145297c79e344400ff79
         echo "<div class=\"row gx-0\">
 \t";
         // line 12
-        $this->loadTemplate("fc-rates-sidebar.html", "fc-rates-ffr.html", 12)->display($context);
+        $this->loadTemplate("fc-rates-sidebar.html", "fc-rates-other.html", 12)->display($context);
         // line 13
         echo "\t<div class=\"col px-0\">
 \t
@@ -107,7 +107,7 @@ class __TwigTemplate_1e89146a48b8cd5141546927cd1ee93654bf9a9145297c79e344400ff79
 
     public function getTemplateName()
     {
-        return "fc-rates-ffr.html";
+        return "fc-rates-other.html";
     }
 
     public function isTraitable()
@@ -167,6 +167,6 @@ class __TwigTemplate_1e89146a48b8cd5141546927cd1ee93654bf9a9145297c79e344400ff79
 \t
 \t</div>
 </div>
-{% endblock %}", "fc-rates-ffr.html", "/var/www/econforecasting.com/public/templates/fc-rates-ffr.html");
+{% endblock %}", "fc-rates-other.html", "/var/www/econforecasting.com/public/templates/fc-rates-other.html");
     }
 }

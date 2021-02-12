@@ -119,7 +119,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t\t\t\t\t\t<div class=\"dropdown-menu\">
 \t\t\t\t\t\t\t\t<div class=\"d-md-flex align-items-start justify-content-start\">
 \t\t\t\t\t\t\t\t\t<div>   
-\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header\">TREASURY YIELDS</div>
+\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 px-3 border-bottom border-econgreen\" style=\"font-size:1.0rem\">TREASURY YIELDS</div>
 \t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-info\">Overview and Methodology</a>
 \t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-tcurve\">Full Treasury Yield Forecast</a>
 \t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-3m\">3 Month T-Bill Forecast</a>
@@ -128,10 +128,9 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-30y\">30 Year T-Bond Forecast</a>
 \t\t\t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t\t\t<div>
-\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header\">WIP</div>
-\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\">WIP</a>
-\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\">WIP</a>
-\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\">WIP</a>
+\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 px-3 border-bottom border-econgreen\" style=\"font-size:1.0rem\">OTHER INTEREST RATES</div>
+\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-ffr\">Federal Funds Rate Forecast</a>
+\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-sofr\">SOFR Forecast</a>
 \t\t\t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t\t <div class=\"dropdown-divider\"></div>
@@ -155,9 +154,9 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t
 \t<main >
 \t\t";
-        // line 106
+        // line 105
         $this->displayBlock('content', $context, $blocks);
-        // line 108
+        // line 107
         echo "\t</main>
 
 \t<footer class=\"container-fluid text-white px-0 bg-dark\">
@@ -193,9 +192,11 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t  <!-- Grid container -->
 
 \t  <!-- Copyright -->
-\t  <div class=\"text-end p-2\" style=\"background-color: rgba(0, 0, 0, 0.2)\">
-\t\t<span>© 2021 The Center for Macroeconomic Forecasts & Insights</span>
-\t  </div>
+\t<div class=\"container-fluid\" style=\"background-color: rgba(0, 0, 0, 0.2)\">
+\t\t<div class=\"container text-end p-2\">
+\t\t\t<span>© 2021 <img class=\"mx-1\" width=\"16\" height=\"16\" src=\"/static/cmefi_short.png\"> The Center for Macroeconomic Forecasts &amp; Insights</span>
+\t\t</div>
+\t</div>
 \t  <!-- Copyright -->
 \t</footer>
 
@@ -232,7 +233,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 
 \t<script>
 \t  ";
-        // line 181
+        // line 182
         echo ($context["bodyScript"] ?? null);
         echo "
 \t</script>
@@ -253,11 +254,11 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
         $macros = $this->macros;
     }
 
-    // line 106
+    // line 105
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 107
+        // line 106
         echo "\t\t";
     }
 
@@ -273,7 +274,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 
     public function getDebugInfo()
     {
-        return array (  261 => 107,  257 => 106,  251 => 34,  245 => 8,  236 => 181,  161 => 108,  159 => 106,  86 => 35,  84 => 34,  79 => 32,  54 => 10,  51 => 9,  49 => 8,  40 => 1,);
+        return array (  262 => 106,  258 => 105,  252 => 34,  246 => 8,  237 => 182,  160 => 107,  158 => 105,  86 => 35,  84 => 34,  79 => 32,  54 => 10,  51 => 9,  49 => 8,  40 => 1,);
     }
 
     public function getSourceContext()
@@ -348,7 +349,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t\t\t\t\t\t<div class=\"dropdown-menu\">
 \t\t\t\t\t\t\t\t<div class=\"d-md-flex align-items-start justify-content-start\">
 \t\t\t\t\t\t\t\t\t<div>   
-\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header\">TREASURY YIELDS</div>
+\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 px-3 border-bottom border-econgreen\" style=\"font-size:1.0rem\">TREASURY YIELDS</div>
 \t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-info\">Overview and Methodology</a>
 \t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-tcurve\">Full Treasury Yield Forecast</a>
 \t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-3m\">3 Month T-Bill Forecast</a>
@@ -357,10 +358,9 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-30y\">30 Year T-Bond Forecast</a>
 \t\t\t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t\t\t<div>
-\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header\">WIP</div>
-\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\">WIP</a>
-\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\">WIP</a>
-\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\">WIP</a>
+\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 px-3 border-bottom border-econgreen\" style=\"font-size:1.0rem\">OTHER INTEREST RATES</div>
+\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-ffr\">Federal Funds Rate Forecast</a>
+\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-sofr\">SOFR Forecast</a>
 \t\t\t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t\t <div class=\"dropdown-divider\"></div>
@@ -420,9 +420,11 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t  <!-- Grid container -->
 
 \t  <!-- Copyright -->
-\t  <div class=\"text-end p-2\" style=\"background-color: rgba(0, 0, 0, 0.2)\">
-\t\t<span>© 2021 The Center for Macroeconomic Forecasts & Insights</span>
-\t  </div>
+\t<div class=\"container-fluid\" style=\"background-color: rgba(0, 0, 0, 0.2)\">
+\t\t<div class=\"container text-end p-2\">
+\t\t\t<span>© 2021 <img class=\"mx-1\" width=\"16\" height=\"16\" src=\"/static/cmefi_short.png\"> The Center for Macroeconomic Forecasts &amp; Insights</span>
+\t\t</div>
+\t</div>
 \t  <!-- Copyright -->
 \t</footer>
 

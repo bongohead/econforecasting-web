@@ -12,7 +12,10 @@ Description TBA
 - Added consistent SCSS styling and replaced all inline CSS color variables
 - Added consistent color pallette
 - Added banners to homepage
+- Added FFR forecasts, API, table, downloads, and methodology
+- Added SOFR forecasts, API, table, downloads, and methodology
 - Improved sidebar design & grid layout
+- Fixed major bug with BS5 gutters causing horizontal overflow/scrolling on every page with a sidebar
 
 ## 2021-02-09 [v0.07] (SEO & First Forecasts)
 - Added robots.txt
