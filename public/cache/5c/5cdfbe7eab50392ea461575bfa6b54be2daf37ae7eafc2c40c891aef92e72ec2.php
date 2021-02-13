@@ -128,10 +128,16 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-30y\">30 Year T-Bond Forecast</a>
 \t\t\t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t\t\t<div>
-\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 px-3 border-bottom border-econgreen\" style=\"font-size:1.0rem\">OTHER INTEREST RATES</div>
+\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 px-3 border-bottom border-econgreen\" style=\"font-size:1.0rem\">BENCHMARK RATES</div>
 \t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-ffr\">Federal Funds Rate Forecast</a>
 \t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-sofr\">SOFR Forecast</a>
 \t\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t\t\t<div>
+\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 px-3 border-bottom border-econgreen\" style=\"font-size:1.0rem\">MORTGAGE RATES</div>
+\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-mort15y\">15-Year Mortgage Rate</a>
+\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-mort30y\">30-Year Mortgage Rate</a>
+\t\t\t\t\t\t\t\t\t</div>
+
 \t\t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t\t <div class=\"dropdown-divider\"></div>
 \t\t\t\t\t\t\t</div>
@@ -154,9 +160,9 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t
 \t<main >
 \t\t";
-        // line 105
+        // line 111
         $this->displayBlock('content', $context, $blocks);
-        // line 107
+        // line 113
         echo "\t</main>
 
 \t<footer class=\"container-fluid text-white px-0 bg-dark\">
@@ -233,7 +239,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 
 \t<script>
 \t  ";
-        // line 182
+        // line 188
         echo ($context["bodyScript"] ?? null);
         echo "
 \t</script>
@@ -254,11 +260,11 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
         $macros = $this->macros;
     }
 
-    // line 105
+    // line 111
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 106
+        // line 112
         echo "\t\t";
     }
 
@@ -274,7 +280,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 
     public function getDebugInfo()
     {
-        return array (  262 => 106,  258 => 105,  252 => 34,  246 => 8,  237 => 182,  160 => 107,  158 => 105,  86 => 35,  84 => 34,  79 => 32,  54 => 10,  51 => 9,  49 => 8,  40 => 1,);
+        return array (  268 => 112,  264 => 111,  258 => 34,  252 => 8,  243 => 188,  166 => 113,  164 => 111,  86 => 35,  84 => 34,  79 => 32,  54 => 10,  51 => 9,  49 => 8,  40 => 1,);
     }
 
     public function getSourceContext()
@@ -358,10 +364,16 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-30y\">30 Year T-Bond Forecast</a>
 \t\t\t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t\t\t<div>
-\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 px-3 border-bottom border-econgreen\" style=\"font-size:1.0rem\">OTHER INTEREST RATES</div>
+\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 px-3 border-bottom border-econgreen\" style=\"font-size:1.0rem\">BENCHMARK RATES</div>
 \t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-ffr\">Federal Funds Rate Forecast</a>
 \t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-sofr\">SOFR Forecast</a>
 \t\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t\t\t<div>
+\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 px-3 border-bottom border-econgreen\" style=\"font-size:1.0rem\">MORTGAGE RATES</div>
+\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-mort15y\">15-Year Mortgage Rate</a>
+\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-mort30y\">30-Year Mortgage Rate</a>
+\t\t\t\t\t\t\t\t\t</div>
+
 \t\t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t\t <div class=\"dropdown-divider\"></div>
 \t\t\t\t\t\t\t</div>

@@ -11,11 +11,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		const varFullname =
 			varname === 'ffr' ? 'Effective Federal Funds Rate' 
 			: varname === 'sofr' ? 'Secured Overnight Financing Rate'
+			: varname === 'mort30y' ? '30-Year Fixed-Rate Mortgage Rate'
+			: varname === 'mort15y' ? '15-Year Fixed-Rate Mortgage Rate'
 			: 'NA';
 			
 		const varUnits = 
 			varname === 'ffr' ? '%' 
 			: varname === 'sofr' ? '%'
+			: varname === 'mort30y' ? '%'
+			: varname === 'mort15y' ? '%'
 			: 'NA';
 
 		const udPrev = getAllData().userData || {};
@@ -35,6 +39,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		document.querySelector('meta[name="description"]').setAttribute('content',
 			varname === 'ffr' ? 'Monthly consensus forecasts for the federal funds rate (FFR) derived using a futures model.'
 			: varname === 'sofr' ? 'Monthly consensus forecasts for the secured overnight financing rate (SOFR) derived using a futures model.'
+			: varname === 'mort30y' ? 'Monthly forecasts for the 30-year fixed rate mortgage rate.'
+			: varname === 'mort15y' ? 'Monthly forecasts for the 15-year fixed rate mortgage rate.'
+
 			: ''
 		);
 
@@ -62,6 +69,26 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			<img class="me-2" width="16" height="16" src="/static/cmefi_short.png"><div class="d-inline"><span style="vertical-align:middle;font-size:1.4rem; color: var(--bs-econgreen)">BASELINE FORECAST - METHODOLOGY</span></div>
 			<hr class="mt-0 mb-3 bg-econgreen">
 			<p>Forecasts are constructed directly using futures data from the CME Group. Monthly expirations for 30-day federal funds futures are converted into rolling future forecast values by subtracting the futures price from 100.</p>
+			<p>Data and forecasts are updated on a daily basis.</p>
+			`
+			: varname === 'mort30y' ?
+			`
+			<div class="d-inline"><span style="vertical-align:middle;font-size:1.4rem; color: var(--bs-econgreen)">OVERVIEW</span></div>
+			<hr class="mt-0 mb-3 bg-econgreen">
+			<p>This model provides monthly 30-year fixed-rate mortgage forecasts for a forecast period of 5 years. This model is built using our <a href="/fc-rates-t-30y"> baseline 30-year Treasury-yield forecast</a> combined with a quantitative model estimating the spread between the 30-Year Treasury and the 30-Year fixed-rate mortgage rate.</p>
+			<img class="me-2" width="16" height="16" src="/static/cmefi_short.png"><div class="d-inline"><span style="vertical-align:middle;font-size:1.4rem; color: var(--bs-econgreen)">BASELINE FORECAST - METHODOLOGY</span></div>
+			<hr class="mt-0 mb-3 bg-econgreen">
+			<p>The mortgage risk premium (the spread between the mortgage rate and the Treasury yield of equivalent maturity) is estimated with a vector autoregression (VAR) model using consensus forecasts of housing prices and new housing starts. Optimal lag length for the VAR is chosen with an out-of-sample cost minimization procedure. Once the mortgage risk premium is forecasted, it is added to our baseline Treasury yield forecast to derive the mortgage rate forecast.</p>
+			<p>Data and forecasts are updated on a daily basis.</p>
+			`
+			: varname === 'mort15y' ?
+			`
+			<div class="d-inline"><span style="vertical-align:middle;font-size:1.4rem; color: var(--bs-econgreen)">OVERVIEW</span></div>
+			<hr class="mt-0 mb-3 bg-econgreen">
+			<p>This model provides monthly 15-year fixed-rate mortgage forecasts for a forecast period of 5 years. This model is built using our <a href="/fc-rates-t-10y"> baseline 10-year Treasury-yield forecast</a> combined with a quantitative model estimating the spread between the 10-Year Treasury and the 15-Year fixed-rate mortgage rate.</p>
+			<img class="me-2" width="16" height="16" src="/static/cmefi_short.png"><div class="d-inline"><span style="vertical-align:middle;font-size:1.4rem; color: var(--bs-econgreen)">BASELINE FORECAST - METHODOLOGY</span></div>
+			<hr class="mt-0 mb-3 bg-econgreen">
+			<p>The mortgage risk premium (the spread between the mortgage rate and the Treasury yield of equivalent maturity) is estimated with a vector autoregression (VAR) model using consensus forecasts of housing prices and new housing starts. Optimal lag length for the VAR is chosen with an out-of-sample cost minimization procedure. Once the mortgage risk premium is forecasted, it is added to our baseline Treasury yield forecast to derive the mortgage rate forecast.</p>
 			<p>Data and forecasts are updated on a daily basis.</p>
 			`
 			: '';
@@ -117,7 +144,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				(a.cmefi === true && a.fcname !== 'hist' ? -1 : (b.cmefi === true && b.fcname !== 'hist' ? 1 : (a.fcname === 'hist' ? 1 : (b.fcname === 'hist' ? -1 : 0))))
 			).map((x, i) => ({...x, order: i}));
 			
-		console.log('fcDataParsed', fcDataParsed);
+		//console.log('fcDataParsed', fcDataParsed);
 		
 		setData('userData', {...getData('userData'), ...{fcDataParsed: fcDataParsed}});
 		
@@ -198,18 +225,18 @@ function drawChart(fcDataParsed, varFullname, varUnits) {
 			{
 				id: x.fcname,
 				name: (x.fcname !== 'hist' ? x.shortname + ' Forecast (Updated ' + moment(x.vintage_date).format('MM/DD/YY') + ')': x.shortname),
-				data: x.data.map(x => [new Date(x[0]).getTime(), x[1]]),
+				data: x.data.map(x => [parseInt(moment(x[0]).format('x')), x[1]]),
 				type: 'spline',
 				dashStyle: (x.fcname === 'hist' ? 'solid' : 'solid'),
 				lineWidth: (x.fcname === 'hist' ? 4 : 2),
-				color: (x.fcname === 'hist' ? 'black' : getColorArray()[i]),
+				color: (x.fcname === 'hist' ? 'black' : ['var(--bs-econlred)', 'var(--bs-econorange)', 'var(--bs-econlgreen)', 'var(--bs-econblue)'][i]),
 				opacity: 2,
 				visible: (x.cmefi === true),
 				index: i // Force legend to order items correctly
 				//(x.type === 'history' || moment(x.date).month() === moment(fcDataParsed.filter(x => x.type === 'history').slice(-1)[0].date).month() + 1)
 			}
 		));
-	console.log('chartData', chartData);
+	//console.log('chartData', chartData);
 	
 	const o = {
         chart: {
@@ -240,12 +267,12 @@ function drawChart(fcDataParsed, varFullname, varUnits) {
 				shadow: true,
 				dataGrouping: {
 					enabled: true,
-					units: [['day', [1]]],
-					forced: true
+					units: [['day', [1]]]
 				},
 				marker : {
 					enabled: true,
-					radius: 2
+					radius: 2,
+					symbol: 'triangle'
 				}
 			}
         },
@@ -341,7 +368,7 @@ function drawChart(fcDataParsed, varFullname, varUnits) {
             useHTML: true,
 			shared: true,
 			formatter: function () {
-				console.log(this.points);
+				//console.log(this.points);
 				//console.log(this, moment(this.x).format('YYYY MM DD'));
 				const points = this.points;
 				const x = this.x;
@@ -377,14 +404,14 @@ function drawTable(fcDataParsed, varFullname, varUnits) {
 	// Separate tab for each table
 	const tableData = fcDataParsed
 	.forEach(function(x, i) {
-		console.log(x.fcname);
+		//console.log(x.fcname);
 		const seriesData =
 			(x.fcname === 'hist') ?
-			x.data.map(y => ({date: (x.freq === 'q' ? moment(y[0]).format('YYYY[Q]Q') : moment(y[0]).format('YYYY-MM')), type: 'Historical Data', value: y[1]})) :
+			x.data.map(y => ({date: (x.freq === 'q' ? moment(y[0]).format('YYYY[Q]Q') : moment(y[0]).format('YYYY-MM')), type: 'Historical Data', value: y[1].toFixed(4)})) :
 			/*fcDataParsed.filter(x => x.fcname === 'hist')[0].data.slice(-4).map(y => ({date: (x.freq === 'q' ? moment(y[0]).format('YYYY[Q]Q') : moment(y[0]).format('YYYY-MM')), type: 'Historical Data', value: y[1]}))
 				.concat(x.data.map(y => ({date: (x.freq === 'q' ? moment(y[0]).format('YYYY[Q]Q') : moment(y[0]).format('YYYY-MM')), type: 'Forecast', value: y[1]})));
 				*/
-			x.data.map(y => ({date: (x.freq === 'q' ? moment(y[0]).format('YYYY[Q]Q') : moment(y[0]).format('YYYY-MM')), type: 'Forecast', value: y[1]}));
+			x.data.map(y => ({date: (x.freq === 'q' ? moment(y[0]).format('YYYY[Q]Q') : moment(y[0]).format('YYYY-MM')), type: 'Forecast', value: y[1].toFixed(4)}));
 		const dtCols = [
 			{title: 'Date', data: 'date'},
 			{title: 'Type', data: 'type'},
@@ -399,7 +426,7 @@ function drawTable(fcDataParsed, varFullname, varUnits) {
 				css: 'font-size: .9rem'
 			}}
 		});
-		console.log(dtCols);
+		//console.log(dtCols);
 		
 		const copySvg =
 		`<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-clipboard me-1" viewBox="0 0 16 16">
@@ -476,10 +503,10 @@ function drawTable(fcDataParsed, varFullname, varUnits) {
 		// Draw the table
 		const dTable = $(table).DataTable(o);
 		if (i !== 0) $(table).parents('div.dataTables_wrapper').first().hide();
-		console.log(dTable);
+		//console.log(dTable);
 
 		// Move the download buttons
-		console.log(table.parentElement);
+		//console.log(table.parentElement);
 		const downloadDiv = table.closest('.dataTables_wrapper').querySelector('.dt-buttons');
 		downloadDiv.classList.add('float-end');
 		downloadDiv.id = 'download-' + x.fcname;
@@ -488,7 +515,7 @@ function drawTable(fcDataParsed, varFullname, varUnits) {
 		
 		/* Now add event listener */
 		li.addEventListener('click', function() { 
-			console.log(this, this.getAttribute('data-ref-table'));
+			//console.log(this, this.getAttribute('data-ref-table'));
 			// Change active li
 			document.querySelectorAll('#li-container > li').forEach(el => el.classList.remove('active'));
 			this.classList.add('active');
@@ -535,7 +562,6 @@ function drawTable(fcDataParsed, varFullname, varUnits) {
 			dTable.table().container()
 		);
 		*/
-		console.log(dTable);
 
 		
 	});

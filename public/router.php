@@ -27,7 +27,7 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 			['template' => 'fc-rates-t', 'request' => ['fc-rates-t-3m', 'fc-rates-t-6m', 'fc-rates-t-1y', 'fc-rates-t-2y', 'fc-rates-t-5y', 'fc-rates-t-10y', 'fc-rates-t-20y', 'fc-rates-t-30y'], 'title' => 'Treasury Yield Economic Forecasts', 'models' => [], 'js' => ['init', 'fc-rates-t']],
 			['template' => 'fc-rates-tcurve', 'request' => ['fc-rates-tcurve'], 'title' => 'Treasury Yield Curve Forecasts | Center for Macroeconomic Forecasting & Insights', 'models' => [], 'js' => ['init', 'fc-rates-tcurve']],
 			['template' => 'fc-rates-t-info', 'request' => ['fc-rates-t-info'], 'title' => 'Treasury Yield Curve Forecast Model | Center for Macroeconomic Forecasting & Insights', 'models' => [], 'js' => ['init', 'fc-rates-t-info']],
-			['template' => 'fc-rates-other', 'request' => ['fc-rates-ffr', 'fc-rates-sofr'], 'title' => 'Federal Funds Rate Forecasts', 'models' => [], 'js' => ['init', 'fc-rates-ffr']],
+			['template' => 'fc-rates-other', 'request' => ['fc-rates-ffr', 'fc-rates-sofr', 'fc-rates-mort30y', 'fc-rates-mort15y'], 'title' => 'Federal Funds Rate Forecasts', 'models' => [], 'js' => ['init', 'fc-rates-other']],
 		],
 		errorRoute: ['template' => 'error', 'request' => 'error', 'title' => 'Error', 'js' => []],
 		baseJsFiles: ['functions', 'moment.min', 'gradient-min'],

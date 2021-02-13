@@ -78,7 +78,7 @@ class __TwigTemplate_fe94217fbea5b7759b5c4ccabb147284f75f4d6efacd71ad19b5817e39c
 \t\t
 \t\t<a href=\"#ffr\" data-bs-toggle=\"collapse\" class=\"nav-link\">
 \t\t\t<div>
-\t\t\t\t<span>Other Interest Rates</span>
+\t\t\t\t<span>Benchmark Rates</span>
 \t\t\t\t<span class=\"fas fa-caret-down ms-1\"></span>
 \t\t\t</div>
 \t\t</a>
@@ -90,7 +90,21 @@ class __TwigTemplate_fe94217fbea5b7759b5c4ccabb147284f75f4d6efacd71ad19b5817e39c
 \t\t\t\t<span class=\"fas fa-chart-line\"></span><span class=\"ps-2\">SOFR Forecast</span>
 \t\t\t</a>
 \t\t</div>
-\t\t
+\t\t<a href=\"#mrt\" data-bs-toggle=\"collapse\" class=\"nav-link\">
+\t\t\t<div>
+\t\t\t\t<span>Mortgage Rates</span>
+\t\t\t\t<span class=\"fas fa-caret-down ms-1\"></span>
+\t\t\t</div>
+\t\t</a>
+\t\t<div id='mrt' class=\"collapse show sidebar-submenu\">
+\t\t\t<a class=\"text-truncate\" href=\"/fc-rates-mort15y\">
+\t\t\t\t<span class=\"fas fa-chart-line\"></span><span class=\"ps-2\">15-Year Mortgage Forecast</span>
+\t\t\t</a>
+\t\t\t<a class=\"text-truncate\" href=\"/fc-rates-mort30y\">
+\t\t\t\t<span class=\"fas fa-chart-line\"></span><span class=\"ps-2\">30-Year Mortgage Forecast</span>
+\t\t\t</a>
+\t\t</div>
+
 \t</div>
 </nav>
 ";
@@ -152,7 +166,7 @@ class __TwigTemplate_fe94217fbea5b7759b5c4ccabb147284f75f4d6efacd71ad19b5817e39c
 \t\t
 \t\t<a href=\"#ffr\" data-bs-toggle=\"collapse\" class=\"nav-link\">
 \t\t\t<div>
-\t\t\t\t<span>Other Interest Rates</span>
+\t\t\t\t<span>Benchmark Rates</span>
 \t\t\t\t<span class=\"fas fa-caret-down ms-1\"></span>
 \t\t\t</div>
 \t\t</a>
@@ -164,7 +178,21 @@ class __TwigTemplate_fe94217fbea5b7759b5c4ccabb147284f75f4d6efacd71ad19b5817e39c
 \t\t\t\t<span class=\"fas fa-chart-line\"></span><span class=\"ps-2\">SOFR Forecast</span>
 \t\t\t</a>
 \t\t</div>
-\t\t
+\t\t<a href=\"#mrt\" data-bs-toggle=\"collapse\" class=\"nav-link\">
+\t\t\t<div>
+\t\t\t\t<span>Mortgage Rates</span>
+\t\t\t\t<span class=\"fas fa-caret-down ms-1\"></span>
+\t\t\t</div>
+\t\t</a>
+\t\t<div id='mrt' class=\"collapse show sidebar-submenu\">
+\t\t\t<a class=\"text-truncate\" href=\"/fc-rates-mort15y\">
+\t\t\t\t<span class=\"fas fa-chart-line\"></span><span class=\"ps-2\">15-Year Mortgage Forecast</span>
+\t\t\t</a>
+\t\t\t<a class=\"text-truncate\" href=\"/fc-rates-mort30y\">
+\t\t\t\t<span class=\"fas fa-chart-line\"></span><span class=\"ps-2\">30-Year Mortgage Forecast</span>
+\t\t\t</a>
+\t\t</div>
+
 \t</div>
 </nav>
 ", "fc-rates-sidebar.html", "/var/www/econforecasting.com/public/templates/fc-rates-sidebar.html");

@@ -112,9 +112,9 @@ function getFcForecast(varname, fcname) {
 /*** Draw chart ***/
 function drawChart(fcHistory, fcForecast, tFullname) {
 	
-	const fcHistoryParsed = fcHistory.map(x => [new Date(x.obs_date).getTime(), parseFloat(x.value)]);
+	const fcHistoryParsed = fcHistory.map(x => [parseInt(moment(x.obs_date).format('x')), parseFloat(x.value)]);
 	// Push to end of month for forecasts
-	const fcForecastParsed = fcForecast.map(x => [new Date(moment(x.obs_date)).getTime(), parseFloat(x.value)]);
+	const fcForecastParsed = fcForecast.map(x => [parseInt(moment(x.obs_date).format('x')), parseFloat(x.value)]);
 
 	console.log(fcHistoryParsed, fcForecastParsed);
 	Highcharts.setOptions({

@@ -356,7 +356,7 @@ function drawChart(fcDataParsed, playIndex) {
 			offset: -45,
 			tickInterval: 12 * 3 * 30 * 24 * 3600 * 1000,
 			plotLines: [{
-				value: new Date(fcDataParsed[playIndex].date).getTime(),
+				value: parseInt(moment(fcDataParsed[playIndex].date).format('x')),
 				color: 'rgba(255,0,0,.5)',
 				width: 5,
 				id: 'plot-line',
@@ -417,7 +417,7 @@ function drawChart(fcDataParsed, playIndex) {
 			href: 'https://econforecasting.com'
         },
         series: [{
-            data: fcDataParsed.map(x => ({x: new Date(x.date).getTime(), low: -1, high: 1, y: x.data.filter(y => y[0] === 120)[0][1], dateIndex: x.dateIndex, type: x.type})),
+            data: fcDataParsed.map(x => ({x: parseInt(moment(x.date).format('x')), low: -1, high: 1, y: x.data.filter(y => y[0] === 120)[0][1], dateIndex: x.dateIndex, type: x.type})),
             type: 'arearange',
             color: 'rgba(255, 255, 255, 0)',
             fillColor: 'rgba(255, 255, 255, 0)',
@@ -607,7 +607,7 @@ function updateChart2() {
 	const chart = $('#chart-container-2').highcharts();
     chart.xAxis[0].removePlotLine('plot-line');
     chart.xAxis[0].addPlotLine({
-        value: new Date(ud.fcDataParsed[ud.playIndex].date).getTime(),
+        value: parseInt(moment(ud.fcDataParsed[ud.playIndex].date).format('x')),
         color: 'rgba(255,0,0,.5)',
         width: 5,
         id: 'plot-line',

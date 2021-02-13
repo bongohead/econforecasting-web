@@ -21,6 +21,7 @@ ON
 	AND a.varname = b.varname
 INNER JOIN fc_forecastnames c
 ON a.fcname = c.fcname
+ORDER BY obs_date asc
 ${freqStr}
 ", $varsToBind);
 

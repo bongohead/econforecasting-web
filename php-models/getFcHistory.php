@@ -14,4 +14,5 @@ WHERE (
 	AND
 	freq = :freq
 	)
+ORDER BY obs_date ASC
 ", $varsToBind);
