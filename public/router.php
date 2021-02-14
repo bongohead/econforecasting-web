@@ -8,14 +8,14 @@ foreach (glob('/var/www/web-framework/php-files/*.php') as $filename) {
 if (isset($_POST) && isset($_POST['isAjax'])) {
 	routeAjax(
 		$postVars = $_POST,
-		$modelsDir = __DIR__.'/../php-models',
+		$modelsDir = __DIR__.'/../sql',
 		$db = 'ef'
 	);
 } else {
 	routePage(
 		templatesDir: __DIR__.'/templates',
 		templatesCacheDir: __DIR__.'/cache',
-		modelsDir: __DIR__.'/../php-models',
+		modelsDir: __DIR__.'/../sql',
 		toScript: [],
 		jsDir: __DIR__.'/../js',
 		routes: [
