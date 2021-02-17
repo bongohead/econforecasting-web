@@ -66,7 +66,107 @@ $(document).ready(function() {
 			timezoneOffset: 5 * 60
 		}
 	});
-
+	
+	Highcharts.theme = {
+		colors: ['#E10033', '#000000', '#767676', '#E4E4E4'],
+		chart: {
+		backgroundColor: "#FFFFFF",
+			style: {
+				fontFamily: '"Assistant", Arial, "sans-serif"',
+				color: '#000000'
+			}
+		},
+		title: {
+			align: 'center',
+			style: {
+				fontFamily: '"Assistant", Arial, "sans-serif"',
+				color: '#000000'
+			}
+		},
+		subtitle: {
+			align: 'center',
+			style: {
+				fontFamily: '"Assistant", Arial, "sans-serif"',
+				color: '#000000'
+			}
+		},
+		xAxis: {
+			lineColor: "#000000",
+			lineWidth: 2,
+			tickColor: "#000000",
+			tickWidth: 2,
+			labels: {
+				style: {
+					color: "black"
+				}
+			},
+			title: {
+				style: {
+					color: "black"
+				}
+			}
+		},
+		yAxis: {
+			gridLineWidth: 2,
+			gridLineColor: "#F3F3F3",
+			lineColor: "#CEC6B9",
+			minorGridLineColor: "#CEC6B9",
+			labels: {
+				style: {
+					color: "black"
+				}
+			},
+			tickLength: 0,
+			tickColor: "#CEC6B9",
+			tickWidth: 1,
+			title: {
+				style: {
+					color: "black"
+				}
+			}
+		},
+		tooltip: {
+			backgroundColor: "#FFFFFF",
+			borderColor: "#76c0c1",
+			style: {
+				color: "#000000"
+			}
+		},
+		legend: {
+			layout: "horizontal",
+			align: "left",
+			verticalAlign: "top",
+			itemStyle: {
+				color: "#3C3C3C"
+			}
+		},
+		credits: {
+			style: {
+				color: "#666"
+			}
+		},
+		labels: {
+			style: {
+				color: "#D7D7D8"
+			}
+		},
+		navigation: {
+			buttonOptions: {
+				symbolStroke: "#DDDDDD",
+				theme: {
+					fill: "#505053"
+				}
+			}
+		},
+	legendBackgroundColor: "rgba(0, 0, 0, 0.5)",
+	background2: "#505053",
+	dataLabelsColor: "#B0B0B3",
+	textColor: "#C0C0C0",
+	contrastTextColor: "#F0F0F3",
+	maskColor: "rgba(255,255,255,0.3)"
+	};
+	// Apply the theme
+	Highcharts.setOptions(Highcharts.theme);
 	
 });
 
