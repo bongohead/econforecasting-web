@@ -70,7 +70,7 @@ $(document).ready(function() {
 	Highcharts.theme = {
 		colors: ['#E10033', '#000000', '#767676', '#E4E4E4'],
 		chart: {
-		backgroundColor: "#FFFFFF",
+		backgroundColor: "#FFF1E0",
 			style: {
 				fontFamily: '"Assistant", Arial, "sans-serif"',
 				color: '#000000'
@@ -107,8 +107,9 @@ $(document).ready(function() {
 			}
 		},
 		yAxis: {
+			gridLineDashStyle: 'Dot',
 			gridLineWidth: 2,
-			gridLineColor: "#F3F3F3",
+			gridLineColor: "#CEC6B9",
 			lineColor: "#CEC6B9",
 			minorGridLineColor: "#CEC6B9",
 			labels: {

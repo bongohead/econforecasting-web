@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			: varname === 'sofr' ? 'Secured Overnight Financing Rate'
 			: varname === 'mort30y' ? '30-Year Fixed-Rate Mortgage Rate'
 			: varname === 'mort15y' ? '15-Year Fixed-Rate Mortgage Rate'
+			: varname === 'inf' ? 'CPI Inflation Rate'
 			: 'NA';
 			
 		const varUnits = 
@@ -20,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			: varname === 'sofr' ? '%'
 			: varname === 'mort30y' ? '%'
 			: varname === 'mort15y' ? '%'
+			: varname === 'inf' ? '%'
 			: 'NA';
 
 		const udPrev = getAllData().userData || {};
@@ -41,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			: varname === 'sofr' ? 'Monthly consensus forecasts for the secured overnight financing rate (SOFR) derived using a futures model.'
 			: varname === 'mort30y' ? 'Monthly forecasts for the 30-year fixed rate mortgage rate.'
 			: varname === 'mort15y' ? 'Monthly forecasts for the 15-year fixed rate mortgage rate.'
-
+			: varname === 'mort15y' ? 'Monthly forecasts for the CPI inflation rate.'
 			: ''
 		);
 
