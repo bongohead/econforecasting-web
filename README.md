@@ -2,6 +2,12 @@ Description TBA
 
 # CHANGELOG
 
+## 2021-02-19 [v0.09] (Added Mortgage Models & inflation model)
+- Added mortgage models
+- Added highcharts theme consistency
+- Added inflation rate forecasts
+- Improved navbar multi dropdown CSS
+
 ## 2021-02-10 [v0.08] (More General Forecasts)
 - Added API model for selecting all last vintage models by date
 - Added SCSS compiling code for modifing Bootstrap theming

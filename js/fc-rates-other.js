@@ -93,6 +93,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			<p>The mortgage risk premium (the spread between the mortgage rate and the Treasury yield of equivalent maturity) is estimated with a vector autoregression (VAR) model using consensus forecasts of housing prices and new housing starts. Optimal lag length for the VAR is chosen with an out-of-sample cost minimization procedure. Once the mortgage risk premium is forecasted, it is added to our baseline Treasury yield forecast to derive the mortgage rate forecast.</p>
 			<p>Data and forecasts are updated on a daily basis.</p>
 			`
+			: varname === 'inf' ?
+			`
+			<div class="d-inline"><span style="vertical-align:middle;font-size:1.4rem; color: var(--bs-econgreen)">OVERVIEW</span></div>
+			<hr class="mt-0 mb-3 bg-econgreen">
+			<p>This model provides monthly inflation forecasts. In particular, we use the annualized 3-month rolling change in the Consumer Price Index for All Urban Consumers to measure inflation.</p>
+			<p>These forecasts are calculated from Treasury Inflation Protected Securities (TIPS) and are effectively a "market consensus" prediction of inflation.</p>
+			<img class="me-2" width="16" height="16" src="/static/cmefi_short.png"><div class="d-inline"><span style="vertical-align:middle;font-size:1.4rem; color: var(--bs-econgreen)">BASELINE FORECAST - METHODOLOGY</span></div>
+			<hr class="mt-0 mb-3 bg-econgreen">
+			<p>Data from TIPS bonds and Treasury bonds are used to calculate what market participants expect inflation to be over the next thirty years. The term structure is interpolated to derive inflation expectations for each monthly duration interval. Annualized rolling 3-month changes are then calculated to derive monthly forecasts.</p>
+			`
 			: '';
 	})();
 

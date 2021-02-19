@@ -119,7 +119,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t\t\t\t\t\t<div class=\"dropdown-menu\">
 \t\t\t\t\t\t\t\t<div class=\"d-md-flex align-items-start justify-content-start\">
 \t\t\t\t\t\t\t\t\t<div>   
-\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 px-3 border-bottom border-econgreen\" style=\"font-size:1.0rem\">TREASURY YIELDS</div>
+\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 mx-3 mb-1 border-bottom border-econgreen\" style=\"font-size:1.0rem\">TREASURY YIELDS</div>
 \t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-info\">Overview and Methodology</a>
 \t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-tcurve\">Full Treasury Yield Forecast</a>
 \t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-3m\">3 Month T-Bill Forecast</a>
@@ -128,14 +128,17 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-30y\">30 Year T-Bond Forecast</a>
 \t\t\t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t\t\t<div>
-\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 px-3 border-bottom border-econgreen\" style=\"font-size:1.0rem\">BENCHMARK RATES</div>
+\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 mx-3 mb-1 border-bottom border-econgreen\" style=\"font-size:1.0rem\">BENCHMARK RATES</div>
 \t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-ffr\">Federal Funds Rate Forecast</a>
 \t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-sofr\">SOFR Forecast</a>
-\t\t\t\t\t\t\t\t\t</div>
-\t\t\t\t\t\t\t\t\t<div>
-\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 px-3 border-bottom border-econgreen\" style=\"font-size:1.0rem\">MORTGAGE RATES</div>
+\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 mx-3 mt-4 mb-1 border-bottom border-econgreen\" style=\"font-size:1.0rem\">MORTGAGE RATES</div>
 \t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-mort15y\">15-Year Mortgage Rate</a>
 \t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-mort30y\">30-Year Mortgage Rate</a>
+
+\t\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t\t\t<div>
+\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 mx-3 mb-1 border-bottom border-econgreen\" style=\"font-size:1.0rem\">MACRO INDICATORS</div>
+\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-macro-inf\">Inflation Rate</a>
 \t\t\t\t\t\t\t\t\t</div>
 
 \t\t\t\t\t\t\t\t</div>
@@ -160,9 +163,9 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t
 \t<main >
 \t\t";
-        // line 111
+        // line 114
         $this->displayBlock('content', $context, $blocks);
-        // line 113
+        // line 116
         echo "\t</main>
 
 \t<footer class=\"container-fluid text-white px-0 bg-dark\">
@@ -239,7 +242,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 
 \t<script>
 \t  ";
-        // line 188
+        // line 191
         echo ($context["bodyScript"] ?? null);
         echo "
 \t</script>
@@ -260,11 +263,11 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
         $macros = $this->macros;
     }
 
-    // line 111
+    // line 114
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 112
+        // line 115
         echo "\t\t";
     }
 
@@ -280,7 +283,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 
     public function getDebugInfo()
     {
-        return array (  268 => 112,  264 => 111,  258 => 34,  252 => 8,  243 => 188,  166 => 113,  164 => 111,  86 => 35,  84 => 34,  79 => 32,  54 => 10,  51 => 9,  49 => 8,  40 => 1,);
+        return array (  271 => 115,  267 => 114,  261 => 34,  255 => 8,  246 => 191,  169 => 116,  167 => 114,  86 => 35,  84 => 34,  79 => 32,  54 => 10,  51 => 9,  49 => 8,  40 => 1,);
     }
 
     public function getSourceContext()
@@ -355,7 +358,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t\t\t\t\t\t<div class=\"dropdown-menu\">
 \t\t\t\t\t\t\t\t<div class=\"d-md-flex align-items-start justify-content-start\">
 \t\t\t\t\t\t\t\t\t<div>   
-\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 px-3 border-bottom border-econgreen\" style=\"font-size:1.0rem\">TREASURY YIELDS</div>
+\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 mx-3 mb-1 border-bottom border-econgreen\" style=\"font-size:1.0rem\">TREASURY YIELDS</div>
 \t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-info\">Overview and Methodology</a>
 \t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-tcurve\">Full Treasury Yield Forecast</a>
 \t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-3m\">3 Month T-Bill Forecast</a>
@@ -364,14 +367,17 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-30y\">30 Year T-Bond Forecast</a>
 \t\t\t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t\t\t<div>
-\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 px-3 border-bottom border-econgreen\" style=\"font-size:1.0rem\">BENCHMARK RATES</div>
+\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 mx-3 mb-1 border-bottom border-econgreen\" style=\"font-size:1.0rem\">BENCHMARK RATES</div>
 \t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-ffr\">Federal Funds Rate Forecast</a>
 \t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-sofr\">SOFR Forecast</a>
-\t\t\t\t\t\t\t\t\t</div>
-\t\t\t\t\t\t\t\t\t<div>
-\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 px-3 border-bottom border-econgreen\" style=\"font-size:1.0rem\">MORTGAGE RATES</div>
+\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 mx-3 mt-4 mb-1 border-bottom border-econgreen\" style=\"font-size:1.0rem\">MORTGAGE RATES</div>
 \t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-mort15y\">15-Year Mortgage Rate</a>
 \t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-mort30y\">30-Year Mortgage Rate</a>
+
+\t\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t\t\t<div>
+\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 mx-3 mb-1 border-bottom border-econgreen\" style=\"font-size:1.0rem\">MACRO INDICATORS</div>
+\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-macro-inf\">Inflation Rate</a>
 \t\t\t\t\t\t\t\t\t</div>
 
 \t\t\t\t\t\t\t\t</div>

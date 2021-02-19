@@ -293,11 +293,15 @@ function drawHeatmap(acFund, acFundSeriesMap, acSeries, acActiveDate) {
 				rotation: -90,
 				y:15
 				//x:10
-			}
+			},
+			tickWidth: 0
+
 		},
 		yAxis: {
 			categories: categories,
 			title: null,
+			gridLineDashStyle: 'Solid',
+			gridLineWidth: 0,
 			min: 0,
             labels: {
 				formatter: function () {

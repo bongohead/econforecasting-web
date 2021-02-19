@@ -293,10 +293,15 @@ function drawHeatmap(acFund, acFundSeriesMap, acSeries, acActiveDate) {
 				rotation: -45,
 				y:15,
 				x:10
-			}
+			},
+			tickWidth: 0,
+			lineWidth: 0
+
 		},
 		yAxis: {
 			categories: categories,
+			gridLineDashStyle: 'Solid',
+			gridLineWidth: 0,
 			title: null,
 			min: 0,
             labels: {
@@ -305,7 +310,8 @@ function drawHeatmap(acFund, acFundSeriesMap, acSeries, acActiveDate) {
 					return '<span style="color:' + color + '">' + this.value  + '</span>';
 				},
                 rotation: 0
-             }
+             },
+			 lineWidth: 0
 		},
 		colorAxis: {
 			min: -1,
