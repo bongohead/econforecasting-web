@@ -79,6 +79,9 @@ class __TwigTemplate_a4e9843d31667e1aa04708343011915ea8bf5cd504a6d1642be19df1ea0
 \t\t\t\t<h3>What is nowcasting?</h3>
 \t\t\t\t<h3>What is nowcasting?</h3>
 \t\t\t\t<h3>Methododology</h3>
+\t\t\t\t
+\t\t\t\t\$\\begin{bmatrix}a & b\\\\c & d\\end{bmatrix}\$
+\t\t\t\t
 \t\t\t\tOur approach follows the methodolgoy of Giannone, Reichlin, and Small (2008). We will begin by extracting a few common factor variables underlying.
 \t\t\t\t<p>This blog post shows a few different types of content that’s supported and styled with Bootstrap. Basic typography, images, and code are all supported.</p>
 \t\t\t\t<hr>
@@ -222,6 +225,9 @@ class __TwigTemplate_a4e9843d31667e1aa04708343011915ea8bf5cd504a6d1642be19df1ea0
 \t\t\t\t<h3>What is nowcasting?</h3>
 \t\t\t\t<h3>What is nowcasting?</h3>
 \t\t\t\t<h3>Methododology</h3>
+\t\t\t\t
+\t\t\t\t\$\\begin{bmatrix}a & b\\\\c & d\\end{bmatrix}\$
+\t\t\t\t
 \t\t\t\tOur approach follows the methodolgoy of Giannone, Reichlin, and Small (2008). We will begin by extracting a few common factor variables underlying.
 \t\t\t\t<p>This blog post shows a few different types of content that’s supported and styled with Bootstrap. Basic typography, images, and code are all supported.</p>
 \t\t\t\t<hr>
