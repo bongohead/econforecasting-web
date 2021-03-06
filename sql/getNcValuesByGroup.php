@@ -6,8 +6,8 @@ $varsToBind =
 		'freq' => (string) $fromAjax['freq'] ?? NULL
 	);
 
-$fcForecast = $sql -> select("
-SELECT a.varname, a.vdate, a.date, b.fullname, b.units, b.d1, b.d2 FROM nc_values a
+$ncValues = $sql -> select("
+SELECT a.varname, a.vdate, a.date, a.value, a.form, b.fullname, b.units, b.d1, b.d2 FROM nc_values a
 LEFT JOIN nc_params b
 ON a.varname = b.varname
 WHERE (
@@ -16,5 +16,7 @@ AND
 b.dispgroup = :dispgroup
 AND
 a.freq = :freq
+AND 
+a.form IN ('d1', 'd2')
 )
 ", $varsToBind);

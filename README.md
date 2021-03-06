@@ -4,6 +4,8 @@ Description TBA
 
 ## 2021-03-08 [v0.10] (Adding Nowcast Models)
 - Added PHP code to pull nowcast from SQL
+- Added JS code to import nowcast data
+- Added nowcast datatables code with correct ordering, indenting for GDP & subcomponents
 
 ## 2021-02-19 [v0.09] (Added Mortgage Models & inflation model)
 - Added mortgage models

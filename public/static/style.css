@@ -249,6 +249,10 @@ table.dataTable .dt-left {
 	text-align: left;
 }
 
+table.dataTable .dt-right {
+	text-align: right;
+}
+
 table.dataTable thead {
 	border-bottom: 1px solid black;
 }

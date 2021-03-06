@@ -29,6 +29,7 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 			['template' => 'fc-rates-t-info', 'request' => ['fc-rates-t-info'], 'title' => 'Treasury Yield Curve Forecast Model | Center for Macroeconomic Forecasting & Insights', 'models' => [], 'js' => ['init', 'fc-rates-t-info']],
 			['template' => 'fc-rates-other', 'request' => ['fc-rates-ffr', 'fc-rates-sofr', 'fc-rates-mort30y', 'fc-rates-mort15y', 'fc-rates-inf'], 'title' => 'Federal Funds Rate Forecasts', 'models' => [], 'js' => ['init', 'fc-rates-other']],
 			['template' => 'fc-macro-other', 'request' => ['fc-macro-inf'], 'title' => 'Macroeconomic Indicator Forecasts', 'models' => [], 'js' => ['init', 'fc-rates-other']],
+			['template' => 'nc-gdp', 'request' => ['nc-gdp'], 'title' => 'GDP Nowcasts | Center for Macroeconomic Forecasts & Insights', 'models' => [], 'js' => ['nc-gdp']],
 			['template' => 'blog', 'request' => 'blog', 'title' => 'The Center for Macroeconomic Forecasts & Insights', 'models' => [], 'js' => []],
 		],
 		errorRoute: ['template' => 'error', 'request' => 'error', 'title' => 'Error', 'js' => []],
