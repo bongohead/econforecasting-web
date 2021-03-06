@@ -2,7 +2,8 @@ Description TBA
 
 # CHANGELOG
 
-## 2021-? [v0.10] (Adding Nowcast Models)
+## 2021-03-08 [v0.10] (Adding Nowcast Models)
+- Added PHP code to pull nowcast from SQL
 
 ## 2021-02-19 [v0.09] (Added Mortgage Models & inflation model)
 - Added mortgage models
