@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			];
 		//console.log('fcDataRaw', fcDataRaw);
 		
-		const ncValuesGrouped =
+		const ncValuesGrouped =		
 			// Nest into array of objects containing each varname
 			[... new Set(ncValues.map(x => x.varname))]
 			.map(function(varname) {
@@ -96,13 +96,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					units: z.units,
 					d1: z.d1,
 					d2: z.d2,
-					data: ncValues.filter(x => x.varname == varname).map(x => ({date: x.date, formatdate: x.formatdate, value: x.value})).sort((a, b) => a[0] - b[0]),
+					data: ncValues.filter(x => x.varname == varname).map(x => ({date: x.date, formatdate: x.formatdate, vdate: x.vdate, value: x.value})).sort((a, b) => a[0] - b[0]),
 					tabs: (z.varname === 'gdp' ? 0 : z.fullname.split(':').length)
 				}
 			})
 			// Sort to follow order of const order
 			.sort((a, b) => (order.indexOf(a) > order.indexOf(b) ? -1 : 1))
 			.map((x, i) => ({...x, order: i}));
+			// Now modify data object ine ach so that it is of the form [{vdate: ., []}, {}, {}...]
 			
 			
 		console.log(ncValuesGrouped);
@@ -114,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	})
 	/********** DRAW CHART & TABLE **********/
 	.then(function(ncValuesGrouped) {
-		//drawChart(fcDataParsed, getData('userData').varFullname, getData('userData').varUnits);
+		drawChart(ncValuesGrouped);
 		drawTable(ncValuesGrouped);
 		$('div.overlay').hide();
 	});
@@ -362,9 +363,13 @@ function drawChart(fcDataParsed, varFullname, varUnits) {
 function drawTable(ncValuesGrouped) {
 	
 	console.log('ncValuesGrouped', ncValuesGrouped);
+	
+	// Get last vdate
+	const vdate = ncValuesGrouped.map(x => x.data.map(y => y.vdate)).flat().sort().slice(-1);
+	
 	// Turn into list of series
 	// Separate tab for each table
-	const uniqueDates = [... new Set(ncValuesGrouped.map(x => x.data.map(y => y.formatdate)).flat())]
+	const uniqueDates = [... new Set(ncValuesGrouped.map(x => x.data.map(y => y.formatdate)).flat())].sort()
 		//.map((x, i) => ({date: x.substr(-1), formatdate = x}));
 	const dtCols = 
 		[{title: 'Order', data: 'order'}, {title: 'Tabs', data: 'tabs'}, {title: 'Nowcasted Date', data: 'fancyname'}]
@@ -391,7 +396,7 @@ function drawTable(ncValuesGrouped) {
 				order: x.order,
 				tabs: x.tabs,
 				fancyname: x.fullname,
-				...Object.fromEntries(x.data.map(x => [x.formatdate, x.value]))
+				...Object.fromEntries(x.data.filter(y => y.vdate == vdate).map(z => [z.formatdate, z.value]))
 				};
 		});
 	
@@ -420,7 +425,7 @@ function drawTable(ncValuesGrouped) {
 			{extend: 'copyHtml5', text: copySvg + 'Copy', exportOptions: {columns: [0, 2]}, className: 'btn btn-sm btn-econgreen'},
 			{extend: 'csvHtml5', text: dlSvg + 'Download', exportOptions: {columns: [0, 2]}, className: 'btn btn-sm btn-econgreen'}
 		],
-		paging: true,
+		paging: false,
 		pagingType: 'numbers',
 		language: {
 			search: "Filter By Date:",

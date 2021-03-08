@@ -11,8 +11,6 @@ SELECT a.varname, a.vdate, a.date, a.value, a.form, b.fullname, b.units, b.d1, b
 LEFT JOIN nc_params b
 ON a.varname = b.varname
 WHERE (
-a.vdate = (SELECT MAX(vdate) FROM nc_values)
-AND
 b.dispgroup = :dispgroup
 AND
 a.freq = :freq
@@ -20,3 +18,5 @@ AND
 a.form IN ('d1', 'd2')
 )
 ", $varsToBind);
+
+// a.vdate = (SELECT MAX(vdate) FROM nc_values)
