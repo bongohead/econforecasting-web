@@ -6,47 +6,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	/* Use previous options if set, otherwise use default options stated above.
 	 */ 
 	(function() {
-		
-		const varname = window.location.pathname.split('-').pop();
-		const varFullname =
-			varname === 'ffr' ? 'Effective Federal Funds Rate' 
-			: varname === 'sofr' ? 'Secured Overnight Financing Rate'
-			: varname === 'mort30y' ? '30-Year Fixed-Rate Mortgage Rate'
-			: varname === 'mort15y' ? '15-Year Fixed-Rate Mortgage Rate'
-			: varname === 'inf' ? 'CPI Inflation Rate'
-			: 'NA';
-			
-		const varUnits = 
-			varname === 'ffr' ? '%' 
-			: varname === 'sofr' ? '%'
-			: varname === 'mort30y' ? '%'
-			: varname === 'mort15y' ? '%'
-			: varname === 'inf' ? '%'
-			: 'NA';
-
 		const udPrev = getAllData().userData || {};
 		const ud = {
 			... udPrev,
 			... {
-					varname: varname,
-					freq: 'm',
-					varFullname: varFullname,
-					varUnits: varUnits
+					displayQuarter: moment().format('YYYY[Q]Q')
 				}
 		}
 
 		setData('userData', ud);
-		
-		document.title = varFullname + ' Forecast | Center for Macroeconomic Forecasting & Insights';
-		document.querySelector('meta[name="description"]').setAttribute('content',
-			varname === 'ffr' ? 'Monthly consensus forecasts for the federal funds rate (FFR) derived using a futures model.'
-			: varname === 'sofr' ? 'Monthly consensus forecasts for the secured overnight financing rate (SOFR) derived using a futures model.'
-			: varname === 'mort30y' ? 'Monthly forecasts for the 30-year fixed rate mortgage rate.'
-			: varname === 'mort15y' ? 'Monthly forecasts for the 15-year fixed rate mortgage rate.'
-			: varname === 'mort15y' ? 'Monthly forecasts for the CPI inflation rate.'
-			: ''
-		);
-
 
 	})();
 
@@ -103,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				}
 			})
 			// Sort to follow order of const order
-			.sort((a, b) => (order.indexOf(a) > order.indexOf(b) ? -1 : 1))
+			.sort((a, b) => (order.indexOf(a.varname) > order.indexOf(b.varname) ? 1 : -1))
 			.map((x, i) => ({...x, order: i}));
 			// Now modify data object ine ach so that it is of the form [{vdate: ., []}, {}, {}...]
 			
@@ -117,10 +85,22 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	})
 	/********** DRAW CHART & TABLE **********/
 	.then(function(ncValuesGrouped) {
-		drawChart(ncValuesGrouped, displayQuarter = '2021Q1');
+		drawChart(ncValuesGrouped, displayQuarter = ud.displayQuarter);
 		drawTable(ncValuesGrouped);
 		$('div.overlay').hide();
 	});
+	
+	
+	/********** EVENT LISTENERS FOR DATE SWITCH **********/
+	$('#chart-container').on('click', '#chart-subtitle-group > button.chart-subtitle', function() {
+		const newDisplayQuarter = this.innerHTML;
+		
+		//setData('userData', {...getData('userData'), ...{playState: newPlayState, playIndex: newPlayIndex}});
+		drawChart(getData('userData').ncValuesGrouped, newDisplayQuarter);
+		
+		return;
+    });
+	
 
 });
 
@@ -131,17 +111,18 @@ function drawChart(ncValuesGrouped, displayQuarter) {
 	// Create series - each corresponding to a different economic variable
 	const chartData =
 		ncValuesGrouped
-		.filter(x => x.varname == 'gdp')
+		.filter(x => ['gdp', 'pce', 'pcegd', 'pces', 'pdi', 'ex', 'im', 'govt'].includes(x.varname))
 		.map((x, i) => (
 			{
 				id: x.varname,
 				name: x.fullname,
-				data: x.data.filter(y => y.formatDate == displayQuarter).map(y => [parseInt(moment(x.vdate).format('x')), x.value]),
-				type: 'line',
+				data: x.data.filter(y => y.formatdate == displayQuarter).map(y => [parseInt(moment(y.vdate).format('x')), y.value]),
+				type: (x.varname === 'gdp' ? 'area' : 'line'),
 				//dashStyle: (x.fcname === 'hist' ? 'solid' : 'solid'),
-				lineWidth: (x.varname == 'gdp' ? 4 : 2),
-				opacity: 2,
-				visible: true,
+				lineWidth: (x.varname === 'gdp' ? 4 : 2),
+				opacity: .9,
+				color: getColorArray()[i],
+				visible: (x.varname === 'gdp' ? true : false),
 				index: x.order // Force legend to order items correctly
 			}
 		));
@@ -221,14 +202,21 @@ function drawChart(ncValuesGrouped, displayQuarter) {
         },
         title: {
 			useHTML: true,
-			text: '<img class="me-2" width="20" height="20" src="/static/cmefi_short.png"><div style="vertical-align:middle;display:inline"><span>GDP Nowcasts for ' + displayQuarter + '</h5></span>',
+			text: '<img class="me-2" width="20" height="20" src="/static/cmefi_short.png"><div style="vertical-align:middle;display:inline"><span>Forecasted ' + displayQuarter + ' GDP Over Time</h5></span>',
 			style: {
 				fontSize: '1.5rem',
 				color: 'var(--bs-econblue)'
 			}
         },
-		caption: {
-			text: 'Shaded areas indicate recessions'
+		subtitle: {
+			useHTML: true,
+			text: 
+				'<div class="col-12 btn-group d-inline-block" role="group" id="chart-subtitle-group">' +
+					'<button class="btn btn-secondary btn" style="" type="button" disabled="">Select Nowcast Date:&nbsp;</button>' + 
+					[... new Set(ncValuesGrouped.map(x => x.data.map(y => y.formatdate)).flat())].map(x => 
+					'<button class="btn btn-primary chart-subtitle btn ' + (x === displayQuarter ? 'active' : '') + '" style="" type="button">' + x + '</button>'
+					).join('') +
+				'</div>'
 		},
         plotOptions: {
 			series: {
@@ -238,59 +226,21 @@ function drawChart(ncValuesGrouped, displayQuarter) {
 					units: [['day', [1]]]
 				},
 				marker : {
-					enabled: true,
-					radius: 2,
+					enabled: false,
+					radius: 3,
 					symbol: 'triangle'
 				}
 			}
         },
 		rangeSelector: {
-			buttons: [
-				{
-					text: '1 Year',
-					events: {
-						click: function(e) {
-							chart.xAxis[0].setExtremes(moment().add(-12, 'M').toDate().getTime(), moment().add(12, 'M').toDate().getTime());
-							return false;
-						}
-					}
-				}, {
-					text: '2 Year',
-					events: {
-						click: function(e) {
-							chart.xAxis[0].setExtremes(moment().add(-12, 'M').toDate().getTime(), moment().add(24, 'M').toDate().getTime());
-							return false;
-						}
-					}
-				}, {
-					text: '5 Year',
-					events: {
-						click: function(e) {
-							chart.xAxis[0].setExtremes(moment().add(-12, 'M').toDate().getTime(), moment().add(60, 'M').toDate().getTime());
-							return false;
-						}
-					}
-				}, {
-					type: 'all',
-					text: 'All Historical Data'
-				}
-			],
-			buttonTheme: { // styles for the buttons
-				width: '5rem'
-			}
+			enabled: false
 		},
 		xAxis: {
 			type: 'datetime',
             dateTimeLabelFormats: {
-                day: "%m-%d-%Y",
-                week: "%m-%d-%Y"
+                day: "%m/%d",
+                week: "%m/%d"
             },
-			plotBands: [{color: '#ffd9b3', from: Date.UTC(2020, 2, 1), to: Date.UTC(2021, 2, 28)},
-			{color: '#ffd9b3', from: Date.UTC(2007, 12, 1), to: Date.UTC(2009, 6, 30)},
-			{color: '#ffd9b3', from: Date.UTC(2001, 3, 1), to: Date.UTC(2001, 11, 30)}],
-			ordinal: false,
-			min: moment().add(-12, 'M').toDate().getTime(),
-			max: moment().add(60, 'M').toDate().getTime(),
 			labels: {
 				style: {
 					color: 'black'
@@ -316,9 +266,7 @@ function drawChart(ncValuesGrouped, displayQuarter) {
 			opposite: false
 		},
         navigator: {
-            enabled: true,
-			height: 30,
-			maskFill: 'rgba(48, 79, 11, .3)'
+            enabled: false,
         },
 		legend: {
 			enabled: true,
@@ -329,7 +277,7 @@ function drawChart(ncValuesGrouped, displayQuarter) {
 			verticalAlign: 'bottom',
 			layout: 'horizontal',
 			title: {
-				text: 'Available Forecasts <span style="font-size: .8rem; color: #666; font-weight: normal; font-style: italic">(click to hide/show)</span>',
+				text: 'Nowcasted Variables <span style="font-size: .8rem; color: #666; font-weight: normal; font-style: italic">(click to hide/show)</span>',
 			}
 		},
         tooltip: {
@@ -343,12 +291,10 @@ function drawChart(ncValuesGrouped, displayQuarter) {
 				const ud = getData('userData');
 				const text =
 					'<table>' +
-					'<tr style="border-bottom:1px solid black"><td>DATE</td><td style="font-weight:600">' +
-						'FORECAST' +
-					'</td></tr>' +
+					'<tr style="border-bottom:1px solid black"><td style="font-weight:600; text-align:center">' + moment(x).format('MMM Do YY') + '</td></tr>'  +
 					points.map(function(point) {
-						const freq = ud.fcDataParsed.filter(x => x.fcname === point.series.options.id)[0].freq;
-						return '<tr><td style="padding-right:1rem; color:'+point.series.color+'">' + (freq === 'm' ? moment(x).format('MMM YYYY') : moment(x).format('YYYY[Q]Q')) +'</td><td style="color:' + point.color + '">' + point.series.name.replace(/ *\([^)]*\) */g, "") + ': ' + point.y.toFixed(2) + '%</td></tr>'; // Remove everything in aprantheses
+						//const freq = ud.ncValuesGrouped.filter(x => x.varname === point.series.options.id)[0].freq;
+						return '<tr><td style="color:' + point.color + '">Nowcast for ' + displayQuarter + ' ' + point.series.name + ': ' + point.y.toFixed(2) + '%</td></tr>'; // Remove everything in aprantheses
 					}).join('') +
 					'</table>';
 				
@@ -370,25 +316,25 @@ function drawTable(ncValuesGrouped) {
 	console.log('ncValuesGrouped', ncValuesGrouped);
 	
 	// Get last vdate - only show last vintage date data
-	const vdate = ncValuesGrouped.map(x => x.data.map(y => y.vdate)).flat().sort().slice(-1);
+	const vdate = ncValuesGrouped.map(x => x.data.map(y => y.vdate)).flat().sort().slice(-1)[0];
+	console.log('vdate', vdate);
+	$('#vdate').text(moment(vdate).format('MMM Do') + ' ');
 	
-	// Turn into list of series
-	// Separate tab for each table
 	// Get list of unique date values 
 	const uniqueDates = [... new Set(ncValuesGrouped.map(x => x.data.map(y => y.formatdate)).flat())].sort()
 		//.map((x, i) => ({date: x.substr(-1), formatdate = x}));
 	const dtCols = 
-		[{title: 'Order', data: 'order'}, {title: 'Tabs', data: 'tabs'}, {title: 'Nowcasted Date', data: 'fancyname'}]
+		[{title: 'Order', data: 'order'}, {title: 'Tabs', data: 'tabs'}, {title: 'NOWCAST', data: 'fancyname'}]
 		.concat(uniqueDates.map((x, i) => ({title: x, data: x})))
 		.map(function(x, i) {
 			return {...x, ...{
 				visible: (!['Order', 'Tabs'].includes(x.title)),
 				orderable: false,
-				type: (x.title === 'Nowcasted Date' ? 'string' : 'num'),
-				className: (x.title === 'Nowcasted Date' ? 'dt-right' : 'dt-center'),
+				type: (x.title === 'NOWCAST' ? 'string' : 'num'),
+				className: (x.title === 'NOWCAST' ? 'dt-left' : 'dt-center'),
 				css: 'font-size: .9rem',
 				createdCell: function(td, cellData, rowData, row, col) {
-					(x.title === 'Nowcasted Date' ? $(td).css('padding-left', String(rowData.tabs * .8 + .5) + 'rem' ) : false)
+					(x.title === 'NOWCAST' ? $(td).css('padding-left', String(rowData.tabs * .8 + .5) + 'rem' ) : false)
 				}
 			}
 			}
@@ -402,7 +348,7 @@ function drawTable(ncValuesGrouped) {
 				order: x.order,
 				tabs: x.tabs,
 				fancyname: x.fullname,
-				...Object.fromEntries(x.data.filter(y => y.vdate == vdate).map(z => [z.formatdate, z.value]))
+				...Object.fromEntries(x.data.filter(y => y.vdate == vdate).map(z => [z.formatdate, z.value.toFixed(1)]))
 				};
 		});
 	
@@ -418,7 +364,6 @@ function drawTable(ncValuesGrouped) {
 	  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"></path>
 	  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"></path>
 	</svg>`;
-
 	const o = {
 		data: tableData,
 		columns: dtCols,
@@ -428,8 +373,8 @@ function drawTable(ncValuesGrouped) {
 			"<'row justify-content-center'<'col-12'tr>>" +
 			"<'row justify-content-end'<'col-auto'p>>",
 		buttons: [
-			{extend: 'copyHtml5', text: copySvg + 'Copy', exportOptions: {columns: [0, 2]}, className: 'btn btn-sm btn-econgreen'},
-			{extend: 'csvHtml5', text: dlSvg + 'Download', exportOptions: {columns: [0, 2]}, className: 'btn btn-sm btn-econgreen'}
+			{extend: 'copyHtml5', text: copySvg + 'Copy', exportOptions: {columns: dtCols.map((x, i) => ({...x, index: i})).filter(x => x.visible).map(x => x.index)}, className: 'btn btn-sm btn-econgreen'},
+			{extend: 'csvHtml5', text: dlSvg + 'Download', exportOptions: {columns: dtCols.map((x, i) => ({...x, index: i})).filter(x => x.visible).map(x => x.index)}, className: 'btn btn-sm btn-econgreen'}
 		],
 		paging: false,
 		pagingType: 'numbers',
@@ -450,97 +395,6 @@ function drawTable(ncValuesGrouped) {
 	
 	 $('#gdp-table').DataTable(o);
 		
-
-	/*
-	const tableData =
-		ncValuesGrouped
-		.
-		
-		//console.log(x.fcname);
-		const seriesData =
-			(x.fcname === 'hist') ?
-			x.data.map(y => ({date: (x.freq === 'q' ? moment(y[0]).format('YYYY[Q]Q') : moment(y[0]).format('YYYY-MM')), type: 'Historical Data', value: y[1].toFixed(4)})) :
-			x.data.map(y => ({date: (x.freq === 'q' ? moment(y[0]).format('YYYY[Q]Q') : moment(y[0]).format('YYYY-MM')), type: 'Forecast', value: y[1].toFixed(4)}));
-		const dtCols = [
-			{title: 'Date', data: 'date'},
-			{title: 'Type', data: 'type'},
-			{title: varFullname + ' (' + varUnits + ')', data: 'value'}
-		].map(function(x, i) {
-			return {...x, ...{
-				visible: (x.title !== 'Type'),
-				orderable: true,
-				ordering: true,
-				type: (x.title === 'Date' ? 'date' : 'num'),
-				className: 'dt-center',
-				css: 'font-size: .9rem'
-			}}
-		});
-		//console.log(dtCols);
-		
-		const copySvg =
-		`<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-clipboard me-1" viewBox="0 0 16 16">
-			<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-			<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
-		</svg>`;
-		const dlSvg = 
-		`<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-download me-1" viewBox="0 0 16 16">
-		  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"></path>
-		  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"></path>
-		</svg>`;
-		const o = {
-			data: seriesData,
-			columns: dtCols,
-			iDisplayLength: 15,
-			dom:
-				"<'row justify-content-end'<'col-auto'B>>" +
-				"<'row justify-content-center'<'col-12'tr>>" +
-				"<'row justify-content-end'<'col-auto'p>>",
-			buttons: [
-				{extend: 'copyHtml5', text: copySvg + 'Copy', exportOptions: {columns: [0, 2]}, className: 'btn btn-sm btn-econgreen'},
-				{extend: 'csvHtml5', text: dlSvg + 'Download', exportOptions: {columns: [0, 2]}, className: 'btn btn-sm btn-econgreen'}
-			],
-			order: (x.fcname === 'hist' ? [[0, 'desc']] : [[0, 'asc']]),
-			paging: true,
-			pagingType: 'numbers',
-			language: {
-				search: "Filter By Date:",
-				searchPlaceholder: "YYYY-MM"
-			},
-			responsive: true,
-			createdRow: function(row, data, dataIndex) {
-				if (data.type === 'history')  {
-					$(row).addClass('dog');
-					$(row).css('color', 'var(--econgreen)');
-				} else {
-					$(row).css('color', 'var(--econred)');
-				}
-			}
-		}
-		
-		// Create table and style it
-		const table = document.createElement('table');
-		table.classList.add('table');
-		table.classList.add('data-table');
-		table.classList.add('w-100');
-		table.id = 'table-' + x.fcname;
-		document.querySelector('#tables-container').appendChild(table);
-		
-
-		// Draw the table
-		const dTable = $(table).DataTable(o);
-		if (i !== 0) $(table).parents('div.dataTables_wrapper').first().hide();
-		//console.log(dTable);
-
-		// Move the download buttons
-		//console.log(table.parentElement);
-		const downloadDiv = table.closest('.dataTables_wrapper').querySelector('.dt-buttons');
-		downloadDiv.classList.add('float-end');
-		downloadDiv.id = 'download-' + x.fcname;
-		if (i !== 0) downloadDiv.style.display = 'none'
-		$('#tables-container .d-inline').after($(downloadDiv).detach());
-
-	*/
-	
 	return;
 }
 

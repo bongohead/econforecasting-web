@@ -2,8 +2,12 @@ Description TBA
 
 # CHANGELOG
 
-## 2021-03-11 [0.v11] (Finalize Nowcast Page)
-- Added JS code to structure datatables & chart data for nowcast
+## 2021-03-12 [0.v11] (Finalize Nowcast Page)
+- Added data table with GDP nowcasts
+- Added chart data for nowcasts
+- Added event listener for button to switch between nowcast forecast dates
+- Added nowcast model summary and link to detailed overview
+- Added nowcast to navbar and home page
 
 ## 2021-03-08 [v0.10] (Adding Nowcast Models)
 - Added PHP code to pull nowcast from SQL

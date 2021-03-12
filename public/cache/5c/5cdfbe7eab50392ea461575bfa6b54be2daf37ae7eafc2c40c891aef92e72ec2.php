@@ -147,6 +147,15 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t\t\t\t\t</li>
 \t\t\t\t\t\t<li class=\"nav-item dropdown\">
 \t\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-bs-toggle=\"dropdown\">
+\t\t\t\t\t\t\t\t<i class=\"bi bi-pie-chart-fill me-1\"></i>Nowcast Models
+\t\t\t\t\t\t\t</a>
+\t\t\t\t\t\t\t<ul class=\"dropdown-menu\">
+\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/nc-gdp\"><span style=\"margin-left: 1rem\">GDP & Subcomponents</span></a></li>
+\t\t\t\t\t\t\t</ul>
+\t\t\t\t\t\t</li>
+
+\t\t\t\t\t\t<li class=\"nav-item dropdown\">
+\t\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-bs-toggle=\"dropdown\">
 \t\t\t\t\t\t\t\t<i class=\"bi bi-gear-wide-connected me-1\"></i>Indicators and Indices
 \t\t\t\t\t\t\t</a>
 \t\t\t\t\t\t\t<ul class=\"dropdown-menu\">
@@ -163,9 +172,9 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t
 \t<main >
 \t\t";
-        // line 114
+        // line 123
         $this->displayBlock('content', $context, $blocks);
-        // line 116
+        // line 125
         echo "\t</main>
 
 \t<footer class=\"container-fluid text-white px-0 bg-dark\">
@@ -242,7 +251,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 
 \t<script>
 \t  ";
-        // line 191
+        // line 200
         echo ($context["bodyScript"] ?? null);
         echo "
 \t</script>
@@ -263,11 +272,11 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
         $macros = $this->macros;
     }
 
-    // line 114
+    // line 123
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 115
+        // line 124
         echo "\t\t";
     }
 
@@ -283,7 +292,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 
     public function getDebugInfo()
     {
-        return array (  271 => 115,  267 => 114,  261 => 34,  255 => 8,  246 => 191,  169 => 116,  167 => 114,  86 => 35,  84 => 34,  79 => 32,  54 => 10,  51 => 9,  49 => 8,  40 => 1,);
+        return array (  280 => 124,  276 => 123,  270 => 34,  264 => 8,  255 => 200,  178 => 125,  176 => 123,  86 => 35,  84 => 34,  79 => 32,  54 => 10,  51 => 9,  49 => 8,  40 => 1,);
     }
 
     public function getSourceContext()
@@ -384,6 +393,15 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t\t\t\t\t\t\t <div class=\"dropdown-divider\"></div>
 \t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t</li>
+\t\t\t\t\t\t<li class=\"nav-item dropdown\">
+\t\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-bs-toggle=\"dropdown\">
+\t\t\t\t\t\t\t\t<i class=\"bi bi-pie-chart-fill me-1\"></i>Nowcast Models
+\t\t\t\t\t\t\t</a>
+\t\t\t\t\t\t\t<ul class=\"dropdown-menu\">
+\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/nc-gdp\"><span style=\"margin-left: 1rem\">GDP & Subcomponents</span></a></li>
+\t\t\t\t\t\t\t</ul>
+\t\t\t\t\t\t</li>
+
 \t\t\t\t\t\t<li class=\"nav-item dropdown\">
 \t\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-bs-toggle=\"dropdown\">
 \t\t\t\t\t\t\t\t<i class=\"bi bi-gear-wide-connected me-1\"></i>Indicators and Indices

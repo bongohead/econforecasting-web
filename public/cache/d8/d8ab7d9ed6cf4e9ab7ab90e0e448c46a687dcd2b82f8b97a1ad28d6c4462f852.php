@@ -184,7 +184,7 @@ class __TwigTemplate_4848799cd9d7664fb9f430ea315c54eaf57da1e68128344aed928ef98c3
 \t\t\t<div class=\"row justify-content-center\">
 \t\t\t
 \t\t\t  <div class=\"col-12 col-xl-5 border rounded shadow-sm p-3 mx-1 bg-white\">
-\t\t\t\t\t<h6 class=\"d-inline-block mb-2 text-econred fw-bold\">Forecasts</h6>
+\t\t\t\t\t<h6 class=\"d-inline-block mb-2 text-econred fw-bold\">Forecasts & Nowcasts</h6>
 \t\t\t\t\t<div class=\"row row-cols-3 row-cols-sm-4 row-cols-md-5 row-cols-lg-6 row-cols-xl-5\">
 \t\t\t\t\t\t<div class=\"col homepage-links mb-2\">
 \t\t\t\t\t\t\t<a href=\"/fc-rates-tcurve\" class=\"d-block text-dark text-decoration-none\" style=\"background-image:linear-gradient(45deg, rgba(255, 255, 255, .9) 50%, rgba(255, 255, 255, .9) 50%), url(/static/svg_fc_rates_tcurve.svg);background-size:100%, 90%;background-repeat:no-repeat;background-position:center center\">
@@ -233,6 +233,13 @@ class __TwigTemplate_4848799cd9d7664fb9f430ea315c54eaf57da1e68128344aed928ef98c3
 \t\t\t\t\t\t\t<a href=\"/fc-macro-inf\" class=\"d-block text-dark text-decoration-none\" style=\"background-image:linear-gradient(45deg, rgba(255, 255, 255, .9) 50%, rgba(255, 255, 255, .9)50%), url(/static/svg_fc_macro_inf.svg);background-size:100%, 90%;background-repeat:no-repeat;background-position:center center\">
 \t\t\t\t\t\t\t\t<div class=\"text-center rounded border-2 border-econred\">
 \t\t\t\t\t\t\t\t\t<span>Inflation<br>Rate</span>
+\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t</a>
+\t\t\t\t\t\t</div>
+\t\t\t\t\t\t<div class=\"col homepage-links mb-2\">
+\t\t\t\t\t\t\t<a href=\"/nc-gdp\" class=\"d-block text-dark text-decoration-none\" style=\"background-image:linear-gradient(45deg, rgba(255, 255, 255, .9) 50%, rgba(255, 255, 255, .9)50%), url(/static/svg_nc_gdp.svg);background-size:100%, 90%;background-repeat:no-repeat;background-position:center center\">
+\t\t\t\t\t\t\t\t<div class=\"text-center rounded border-2 border-econred\">
+\t\t\t\t\t\t\t\t\t<span>GDP<br>Nowcasts</span>
 \t\t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t</a>
 \t\t\t\t\t\t</div>
@@ -430,7 +437,7 @@ class __TwigTemplate_4848799cd9d7664fb9f430ea315c54eaf57da1e68128344aed928ef98c3
 \t\t\t<div class=\"row justify-content-center\">
 \t\t\t
 \t\t\t  <div class=\"col-12 col-xl-5 border rounded shadow-sm p-3 mx-1 bg-white\">
-\t\t\t\t\t<h6 class=\"d-inline-block mb-2 text-econred fw-bold\">Forecasts</h6>
+\t\t\t\t\t<h6 class=\"d-inline-block mb-2 text-econred fw-bold\">Forecasts & Nowcasts</h6>
 \t\t\t\t\t<div class=\"row row-cols-3 row-cols-sm-4 row-cols-md-5 row-cols-lg-6 row-cols-xl-5\">
 \t\t\t\t\t\t<div class=\"col homepage-links mb-2\">
 \t\t\t\t\t\t\t<a href=\"/fc-rates-tcurve\" class=\"d-block text-dark text-decoration-none\" style=\"background-image:linear-gradient(45deg, rgba(255, 255, 255, .9) 50%, rgba(255, 255, 255, .9) 50%), url(/static/svg_fc_rates_tcurve.svg);background-size:100%, 90%;background-repeat:no-repeat;background-position:center center\">
@@ -479,6 +486,13 @@ class __TwigTemplate_4848799cd9d7664fb9f430ea315c54eaf57da1e68128344aed928ef98c3
 \t\t\t\t\t\t\t<a href=\"/fc-macro-inf\" class=\"d-block text-dark text-decoration-none\" style=\"background-image:linear-gradient(45deg, rgba(255, 255, 255, .9) 50%, rgba(255, 255, 255, .9)50%), url(/static/svg_fc_macro_inf.svg);background-size:100%, 90%;background-repeat:no-repeat;background-position:center center\">
 \t\t\t\t\t\t\t\t<div class=\"text-center rounded border-2 border-econred\">
 \t\t\t\t\t\t\t\t\t<span>Inflation<br>Rate</span>
+\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t</a>
+\t\t\t\t\t\t</div>
+\t\t\t\t\t\t<div class=\"col homepage-links mb-2\">
+\t\t\t\t\t\t\t<a href=\"/nc-gdp\" class=\"d-block text-dark text-decoration-none\" style=\"background-image:linear-gradient(45deg, rgba(255, 255, 255, .9) 50%, rgba(255, 255, 255, .9)50%), url(/static/svg_nc_gdp.svg);background-size:100%, 90%;background-repeat:no-repeat;background-position:center center\">
+\t\t\t\t\t\t\t\t<div class=\"text-center rounded border-2 border-econred\">
+\t\t\t\t\t\t\t\t\t<span>GDP<br>Nowcasts</span>
 \t\t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t</a>
 \t\t\t\t\t\t</div>
