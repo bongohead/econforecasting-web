@@ -72,6 +72,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			});
 			
 		console.log(ncValues);
+		// Order values for table
 		const order = [
 			'gdp',
 			'pce',
@@ -96,6 +97,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					units: z.units,
 					d1: z.d1,
 					d2: z.d2,
+					// Let data contain all vintages
 					data: ncValues.filter(x => x.varname == varname).map(x => ({date: x.date, formatdate: x.formatdate, vdate: x.vdate, value: x.value})).sort((a, b) => a[0] - b[0]),
 					tabs: (z.varname === 'gdp' ? 0 : z.fullname.split(':').length)
 				}
@@ -115,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	})
 	/********** DRAW CHART & TABLE **********/
 	.then(function(ncValuesGrouped) {
-		drawChart(ncValuesGrouped);
+		drawChart(ncValuesGrouped, displayQuarter = '2021Q1');
 		drawTable(ncValuesGrouped);
 		$('div.overlay').hide();
 	});
@@ -124,8 +126,28 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 
 /*** Draw chart ***/
-function drawChart(fcDataParsed, varFullname, varUnits) {
+function drawChart(ncValuesGrouped, displayQuarter) {
 	
+	// Create series - each corresponding to a different economic variable
+	const chartData =
+		ncValuesGrouped
+		.filter(x => x.varname == 'gdp')
+		.map((x, i) => (
+			{
+				id: x.varname,
+				name: x.fullname,
+				data: x.data.filter(y => y.formatDate == displayQuarter).map(y => [parseInt(moment(x.vdate).format('x')), x.value]),
+				type: 'line',
+				//dashStyle: (x.fcname === 'hist' ? 'solid' : 'solid'),
+				lineWidth: (x.varname == 'gdp' ? 4 : 2),
+				opacity: 2,
+				visible: true,
+				index: x.order // Force legend to order items correctly
+			}
+		));
+		
+	console.log('chartData', chartData);
+
 	Highcharts.setOptions({
 		lang: {
 			rangeSelectorZoom: 'Display:'
@@ -182,23 +204,6 @@ function drawChart(fcDataParsed, varFullname, varUnits) {
 	);
 	*/
 	
-	const chartData =
-		fcDataParsed
-		.map((x, i) => (
-			{
-				id: x.fcname,
-				name: (x.fcname !== 'hist' ? x.shortname + ' Forecast (Updated ' + moment(x.vintage_date).format('MM/DD/YY') + ')': x.shortname),
-				data: x.data.map(x => [parseInt(moment(x[0]).format('x')), x[1]]),
-				type: 'spline',
-				dashStyle: (x.fcname === 'hist' ? 'solid' : 'solid'),
-				lineWidth: (x.fcname === 'hist' ? 4 : 2),
-				color: (x.fcname === 'hist' ? 'black' : ['var(--bs-econlred)', 'var(--bs-econorange)', 'var(--bs-econlgreen)', 'var(--bs-econblue)'][i]),
-				opacity: 2,
-				visible: (x.cmefi === true),
-				index: i // Force legend to order items correctly
-				//(x.type === 'history' || moment(x.date).month() === moment(fcDataParsed.filter(x => x.type === 'history').slice(-1)[0].date).month() + 1)
-			}
-		));
 	//console.log('chartData', chartData);
 	
 	const o = {
@@ -216,7 +221,7 @@ function drawChart(fcDataParsed, varFullname, varUnits) {
         },
         title: {
 			useHTML: true,
-			text: '<img class="me-2" width="20" height="20" src="/static/cmefi_short.png"><div style="vertical-align:middle;display:inline"><span>' + varFullname + '</h5></span>',
+			text: '<img class="me-2" width="20" height="20" src="/static/cmefi_short.png"><div style="vertical-align:middle;display:inline"><span>GDP Nowcasts for ' + displayQuarter + '</h5></span>',
 			style: {
 				fontSize: '1.5rem',
 				color: 'var(--bs-econblue)'
@@ -303,7 +308,7 @@ function drawChart(fcDataParsed, varFullname, varUnits) {
                 }
             },
 			title: {
-				text: varUnits,
+				text: 'Annualized % Change',
 				style: {
 					color: 'black',
 				}
@@ -364,11 +369,12 @@ function drawTable(ncValuesGrouped) {
 	
 	console.log('ncValuesGrouped', ncValuesGrouped);
 	
-	// Get last vdate
+	// Get last vdate - only show last vintage date data
 	const vdate = ncValuesGrouped.map(x => x.data.map(y => y.vdate)).flat().sort().slice(-1);
 	
 	// Turn into list of series
 	// Separate tab for each table
+	// Get list of unique date values 
 	const uniqueDates = [... new Set(ncValuesGrouped.map(x => x.data.map(y => y.formatdate)).flat())].sort()
 		//.map((x, i) => ({date: x.substr(-1), formatdate = x}));
 	const dtCols = 
@@ -400,7 +406,7 @@ function drawTable(ncValuesGrouped) {
 				};
 		});
 	
-	console.log(tableData);
+	console.log('tableData', tableData);
 		
 	const copySvg =
 	`<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-clipboard me-1" viewBox="0 0 16 16">
