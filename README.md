@@ -2,6 +2,9 @@ Description TBA
 
 # CHANGELOG
 
+## 2021-03-11 [0.v11] (Finalize Nowcast Page)
+- Added JS code to structure datatables & chart data for nowcast
+
 ## 2021-03-08 [v0.10] (Adding Nowcast Models)
 - Added PHP code to pull nowcast from SQL
 - Added JS code to import nowcast data
