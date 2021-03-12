@@ -49,7 +49,7 @@ class __TwigTemplate_971b11a3a68d568655a46ba4733e3a55c85f35e983a059decd19487cbd2
     {
         $macros = $this->macros;
         // line 4
-        echo "<meta name=\"description\" content=\"A GDP nowcasting model.\"/>
+        echo "<meta name=\"description\" content=\"GDP nowcasts - a rolling estimate of current and future GDP growth based on the latest available economic data.\"/>
 ";
     }
 
@@ -130,7 +130,7 @@ class __TwigTemplate_971b11a3a68d568655a46ba4733e3a55c85f35e983a059decd19487cbd2
         return new Source("{% extends \"base.html\" %}
 
 {% block meta %}
-<meta name=\"description\" content=\"A GDP nowcasting model.\"/>
+<meta name=\"description\" content=\"GDP nowcasts - a rolling estimate of current and future GDP growth based on the latest available economic data.\"/>
 {% endblock %}
 
 {% block staticlinks %}
