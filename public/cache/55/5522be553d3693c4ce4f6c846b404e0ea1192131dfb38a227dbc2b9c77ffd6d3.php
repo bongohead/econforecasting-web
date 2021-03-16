@@ -84,8 +84,8 @@ class __TwigTemplate_971b11a3a68d568655a46ba4733e3a55c85f35e983a059decd19487cbd2
 \t\t\t\t\t\t</p>
 \t\t\t\t\t\t<img class=\"me-2\" src=\"/static/cmefi_short.png\" width=\"16\" height=\"16\"><div class=\"d-inline\"><span style=\"vertical-align:middle;font-size:1.4rem; color: var(--bs-econgreen)\">DETAILED METHODOLOGY</span></div>
 \t\t\t\t\t\t<hr class=\"mt-0 mb-3 bg-econgreen\">
-\t\t\t\t\t\t<iframe src=\"https://cmefi.github.io/econforecasting-r/model-outputs/2021-03-11-nowcast.pdf\" width=\"100%\" height=\"500px\"></iframe>
-\t\t\t\t\t\t<a href=\"https://cmefi.github.io/econforecasting-r/model-outputs/2021-03-11-nowcast.pdf\" target=\"_blank\">Download</a>
+\t\t\t\t\t\t<iframe src=\"https://cmefi.github.io/econforecasting-r/documentation-templates/nowcast-documentation.pdf\" width=\"100%\" height=\"500px\"></iframe>
+\t\t\t\t\t\t<a href=\"https://cmefi.github.io/econforecasting-r/documentation-templates/nowcast-documentation.pdf\" target=\"_blank\">Download</a>
 \t\t\t\t\t</div>
 \t\t\t
 \t\t\t\t\t<div class=\"card border-secondary border-2 m-2 col-xl-6 col-lg-10 col-sm-12 bg-white\">
@@ -157,8 +157,8 @@ class __TwigTemplate_971b11a3a68d568655a46ba4733e3a55c85f35e983a059decd19487cbd2
 \t\t\t\t\t\t</p>
 \t\t\t\t\t\t<img class=\"me-2\" src=\"/static/cmefi_short.png\" width=\"16\" height=\"16\"><div class=\"d-inline\"><span style=\"vertical-align:middle;font-size:1.4rem; color: var(--bs-econgreen)\">DETAILED METHODOLOGY</span></div>
 \t\t\t\t\t\t<hr class=\"mt-0 mb-3 bg-econgreen\">
-\t\t\t\t\t\t<iframe src=\"https://cmefi.github.io/econforecasting-r/model-outputs/2021-03-11-nowcast.pdf\" width=\"100%\" height=\"500px\"></iframe>
-\t\t\t\t\t\t<a href=\"https://cmefi.github.io/econforecasting-r/model-outputs/2021-03-11-nowcast.pdf\" target=\"_blank\">Download</a>
+\t\t\t\t\t\t<iframe src=\"https://cmefi.github.io/econforecasting-r/documentation-templates/nowcast-documentation.pdf\" width=\"100%\" height=\"500px\"></iframe>
+\t\t\t\t\t\t<a href=\"https://cmefi.github.io/econforecasting-r/documentation-templates/nowcast-documentation.pdf\" target=\"_blank\">Download</a>
 \t\t\t\t\t</div>
 \t\t\t
 \t\t\t\t\t<div class=\"card border-secondary border-2 m-2 col-xl-6 col-lg-10 col-sm-12 bg-white\">

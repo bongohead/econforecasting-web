@@ -116,7 +116,7 @@ function drawChart(ncValuesGrouped, displayQuarter) {
 			{
 				id: x.varname,
 				name: x.fullname,
-				data: x.data.filter(y => y.formatdate == displayQuarter).map(y => [parseInt(moment(y.vdate).format('x')), y.value]),
+				data: x.data.filter(y => y.formatdate == displayQuarter).map(y => [parseInt(moment(y.vdate).format('x')), y.value]).sort((a, b) => a[0] - b[0]),
 				type: (x.varname === 'gdp' ? 'area' : 'line'),
 				//dashStyle: (x.fcname === 'hist' ? 'solid' : 'solid'),
 				lineWidth: (x.varname === 'gdp' ? 4 : 2),
