@@ -15,20 +15,20 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.6.3/css/all.min.css" integrity="sha512-f2MWjotY+JCWDlE0+QAshlykvZUtIm35A6RHwfYZPdxKgLJpL8B+VVxjpHJwZDsZaWdyHVhlIHoblFYGkmrbhg==" crossorigin="anonymous" />
 	
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap5.min.css"/>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css"/>
 
-	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
 
-	<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
-	<script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap5.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap5.min.js"></script>
 	
-	<script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
-	<script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script> <!-- HTML export buttons -->
+	<script src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script> <!-- HTML export buttons -->
 	
-	<!-- Bug with v9.0 stripping data-dir attributes from buttons -->
-    <script src="https://code.highcharts.com/stock/8.2/highstock.js"></script>
-	<script src="https://code.highcharts.com/8.2/modules/boost.js"></script>
+	<!-- Version 9.0+ requires AST filtration bypass -->
+	<script src="https://code.highcharts.com/stock/9.1/highstock.js"></script>
+	<script src="https://code.highcharts.com/9.1/modules/boost.js"></script>
     {{ pageJS | raw }}
 
     {% block staticlinks %}{% endblock %}

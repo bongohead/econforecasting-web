@@ -58,7 +58,7 @@ class __TwigTemplate_9572e23f8e70d3002681c2a368d39cc44e79c525e39ebd63542f16e7a84
     {
         $macros = $this->macros;
         // line 8
-        echo "<script src=\"https://code.highcharts.com/8.2/highcharts-more.js\"></script>
+        echo "<script src=\"https://code.highcharts.com/9.1/highcharts-more.js\"></script>
 <script src=\"https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js\"></script>
 ";
     }
@@ -133,7 +133,7 @@ class __TwigTemplate_9572e23f8e70d3002681c2a368d39cc44e79c525e39ebd63542f16e7a84
 {% endblock %}
 
 {% block staticlinks %}
-<script src=\"https://code.highcharts.com/8.2/highcharts-more.js\"></script>
+<script src=\"https://code.highcharts.com/9.1/highcharts-more.js\"></script>
 <script src=\"https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js\"></script>
 {% endblock %}
 

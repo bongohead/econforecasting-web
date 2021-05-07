@@ -149,6 +149,8 @@ function getFcForecast(fcname) {
 /*** Draw chart ***/
 function drawChart(fcDataParsed, playIndex) {
 	
+	Highcharts.AST.allowedAttributes.push('data-dir');
+	
 	const o = {
         chart: {
 			spacingTop: 10,

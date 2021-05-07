@@ -58,7 +58,7 @@ class __TwigTemplate_df9a1e7b938eb8413bb147a90b83b0ea9f0c34d6927ca97ed887da8f67d
     {
         $macros = $this->macros;
         // line 8
-        echo "<script src=\"https://code.highcharts.com/8.2/highcharts-more.js\"></script>
+        echo "<script src=\"https://code.highcharts.com/9.1/highcharts-more.js\"></script>
 <script src=\"https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js\"></script>
 <script type=\"text/javascript\" id=\"MathJax-script\" async src=\"https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js\"></script>
 <script>
@@ -151,7 +151,7 @@ MathJax = {
 {% endblock %}
 
 {% block staticlinks %}
-<script src=\"https://code.highcharts.com/8.2/highcharts-more.js\"></script>
+<script src=\"https://code.highcharts.com/9.1/highcharts-more.js\"></script>
 <script src=\"https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js\"></script>
 <script type=\"text/javascript\" id=\"MathJax-script\" async src=\"https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js\"></script>
 <script>

@@ -2,7 +2,6 @@ $(document).ready(function() {
 /*** ac-assets-hm.js and ac-regions-hm.js are identical except for initialization & width/height multiplier (30 for assets, 20 for regions) ***/
 
 
-
 	/********** INITIALIZE **********/
 	$('div.overlay').show();
 	
@@ -232,6 +231,9 @@ function drawHeatmap(acFund, acFundSeriesMap, acSeries, acActiveDate) {
 	console.log('groups', groups);
 	
 	console.log('acActiveDate', acActiveDate);
+	Highcharts.AST.allowedAttributes.push('data-dir');
+	Highcharts.AST.allowedAttributes.push('data-bs-toggle');
+
 	const chart = Highcharts.chart('heatmap-container', {
 		chart: {
 			height: Math.floor(acFund.length * 22),

@@ -1,8 +1,14 @@
 Description TBA
 
 # CHANGELOG
+- TBD: Use HC 9.1.0, allowlists (https://www.highcharts.com/docs/chart-concepts/labels-and-string-formatting)
 
-## 2021-03-12 [0.v11] (Finalize Nowcast Page)
+## 2021-07-01 [v0.12] (Misc Dependencies Update)
+- Updated to Bootstrap 5.0.0
+- Updated to Highcharts 9.1 (added Highcharts.AST.allowedAttributes to prevent automatic HTML filtration)
+- Updated to jQuery 3.6.0
+
+## 2021-03-12 [v0.11] (Finalize Nowcast Page)
 - Added data table with GDP nowcasts
 - Added chart data for nowcasts
 - Added event listener for button to switch between nowcast forecast dates

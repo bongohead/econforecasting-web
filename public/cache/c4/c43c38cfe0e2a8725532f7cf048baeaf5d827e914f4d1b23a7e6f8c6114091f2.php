@@ -59,7 +59,7 @@ class __TwigTemplate_ad3408e777c9f2a958976562886e77345b935ff9e4a6fa722dfe002ce42
     {
         $macros = $this->macros;
         // line 9
-        echo "<script src=\"https://code.highcharts.com/8.2/modules/heatmap.js\"></script>
+        echo "<script src=\"https://code.highcharts.com/9.1/modules/heatmap.js\"></script>
 ";
     }
 
@@ -122,7 +122,7 @@ class __TwigTemplate_ad3408e777c9f2a958976562886e77345b935ff9e4a6fa722dfe002ce42
 {% endblock %}
 
 {% block staticlinks %}
-<script src=\"https://code.highcharts.com/8.2/modules/heatmap.js\"></script>
+<script src=\"https://code.highcharts.com/9.1/modules/heatmap.js\"></script>
 {% endblock %}
 
 {% block content %}
