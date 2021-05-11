@@ -63,7 +63,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css\"/>
 
 \t<script src=\"https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js\"></script>
-\t<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js\"></script>
+\t<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js\"></script>
 
 \t<script src=\"https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js\"></script>
 \t<script src=\"https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap5.min.js\"></script>
@@ -317,7 +317,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css\"/>
 
 \t<script src=\"https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js\"></script>
-\t<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js\"></script>
+\t<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js\"></script>
 
 \t<script src=\"https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js\"></script>
 \t<script src=\"https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap5.min.js\"></script>

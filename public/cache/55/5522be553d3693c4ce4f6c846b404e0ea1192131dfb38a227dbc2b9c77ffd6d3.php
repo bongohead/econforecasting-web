@@ -69,7 +69,13 @@ class __TwigTemplate_971b11a3a68d568655a46ba4733e3a55c85f35e983a059decd19487cbd2
 \t
 \t\t
 \t\t<div class=\"row justify-content-center mx-3\" style=\"background-color:rgba(25, 50, 20, 0.05)\">
-\t\t\t<div id=\"chart-container\" class=\"col-xl-8 col-lg-10 col-12-md px-2\">
+\t\t\t<div id=\"chart-container\" class=\"col-xl-6 col-lg-10 col-12-md px-2\">
+\t\t\t</div>
+\t\t\t<div class=\"col-xl-2 col-lg-2 col-8-md px-2\">
+\t\t\t\t<span style=\"font-size:1.5rem;font-family:'Assistant', Arial, 'sans-serif';text-align:center; padding-top:50px\" class=\"text-econblue d-block\">Data Release Calendar</span>
+\t\t\t\t<div class=\"overflow-auto border border-econblue rounded\"  style=\"height:300px;margin-top:20px;position:relative\" id=\"release-container\">
+\t\t\t\t</div>
+\t\t\t\t<span class=\"d-block text-end fst-italic text-muted\">Major releases highlighted in <span class=\"text-econlred\">red</span></span>
 \t\t\t</div>
 \t\t</div>
 \t\t
@@ -142,7 +148,13 @@ class __TwigTemplate_971b11a3a68d568655a46ba4733e3a55c85f35e983a059decd19487cbd2
 \t
 \t\t
 \t\t<div class=\"row justify-content-center mx-3\" style=\"background-color:rgba(25, 50, 20, 0.05)\">
-\t\t\t<div id=\"chart-container\" class=\"col-xl-8 col-lg-10 col-12-md px-2\">
+\t\t\t<div id=\"chart-container\" class=\"col-xl-6 col-lg-10 col-12-md px-2\">
+\t\t\t</div>
+\t\t\t<div class=\"col-xl-2 col-lg-2 col-8-md px-2\">
+\t\t\t\t<span style=\"font-size:1.5rem;font-family:'Assistant', Arial, 'sans-serif';text-align:center; padding-top:50px\" class=\"text-econblue d-block\">Data Release Calendar</span>
+\t\t\t\t<div class=\"overflow-auto border border-econblue rounded\"  style=\"height:300px;margin-top:20px;position:relative\" id=\"release-container\">
+\t\t\t\t</div>
+\t\t\t\t<span class=\"d-block text-end fst-italic text-muted\">Major releases highlighted in <span class=\"text-econlred\">red</span></span>
 \t\t\t</div>
 \t\t</div>
 \t\t

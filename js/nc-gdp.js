@@ -26,8 +26,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	 */
 	const ud = getData('userData');
 	const getNcValuesDfd = getFetch('getNcValuesByGroup', toScript = ['ncValues'], fromAjax = {dispgroup: 'GDP', freq: 'q'});
-	
-	Promise.all([getNcValuesDfd]).then(function(response) {
+	const getNcReleases = getFetch('getNcReleases', toScript = ['ncReleases'], fromAjax = {});
+
+	Promise.all([getNcValuesDfd, getNcReleases]).then(function(response) {
 		
 		const ncValues =
 			response[0].ncValues.map(function(x) {
@@ -39,7 +40,19 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				};
 			});
 			
-		console.log(ncValues);
+		const ncReleases =
+			response[1].ncReleases.map(function(x) {
+				return {
+					id: x.id,
+					count: x.count,
+					link: x.link,
+					relname: x.relname,
+					seriesnames: JSON.parse(x.seriesnames),
+					reldates: JSON.parse(x.reldates)
+				};
+			});
+			
+		console.log(ncValues, ncReleases);
 		// Order values for table
 		const order = [
 			'gdp',
@@ -78,15 +91,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			
 		console.log(ncValuesGrouped);
 		
-		setData('userData', {...getData('userData'), ...{ncValuesGrouped: ncValuesGrouped}});
+		setData('userData', {...getData('userData'), ...{ncValuesGrouped: ncValuesGrouped}, ...{ncReleases: ncReleases}});
 		
-		return(ncValuesGrouped);
+		return({ncValuesGrouped: ncValuesGrouped, ncReleases: ncReleases});
 	
 	})
 	/********** DRAW CHART & TABLE **********/
-	.then(function(ncValuesGrouped) {
-		drawChart(ncValuesGrouped, displayQuarter = ud.displayQuarter);
-		drawTable(ncValuesGrouped);
+	.then(function(res) {
+		drawChart(res.ncValuesGrouped, res.ncReleases, displayQuarter = ud.displayQuarter);
+		drawTable(res.ncValuesGrouped);
 		$('div.overlay').hide();
 	});
 	
@@ -96,17 +109,33 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		const newDisplayQuarter = this.innerHTML;
 		
 		//setData('userData', {...getData('userData'), ...{playState: newPlayState, playIndex: newPlayIndex}});
-		drawChart(getData('userData').ncValuesGrouped, newDisplayQuarter);
+		drawChart(getData('userData').ncValuesGrouped, getData('userData').ncReleases, newDisplayQuarter);
 		
 		return;
     });
 	
+	/********** EVENT LISTENERS FOR DATA CALENDAR HOVER **********/
+	$('#release-container').on('mouseenter', 'li.release-calendar-date', function() {
+		console.log(this.id.replace('li-', ''));
+		const chart = $('#chart-container').highcharts();
+		chart.xAxis[0].addPlotLine({
+			value: parseInt(moment(this.id.replace('li-', '')).format('x')),
+			color: 'blue',
+			width: 3,
+			id: 'release-calendar-indicator'
+		  });
+		console.log('highcharts');
+	});
+	$('#release-container').on('mouseleave', 'li.release-calendar-date', function() {
+		const chart = $('#chart-container').highcharts();
+		chart.xAxis[0].removePlotLine('release-calendar-indicator');
+	});
 
 });
 
 
 /*** Draw chart ***/
-function drawChart(ncValuesGrouped, displayQuarter) {
+function drawChart(ncValuesGrouped, ncReleases, displayQuarter) {
 	
 	// Create series - each corresponding to a different economic variable
 	const chartData =
@@ -120,7 +149,8 @@ function drawChart(ncValuesGrouped, displayQuarter) {
 				type: (x.varname === 'gdp' ? 'area' : 'line'),
 				//dashStyle: (x.fcname === 'hist' ? 'solid' : 'solid'),
 				lineWidth: (x.varname === 'gdp' ? 4 : 2),
-				opacity: .9,
+				opacity: 1,
+				zIndex: 2,
 				color: getColorArray()[i],
 				visible: (x.varname === 'gdp' ? true : false),
 				index: x.order // Force legend to order items correctly
@@ -128,7 +158,95 @@ function drawChart(ncValuesGrouped, displayQuarter) {
 		));
 		
 	console.log('chartData', chartData);
+	
+	// Calculate end date (take the first vintage of the GDP release occuring after the quarter end date)
+	const quarterEndDate = moment(displayQuarter, 'YYYY[Q]Q').add(1, 'Q');
+	const chartEndDate = ncReleases.filter(x => x.relname == 'Gross Domestic Product')[0].reldates.filter(x => moment(x) > quarterEndDate)[0];
+	
+	console.log('chartEndDate', chartEndDate);
+	
+	function getDates(startDate, stopDate) {
+		var dateArray = [];
+		var currentDate = moment(startDate);
+		var stopDate = moment(stopDate);
+		while (currentDate <= stopDate) {
+			dateArray.push( moment(currentDate).format('YYYY-MM-DD') )
+			currentDate = moment(currentDate).add(1, 'days');
+		}
+		return dateArray;
+	}
+	
+	console.log('dateRange', getDates(chartData[0].data[0][0], moment(chartEndDate)));
+	// Get flattened array of date x releaseid objects
+	const releaseSeriesData =
+		ncReleases
+		.map(x => ({...x, reldates: x.reldates.filter(y => moment(y) > moment(chartData[0].data[0][0]) && moment(y) <= moment(chartEndDate))}))
+		.filter(x => x.reldates.length > 0)
+		.map(function(x, i) {
+			return x.reldates.map(function(date) {
+				return {
+					color: getColorArray()[i], // Color value
+					value: date, //parseInt(moment(date).format('x')),
+					link: x.link,
+					width: 1,
+					label: {
+						text: x.relname
+					}
+				};
+			})
+		}).flat();
+		// nest releaseid under dates
 
+	// Now get this data as a date => release id obj
+	const releaseData =
+		getDates(chartData[0].data[0][0], moment(chartEndDate))
+		.map(date => releaseSeriesData.filter(x => x.value === date))
+		.filter(x => x.length > 0)
+		.sort(x => x.width == 1)
+		
+	const plotLinesChart =
+		releaseData.filter(function(x) {
+			return ['Selected Real Retail Sales Series', 'Gross Domestic Product', 'Employment Situation', 'G.17 Industrial Production and Capacity Utilization', 'Personal Income and Outlays'].some(release => x.map(y => y.label.text).includes(release));		
+		}).map(x => ({
+			color: 'orange',
+			dashStyle: 'Solid',
+			test: x[0].value,
+			value: parseInt(moment(x[0].value).format('x')), 
+			width: 1,
+			zIndex: 0
+		}));
+		
+	console.log('plotlinesChart', plotLinesChart);
+		
+	const releaseEl =
+		'<ul class="list-group">' +
+		releaseData.map(function(x) {
+			return
+			'<li href="#" id="li-' + x[0].value + '" class="list-group-item list-group-item-action release-calendar-date">' +
+				'<div class="d-flex justify-content-between align-items-center">' +
+					moment(x[0].value).format('MMMM Do') +
+					'<span class="badge bg-econgreen">' + x.length + '</span>' +
+				'</div>' +
+				'<ul class="ps-2" style="font-size:.8rem">' +
+					x.map(y => '<li><a ' + (['Selected Real Retail Sales Series', 'Gross Domestic Product', 'Employment Situation', 'G.17 Industrial Production and Capacity Utilization', 'Personal Income and Outlays'].includes(y.label.text) ? 'class="fw-bolder text-danger"' : '')+ ' href="'+ (y.label != null ? y.link : '') + '">' + y.label.text + '</a></li>').join('\n') +
+				'</ul>' +
+			'</li>'
+		}).join('\n') +
+		'</ul>';
+
+	$('#release-container').html(releaseEl);
+	
+	// Auto scroll to most recent date
+	// https://stackoverflow.com/questions/635706/how-to-scroll-to-an-element-inside-a-div
+	
+	const nextReleaseDate = releaseData.map(x => x[0].value).filter(x => moment(x) >= moment())[0] || releaseData[releaseData.length - 1][0].value;
+	var myElement = document.getElementById('li-' + nextReleaseDate);
+	var topPos = myElement.offsetTop;
+	document.getElementById('release-container').scrollTop = topPos;
+
+	console.log('releaseData', releaseData);
+	
+	
 	Highcharts.setOptions({
 		lang: {
 			rangeSelectorZoom: 'Display:'
@@ -223,7 +341,8 @@ function drawChart(ncValuesGrouped, displayQuarter) {
 				shadow: true,
 				dataGrouping: {
 					enabled: true,
-					units: [['day', [1]]]
+					units: [['day', [1]]],
+					forced: true
 				},
 				marker : {
 					enabled: false,
@@ -245,7 +364,24 @@ function drawChart(ncValuesGrouped, displayQuarter) {
 				style: {
 					color: 'black'
 				}
-			}
+			},
+			max: parseInt(moment(chartEndDate).add(5, 'day').format('x')),
+			ordinal: false,
+			plotLines: [{
+				color: 'red', // Color value
+				dashStyle: 'ShortDash', // Style of the plot line. Default to solid
+				//value: parseInt(moment(chartEndDate).format('x')), // Value of where the line will appear
+				value: parseInt(moment(chartEndDate).format('x')), // Value of where the line will appear
+				width: 2,
+				label: {
+					text: 'Official GDP Data Release',
+					style: {
+						color: 'red',
+						fontWeight: 'bold'
+					}
+				}
+
+			}].concat(plotLinesChart)
 		},
 		yAxis: {
             labels: {
