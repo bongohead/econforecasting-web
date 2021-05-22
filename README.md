@@ -3,7 +3,13 @@ Description TBA
 # CHANGELOG
 - TBD: Use HC 9.1.0, allowlists (https://www.highcharts.com/docs/chart-concepts/labels-and-string-formatting)
 
-## 2021-07-01 [v0.12] (Misc Dependencies Update)
+## 2021-05-21 [v0.13] (Updated Nowcasts with Release Calendar)
+- Added data release calendar 
+- Added onHover for data release calendar
+- Added major data release markings on graph
+- Fixed timezone bug with charts by adding moment-timezone.js
+
+## 2021-05-09 [v0.12] (Misc Dependencies Update)
 - Updated to Bootstrap 5.0.0
 - Updated to Highcharts 9.1 (added Highcharts.AST.allowedAttributes to prevent automatic HTML filtration)
 - Updated to jQuery 3.6.0

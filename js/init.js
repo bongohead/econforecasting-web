@@ -63,7 +63,7 @@ $(document).ready(function() {
 	
 	Highcharts.setOptions({
 		time: {
-			timezoneOffset: 5 * 60
+			timezone: 'America/New_York'
 		}
 	});
 	

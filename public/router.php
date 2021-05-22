@@ -33,7 +33,7 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 			['template' => 'blog', 'request' => 'blog', 'title' => 'The Center for Macroeconomic Forecasts & Insights', 'models' => [], 'js' => []],
 		],
 		errorRoute: ['template' => 'error', 'request' => 'error', 'title' => 'Error', 'js' => []],
-		baseJsFiles: ['functions', 'moment.min', 'gradient-min'],
+		baseJsFiles: ['functions', 'moment.min', 'moment-timezone-with-data-1970-2030.min', 'gradient-min'],
 		devMode:  ($_SERVER['REMOTE_ADDR'] === '24.42.246.68') ? true : false,
 		db: 'ef'
 	);
