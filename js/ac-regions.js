@@ -77,7 +77,7 @@ function drawChart(acIndex) {
 	const acIndexParsed =
 		acIndex.map(function(x) {
 			const z = {
-				x: new Date(x.date).getTime(),
+				x: parseInt(moment(x.date).format('x')),
 				y: parseFloat(x.value) * 100;
 			};
 			return z;
