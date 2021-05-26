@@ -141,7 +141,7 @@ function drawChart(fcHistory, fcForecast, tFullname) {
 			href: 'https://econforecasting.com'
         },
         title: {
-            text: tFullname + ' Forecast (Updated ' + moment(fcForecast[0].vintage_date).format('MM/DD/YYYY') + ')',
+            text: tFullname + ' Forecast (Updated ' + moment(fcForecast[0].vintage_date).add(1, 'days').format('MM/DD/YYYY') + ')',
 			style: {
 				'font-weight': 'bolder',
 				fontSize: '1.2rem',

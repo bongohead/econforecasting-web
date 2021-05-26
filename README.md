@@ -3,10 +3,12 @@ Description TBA
 # CHANGELOG
 - TBD: Use HC 9.1.0, allowlists (https://www.highcharts.com/docs/chart-concepts/labels-and-string-formatting)
 
-## 2021-05-21 [v0.13] (Updated Nowcasts with Release Calendar)
+## 2021-05-25 [v0.13] (Updated Nowcasts with Release Calendar)
 - Added data release calendar 
-- Added onHover for data release calendar
+- Added onHover scrolling for data release calendar
 - Added major data release markings on graph
+- Added +1 date shift to Treasury yield forecasts
+- Fixed bug with contagion index dates being a day behind
 - Fixed timezone bug with charts by adding moment-timezone.js
 
 ## 2021-05-09 [v0.12] (Misc Dependencies Update)
