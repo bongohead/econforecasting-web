@@ -178,7 +178,7 @@ function drawChart(fcDataParsed, playIndex) {
 					
 					/* Now render non-changing historical data on RHS */
 					this.renderer
-						.text('Historical data for ' + moment(fcDataParsed[playIndex - 1].date).format('MMM YYYY'), distFromLeft, distFromTop + 40)
+						.text('Current Yield Curve: ' + moment(fcDataParsed[playIndex - 1].date).format('MMM YYYY'), distFromLeft, distFromTop + 40)
 						.attr({'id': 'date-text', fill: 'darkred', 'font-size': '1.5rem'})
 						.add();
 
