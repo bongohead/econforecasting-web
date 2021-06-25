@@ -3,6 +3,9 @@ Description TBA
 # CHANGELOG
 - TBD: Use HC 9.1.0, allowlists (https://www.highcharts.com/docs/chart-concepts/labels-and-string-formatting)
 
+## 2021-06-24 [v0.14] ()
+- Fixed broken GH pages link and replaced with local file for nowcast documentation
+
 ## 2021-05-25 [v0.13] (Updated Nowcasts with Release Calendar)
 - Added data release calendar 
 - Added onHover scrolling for data release calendar
