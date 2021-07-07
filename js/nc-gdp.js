@@ -161,7 +161,11 @@ function drawChart(ncValuesGrouped, ncReleases, displayQuarter) {
 	
 	// Calculate end date (take the first vintage of the GDP release occuring after the quarter end date)
 	const quarterEndDate = moment(displayQuarter, 'YYYY[Q]Q').add(1, 'Q');
-	const chartEndDate = ncReleases.filter(x => x.relname == 'Gross Domestic Product')[0].reldates.filter(x => moment(x) > quarterEndDate)[0];
+	console.log('quarterEndDate', quarterEndDate);
+	const chartEndDate0 =
+		ncReleases.filter(x => x.relname == 'Gross Domestic Product')[0].reldates.filter(x => moment(x) > quarterEndDate)[0];
+	// Modified 7-6-21 to automatically guess the date if doesn't exist
+	const chartEndDate = (typeof(chartEndDate0) !== 'undefined' ? chartEndDate0 : quarterEndDate);
 	
 	console.log('chartEndDate', chartEndDate);
 	
