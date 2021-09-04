@@ -3,6 +3,8 @@ Description TBA
 # CHANGELOG
 - TBD: Use HC 9.1.0, allowlists (https://www.highcharts.com/docs/chart-concepts/labels-and-string-formatting)
 
+## [v0.17]
+
 ## 2021-09-03 [v0.16] (Minor Update)
 - Updated sitemap
 
