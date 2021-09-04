@@ -3,7 +3,10 @@ Description TBA
 # CHANGELOG
 - TBD: Use HC 9.1.0, allowlists (https://www.highcharts.com/docs/chart-concepts/labels-and-string-formatting)
 
-## 2021-08-01 Tentative [v0.15] (Updated Forecasts with New Model Flow)
+## 2021-09-03 [v0.16] (Minor Update)
+- Updated sitemap
+
+## 2021-08-01 [v0.15] (Minor Bugfix)
 - Fixed bug caused by missing GDP release date two quarters out
 
 ## 2021-06-24 [v0.14] (Minor Bugfix)
