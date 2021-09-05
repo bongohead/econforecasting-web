@@ -31,6 +31,8 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 			['template' => 'fc-macro-other', 'request' => ['fc-macro-inf'], 'title' => 'Macroeconomic Indicator Forecasts', 'models' => [], 'js' => ['init', 'fc-rates-other']],
 			['template' => 'nc-gdp', 'request' => ['nc-gdp'], 'title' => 'GDP Nowcasts | Center for Macroeconomic Forecasts & Insights', 'models' => [], 'js' => ['init', 'nc-gdp']],
 			['template' => 'blog', 'request' => 'blog', 'title' => 'The Center for Macroeconomic Forecasts & Insights', 'models' => [], 'js' => []],
+			
+			['template' => 'csm-all-forecasts', 'request' => ['forecasts'], 'title' => 'All Forecasts | CMEFI', 'models' => [], 'js' => ['init', 'csm-all-forecasts']],
 		],
 		errorRoute: ['template' => 'error', 'request' => 'error', 'title' => 'Error', 'js' => []],
 		baseJsFiles: ['functions', 'moment.min', 'moment-timezone-with-data-1970-2030.min', 'gradient-min'],

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block meta %}
+<meta name="description" content="Aggregated macroeconomic forecasts for GDP, consumption, federal funds rates, Treasury yields, and others."/>
+{% endblock %}
+
+{% block staticlinks %}
+<script src="https://code.highcharts.com/9.1/highcharts-more.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="row gx-0">
+	{% include 'fc-rates-sidebar.html' %}
+	<div class="col-12 col-lg-8 col-xl-9 col-xxl-9 m-auto pt-0 px-2 pb-5">
+	
+		<div class="row justify-content-center px-3" style="background-color:rgba(25, 50, 20, 0.1)">
+			<div id="chart-container" class="col-xl-9 col-lg-10 col-12-md">
+			</div>
+		</div>
+		<div class="row justify-content-center pt-3 px-3">
+		
+			<div class="col-xl-7 col-md-7 col-sm-12">
+				<h2 class="text-decoration-underline">Overview</h2>
+			</div>
+
+			<div class="card border-secondary border-2 m-2 col-xl-4 col-md-4 col-sm-10" style="background-color:rgba(200, 200, 250, .1)">
+				<div class="card-body">
+				<h6>For a full 10-year forecast of all Treasury yields, please click <a href="/fc-rates-tcurve">here.</a></h6>
+				<h6 class="card-subtitle mb-2 text-muted fst-italic">*forecasted values</h6>
+				<table id="table-container" class="table summary-table w-100"></table>
+				</div>
+			</div>
+
+		
+		</div>
+		
+
+		
+	</div>
+</div>
+{% endblock %}

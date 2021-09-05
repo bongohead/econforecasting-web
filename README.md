@@ -3,7 +3,9 @@ Description TBA
 # CHANGELOG
 - TBD: Use HC 9.1.0, allowlists (https://www.highcharts.com/docs/chart-concepts/labels-and-string-formatting)
 
-## [v0.17]
+## 2021-09-05 [v0.17] (Adding Updated Model Forecasts to Site)
+- Added new import files to get data from csm_\* SQL tables
+- Added new file for scenario baseline forecast page
 
 ## 2021-09-03 [v0.16] (Minor Update)
 - Updated sitemap
