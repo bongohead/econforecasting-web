@@ -54,6 +54,49 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			});
 			
 		console.log('tsParams', tsParams, 'tsTypes', tsTypes);
+		
+		/* Get varnames to display */
+		const displayVarnames = tsParams
+			.filter(x => x.dispgroup !== null && x.disporder !== null)
+			.map(x => x.varname);
+			
+		/* Get dates to display - includes historical data (color in non historical data later) */
+		const displayDates = getDates(moment().startOf('quarter').subtract(4, 'quarters'), moment().startOf('quarter').add(4 * 5, 'quarters'), 1, 'quarters');
+		const displayFreq = 'q';
+		console.log('displayVarnames', displayVarnames, 'displayFreq', displayFreq, 'displayDates', displayDates);
+		
+		const tsValuesFiltered = tsValues
+			.filter(x => x.freq === displayFreq && ['baseline', 'hist'].includes(x.tskey) && displayDates.includes(x.date) && displayVarnames.includes(x.varname))
+			.map(x => ({
+				date: x.date,
+				form: x.form,
+				tskey: x.tskey,
+				value: x.value,
+				varname: x.varname
+			}));
+			
+		console.log('res', res);
+		
+		const tsValuesGrouped =		
+			// Nest into array of objects containing each varname
+			[... new Set(tsValuesFiltered.map(x => x.varname))]
+			.map(function(varname) {
+				const z = tsValuesFiltered.filter(x => x.varname == varname)[0];
+				return {
+					varname: z.varname,
+					fullname: z.fullname,
+					units: z.units,
+					vdate: z.vdate,
+					units: z.units,
+					d1: z.d1,
+					d2: z.d2,
+					// Let data contain all vintages
+					data: ncValues.filter(x => x.varname == varname).map(x => ({date: x.date, formatdate: x.formatdate, vdate: x.vdate, value: x.value})).sort((a, b) => a[0] - b[0]),
+					tabs: (z.varname === 'gdp' ? 0 : z.fullname.split(':').length)
+				}
+			})
+
+		
 		/*
 		// Order values for table
 		const order = [
