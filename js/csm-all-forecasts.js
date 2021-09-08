@@ -23,10 +23,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	 * Put the functions in a bigger $.Deferred function when more cleaning is needed before finalization;
 	 */
 	const ud = getData('userData');
-	const getTsValuesDfd = getFetch('getLastTsValues', toScript = ['tsValues'], fromAjax = {tskey: '{"baseline", "downside"}', form: '{"d1", "d2"}', freq:  '{' + ['q', 'm'].join() + '}'});
-	const getNcReleases = getFetch('getNcReleases', toScript = ['ncReleases'], fromAjax = {});
+	const getTsValuesDfd = getFetch('getTsValuesLast', toScript = ['tsValues'], fromAjax = {tskey: '{"baseline", "downside"}', form: '{"d1", "d2"}', freq:  '{' + ['q', 'm'].join() + '}'});
+	const getTsParamsDfd = getFetch('getTsParams', toScript = ['tsParams'], fromAjax = {});
+	const getTsTypesDfd = getFetch('getTsTypes', toScript = ['tsTypes'], fromAjax = {});
 
-	Promise.all([getTsValuesDfd, getNcReleases]).then(function(response) {
+	Promise.all([getTsValuesDfd, getTsParamsDfd, getTsTypesDfd]).then(function(response) {
 		
 		const tsValues =
 			response[0].tsValues.map(function(x) {
@@ -40,30 +41,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			});
 		console.log('tsValues', tsValues, [...new Set(tsValues.map(x => x.form))]);
 		
-/*
-		const ncValues =
-			response[0].ncValues.map(function(x) {
-				return {...x,
-					date: (x.date),
-					vdate: (x.vdate),
-					value: parseFloat(x.value),
-					formatdate: String(moment(x.date).year()) + 'Q' + String(Math.ceil((moment(x.date).month() + 1)/3))
+		const tsParams =
+			response[1].tsParams.map(function(x) {
+				return {...x
 				};
 			});
 			
-		const ncReleases =
-			response[1].ncReleases.map(function(x) {
-				return {
-					id: x.id,
-					count: x.count,
-					link: x.link,
-					relname: x.relname,
-					seriesnames: JSON.parse(x.seriesnames),
-					reldates: JSON.parse(x.reldates)
+		const tsTypes =
+			response[2].tsTypes.map(function(x) {
+				return {...x
 				};
 			});
 			
-		console.log(ncValues, ncReleases);
+		console.log('tsParams', tsParams, 'tsTypes', tsTypes);
+		/*
 		// Order values for table
 		const order = [
 			'gdp',
