@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	 * Put the functions in a bigger $.Deferred function when more cleaning is needed before finalization;
 	 */
 	const ud = getData('userData');
-	const getTsValuesDfd = getFetch('getTsValuesLast', toScript = ['tsValues'], fromAjax = {tskey: '{"baseline", "downside"}', form: '{"d1", "d2"}', freq:  '{' + ['q', 'm'].join() + '}'});
+	const getTsValuesDfd = getFetch('getTsValuesLast', toScript = ['tsValues'], fromAjax = {tskey: '{"baseline", "hist"}', form: '{"d1", "d2"}', freq:  '{' + ['q', 'm'].join() + '}'});
 	const getTsParamsDfd = getFetch('getTsParams', toScript = ['tsParams'], fromAjax = {});
 	const getTsTypesDfd = getFetch('getTsTypes', toScript = ['tsTypes'], fromAjax = {});
 
@@ -33,6 +33,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			response[0].tsValues.map(function(x) {
 				return {...x,
 					date: (x.date),
+					/*formatdate: (
+						x.freq === 'q' ?
+						String(moment(x.date).year()) + 'Q' + String(Math.ceil((moment(x.date).month() + 1)/3)) :
+						String(moment(x.date).year()) + 'M' + String(moment(x.date).month())						
+						),*/
 					vdate: (x.vdate),
 					form: x.form,
 					value: Number(x.value),
@@ -61,42 +66,51 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			.map(x => x.varname);
 			
 		/* Get dates to display - includes historical data (color in non historical data later) */
-		const displayDates = getDates(moment().startOf('quarter').subtract(4, 'quarters'), moment().startOf('quarter').add(4 * 5, 'quarters'), 1, 'quarters');
-		const displayFreq = 'q';
-		console.log('displayVarnames', displayVarnames, 'displayFreq', displayFreq, 'displayDates', displayDates);
-		
-		const tsValuesFiltered = tsValues
-			.filter(x => x.freq === displayFreq && ['baseline', 'hist'].includes(x.tskey) && displayDates.includes(x.date) && displayVarnames.includes(x.varname))
-			.map(x => ({
-				date: x.date,
-				form: x.form,
-				tskey: x.tskey,
-				value: x.value,
-				varname: x.varname
-			}));
-			
-		console.log('res', res);
-		
-		const tsValuesGrouped =		
-			// Nest into array of objects containing each varname
-			[... new Set(tsValuesFiltered.map(x => x.varname))]
-			.map(function(varname) {
-				const z = tsValuesFiltered.filter(x => x.varname == varname)[0];
-				return {
-					varname: z.varname,
-					fullname: z.fullname,
-					units: z.units,
-					vdate: z.vdate,
-					units: z.units,
-					d1: z.d1,
-					d2: z.d2,
-					// Let data contain all vintages
-					data: ncValues.filter(x => x.varname == varname).map(x => ({date: x.date, formatdate: x.formatdate, vdate: x.vdate, value: x.value})).sort((a, b) => a[0] - b[0]),
-					tabs: (z.varname === 'gdp' ? 0 : z.fullname.split(':').length)
-				}
-			})
+		const displayDatesQ = getDates(moment().startOf('quarter').subtract(4, 'quarters'), moment().startOf('quarter').add(4 * 4, 'quarters'), 1, 'quarters');
+		const displayDatesM = getDates(moment(displayDatesQ[0]), moment(displayDatesQ[displayDatesQ.length - 1]), 1, 'months');
 
+		console.log('displayVarnames', displayVarnames, 'displayDates', displayDatesQ, displayDatesM);
 		
+		const tsValuesGrouped = displayVarnames.map(varname => tsParams.filter(x => x.varname === varname)[0]).map(function (p, i) {
+			
+			const varnameData = tsValues.filter(x => x.varname === p.varname);
+			// Iterate through frequencies
+			const dataByFreq = ['m', 'q'].map(function(thisFreq) {
+				const freqData = varnameData.filter(x => x.freq === thisFreq);
+				if (freqData.length === 0) return null;
+					
+				// Iterate through the dates, get  hist if exists, otherwise get baseline forecasts
+				const varnameDataByForm = ['d1', 'd2'].map(function(thisForm) {
+					const displayDates = (thisFreq === 'q' ? displayDatesQ : displayDatesM);
+					const formData = displayDates.map(function(thisDate) {
+						//console.log(thisDate, thisForm, p.varname, varnameData, freqData.filter(x => x.date == thisDate && x.form == thisForm));
+						const dateData =
+							freqData.filter(x => x.date == thisDate && x.form == thisForm)
+							// Always sort historical first before others
+							.sort(function (a, b) {
+								const valA = (a === 'hist' ? 0 : 1)
+								const valB = (b === 'hist' ? 0 : 1)
+								return valA - valB;
+							}).map((x, i) => ({date: x.date, value: x.value, tskey: x.tskey, within_date_order: i}))[0]; // Now return first element
+						// console.log('dateData', dateData);
+						if (dateData == null || dateData.length === 0) return null;
+						//return (dateData === null ? null : {date: dateData.date, value: dateData.value, tskey: dateData.tskey});
+						return dateData;
+					}).filter(x => x! == null);
+					return {varname: p.varname, form: thisForm, freq: thisFreq, data: formData, ...p, tabs: (p.varname === 'gdp' ? 0 : p.fullname.split(':').length)};
+				});
+				return varnameDataByForm;
+			}).filter(x => x !== null).flat(1);
+								
+			return dataByFreq
+		}).flat(1).filter(x => x.data.length >= 1).map((x, i) => ({row_order: i, ...x}));
+
+
+		console.log('tsValuesGrouped', tsValuesGrouped);
+		setData('userData', {...getData('userData'), ...{tsValuesGrouped: tsValuesGrouped}, displayDatesQ: displayDatesQ, displayDatesM: displayDatesM});
+		
+		return({tsValuesGrouped: tsValuesGrouped, displayDatesQ: displayDatesQ, displayDatesM: displayDatesM});
+
 		/*
 		// Order values for table
 		const order = [
@@ -145,7 +159,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	/********** DRAW CHART & TABLE **********/
 	.then(function(res) {
 		//drawChart(res.ncValuesGrouped, res.ncReleases, displayQuarter = ud.displayQuarter);
-		//drawTable(res.ncValuesGrouped);
+		drawTable(res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
 		$('div.overlay').hide();
 	});
 	
@@ -500,44 +514,46 @@ function drawChart(ncValuesGrouped, ncReleases, displayQuarter) {
 
 
 
-function drawTable(ncValuesGrouped) {
+function drawTable(tsValuesGrouped, displayDatesQ) {
 	
-	console.log('ncValuesGrouped', ncValuesGrouped);
+	console.log('tsValuesGrouped', tsValuesGrouped, 'displayDatesQ', displayDatesQ);
 	
 	// Get last vdate - only show last vintage date data
+	/*
 	const vdate = ncValuesGrouped.map(x => x.data.map(y => y.vdate)).flat().sort().slice(-1)[0];
 	console.log('vdate', vdate);
 	$('#vdate').text(moment(vdate).format('MMM Do') + ' ');
-	
-	// Get list of unique date values 
-	const uniqueDates = [... new Set(ncValuesGrouped.map(x => x.data.map(y => y.formatdate)).flat())].sort()
-		//.map((x, i) => ({date: x.substr(-1), formatdate = x}));
+	*/
+	const formatDates = displayDatesQ.map(x => String(moment(x).year()) + 'Q' + String(Math.ceil((moment(x).month() + 1)/3)));
+	console.log('formatDates', formatDates);
 	const dtCols = 
-		[{title: 'Order', data: 'order'}, {title: 'Tabs', data: 'tabs'}, {title: 'NOWCAST', data: 'fancyname'}]
-		.concat(uniqueDates.map((x, i) => ({title: x, data: x})))
+		[{title: 'Order', data: 'order'}, {title: 'Tabs', data: 'tabs'}, {title: 'Variable', data: 'fullname'}]
+		.concat(formatDates.map((x, i) => ({title: x, data: x})))
 		.map(function(x, i) {
 			return {...x, ...{
 				visible: (!['Order', 'Tabs'].includes(x.title)),
 				orderable: false,
-				type: (x.title === 'NOWCAST' ? 'string' : 'num'),
-				className: (x.title === 'NOWCAST' ? 'dt-left' : 'dt-center'),
+				type: (x.title === 'Variable' ? 'string' : 'num'),
+				className: (x.title === 'Variable' ? 'dt-left' : 'dt-center'),
 				css: 'font-size: .9rem',
 				createdCell: function(td, cellData, rowData, row, col) {
-					(x.title === 'NOWCAST' ? $(td).css('padding-left', String(rowData.tabs * .8 + .5) + 'rem' ) : false)
+					(x.title === 'Variable' ? $(td).css('padding-left', String(rowData.tabs * .8 + .5) + 'rem' ) : false)
 				}
 			}
 			}
 		});
 	
 	
-	console.log(uniqueDates);
+	console.log('dtCols', dtCols);
 	const tableData =
-		ncValuesGrouped.map(function(x) {
+		tsValuesGrouped
+		.filter(x => (['core.endog', 'core.exog.p', 'core.exog'].includes(x.core_structural)))
+		.map(function(x, i) {
 			return {
-				order: x.order,
+				order: i,
 				tabs: x.tabs,
-				fancyname: x.fullname,
-				...Object.fromEntries(x.data.filter(y => y.vdate == vdate).map(z => [z.formatdate, z.value.toFixed(1)]))
+				fullname: x.fullname,
+				...Object.fromEntries(x.data.map(z => [(String(moment(z.date).year()) + 'Q' + String(Math.ceil((moment(z.date).month() + 1)/3))), z.value.toFixed(1)]))
 				};
 		});
 	
@@ -582,7 +598,7 @@ function drawTable(ncValuesGrouped) {
 		}]*/
 	}
 	
-	 $('#gdp-table').DataTable(o);
+	 $('#forecasts-table').DataTable(o);
 		
 	return;
 }
