@@ -6,8 +6,10 @@
 
 {% block staticlinks %}
 <script src="https://code.highcharts.com/9.1/highcharts-more.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>
-<!--<script src="https://cdn.datatables.net/fixedcolumns/3.3.3/js/dataTables.fixedColumns.min.js"></script>-->
+<!--<script src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>-->
+<script src="https://cdn.datatables.net/rowgroup/1.1.3/js/dataTables.rowGroup.min.js"></script>
+<script src="https://cdn.datatables.net/fixedcolumns/3.3.3/js/dataTables.fixedColumns.min.js"></script>
+
 {% endblock %}
 
 {% block content %}
@@ -50,7 +52,7 @@
 							<div class="d-inline"><span style="vertical-align:middle;font-size:1.4rem; color: var(--bs-econblue)"><span id="vdate"></span>nowcasts for GDP & components</span></div>
 							<hr class="mt-0 mb-3 bg-econblue">
 							<p class="fst-italic">All units are reported in terms of annualized % change except for net exports and change in private inventories, which are reported in billions of dollars.</p>
-							<table class="table data-table w-100" id="forecasts-table"></table>
+							<table class="table summary-table w-100" id="forecasts-table"></table>
 
 						</div>
 					</div>

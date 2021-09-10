@@ -99,8 +99,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					if (res == null || res.length === 0) return {formatdate: thisDate, value: null, tskey: null}; // Return when res returns nothing
 					return res;
 				});
-				
-				return {varname: param.varname, fullname: param.fullname, units: param.units, d1: param.d1, data: dataByDate};
+				return {...param, data: dataByDate};
+				//return {varname: param.varname, fullname: param.fullname, units: param.units, d1: param.d1, data: dataByDate};
 			});
 
 		console.log('tsValuesGrouped', tsValuesGrouped);
@@ -517,7 +517,7 @@ function drawTable(tsValuesGrouped, displayDates) {
 	// console.log('tsValuesGrouped', tsValuesGrouped, 'displayDates', displayDates);
 	
 	const dtCols0 = 
-		[{title: 'Order', data: 'order'}, {title: 'Tabs', data: 'tabs'}, {title: 'Variable', data: 'fullname'}]
+		[{title: 'Order', data: 'order'}, {title: 'Tabs', data: 'tabs'}, {title: 'Variable', data: 'fullname'}, {title: 'Group', data: 'dispgroup'}]
 		.concat(displayDates.map((x, i) => ({title: x, data: x})));
 		
 	// Add formatting functions to dtCols
@@ -525,16 +525,17 @@ function drawTable(tsValuesGrouped, displayDates) {
 		dtCols0
 		.map(function(x, i) {
 			return {...x, ...{
-				visible: (!['Order', 'Tabs'].includes(x.title)),
+				visible: (!['Order', 'Tabs', 'Group'].includes(x.title)),
 				orderable: false,
 				type: (x.title === 'Variable' ? 'string' : 'num'),
 				className: (x.title === 'Variable' ? 'dt-left' : 'dt-center'),
 				css: 'font-size: 1.0rem',
 				createdCell: function(td, cellData, rowData, rowIndex, colIndex) {
+					(x.title === 'Variable' ? $(td).css('min-width', '15rem') : false);
 					(x.title === 'Variable' ? $(td).css('padding-left', String(rowData.tabs * .8 + .5) + 'rem' ) : false);
-					console.log(colIndex - 3);
-					(!['Order', 'Tabs', 'Variable'].includes(x.title) ?
-						(tsValuesGrouped[rowIndex].data[colIndex - 3].tskey != 'hist' ? $(td).css('color', 'red') : false) :
+					// console.log(colIndex - 3);  // Subtract out the number of non-data columns
+					(!['Order', 'Tabs', 'Variable', 'Group'].includes(x.title) ?
+						(tsValuesGrouped[rowIndex].data[colIndex - 4].tskey === 'hist' ? $(td).css('color', '#898989') : false) :
 						false);
 				}
 			}
@@ -550,6 +551,7 @@ function drawTable(tsValuesGrouped, displayDates) {
 			return {
 				order: i,
 				tabs: (x.varname === 'gdp' ? 0 : x.fullname.split(':').length),
+				dispgroup: x.dispgroup,
 				fullname: (x.fullname.includes(':') ? x.fullname.substring(x.fullname.lastIndexOf(':') + 2) : x.fullname),
 				...Object.fromEntries(
 					x.data.map(z => [z.formatdate, z.value == null ? '' : z.value.toFixed(1)])
@@ -557,7 +559,7 @@ function drawTable(tsValuesGrouped, displayDates) {
 				};
 		});
 	
-	// console.log('tableData', tableData);
+	console.log('tableData', tableData);
 		
 	const copySvg =
 	`<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-clipboard me-1" viewBox="0 0 16 16">
@@ -580,8 +582,8 @@ function drawTable(tsValuesGrouped, displayDates) {
 			{extend: 'copyHtml5', text: copySvg + 'Copy', exportOptions: {columns: dtCols.map((x, i) => ({...x, index: i})).filter(x => x.visible).map(x => x.index)}, className: 'btn btn-sm btn-econgreen'},
 			{extend: 'csvHtml5', text: dlSvg + 'Download', exportOptions: {columns: dtCols.map((x, i) => ({...x, index: i})).filter(x => x.visible).map(x => x.index)}, className: 'btn btn-sm btn-econgreen'}
 		],
-		/*scrollX: true,
-		fixedColumns: {left: 1},*/
+		scrollX: true,
+		//fixedColumns: {left: 1},
 		paging: false,
 		pagingType: 'numbers',
 		language: {
@@ -590,9 +592,16 @@ function drawTable(tsValuesGrouped, displayDates) {
 		},
 		ordering: [[0, 'asc']],
 		responsive: true,
+		rowGroup: {dataSrc: 'dispgroup'}
 		/*
-		columnDefs: [{
+		createdRow: function(row, data, dataIndex, cells) {
+			if (tsValuesGrouped[dataIndex + 1] != null && tsValuesGrouped[dataIndex].dispgroup !== tsValuesGrouped[dataIndex + 1].dispgroup) {
+				$(row).css('margin-bottom', '1.0rem');
+			}
+		}*/
+		/*columnDefs: [{
 			targets: '_all',
+			width: '50rem'
 			createdCell: function(td, cellData, rowData, row, col) {
 				$(td).addClass('ps-1' + rowData.tabs);
 			}

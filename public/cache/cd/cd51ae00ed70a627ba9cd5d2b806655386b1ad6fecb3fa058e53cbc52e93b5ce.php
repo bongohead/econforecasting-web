@@ -59,16 +59,18 @@ class __TwigTemplate_6c4899151c1138e0bed7496d9018be31789dd7895da7de1ffb0b6466324
         $macros = $this->macros;
         // line 8
         echo "<script src=\"https://code.highcharts.com/9.1/highcharts-more.js\"></script>
-<script src=\"https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js\"></script>
-<!--<script src=\"https://cdn.datatables.net/fixedcolumns/3.3.3/js/dataTables.fixedColumns.min.js\"></script>-->
+<!--<script src=\"https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js\"></script>-->
+<script src=\"https://cdn.datatables.net/rowgroup/1.1.3/js/dataTables.rowGroup.min.js\"></script>
+<script src=\"https://cdn.datatables.net/fixedcolumns/3.3.3/js/dataTables.fixedColumns.min.js\"></script>
+
 ";
     }
 
-    // line 13
+    // line 15
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 14
+        // line 16
         echo "<div class=\"row gx-0\">
 \t<div class=\"col px-0\">
 \t
@@ -108,7 +110,7 @@ class __TwigTemplate_6c4899151c1138e0bed7496d9018be31789dd7895da7de1ffb0b6466324
 \t\t\t\t\t\t\t<div class=\"d-inline\"><span style=\"vertical-align:middle;font-size:1.4rem; color: var(--bs-econblue)\"><span id=\"vdate\"></span>nowcasts for GDP & components</span></div>
 \t\t\t\t\t\t\t<hr class=\"mt-0 mb-3 bg-econblue\">
 \t\t\t\t\t\t\t<p class=\"fst-italic\">All units are reported in terms of annualized % change except for net exports and change in private inventories, which are reported in billions of dollars.</p>
-\t\t\t\t\t\t\t<table class=\"table data-table w-100\" id=\"forecasts-table\"></table>
+\t\t\t\t\t\t\t<table class=\"table summary-table w-100\" id=\"forecasts-table\"></table>
 
 \t\t\t\t\t\t</div>
 \t\t\t\t\t</div>
@@ -134,7 +136,7 @@ class __TwigTemplate_6c4899151c1138e0bed7496d9018be31789dd7895da7de1ffb0b6466324
 
     public function getDebugInfo()
     {
-        return array (  72 => 14,  68 => 13,  61 => 8,  57 => 7,  52 => 4,  48 => 3,  37 => 1,);
+        return array (  74 => 16,  70 => 15,  61 => 8,  57 => 7,  52 => 4,  48 => 3,  37 => 1,);
     }
 
     public function getSourceContext()
@@ -147,8 +149,10 @@ class __TwigTemplate_6c4899151c1138e0bed7496d9018be31789dd7895da7de1ffb0b6466324
 
 {% block staticlinks %}
 <script src=\"https://code.highcharts.com/9.1/highcharts-more.js\"></script>
-<script src=\"https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js\"></script>
-<!--<script src=\"https://cdn.datatables.net/fixedcolumns/3.3.3/js/dataTables.fixedColumns.min.js\"></script>-->
+<!--<script src=\"https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js\"></script>-->
+<script src=\"https://cdn.datatables.net/rowgroup/1.1.3/js/dataTables.rowGroup.min.js\"></script>
+<script src=\"https://cdn.datatables.net/fixedcolumns/3.3.3/js/dataTables.fixedColumns.min.js\"></script>
+
 {% endblock %}
 
 {% block content %}
@@ -191,7 +195,7 @@ class __TwigTemplate_6c4899151c1138e0bed7496d9018be31789dd7895da7de1ffb0b6466324
 \t\t\t\t\t\t\t<div class=\"d-inline\"><span style=\"vertical-align:middle;font-size:1.4rem; color: var(--bs-econblue)\"><span id=\"vdate\"></span>nowcasts for GDP & components</span></div>
 \t\t\t\t\t\t\t<hr class=\"mt-0 mb-3 bg-econblue\">
 \t\t\t\t\t\t\t<p class=\"fst-italic\">All units are reported in terms of annualized % change except for net exports and change in private inventories, which are reported in billions of dollars.</p>
-\t\t\t\t\t\t\t<table class=\"table data-table w-100\" id=\"forecasts-table\"></table>
+\t\t\t\t\t\t\t<table class=\"table summary-table w-100\" id=\"forecasts-table\"></table>
 
 \t\t\t\t\t\t</div>
 \t\t\t\t\t</div>
