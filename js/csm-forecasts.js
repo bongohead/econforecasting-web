@@ -10,7 +10,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		const ud = {
 			... udPrev,
 			... {
-					displayFreq: 'q'
+					displayFreq: udPrev.displayFreq || 'q',
+					displayForm: udPrev.displayForm || 'd1',
+					displayScenario: udPred.displayScenario || 'baseline'
 				}
 		}
 		setData('userData', ud);
@@ -23,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	 * Put the functions in a bigger $.Deferred function when more cleaning is needed before finalization;
 	 */
 	const ud = getData('userData');
-	const getTsValuesDfd = getFetch('getTsValuesLast', toScript = ['tsValues'], fromAjax = {tskey: '{"baseline", "hist"}', form: '{"d1"}', freq:  '{' + ['q', 'm'].join() + '}'});
+	const getTsValuesDfd = getFetch('getTsValuesLast', toScript = ['tsValues'], fromAjax = {tskey: '{"' + displayScenario + '", "hist"}', form: '{' + displayForm + '}', freq:  '{' + displayFreq + '}'});
 	const getTsParamsDfd = getFetch('getTsParams', toScript = ['tsParams'], fromAjax = {});
 	const getTsTypesDfd = getFetch('getTsTypes', toScript = ['tsTypes'], fromAjax = {});
 
