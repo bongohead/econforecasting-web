@@ -32,7 +32,7 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 			['template' => 'nc-gdp', 'request' => ['nc-gdp'], 'title' => 'GDP Nowcasts | Center for Macroeconomic Forecasts & Insights', 'models' => [], 'js' => ['init', 'nc-gdp']],
 			['template' => 'blog', 'request' => 'blog', 'title' => 'The Center for Macroeconomic Forecasts & Insights', 'models' => [], 'js' => []],
 			
-			['template' => 'csm-all-forecasts', 'request' => ['forecasts'], 'title' => 'All Forecasts | CMEFI', 'models' => [], 'js' => ['init', 'csm-all-forecasts']],
+			['template' => 'csm-forecasts', 'request' => ['forecasts'], 'title' => 'Forecasts | CMEFI', 'models' => [], 'js' => ['init', 'csm-forecasts']],
 		],
 		errorRoute: ['template' => 'error', 'request' => 'error', 'title' => 'Error', 'js' => []],
 		baseJsFiles: ['functions', 'moment.min', 'moment-timezone-with-data-1970-2030.min', 'gradient-min'],

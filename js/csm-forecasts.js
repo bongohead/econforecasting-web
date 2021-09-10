@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			... {
 					displayFreq: udPrev.displayFreq || 'q',
 					displayForm: udPrev.displayForm || 'd1',
-					displayScenario: udPred.displayScenario || 'baseline'
+					displayScenario: udPrev.displayScenario || 'baseline'
 				}
 		}
 		setData('userData', ud);
@@ -25,7 +25,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	 * Put the functions in a bigger $.Deferred function when more cleaning is needed before finalization;
 	 */
 	const ud = getData('userData');
-	const getTsValuesDfd = getFetch('getTsValuesLast', toScript = ['tsValues'], fromAjax = {tskey: '{"' + displayScenario + '", "hist"}', form: '{' + displayForm + '}', freq:  '{' + displayFreq + '}'});
+	const getTsValuesDfd = getFetch('getTsValuesLast', toScript = ['tsValues'],
+		fromAjax = {tskey: '{' + [ud.displayScenario, 'hist'].join() + '}', form: '{' + ud.displayForm + '}', freq:  '{' + ud.displayFreq + '}'}
+		);
 	const getTsParamsDfd = getFetch('getTsParams', toScript = ['tsParams'], fromAjax = {});
 	const getTsTypesDfd = getFetch('getTsTypes', toScript = ['tsTypes'], fromAjax = {});
 
@@ -33,20 +35,18 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		
 		const tsValues =
 			response[0].tsValues.map(function(x) {
-				return {...x,
-					date: (x.date),
-					/*formatdate: (
-						x.freq === 'q' ?
-						String(moment(x.date).year()) + 'Q' + String(Math.ceil((moment(x.date).month() + 1)/3)) :
-						String(moment(x.date).year()) + 'M' + String(moment(x.date).month())						
-						),*/
-					vdate: (x.vdate),
-					form: x.form,
-					value: Number(x.value),
-					//formatdate: String(moment(x.date).year()) + 'Q' + String(Math.ceil((moment(x.date).month() + 1)/3))
+				return {
+					date: x.date,
+					formatdate: (
+						ud.displayFreq === 'q' ? moment(x.date).format('YYYY[Q]Q') : 
+							(moment(x.date).month() === 1 ? moment(x.date).format('MMM YYYY') : moment(x.date).format('MMM'))
+						),
+					varname: x.varname,
+					tskey: x.tskey,
+					vdate: x.vdate,
+					value: Number(x.value)
 				};
 			});
-		console.log('tsValues', tsValues, [...new Set(tsValues.map(x => x.form))]);
 		
 		const tsParams =
 			response[1].tsParams.map(function(x) {
@@ -60,58 +60,53 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				};
 			});
 			
-		console.log('tsParams', tsParams, 'tsTypes', tsTypes);
+		console.log('tsValues', tsValues, 'tsParams', tsParams, 'tsTypes', tsTypes);
 		
 		/* Get varnames to display */
-		const displayVarnames = tsParams
+		const displayVarnames =
+			tsParams
 			.filter(x => x.dispgroup !== null && x.disporder !== null)
 			.map(x => x.varname);
 			
 		/* Get dates to display - includes historical data (color in non historical data later) */
-		const displayDatesQ = getDates(moment().startOf('quarter').subtract(2, 'quarters'), moment().startOf('quarter').add(4 * 3, 'quarters'), 1, 'quarters');
-		const displayDatesM = getDates(moment(displayDatesQ[0]), moment(displayDatesQ[displayDatesQ.length - 1]), 1, 'months');
-
-		console.log('displayVarnames', displayVarnames, 'displayDates', displayDatesQ, displayDatesM);
-		
-		const tsValuesGrouped = displayVarnames.map(varname => tsParams.filter(x => x.varname === varname)[0]).map(function (p, i) {
-			
-			const varnameData = tsValues.filter(x => x.varname === p.varname);
-			// Iterate through frequencies
-			const dataByFreq = ['m', 'q'].map(function(thisFreq) {
-				const freqData = varnameData.filter(x => x.freq === thisFreq);
-				if (freqData.length === 0) return null;
-					
-				// Iterate through the dates, get  hist if exists, otherwise get baseline forecasts
-				const varnameDataByForm = ['d1', 'd2'].map(function(thisForm) {
-					const displayDates = (thisFreq === 'q' ? displayDatesQ : displayDatesM);
-					const formData = displayDates.map(function(thisDate) {
-						//console.log(thisDate, thisForm, p.varname, varnameData, freqData.filter(x => x.date == thisDate && x.form == thisForm));
-						const dateData =
-							freqData.filter(x => x.date == thisDate && x.form == thisForm)
-							// Always sort historical first before others
-							.sort(function (a, b) {
-								const valA = (a === 'hist' ? 0 : 1)
-								const valB = (b === 'hist' ? 0 : 1)
-								return valA - valB;
-							}).map((x, i) => ({date: x.date, value: x.value, tskey: x.tskey, within_date_order: i}))[0]; // Now return first element
-						// console.log('dateData', dateData);
-						if (dateData == null || dateData.length === 0) return null;
-						//return (dateData === null ? null : {date: dateData.date, value: dateData.value, tskey: dateData.tskey});
-						return dateData;
-					}).filter(x => x! == null);
-					return {varname: p.varname, form: thisForm, data_freq: thisFreq, data: formData, ...p, tabs: (p.varname === 'gdp' ? 0 : p.fullname.split(':').length)};
+		const displayDates =
+			ud.displayFreq === 'q' ?
+				getDates(moment().startOf('quarter').subtract(2, 'quarters'), moment().startOf('quarter').add(4 * 4, 'quarters'), 1, 'quarters').map(x => moment(x).format('YYYY[Q]Q')) :
+				getDates(moment().startOf('month').subtract(2, 'months'), moment().startOf('quarter').add(4 * 12, 'months'), 1, 'months').map(x => moment(x).month() === 1 ? moment(x).format('MMM YYYY') : moment(x).format('MMM'));
+				
+				
+		console.log('displayVarnames', displayVarnames, 'displayDates', displayDates);		
+		const tsValuesGrouped =
+			displayVarnames
+			.map(varname => tsParams.filter(x => x.varname === varname)[0]) // Get array of params
+			.map(function (param, i) {
+				
+				const varnameData = tsValues.filter(x => x.varname === param.varname);
+				if (varnameData == null || varnameData.length === 0) return null;
+				
+				// Now map through dates
+				const dataByDate = displayDates.map(function(thisDate) {
+					const res =
+						varnameData
+						.filter(x => x.formatdate === thisDate)
+						// Always sort historical first before others
+						.sort(function(a, b) {
+							const valA = (a === 'hist' ? 0 : 1);
+							const valB = (b === 'hist' ? 0 : 1);
+							return valA - valB;
+						})
+						.map((x, i) => ({formatdate: x.formatdate, value: x.value, tskey: x.tskey}))[0];
+					if (res == null || res.length === 0) return {formatdate: thisDate, value: null, tskey: null}; // Return when res returns nothing
+					return res;
 				});
-				return varnameDataByForm;
-			}).filter(x => x !== null).flat(1);
-								
-			return dataByFreq
-		}).flat(1).filter(x => x.data.length >= 1).map((x, i) => ({row_order: i, ...x}));
-
+				
+				return {varname: param.varname, fullname: param.fullname, units: param.units, d1: param.d1, data: dataByDate};
+			});
 
 		console.log('tsValuesGrouped', tsValuesGrouped);
-		setData('userData', {...getData('userData'), ...{tsValuesGrouped: tsValuesGrouped}, displayDatesQ: displayDatesQ, displayDatesM: displayDatesM});
+		setData('userData', {...getData('userData'), ...{tsValuesGrouped: tsValuesGrouped}, displayDates: displayDates});
 		
-		return({tsValuesGrouped: tsValuesGrouped, displayDatesQ: displayDatesQ, displayDatesM: displayDatesM});
+		return({tsValuesGrouped: tsValuesGrouped, displayDates: displayDates});
 
 		/*
 		// Order values for table
@@ -161,7 +156,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	/********** DRAW CHART & TABLE **********/
 	.then(function(res) {
 		//drawChart(res.ncValuesGrouped, res.ncReleases, displayQuarter = ud.displayQuarter);
-		drawTable(res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
+		drawTable(res.tsValuesGrouped, res.displayDates);
 		$('div.overlay').hide();
 	});
 	
@@ -516,49 +511,53 @@ function drawChart(ncValuesGrouped, ncReleases, displayQuarter) {
 
 
 
-function drawTable(tsValuesGrouped, displayDatesQ, displayDatesM) {
+function drawTable(tsValuesGrouped, displayDates) {
 	
-	const displayFreq = getData('userData').displayFreq;
 	
-	console.log('tsValuesGrouped', tsValuesGrouped, 'displayDates', displayDatesQ, displayFreq);
+	// console.log('tsValuesGrouped', tsValuesGrouped, 'displayDates', displayDates);
 	
-	const formatDates = displayDatesQ.map(x => String(moment(x).year()) + 'Q' + String(Math.ceil((moment(x).month() + 1)/3)));
-	console.log('formatDates', formatDates);
-	const dtCols = 
+	const dtCols0 = 
 		[{title: 'Order', data: 'order'}, {title: 'Tabs', data: 'tabs'}, {title: 'Variable', data: 'fullname'}]
-		.concat(formatDates.map((x, i) => ({title: x, data: x})))
+		.concat(displayDates.map((x, i) => ({title: x, data: x})));
+		
+	// Add formatting functions to dtCols
+	const dtCols =
+		dtCols0
 		.map(function(x, i) {
 			return {...x, ...{
 				visible: (!['Order', 'Tabs'].includes(x.title)),
 				orderable: false,
 				type: (x.title === 'Variable' ? 'string' : 'num'),
 				className: (x.title === 'Variable' ? 'dt-left' : 'dt-center'),
-				css: 'font-size: .9rem',
-				createdCell: function(td, cellData, rowData, row, col) {
-					(x.title === 'Variable' ? $(td).css('padding-left', String(rowData.tabs * .8 + .5) + 'rem' ) : false)
+				css: 'font-size: 1.0rem',
+				createdCell: function(td, cellData, rowData, rowIndex, colIndex) {
+					(x.title === 'Variable' ? $(td).css('padding-left', String(rowData.tabs * .8 + .5) + 'rem' ) : false);
+					console.log(colIndex - 3);
+					(!['Order', 'Tabs', 'Variable'].includes(x.title) ?
+						(tsValuesGrouped[rowIndex].data[colIndex - 3].tskey != 'hist' ? $(td).css('color', 'red') : false) :
+						false);
 				}
 			}
 			}
 		});
 	
 	
-	console.log('dtCols', dtCols);
+	// console.log('dtCols', dtCols);
 	const tableData =
 		tsValuesGrouped
-		.filter(x => x.data_freq === displayFreq && x.form === 'd1')
-		.filter(x => (['core.endog', 'core.exog.p', 'core.exog'].includes(x.core_structural)))
+		//.filter(x => (['core.endog', 'core.exog.p', 'core.exog'].includes(x.core_structural)))
 		.map(function(x, i) {
 			return {
 				order: i,
-				tabs: x.tabs,
+				tabs: (x.varname === 'gdp' ? 0 : x.fullname.split(':').length),
 				fullname: (x.fullname.includes(':') ? x.fullname.substring(x.fullname.lastIndexOf(':') + 2) : x.fullname),
 				...Object.fromEntries(
-					x.data.map(z => [(String(moment(z.date).year()) + 'Q' + String(Math.ceil((moment(z.date).month() + 1)/3))), z.value.toFixed(1)])
+					x.data.map(z => [z.formatdate, z.value == null ? '' : z.value.toFixed(1)])
 					)
 				};
 		});
 	
-	console.log('tableData', tableData);
+	// console.log('tableData', tableData);
 		
 	const copySvg =
 	`<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-clipboard me-1" viewBox="0 0 16 16">
@@ -573,7 +572,6 @@ function drawTable(tsValuesGrouped, displayDatesQ, displayDatesM) {
 	const o = {
 		data: tableData,
 		columns: dtCols,
-		iDisplayLength: 15,
 		dom:
 			"<'row justify-content-end'<'col-auto'B>>" +
 			"<'row justify-content-center'<'col-12'tr>>" +
@@ -582,6 +580,8 @@ function drawTable(tsValuesGrouped, displayDatesQ, displayDatesM) {
 			{extend: 'copyHtml5', text: copySvg + 'Copy', exportOptions: {columns: dtCols.map((x, i) => ({...x, index: i})).filter(x => x.visible).map(x => x.index)}, className: 'btn btn-sm btn-econgreen'},
 			{extend: 'csvHtml5', text: dlSvg + 'Download', exportOptions: {columns: dtCols.map((x, i) => ({...x, index: i})).filter(x => x.visible).map(x => x.index)}, className: 'btn btn-sm btn-econgreen'}
 		],
+		/*scrollX: true,
+		fixedColumns: {left: 1},*/
 		paging: false,
 		pagingType: 'numbers',
 		language: {
