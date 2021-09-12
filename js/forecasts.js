@@ -156,21 +156,19 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	/********** DRAW CHART & TABLE **********/
 	.then(function(res) {
 		//drawChart(res.ncValuesGrouped, res.ncReleases, displayQuarter = ud.displayQuarter);
-		drawTable(res.tsValuesGrouped, res.displayDates);
+		drawTable('gdp', res.tsValuesGrouped.filter(x => x.dispgroup === 'GDP'), res.displayDates);
 		$('div.overlay').hide();
 	});
 	
 	/********** EVENT LISTENERS FOR DATE SWITCH **********/
-	/*
-	$('#chart-container').on('click', '#chart-subtitle-group > button.chart-subtitle', function() {
+	$('.card-body').on('click', '#chart-subtitle-group > button.chart-subtitle', function() {
 		const newDisplayQuarter = this.innerHTML;
 		
 		//setData('userData', {...getData('userData'), ...{playState: newPlayState, playIndex: newPlayIndex}});
-		drawChart(getData('userData').ncValuesGrouped, getData('userData').ncReleases, newDisplayQuarter);
+		//drawChart(getData('userData').ncValuesGrouped, getData('userData').ncReleases, newDisplayQuarter);
 		
 		return;
     });
-	*/
 	
 	/********** EVENT LISTENERS FOR DATA CALENDAR HOVER **********/
 	/*
@@ -511,13 +509,13 @@ function drawChart(ncValuesGrouped, ncReleases, displayQuarter) {
 
 
 
-function drawTable(tsValuesGrouped, displayDates) {
+function drawTable(dispgroup, tsValuesGrouped, displayDates) {
 	
 	
-	// console.log('tsValuesGrouped', tsValuesGrouped, 'displayDates', displayDates);
+	console.log('tsValuesGrouped', tsValuesGrouped, 'displayDates', displayDates);
 	
 	const dtCols0 = 
-		[{title: 'Order', data: 'order'}, {title: 'Tabs', data: 'tabs'}, {title: 'Variable', data: 'fullname'}, {title: 'Group', data: 'dispgroup'}]
+		[{title: 'Order', data: 'order'}, {title: 'Tabs', data: 'disptabs'}, {title: 'Variable', data: 'fullname'}, {title: 'Group', data: 'dispgroup'}]
 		.concat(displayDates.map((x, i) => ({title: x, data: x})));
 		
 	// Add formatting functions to dtCols
@@ -532,7 +530,7 @@ function drawTable(tsValuesGrouped, displayDates) {
 				css: 'font-size: 1.0rem',
 				createdCell: function(td, cellData, rowData, rowIndex, colIndex) {
 					(x.title === 'Variable' ? $(td).css('min-width', '15rem') : false);
-					(x.title === 'Variable' ? $(td).css('padding-left', String(rowData.tabs * .8 + .5) + 'rem' ) : false);
+					(x.title === 'Variable' ? $(td).css('padding-left', String((rowData.disptabs - 1)* 1.5 + .2) + 'rem' ) : false);
 					// console.log(colIndex - 3);  // Subtract out the number of non-data columns
 					(!['Order', 'Tabs', 'Variable', 'Group'].includes(x.title) ?
 						(tsValuesGrouped[rowIndex].data[colIndex - 4].tskey === 'hist' ? $(td).css('color', '#898989') : false) :
@@ -541,6 +539,10 @@ function drawTable(tsValuesGrouped, displayDates) {
 			}
 			}
 		});
+		
+		
+	// Create 4 tables - monthly/restricted, quarterly/restricted, monthly/all, quarterly/all
+	// See fc-rates-other.js for usage
 	
 	
 	// console.log('dtCols', dtCols);
@@ -550,7 +552,7 @@ function drawTable(tsValuesGrouped, displayDates) {
 		.map(function(x, i) {
 			return {
 				order: i,
-				tabs: (x.varname === 'gdp' ? 0 : x.fullname.split(':').length),
+				disptabs: x.disptabs,
 				dispgroup: x.dispgroup,
 				fullname: (x.fullname.includes(':') ? x.fullname.substring(x.fullname.lastIndexOf(':') + 2) : x.fullname),
 				...Object.fromEntries(
@@ -608,7 +610,7 @@ function drawTable(tsValuesGrouped, displayDates) {
 		}]*/
 	}
 	
-	 $('#gdp-table').DataTable(o);
+	$('#' + dispgroup + '-table').DataTable(o);
 		
 	return;
 }
