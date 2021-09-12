@@ -543,7 +543,145 @@ function drawTable(dispgroup, tsValuesGrouped, displayDates) {
 		
 	// Create 4 tables - monthly/restricted, quarterly/restricted, monthly/all, quarterly/all
 	// See fc-rates-other.js for usage
+	const tableRes = 
+	[{restrict: 'y', freq: 'q'},  {restrict: 'n', freq: 'q'}, {restrict: 'y', freq: 'm'}, {restrict: 'n', freq: 'm'}]
+	.map(function(x) {
+		return {
+			...x,
+			tsValues: tsValuesGrouped.filter(y => y.freq === x.freq && (x.restrict === 'y' ? [1, 2].includes(y.disprank) : [1, 2, 3, 4, 5].includes(y.disprank)))
+		};
+	});
 	
+	console.log('tableRes', tableRes);
+	
+	/*
+	tsValuesGrouped
+	.forEach(function(x, i) {
+		//console.log(x.fcname);
+		const seriesData =
+			(x.fcname === 'hist') ?
+			x.data.map(y => ({date: (x.freq === 'q' ? moment(y[0]).format('YYYY[Q]Q') : moment(y[0]).format('YYYY-MM')), type: 'Historical Data', value: y[1].toFixed(4)})) :
+			x.data.map(y => ({date: (x.freq === 'q' ? moment(y[0]).format('YYYY[Q]Q') : moment(y[0]).format('YYYY-MM')), type: 'Forecast', value: y[1].toFixed(4)}));
+		const dtCols = [
+			{title: 'Date', data: 'date'},
+			{title: 'Type', data: 'type'},
+			{title: varFullname + ' (' + varUnits + ')', data: 'value'}
+		].map(function(x, i) {
+			return {...x, ...{
+				visible: (x.title !== 'Type'),
+				orderable: true,
+				ordering: true,
+				type: (x.title === 'Date' ? 'date' : 'num'),
+				className: 'dt-center',
+				css: 'font-size: .9rem'
+			}}
+		});
+		//console.log(dtCols);
+		
+		const copySvg =
+		`<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-clipboard me-1" viewBox="0 0 16 16">
+			<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+			<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+		</svg>`;
+		const dlSvg = 
+		`<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-download me-1" viewBox="0 0 16 16">
+		  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"></path>
+		  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"></path>
+		</svg>`;
+		const o = {
+			data: seriesData,
+			columns: dtCols,
+			iDisplayLength: 15,
+			dom:
+				"<'row justify-content-end'<'col-auto'B>>" +
+				"<'row justify-content-center'<'col-12'tr>>" +
+				"<'row justify-content-end'<'col-auto'p>>",
+			buttons: [
+				{extend: 'copyHtml5', text: copySvg + 'Copy', exportOptions: {columns: [0, 2]}, className: 'btn btn-sm btn-econgreen'},
+				{extend: 'csvHtml5', text: dlSvg + 'Download', exportOptions: {columns: [0, 2]}, className: 'btn btn-sm btn-econgreen'}
+			],
+			order: (x.fcname === 'hist' ? [[0, 'desc']] : [[0, 'asc']]),
+			paging: true,
+			pagingType: 'numbers',
+			language: {
+				search: "Filter By Date:",
+				searchPlaceholder: "YYYY-MM"
+			},
+			responsive: true,
+			createdRow: function(row, data, dataIndex) {
+			}
+		}
+		//console.log('seriesData', seriesData);
+		
+		// Create button for this forecast
+		const li = document.createElement('li');
+		li.classList.add('list-group-item');
+		li.classList.add('w-100'); // Needed to get the thing to vertically align
+		li.textContent = (x.fcname !== 'hist' ? x.shortname + ' Forecast' : x.shortname);
+		li.setAttribute('data-ref-table', x.fcname); 
+		if (i === 0) li.classList.add('active');
+		document.querySelector('#li-container').appendChild(li);
+		
+		// Add last updated text
+		const updatedDiv = document.createElement('div');
+		const updatedSpan = document.createElement('span');
+		updatedDiv.id = 'updated-' + x.fcname;
+		updatedDiv.classList.add('text-end');
+		updatedSpan.textContent = (x.fcname !== 'hist' ? x.shortname + ' Forecast Updated ' + x.vintage_date : '');
+		updatedSpan.classList.add('text-muted');
+		updatedSpan.style.fontSize = '0.9rem';
+		updatedDiv.appendChild(updatedSpan);
+		document.querySelector('#li-container').after(updatedDiv);
+		if (i !== 0) updatedDiv.style.display = 'none';
+		
+		
+		// Create table and style it
+		const table = document.createElement('table');
+		table.classList.add('table');
+		table.classList.add('data-table');
+		table.classList.add('w-100');
+		table.id = 'table-' + x.fcname;
+		document.querySelector('#tables-container').appendChild(table);
+		
+
+		// Draw the table
+		const dTable = $(table).DataTable(o);
+		if (i !== 0) $(table).parents('div.dataTables_wrapper').first().hide();
+		//console.log(dTable);
+
+		// Move the download buttons
+		//console.log(table.parentElement);
+		const downloadDiv = table.closest('.dataTables_wrapper').querySelector('.dt-buttons');
+		downloadDiv.classList.add('float-end');
+		downloadDiv.id = 'download-' + x.fcname;
+		if (i !== 0) downloadDiv.style.display = 'none'
+		$('#tables-container .d-inline').after($(downloadDiv).detach());
+		
+		li.addEventListener('click', function() { 
+			//console.log(this, this.getAttribute('data-ref-table'));
+			// Change active li
+			document.querySelectorAll('#li-container > li').forEach(el => el.classList.remove('active'));
+			this.classList.add('active');
+			
+			// First hide all tables-container
+			$('div.dataTables_wrapper').hide();
+			
+			const table = document.querySelector('#table-' + this.getAttribute('data-ref-table'));
+			$(table).parents('div.dataTables_wrapper').first().show();
+			
+			
+			$('#tables-container div.dt-buttons').hide();
+			$('#download-' + this.getAttribute('data-ref-table')).show();
+			
+			$('#tables-container div.text-end').hide();
+			$('#updated-' + this.getAttribute('data-ref-table')).show();
+
+			
+		}, false);
+		
+	});
+	*/
+
 	
 	// console.log('dtCols', dtCols);
 	const tableData =
