@@ -94,8 +94,7 @@ class __TwigTemplate_516126d4db106904f981c8bc9205b8bb3032f166e46a74ff5450e97c1c6
 \t\t\t\t\t\t\t\t<div class=\"input-group input-group-sm\">
 \t\t\t\t\t\t\t\t  <label class=\"input-group-text\">Frequency</label>
 \t\t\t\t\t\t\t\t\t<select class=\"form-select form-select-sm select-month me-2\">
-\t\t\t\t\t\t\t\t\t\t<option value=\"q\">Quarterly</option>
-\t\t\t\t\t\t\t\t\t\t<option value=\"m\" disabled>Monthly</option>
+\t\t\t\t\t\t\t\t\t\t<option value=\"q\">Quarterly</option><option value=\"m\" disabled>Monthly</option>
 \t\t\t\t\t\t\t\t\t</select>
 \t\t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t</div>
@@ -134,8 +133,7 @@ class __TwigTemplate_516126d4db106904f981c8bc9205b8bb3032f166e46a74ff5450e97c1c6
 \t\t\t\t\t\t\t\t<div class=\"input-group input-group-sm\">
 \t\t\t\t\t\t\t\t  <label class=\"input-group-text\">Frequency</label>
 \t\t\t\t\t\t\t\t\t<select class=\"form-select form-select-sm select-month me-2\">
-\t\t\t\t\t\t\t\t\t\t<option value=\"q\">Quarterly</option>
-\t\t\t\t\t\t\t\t\t\t<option value=\"m\" disabled>Monthly</option>
+\t\t\t\t\t\t\t\t\t\t<option value=\"q\">Quarterly</option><option value=\"m\" >Monthly</option>
 \t\t\t\t\t\t\t\t\t</select>
 \t\t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t</div>
@@ -223,8 +221,7 @@ class __TwigTemplate_516126d4db106904f981c8bc9205b8bb3032f166e46a74ff5450e97c1c6
 \t\t\t\t\t\t\t\t<div class=\"input-group input-group-sm\">
 \t\t\t\t\t\t\t\t  <label class=\"input-group-text\">Frequency</label>
 \t\t\t\t\t\t\t\t\t<select class=\"form-select form-select-sm select-month me-2\">
-\t\t\t\t\t\t\t\t\t\t<option value=\"q\">Quarterly</option>
-\t\t\t\t\t\t\t\t\t\t<option value=\"m\" disabled>Monthly</option>
+\t\t\t\t\t\t\t\t\t\t<option value=\"q\">Quarterly</option><option value=\"m\" disabled>Monthly</option>
 \t\t\t\t\t\t\t\t\t</select>
 \t\t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t</div>
@@ -263,8 +260,7 @@ class __TwigTemplate_516126d4db106904f981c8bc9205b8bb3032f166e46a74ff5450e97c1c6
 \t\t\t\t\t\t\t\t<div class=\"input-group input-group-sm\">
 \t\t\t\t\t\t\t\t  <label class=\"input-group-text\">Frequency</label>
 \t\t\t\t\t\t\t\t\t<select class=\"form-select form-select-sm select-month me-2\">
-\t\t\t\t\t\t\t\t\t\t<option value=\"q\">Quarterly</option>
-\t\t\t\t\t\t\t\t\t\t<option value=\"m\" disabled>Monthly</option>
+\t\t\t\t\t\t\t\t\t\t<option value=\"q\">Quarterly</option><option value=\"m\" >Monthly</option>
 \t\t\t\t\t\t\t\t\t</select>
 \t\t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t</div>

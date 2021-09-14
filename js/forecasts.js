@@ -211,7 +211,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	});
 	*/
 	
-	/********** Attach Table Event Listener to Show/Hide All Accounts **********/
+	/********** Attach Table Event Listener to Show/Hide All Variables **********/
 	$('main').on('click', 'div.card-footer > a.btn', function(event) {
 		
 		const refFreq = this.closest('div.card-body').dataset.refFreq;
@@ -231,6 +231,19 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		dt.draw();
 	});
 	
+	/********** Attach Table Event Listener to Change Frequency **********/
+	$('main').on('change', 'div.card-header select', function(event) {
+		
+		const refDispgroup = this.closest('div.card').dataset.refDispgroup;
+		const newFreq = this.value;
+		
+		$(this.closest('div.card').querySelectorAll('div.card-body')).hide();
+		$(this.closest('div.card').querySelector('div.card-body[data-ref-freq="' + newFreq + '"]')).show();
+
+		//console.log(refDispgroup, newFreq);
+	});
+	
+
 	
 
 });
