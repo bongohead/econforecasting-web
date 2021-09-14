@@ -6,6 +6,8 @@ Description TBA
 ## 2021-09-05 [v0.17] (Adding Updated Model Forecasts to Site)
 - Added new import files to get data from csm_\* SQL tables
 - Added scenario baseline forecast page
+- Improved styling/colors
+- Updated SCSS to Bootstrap 5.1
 
 ## 2021-09-03 [v0.16] (Minor Update)
 - Updated sitemap
