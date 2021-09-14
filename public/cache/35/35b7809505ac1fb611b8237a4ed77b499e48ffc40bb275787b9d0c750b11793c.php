@@ -60,7 +60,7 @@ class __TwigTemplate_516126d4db106904f981c8bc9205b8bb3032f166e46a74ff5450e97c1c6
         // line 8
         echo "<script src=\"https://code.highcharts.com/9.1/highcharts-more.js\"></script>
 <!--<script src=\"https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js\"></script>-->
-<script src=\"https://cdn.datatables.net/fixedcolumns/3.3.3/js/dataTables.fixedColumns.min.js\"></script>
+<!--<script src=\"https://cdn.datatables.net/fixedcolumns/3.3.3/js/dataTables.fixedColumns.min.js\"></script>-->
 ";
     }
 
@@ -69,10 +69,10 @@ class __TwigTemplate_516126d4db106904f981c8bc9205b8bb3032f166e46a74ff5450e97c1c6
     {
         $macros = $this->macros;
         // line 14
-        echo "<div class=\"row gx-0 bg-econlpale\">
+        echo "<div class=\"row gx-0\" style=\"background-color: var(--bs-efpaleblue)\">
 \t";
         // line 15
-        $this->loadTemplate("fc-rates-sidebar.html", "forecasts.html", 15)->display($context);
+        $this->loadTemplate("csm-sidebar.html", "forecasts.html", 15)->display($context);
         // line 16
         echo "\t<div class=\"col-12 col-lg-8 col-xl-9 col-xxl-10 m-auto pt-2 px-2 pb-5\">
 \t
@@ -83,104 +83,87 @@ class __TwigTemplate_516126d4db106904f981c8bc9205b8bb3032f166e46a74ff5450e97c1c6
 \t\t
 \t\t<div class=\"row justify-content-center pt-3 px-3\">
 \t\t\t<!-- Card 1 -->
-\t\t\t<div class=\"col-lg-6 border-0 p-0\">
-\t\t\t\t<div class=\"card shadow\">
+\t\t\t<div class=\"col-lg-6 border-0 p-0 pe-lg-4\">
+\t\t\t\t<div class=\"card shadow\" data-ref-dispgroup=\"GDP\">
 \t\t\t\t\t<div class=\"card-header\">
 \t\t\t\t\t\t<div class=\"row flex-between-center\">
 \t\t\t\t\t\t\t<div class=\"col-auto\">
-\t\t\t\t\t\t\t\t<h6 class=\"mb-0\">Total Sales</h6>
+\t\t\t\t\t\t\t\t<span class=\"mb-0 fw-bolder\" style=\"font-size:.9rem\">GDP</span>
 \t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t<div class=\"col-auto d-flex\">
 \t\t\t\t\t\t\t\t<div class=\"input-group input-group-sm\">
 \t\t\t\t\t\t\t\t  <label class=\"input-group-text\">Frequency</label>
 \t\t\t\t\t\t\t\t\t<select class=\"form-select form-select-sm select-month me-2\">
 \t\t\t\t\t\t\t\t\t\t<option value=\"q\">Quarterly</option>
-\t\t\t\t\t\t\t\t\t\t<option value=\"m\">Monthly</option>
+\t\t\t\t\t\t\t\t\t\t<option value=\"m\" disabled>Monthly</option>
 \t\t\t\t\t\t\t\t\t</select>
 \t\t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t</div>
 \t\t\t\t\t</div>
-\t\t\t\t\t<div class=\"card-body h-100\">
-\t\t\t\t\t\t<div id=\"gdp-chart\" class=\"col-xl-9 col-lg-10 col-12-md\"></div>
-\t\t\t\t\t\t<table class=\"table summary-table w-100\" id=\"gdp-table\"></table>
+\t\t\t\t\t<div class=\"card-body h-100\" data-ref-freq=\"m\">
+\t\t\t\t\t\t<div class=\"chart-container col-xl-9 col-lg-10 col-12-md\"></div>
+\t\t\t\t\t\t<div class=\"table-container\"></div>
+\t\t\t\t\t\t<div class=\"card-footer bg-light p-0\" style=\"display:none\">
+\t\t\t\t\t\t\t<a class=\"btn btn-sm btn-link d-block w-100 py-2\" href=\"#!\" style=\"font-family: 'Assistant'; font-size: 1.0rem;text-decoration: none;\">
+\t\t\t\t\t\t\t\t<span class=\"align-middle pe-2\">Show Additional Variables</span><i class=\"bi bi-chevron-down\"></i>
+\t\t\t\t\t\t\t</a>
+\t\t\t\t\t\t</div>
 \t\t\t\t\t</div>
-\t\t\t\t\t<div class=\"card-footer bg-light p-0\">
-\t\t\t\t\t\t<a class=\"btn btn-sm btn-link d-block w-100 py-2\" href=\"#!\" style=\"font-family: 'Assistant'; font-size: 1.1rem;text-decoration: none;\">Show all variables
-\t\t\t\t\t\t\t<svg style=\"width: .6rem\" class=\"svg-inline--fa fa-chevron-right fa-w-10 ms-1\" aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fas\" data-icon=\"chevron-right\" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 512\" data-fa-i2svg=\"\"><path fill=\"currentColor\" d=\"M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z\"></path></svg><!-- <span class=\"fas fa-chevron-right ms-1 fs--2\"></span> Font Awesome fontawesome.com -->
-\t\t\t\t\t\t</a>
+\t\t\t\t\t<div class=\"card-body h-100\" data-ref-freq=\"q\">
+\t\t\t\t\t\t<div class=\"chart-container col-xl-9 col-lg-10 col-12-md\"></div>
+\t\t\t\t\t\t<div class=\"table-container\"></div>
+\t\t\t\t\t\t<div class=\"card-footer bg-light p-0\" style=\"display:none\">
+\t\t\t\t\t\t\t<a class=\"btn btn-sm btn-link d-block w-100 py-2\" href=\"#!\" style=\"font-family: 'Assistant'; font-size: 1.0rem;text-decoration: none;\">
+\t\t\t\t\t\t\t\t<span class=\"align-middle pe-2\">Show Additional Variables</span><i class=\"bi bi-chevron-down\"></i>
+\t\t\t\t\t\t\t</a>
+\t\t\t\t\t\t</div>
 \t\t\t\t\t</div>
 \t\t\t\t</div>
             </div>
 \t\t\t
 \t\t\t<!-- Card 2 -->
-\t\t\t<div class=\"col-lg-6 pe-lg-2 mb-3\">
-              <div class=\"card h-lg-100 overflow-hidden\">
-                <div class=\"card-header bg-light\">
-                  <div class=\"row align-items-center\">
-                    <div class=\"col\">
-                      <h6 class=\"mb-0\">Running Projects</h6>
-                    </div>
-                    <div class=\"col-auto text-center pe-card\"><select class=\"form-select form-select-sm\">
-                        <option>Working Time</option>
-                        <option>Estimated Time</option>
-                        <option>Billable Time</option>
-                      </select></div>
-                  </div>
-                </div>
-                <div class=\"card-body p-0\">
-                  <div class=\"row g-0 align-items-center py-2 position-relative border-bottom border-200\">
-                    <div class=\"col ps-card py-1 position-static\">
-                      <div class=\"d-flex align-items-center\">
-                        <div class=\"avatar avatar-xl me-3\">
-                          <div class=\"avatar-name rounded-circle bg-soft-success text-dark\"><span class=\"fs-0 text-success\">R</span></div>
-                        </div>
-                        <div class=\"flex-1\">
-                          <h6 class=\"mb-0 d-flex align-items-center\"><a class=\"text-800 stretched-link\" href=\"#!\">Reign</a><span class=\"badge rounded-pill ms-2 bg-200 text-primary\">79%</span></h6>
-                        </div>
-                      </div>
-                    </div>
-                    <div class=\"col py-1\">
-                      <div class=\"row flex-end-center g-0\">
-                        <div class=\"col-auto pe-2\">
-                          <div class=\"fs--1 fw-semi-bold\">25:20:00</div>
-                        </div>
-                        <div class=\"col-5 pe-card ps-2\">
-                          <div class=\"progress bg-200 me-2\" style=\"height: 5px;\">
-                            <div class=\"progress-bar rounded-pill\" role=\"progressbar\" style=\"width: 79%\" aria-valuenow=\"79\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class=\"row g-0 align-items-center py-2 position-relative\">
-                    <div class=\"col ps-card py-1 position-static\">
-                      <div class=\"d-flex align-items-center\">
-                        <div class=\"avatar avatar-xl me-3\">
-                          <div class=\"avatar-name rounded-circle bg-soft-danger text-dark\"><span class=\"fs-0 text-danger\">S</span></div>
-                        </div>
-                        <div class=\"flex-1\">
-                          <h6 class=\"mb-0 d-flex align-items-center\"><a class=\"text-800 stretched-link\" href=\"#!\">Slick</a><span class=\"badge rounded-pill ms-2 bg-200 text-primary\">70%</span></h6>
-                        </div>
-                      </div>
-                    </div>
-                    <div class=\"col py-1\">
-                      <div class=\"row flex-end-center g-0\">
-                        <div class=\"col-auto pe-2\">
-                          <div class=\"fs--1 fw-semi-bold\">31:20:00</div>
-                        </div>
-                        <div class=\"col-5 pe-card ps-2\">
-                          <div class=\"progress bg-200 me-2\" style=\"height: 5px;\">
-                            <div class=\"progress-bar rounded-pill\" role=\"progressbar\" style=\"width: 70%\" aria-valuenow=\"70\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class=\"card-footer bg-light p-0\"><a class=\"btn btn-sm btn-link d-block w-100 py-2\" href=\"#!\">Show all projects<svg class=\"svg-inline--fa fa-chevron-right fa-w-10 ms-1 fs--2\" aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fas\" data-icon=\"chevron-right\" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 512\" data-fa-i2svg=\"\"><path fill=\"currentColor\" d=\"M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z\"></path></svg><!-- <span class=\"fas fa-chevron-right ms-1 fs--2\"></span> Font Awesome fontawesome.com --></a></div>
-              </div>
-            </div>\t\t
+\t\t\t<div class=\"col-lg-6 border-0 p-0 pe-lg-4\">
+\t\t\t\t<div class=\"card shadow\" data-ref-dispgroup=\"Housing\">
+\t\t\t\t\t<div class=\"card-header\">
+\t\t\t\t\t\t<div class=\"row flex-between-center\">
+\t\t\t\t\t\t\t<div class=\"col-auto\">
+\t\t\t\t\t\t\t\t<span class=\"mb-0 fw-bolder\" style=\"font-size:.9rem\">Housing</span>
+\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t<div class=\"col-auto d-flex\">
+\t\t\t\t\t\t\t\t<div class=\"input-group input-group-sm\">
+\t\t\t\t\t\t\t\t  <label class=\"input-group-text\">Frequency</label>
+\t\t\t\t\t\t\t\t\t<select class=\"form-select form-select-sm select-month me-2\">
+\t\t\t\t\t\t\t\t\t\t<option value=\"q\">Quarterly</option>
+\t\t\t\t\t\t\t\t\t\t<option value=\"m\" disabled>Monthly</option>
+\t\t\t\t\t\t\t\t\t</select>
+\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t</div>
+\t\t\t\t\t</div>
+\t\t\t\t\t<div class=\"card-body h-100\" data-ref-freq=\"m\" style=\"\">
+\t\t\t\t\t\t<div class=\"chart-container col-xl-9 col-lg-10 col-12-md\"></div>
+\t\t\t\t\t\t<div class=\"table-container\"></div>
+\t\t\t\t\t\t<div class=\"card-footer bg-light p-0\" style=\"display:none\">
+\t\t\t\t\t\t\t<a class=\"btn btn-sm btn-link d-block w-100 py-2\" href=\"#!\" style=\"font-family: 'Assistant'; font-size: 1.0rem;text-decoration: none;\">
+\t\t\t\t\t\t\t\t<span class=\"align-middle pe-2\">Show Additional Variables</span><i class=\"bi bi-chevron-down\"></i>
+\t\t\t\t\t\t\t</a>
+\t\t\t\t\t\t</div>
+\t\t\t\t\t</div>
+\t\t\t\t\t<div class=\"card-body h-100\" data-ref-freq=\"q\" style=\"\">
+\t\t\t\t\t\t<div class=\"chart-container col-xl-9 col-lg-10 col-12-md\"></div>
+\t\t\t\t\t\t<div class=\"table-container\"></div>
+\t\t\t\t\t\t<div class=\"card-footer bg-light p-0\" style=\"display:none\">
+\t\t\t\t\t\t\t<a class=\"btn btn-sm btn-link d-block w-100 py-2\" href=\"#!\" style=\"font-family: 'Assistant'; font-size: 1.0rem;text-decoration: none;\">
+\t\t\t\t\t\t\t\t<span class=\"align-middle pe-2\">Show Additional Variables</span><i class=\"bi bi-chevron-down\"></i>
+\t\t\t\t\t\t\t</a>
+\t\t\t\t\t\t</div>
+\t\t\t\t\t</div>
+\t\t\t\t</div>
+            </div>
+
+\t\t</div>
+\t\t\t
 
 \t\t
 \t</div>
@@ -214,12 +197,12 @@ class __TwigTemplate_516126d4db106904f981c8bc9205b8bb3032f166e46a74ff5450e97c1c6
 {% block staticlinks %}
 <script src=\"https://code.highcharts.com/9.1/highcharts-more.js\"></script>
 <!--<script src=\"https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js\"></script>-->
-<script src=\"https://cdn.datatables.net/fixedcolumns/3.3.3/js/dataTables.fixedColumns.min.js\"></script>
+<!--<script src=\"https://cdn.datatables.net/fixedcolumns/3.3.3/js/dataTables.fixedColumns.min.js\"></script>-->
 {% endblock %}
 
 {% block content %}
-<div class=\"row gx-0 bg-econlpale\">
-\t{% include 'fc-rates-sidebar.html' %}
+<div class=\"row gx-0\" style=\"background-color: var(--bs-efpaleblue)\">
+\t{% include 'csm-sidebar.html' %}
 \t<div class=\"col-12 col-lg-8 col-xl-9 col-xxl-10 m-auto pt-2 px-2 pb-5\">
 \t
 \t\t<div class=\"row justify-content-center px-3\" style=\"background-color:rgba(25, 50, 20, 0.1)\">
@@ -229,104 +212,87 @@ class __TwigTemplate_516126d4db106904f981c8bc9205b8bb3032f166e46a74ff5450e97c1c6
 \t\t
 \t\t<div class=\"row justify-content-center pt-3 px-3\">
 \t\t\t<!-- Card 1 -->
-\t\t\t<div class=\"col-lg-6 border-0 p-0\">
-\t\t\t\t<div class=\"card shadow\">
+\t\t\t<div class=\"col-lg-6 border-0 p-0 pe-lg-4\">
+\t\t\t\t<div class=\"card shadow\" data-ref-dispgroup=\"GDP\">
 \t\t\t\t\t<div class=\"card-header\">
 \t\t\t\t\t\t<div class=\"row flex-between-center\">
 \t\t\t\t\t\t\t<div class=\"col-auto\">
-\t\t\t\t\t\t\t\t<h6 class=\"mb-0\">Total Sales</h6>
+\t\t\t\t\t\t\t\t<span class=\"mb-0 fw-bolder\" style=\"font-size:.9rem\">GDP</span>
 \t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t<div class=\"col-auto d-flex\">
 \t\t\t\t\t\t\t\t<div class=\"input-group input-group-sm\">
 \t\t\t\t\t\t\t\t  <label class=\"input-group-text\">Frequency</label>
 \t\t\t\t\t\t\t\t\t<select class=\"form-select form-select-sm select-month me-2\">
 \t\t\t\t\t\t\t\t\t\t<option value=\"q\">Quarterly</option>
-\t\t\t\t\t\t\t\t\t\t<option value=\"m\">Monthly</option>
+\t\t\t\t\t\t\t\t\t\t<option value=\"m\" disabled>Monthly</option>
 \t\t\t\t\t\t\t\t\t</select>
 \t\t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t</div>
 \t\t\t\t\t</div>
-\t\t\t\t\t<div class=\"card-body h-100\">
-\t\t\t\t\t\t<div id=\"gdp-chart\" class=\"col-xl-9 col-lg-10 col-12-md\"></div>
-\t\t\t\t\t\t<table class=\"table summary-table w-100\" id=\"gdp-table\"></table>
+\t\t\t\t\t<div class=\"card-body h-100\" data-ref-freq=\"m\">
+\t\t\t\t\t\t<div class=\"chart-container col-xl-9 col-lg-10 col-12-md\"></div>
+\t\t\t\t\t\t<div class=\"table-container\"></div>
+\t\t\t\t\t\t<div class=\"card-footer bg-light p-0\" style=\"display:none\">
+\t\t\t\t\t\t\t<a class=\"btn btn-sm btn-link d-block w-100 py-2\" href=\"#!\" style=\"font-family: 'Assistant'; font-size: 1.0rem;text-decoration: none;\">
+\t\t\t\t\t\t\t\t<span class=\"align-middle pe-2\">Show Additional Variables</span><i class=\"bi bi-chevron-down\"></i>
+\t\t\t\t\t\t\t</a>
+\t\t\t\t\t\t</div>
 \t\t\t\t\t</div>
-\t\t\t\t\t<div class=\"card-footer bg-light p-0\">
-\t\t\t\t\t\t<a class=\"btn btn-sm btn-link d-block w-100 py-2\" href=\"#!\" style=\"font-family: 'Assistant'; font-size: 1.1rem;text-decoration: none;\">Show all variables
-\t\t\t\t\t\t\t<svg style=\"width: .6rem\" class=\"svg-inline--fa fa-chevron-right fa-w-10 ms-1\" aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fas\" data-icon=\"chevron-right\" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 512\" data-fa-i2svg=\"\"><path fill=\"currentColor\" d=\"M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z\"></path></svg><!-- <span class=\"fas fa-chevron-right ms-1 fs--2\"></span> Font Awesome fontawesome.com -->
-\t\t\t\t\t\t</a>
+\t\t\t\t\t<div class=\"card-body h-100\" data-ref-freq=\"q\">
+\t\t\t\t\t\t<div class=\"chart-container col-xl-9 col-lg-10 col-12-md\"></div>
+\t\t\t\t\t\t<div class=\"table-container\"></div>
+\t\t\t\t\t\t<div class=\"card-footer bg-light p-0\" style=\"display:none\">
+\t\t\t\t\t\t\t<a class=\"btn btn-sm btn-link d-block w-100 py-2\" href=\"#!\" style=\"font-family: 'Assistant'; font-size: 1.0rem;text-decoration: none;\">
+\t\t\t\t\t\t\t\t<span class=\"align-middle pe-2\">Show Additional Variables</span><i class=\"bi bi-chevron-down\"></i>
+\t\t\t\t\t\t\t</a>
+\t\t\t\t\t\t</div>
 \t\t\t\t\t</div>
 \t\t\t\t</div>
             </div>
 \t\t\t
 \t\t\t<!-- Card 2 -->
-\t\t\t<div class=\"col-lg-6 pe-lg-2 mb-3\">
-              <div class=\"card h-lg-100 overflow-hidden\">
-                <div class=\"card-header bg-light\">
-                  <div class=\"row align-items-center\">
-                    <div class=\"col\">
-                      <h6 class=\"mb-0\">Running Projects</h6>
-                    </div>
-                    <div class=\"col-auto text-center pe-card\"><select class=\"form-select form-select-sm\">
-                        <option>Working Time</option>
-                        <option>Estimated Time</option>
-                        <option>Billable Time</option>
-                      </select></div>
-                  </div>
-                </div>
-                <div class=\"card-body p-0\">
-                  <div class=\"row g-0 align-items-center py-2 position-relative border-bottom border-200\">
-                    <div class=\"col ps-card py-1 position-static\">
-                      <div class=\"d-flex align-items-center\">
-                        <div class=\"avatar avatar-xl me-3\">
-                          <div class=\"avatar-name rounded-circle bg-soft-success text-dark\"><span class=\"fs-0 text-success\">R</span></div>
-                        </div>
-                        <div class=\"flex-1\">
-                          <h6 class=\"mb-0 d-flex align-items-center\"><a class=\"text-800 stretched-link\" href=\"#!\">Reign</a><span class=\"badge rounded-pill ms-2 bg-200 text-primary\">79%</span></h6>
-                        </div>
-                      </div>
-                    </div>
-                    <div class=\"col py-1\">
-                      <div class=\"row flex-end-center g-0\">
-                        <div class=\"col-auto pe-2\">
-                          <div class=\"fs--1 fw-semi-bold\">25:20:00</div>
-                        </div>
-                        <div class=\"col-5 pe-card ps-2\">
-                          <div class=\"progress bg-200 me-2\" style=\"height: 5px;\">
-                            <div class=\"progress-bar rounded-pill\" role=\"progressbar\" style=\"width: 79%\" aria-valuenow=\"79\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class=\"row g-0 align-items-center py-2 position-relative\">
-                    <div class=\"col ps-card py-1 position-static\">
-                      <div class=\"d-flex align-items-center\">
-                        <div class=\"avatar avatar-xl me-3\">
-                          <div class=\"avatar-name rounded-circle bg-soft-danger text-dark\"><span class=\"fs-0 text-danger\">S</span></div>
-                        </div>
-                        <div class=\"flex-1\">
-                          <h6 class=\"mb-0 d-flex align-items-center\"><a class=\"text-800 stretched-link\" href=\"#!\">Slick</a><span class=\"badge rounded-pill ms-2 bg-200 text-primary\">70%</span></h6>
-                        </div>
-                      </div>
-                    </div>
-                    <div class=\"col py-1\">
-                      <div class=\"row flex-end-center g-0\">
-                        <div class=\"col-auto pe-2\">
-                          <div class=\"fs--1 fw-semi-bold\">31:20:00</div>
-                        </div>
-                        <div class=\"col-5 pe-card ps-2\">
-                          <div class=\"progress bg-200 me-2\" style=\"height: 5px;\">
-                            <div class=\"progress-bar rounded-pill\" role=\"progressbar\" style=\"width: 70%\" aria-valuenow=\"70\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class=\"card-footer bg-light p-0\"><a class=\"btn btn-sm btn-link d-block w-100 py-2\" href=\"#!\">Show all projects<svg class=\"svg-inline--fa fa-chevron-right fa-w-10 ms-1 fs--2\" aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fas\" data-icon=\"chevron-right\" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 512\" data-fa-i2svg=\"\"><path fill=\"currentColor\" d=\"M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z\"></path></svg><!-- <span class=\"fas fa-chevron-right ms-1 fs--2\"></span> Font Awesome fontawesome.com --></a></div>
-              </div>
-            </div>\t\t
+\t\t\t<div class=\"col-lg-6 border-0 p-0 pe-lg-4\">
+\t\t\t\t<div class=\"card shadow\" data-ref-dispgroup=\"Housing\">
+\t\t\t\t\t<div class=\"card-header\">
+\t\t\t\t\t\t<div class=\"row flex-between-center\">
+\t\t\t\t\t\t\t<div class=\"col-auto\">
+\t\t\t\t\t\t\t\t<span class=\"mb-0 fw-bolder\" style=\"font-size:.9rem\">Housing</span>
+\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t<div class=\"col-auto d-flex\">
+\t\t\t\t\t\t\t\t<div class=\"input-group input-group-sm\">
+\t\t\t\t\t\t\t\t  <label class=\"input-group-text\">Frequency</label>
+\t\t\t\t\t\t\t\t\t<select class=\"form-select form-select-sm select-month me-2\">
+\t\t\t\t\t\t\t\t\t\t<option value=\"q\">Quarterly</option>
+\t\t\t\t\t\t\t\t\t\t<option value=\"m\" disabled>Monthly</option>
+\t\t\t\t\t\t\t\t\t</select>
+\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t</div>
+\t\t\t\t\t</div>
+\t\t\t\t\t<div class=\"card-body h-100\" data-ref-freq=\"m\" style=\"\">
+\t\t\t\t\t\t<div class=\"chart-container col-xl-9 col-lg-10 col-12-md\"></div>
+\t\t\t\t\t\t<div class=\"table-container\"></div>
+\t\t\t\t\t\t<div class=\"card-footer bg-light p-0\" style=\"display:none\">
+\t\t\t\t\t\t\t<a class=\"btn btn-sm btn-link d-block w-100 py-2\" href=\"#!\" style=\"font-family: 'Assistant'; font-size: 1.0rem;text-decoration: none;\">
+\t\t\t\t\t\t\t\t<span class=\"align-middle pe-2\">Show Additional Variables</span><i class=\"bi bi-chevron-down\"></i>
+\t\t\t\t\t\t\t</a>
+\t\t\t\t\t\t</div>
+\t\t\t\t\t</div>
+\t\t\t\t\t<div class=\"card-body h-100\" data-ref-freq=\"q\" style=\"\">
+\t\t\t\t\t\t<div class=\"chart-container col-xl-9 col-lg-10 col-12-md\"></div>
+\t\t\t\t\t\t<div class=\"table-container\"></div>
+\t\t\t\t\t\t<div class=\"card-footer bg-light p-0\" style=\"display:none\">
+\t\t\t\t\t\t\t<a class=\"btn btn-sm btn-link d-block w-100 py-2\" href=\"#!\" style=\"font-family: 'Assistant'; font-size: 1.0rem;text-decoration: none;\">
+\t\t\t\t\t\t\t\t<span class=\"align-middle pe-2\">Show Additional Variables</span><i class=\"bi bi-chevron-down\"></i>
+\t\t\t\t\t\t\t</a>
+\t\t\t\t\t\t</div>
+\t\t\t\t\t</div>
+\t\t\t\t</div>
+            </div>
+
+\t\t</div>
+\t\t\t
 
 \t\t
 \t</div>

@@ -189,9 +189,11 @@ nav.sidebar a {
 /* Main Menu Links */
 nav.sidebar a.nav-link {
 	background-color: transparent;
-	font-weight: bolder;
+	font-weight: 500;
+	font-size: 0.95rem;
 	padding-left: 1.8rem;
 	margin-top: .6rem;
+	color: rgb(94, 110, 130);
 
 }
 nav.sidebar a.nav-link:hover {
@@ -201,12 +203,13 @@ nav.sidebar a.nav-link:hover {
 
 /* Submenu */
 nav.sidebar div.sidebar-submenu > a {
-  padding-left: 2.2rem;
-  padding-top: .25rem;
-  padding-bottom: .25rem;
-  padding-right: 1.2rem;
-  display: block;
-  font-size: .85rem;
+	padding-left: 2.2rem;
+	padding-top: .25rem;
+	padding-bottom: .25rem;
+	padding-right: 1.2rem;
+	display: block;
+	font-size: .85rem;
+	color: rgb(94, 110, 130);
 }
 
 nav.sidebar div.sidebar-submenu > a.activepage {
@@ -225,9 +228,19 @@ nav.sidebar div.sidebar-submenu > a:hover {
 /* Datatable */
 
 table.dataTable th {
-	background-color: rgb(48, 79, 11);
+	background-color: var(--bs-efblue);/*rgb(48, 79, 11);*/
 	color: white;
+	font-size: .90rem;
 }
+
+table.dataTable th:first-child {
+	border-radius:.5rem 0 0 .5rem;
+}
+
+table.dataTable th:last-child {
+	border-radius:0 .5rem .5rem 0;
+}
+
 
 table.dataTable.data-table td {
     padding: .25rem .5rem;
@@ -237,7 +250,7 @@ table.dataTable.data-table td {
 
 table.dataTable.summary-table td {
     padding: .25rem .25rem;
-    font-size: 0.95rem;
+    font-size: 0.92rem;
 	border: none;
 }
 
@@ -254,7 +267,7 @@ table.dataTable .dt-right {
 }
 
 table.dataTable thead {
-	border-bottom: 1px solid black;
+	/*border-bottom: 1px solid black;*/
 }
 
 table.dataTable tbody {
@@ -265,12 +278,12 @@ table.dataTable tr {
 	border: none;
 }
 
-table.dataTable tr.odd {
-    background-color: rgba(200, 230, 245, .2);
+table.dataTable tr.odd  {
+    background-color: rgba(200, 230, 245, .35);
 }
 
-table.dataTable tr:hover {
-	background-color: rgba(0, 0, 158, .7) !important;
+table.dataTable tr:hover td {
+	background-color: rgba(0, 0, 158) !important;
 	color: white !important;
 }
 

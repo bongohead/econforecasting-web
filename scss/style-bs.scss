@@ -6,13 +6,22 @@
  
 // Required imports
 
-@import "bootstrap-5.0.0/_functions";
-@import "bootstrap-5.0.0/_variables";
-@import "bootstrap-5.0.0/_mixins";
+@import "bootstrap-5.1.1/_functions";
+@import "bootstrap-5.1.1/_variables";
+@import "bootstrap-5.1.1/_mixins";
 
 
 // Create your own map
 $custom-colors: (
+	efgreen: #3F9E2E,
+	efpale: #FFFFCC,
+
+	efblue: #00ABE7,
+	efsky: #2DC7FF,
+
+	efred: #A20104,
+	efpaleblue: #EDF2F9,
+
 	econgreen: #497901,
 	econpale: #F4F1BB,
 	econorange: #FC8A08,
@@ -34,8 +43,8 @@ $custom-colors: (
 $theme-colors: map-merge($theme-colors, $custom-colors);
 
 
-$font-size-base: .90rem;
+$font-size-base: 0.95rem;
 $font-family-sans-serif: 'Assistant', Arial, 'sans-serif';
 
 // Now re-import again with variable overrides - Must be at end
-@import "bootstrap-5.0.0/bootstrap";
+@import "bootstrap-5.1.1/bootstrap";
