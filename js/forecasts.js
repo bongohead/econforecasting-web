@@ -132,43 +132,34 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	/********** DRAW CHART & TABLE **********/
 	.then(function(res) {
 		//drawChart(res.ncValuesGrouped, res.ncReleases, displayQuarter = ud.displayQuarter);
+		drawCard('GDP', 1);
+		drawCard('Housing', 1);
+		drawCard('Consumer_Sales', 1);
+		
+		drawCard('Labor_Market', 2);
+		drawCard('Benchmark_Rates', 2);
+		drawCard('Stocks_and_Commodities', 2);
+		drawCard('Currencies', 2);
+		drawCard('Inflation', 2);
+		drawCard('Credit', 2);
+
+
 		drawTable('GDP', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
-		drawTable('Benchmark Rates', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
 		drawTable('Housing', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
+		drawTable('Consumer_Sales', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
+
+		drawTable('Labor_Market', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
+		drawTable('Benchmark_Rates', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
+		drawTable('Stocks_and_Commodities', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
+		drawTable('Currencies', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
+		drawTable('Inflation', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
+		drawTable('Credit', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
 
 		//drawTable('gdp', res.tsValuesGrouped.filter(x => x.dispgroup === 'GDP'), res.displayDates);
 
 		$('div.overlay').hide();
 	});
 	
-	/********** EVENT LISTENERS FOR DATE SWITCH **********/
-	$('.card-body').on('click', '#chart-subtitle-group > button.chart-subtitle', function() {
-		const newDisplayQuarter = this.innerHTML;
-		
-		//setData('userData', {...getData('userData'), ...{playState: newPlayState, playIndex: newPlayIndex}});
-		//drawChart(getData('userData').ncValuesGrouped, getData('userData').ncReleases, newDisplayQuarter);
-		
-		return;
-    });
-	
-	/********** EVENT LISTENERS FOR DATA CALENDAR HOVER **********/
-	/*
-	$('#release-container').on('mouseenter', 'li.release-calendar-date', function() {
-		console.log(this.id.replace('li-', ''));
-		const chart = $('#chart-container').highcharts();
-		chart.xAxis[0].addPlotLine({
-			value: parseInt(moment(this.id.replace('li-', '')).format('x')),
-			color: 'blue',
-			width: 3,
-			id: 'release-calendar-indicator'
-		  });
-		console.log('highcharts');
-	});
-	$('#release-container').on('mouseleave', 'li.release-calendar-date', function() {
-		const chart = $('#chart-container').highcharts();
-		chart.xAxis[0].removePlotLine('release-calendar-indicator');
-	});
-	*/
 	
 	/********** Attach Table Event Listener to Show/Hide All Variables **********/
 	$('main').on('click', 'div.card-footer > a.btn', function(event) {
@@ -198,7 +189,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		const newBody = this.closest('div.card').querySelector('div.card-body[data-ref-freq="' + newFreq + '"]');
 		$(this.closest('div.card').querySelectorAll('div.card-body')).hide();
 		$(newBody).show();
-		$(newBody.querySelector('table.dataTable')).DataTable().draw();
+		const dt = $(document.querySelector('#table-' + refDispgroup + '-freq-' + newFreq)).DataTable();
+		dt.draw();
 
 		//console.log(refDispgroup, newFreq);
 	});
@@ -208,6 +200,60 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 });
 
+function drawCard(dispgroup, colIndex) {
+	
+	if (![1, 2].includes(colIndex)) throw new Error('Incorrect colIndex.');
+	
+	const html =
+	`
+	<div class="card shadow" data-ref-dispgroup="${dispgroup}">
+		<div class="card-header">
+			<div class="row flex-between-center">
+				<div class="col-auto">
+					<span class="mb-0 fw-bolder" style="font-size:.9rem">${dispgroup.replaceAll('_', ' ')}</span>
+				</div>
+				<div class="col-auto d-flex">
+					<div class="input-group input-group-sm">
+					  <label class="input-group-text">Frequency</label>
+						<select class="form-select form-select-sm select-month me-2">
+							<option value="q" selected>Quarterly</option><option value="m" disabled>Monthly</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="card-body h-100" data-ref-freq="m" style="display:none">
+			<div class="chart-container col-xl-9 col-lg-10 col-12-md"></div>
+			<div class="table-container"></div>
+			<div class="card-footer bg-light p-0" style="display:none">
+				<a class="btn btn-sm btn-link d-block w-100 py-2" href="#!" style="font-family: 'Assistant'; font-size: 1.0rem;text-decoration: none;">
+					<span class="align-middle pe-2">Show Additional Variables</span><i class="bi bi-chevron-down"></i>
+				</a>
+			</div>
+		</div>
+		<div class="card-body h-100" data-ref-freq="q" style="display:none">
+			<div class="chart-container col-xl-9 col-lg-10 col-12-md"></div>
+			<div class="table-container"></div>
+			<div class="card-footer bg-light p-0" style="display:none">
+				<a class="btn btn-sm btn-link d-block w-100 py-2" href="#!" style="font-family: 'Assistant'; font-size: 1.0rem;text-decoration: none;">
+					<span class="align-middle pe-2">Show Additional Variables</span><i class="bi bi-chevron-down"></i>
+				</a>
+			</div>
+		</div>
+		<div class="card-footer border-top py-1">
+			<div class="row align-items-center gx-0">
+				<div class="col text-end"><span class="fst-italic" style="font-size:.8rem"><span class="badge bg-light text-dark">SAAR%</span>: seasonally adjusted annualized growth rate</span></div>
+			</div>
+		</div>
+	</div>
+	`
+	
+	let containerEl = document.createElement('div');
+	containerEl.classList.add('col-12', 'border-0', 'p-4');
+	containerEl.innerHTML = html;
+	
+	document.querySelector('#card-col-' + colIndex + ' > div').append(containerEl);
+}
 
 /*** Draw chart ***/
 function drawChart(ncValuesGrouped, ncReleases, displayQuarter) {
@@ -541,7 +587,11 @@ function drawTable(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM) {
 			tsValues: tsValuesGrouped.filter(y => y.dispgroup.toLowerCase() === dispgroup.toLowerCase() && y.freq === x.freq) // Get values for this dispgroup only
 		};
 	});
-	console.log('tableRes', tableRes);
+	// console.log('tableRes', tableRes);
+	
+	// If monthly exists, enable frequency option
+	if (tableRes.filter(x => x.freq === 'm')[0].tsValues.length !== 0) document.querySelector('div.card[data-ref-dispgroup="' + dispgroup + '"] option[value="m"]').disabled = false;
+	
 	
 	// Now construct the tables (one per card body)
 	tableRes
@@ -566,7 +616,7 @@ function drawTable(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM) {
 						(x.fullname.includes(':') ? x.fullname.substring(x.fullname.lastIndexOf(':') + 2) : x.fullname) +
 						'</span>' +
 						'<span class="badge bg-light text-dark ms-2 fst-italic fw-normal">' +
-						(x.d1 === 'apchg' ? 'SAAR%' : (x.d1 === 'base' ? x.units : '')) +
+						(x.d1 === 'apchg' ? 'SAAR%' : (x.d1 === 'pchg' ? '% change from prev period' : (x.d1 === 'base' ? x.units : ''))) +
 						'</span>',
 					...Object.fromEntries(
 						x.data.map(z => [
@@ -579,14 +629,14 @@ function drawTable(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM) {
 					};
 			});
 		
-		console.log('tableData', tableData);
+		// console.log('tableData', tableData);
 		
 		// Get column names
 		const dtCols0 = 
 			[{title: 'Order', data: 'order'}, {title: 'Tabs', data: 'disptabs'}, {title: 'Variable', data: 'fullname'}]
 			.concat(tableSpec.displayDates.map((x, i) => ({title: x, data: x})));
 		
-		console.log('dtCols0', dtCols0);
+		// console.log('dtCols0', dtCols0);
 		
 		// Add formatter to dtCols
 		const dtCols =
@@ -646,33 +696,6 @@ function drawTable(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM) {
 			rowGroup: {dataSrc: 'dispgroup'}
 		};
 
-		
-		
-		/*
-		const li = document.createElement('li');
-		li.classList.add('list-group-item');
-		li.classList.add('w-100'); // Needed to get the thing to vertically align
-		li.textContent = 'test'; //(x.fcname !== 'hist' ? x.shortname + ' Forecast' : x.shortname);
-		li.setAttribute('data-ref-freq', tableSpec.freq);
-		li.setAttribute('data-ref-restrict', tableSpec.restrict);
-		if (i === 0) li.classList.add('active');
-		document.querySelector('#li-container').appendChild(li);
-		*/
-		
-		// Add last updated text
-		/*
-		const updatedDiv = document.createElement('div');
-		const updatedSpan = document.createElement('span');
-		updatedDiv.id = 'updated-'; //+ x.fcname;
-		updatedDiv.classList.add('text-end');
-		updatedSpan.textContent = '' //(x.fcname !== 'hist' ? x.shortname + ' Forecast Updated ' + x.vintage_date : '');
-		updatedSpan.classList.add('text-muted');
-		updatedSpan.style.fontSize = '0.9rem';
-		updatedDiv.appendChild(updatedSpan);
-		document.querySelector('#li-container').after(updatedDiv);
-		if (i !== 0) updatedDiv.style.display = 'none';
-		*/
-		
 		// Create table and style it
 		const table = document.createElement('table');
 		table.classList.add('table');
@@ -681,125 +704,30 @@ function drawTable(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM) {
 		table.id = 'table-' + dispgroup + '-freq-' + tableSpec.freq;
 		bodyEl.querySelector('div.table-container').appendChild(table);
 		
-
 		// Draw the table
 		const dt = $(table).DataTable(o);
-		/*if (i !== 0) $(table).parents('div.dataTables_wrapper').first().hide();*/
 		
 		// Create show/hide all variables button for this forecast if this is restricted and there are other non-restricted tables
-		console.log(tableData.filter(x => ![1, 2].includes(x.disprank)).length);
+		// console.log(tableData.filter(x => ![1, 2].includes(x.disprank)).length);
 		if (tableData.filter(x => ![1, 2].includes(x.disprank)).length !== 0) {
 			console.log('Show');
 			$(bodyEl.querySelector('div.card-footer')).show();
-			//$('#card-' + dispgroup + ' .card-footer.footer-show').show();
-			//console.log('#card-' + dispgroup + ' div.card_footer.footer-show');
 		}
 
 		// Show if either showAllVarnames == 0
 		$.fn.dataTable.ext.search.push(function(settings, searchData, rowIndex, rowData, searchCounter) { // https://datatables.net/manual/plug-ins/search
 			const show = (rowData.showAllVarnames === 1 || [1, 2].includes(rowData.disprank));
-			//console.log(originalData['name'], ancestorStatuses, show);
 			return(show);
 		});
-		console.log(dt.rows().data())
+		// console.log(dt.rows().data())
+		// Show quarterly by default
+		if (tableSpec.freq === 'q') $(bodyEl).show();
+
 		dt.draw();		
-		
-		// If this is monthly, or if this is the only option (i.e., no monthly exists), make the card body visible
-		if (tableSpec.freq === 'm') $(bodyEl).hide();
-
-		//console.log(dTable);
-
-		// Move the download buttons
-		//console.log(table.parentElement);
-		/*
-		const downloadDiv = table.closest('.dataTables_wrapper').querySelector('.dt-buttons');
-		downloadDiv.classList.add('float-end');
-		downloadDiv.id = 'download-' + dispgroup;
-		if (i !== 0) downloadDiv.style.display = 'none'
-		$('#tables-container .d-inline').after($(downloadDiv).detach());
-		*/
-		/*
-		li.addEventListener('click', function() { 
-			//console.log(this, this.getAttribute('data-ref-table'));
-			// Change active li
-			document.querySelectorAll('#li-container > li').forEach(el => el.classList.remove('active'));
-			this.classList.add('active');
-			
-			// First hide all tables-container
-			$('div.dataTables_wrapper').hide();
-			
-			const table = document.querySelector('#table-' + this.getAttribute('data-ref-table'));
-			$(table).parents('div.dataTables_wrapper').first().show();
-			
-			
-			$('#tables-container div.dt-buttons').hide();
-			$('#download-' + this.getAttribute('data-ref-table')).show();
-			
-			$('#tables-container div.text-end').hide();
-			$('#updated-' + this.getAttribute('data-ref-table')).show();
-
-			
-		}, false);
-		*/
+	
 	});
 
 
-/*
-	
-	// console.log('dtCols', dtCols);
-	const tableData =
-		tsValuesGrouped
-		//.filter(x => (['core.endog', 'core.exog.p', 'core.exog'].includes(x.core_structural)))
-		.map(function(x, i) {
-			return {
-				order: i,
-				disptabs: x.disptabs,
-				dispgroup: x.dispgroup,
-				fullname: (x.fullname.includes(':') ? x.fullname.substring(x.fullname.lastIndexOf(':') + 2) : x.fullname),
-				...Object.fromEntries(
-					x.data.map(z => [z.formatdate, z.value == null ? '' : z.value.toFixed(1)])
-					)
-				};
-		});
-	
-	console.log('tableData', tableData);
-		
-	const copySvg =
-	`<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-clipboard me-1" viewBox="0 0 16 16">
-		<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-		<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
-	</svg>`;
-	const dlSvg = 
-	`<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-download me-1" viewBox="0 0 16 16">
-	  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"></path>
-	  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"></path>
-	</svg>`;
-	const o = {
-		data: tableData,
-		columns: dtCols,
-		dom:
-			"<'row justify-content-end'<'col-auto'B>>" +
-			"<'row justify-content-center'<'col-12'tr>>" +
-			"<'row justify-content-end'<'col-auto'p>>",
-		buttons: [
-			{extend: 'copyHtml5', text: copySvg + 'Copy', exportOptions: {columns: dtCols.map((x, i) => ({...x, index: i})).filter(x => x.visible).map(x => x.index)}, className: 'btn btn-sm btn-econgreen'},
-			{extend: 'csvHtml5', text: dlSvg + 'Download', exportOptions: {columns: dtCols.map((x, i) => ({...x, index: i})).filter(x => x.visible).map(x => x.index)}, className: 'btn btn-sm btn-econgreen'}
-		],
-		scrollX: true,
-		fixedColumns: {left: 1},
-		paging: false,
-		pagingType: 'numbers',
-		language: {
-			search: "Filter By Date:",
-			searchPlaceholder: "YYYY-MM"
-		},
-		ordering: [[0, 'asc']],
-		responsive: true,
-		rowGroup: {dataSrc: 'dispgroup'}
-	}
-	
-	$('#' + dispgroup + '-table').DataTable(o);
-	*/
 	return;
 }
 
