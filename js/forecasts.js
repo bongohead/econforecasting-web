@@ -133,6 +133,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	.then(function(res) {
 		//drawChart(res.ncValuesGrouped, res.ncReleases, displayQuarter = ud.displayQuarter);
 		drawTable('GDP', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
+		drawTable('Benchmark Rates', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
 		drawTable('Housing', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
 
 		//drawTable('gdp', res.tsValuesGrouped.filter(x => x.dispgroup === 'GDP'), res.displayDates);
@@ -194,9 +195,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		
 		const refDispgroup = this.closest('div.card').dataset.refDispgroup;
 		const newFreq = this.value;
-		
+		const newBody = this.closest('div.card').querySelector('div.card-body[data-ref-freq="' + newFreq + '"]');
 		$(this.closest('div.card').querySelectorAll('div.card-body')).hide();
-		$(this.closest('div.card').querySelector('div.card-body[data-ref-freq="' + newFreq + '"]')).show();
+		$(newBody).show();
+		$(newBody.querySelector('table.dataTable')).DataTable().draw();
 
 		//console.log(refDispgroup, newFreq);
 	});
@@ -554,7 +556,7 @@ function drawTable(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM) {
 			.map(function(x, i) {
 				return {
 					showAllVarnames: 0,
-					order: i,
+					order: x.disporder,
 					units: x.units,
 					d1: x.d1,
 					disptabs: x.disptabs,
@@ -571,7 +573,7 @@ function drawTable(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM) {
 							z.formatdate,
 							z.value == null ?
 								'' : 
-								((z.tskey === 'hist' ? '<span style="color:#898989">' : '<span>') + z.value.toFixed(1) + '</span>')
+								((z.tskey === 'hist' ? '<span style="color:rgb(150,150,150)">' : '<span style="color:rgb(90,90,90);font-weight:bolder">') + z.value.toFixed(2) + '</span>')
 							])
 						)
 					};
@@ -597,10 +599,10 @@ function drawTable(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM) {
 					className: (x.title === 'Variable' ? 'dt-left' : 'dt-center'),
 					css: 'font-size: 1.0rem',
 					createdCell: function(td, cellData, rowData, rowIndex, colIndex) {
-						(x.title === 'Variable' ? $(td).css('min-width', '15rem').css('color', 'rgb(90, 90, 90)') : false);
-						(x.title !== 'Variable' ? $(td).css('min-width', '5rem').css('font-weight', '600').css('color', 'rgb(90, 90, 90)') : false);
+						(x.title === 'Variable' ? $(td).css('min-width', '12rem').css('color', 'rgb(90, 90, 90)') : false);
+						/*(x.title !== 'Variable' ? $(td).css('min-width', '2rem').css('font-weight', '500').css('color', 'rgb(90, 90, 90)') : false);*/
 
-						(x.title === 'Variable' ? $(td).css('padding-left', String((rowData.disptabs - 1)* 1.5 + .2) + 'rem' ) : false);
+						(x.title === 'Variable' ? $(td).css('padding-left', String((rowData.disptabs - 1)* 1.5 + .5) + 'rem' ) : false);
 						//(!['Order', 'Tabs', 'Variable', 'Group'].includes(x.title) ?
 							/*(tsValuesGrouped[rowIndex].data[dtCols0[colIndex].title].tskey === 'hist' ? $(td).css('color', '#898989') : false) :
 							false);*/
