@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					value: Number(x.value)
 				};
 			});
-		
+
 		const tsParams =
 			response[1].tsParams.map(function(x) {
 				return {...x
@@ -110,10 +110,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				const res = [
 					{
 						varname: param.varname, fullname: param.fullname, dispgroup: param.dispgroup, disporder: param.disporder, disprank: param.disprank, disptabs: param.disptabs,
+						units: param.units, d1: param.d1,
 						freq: 'q', data: dataByDateQuarterly
 					},
 					{
 						varname: param.varname, fullname: param.fullname, dispgroup: param.dispgroup, disporder: param.disporder, disprank: param.disprank, disptabs: param.disptabs,
+						units: param.units, d1: param.d1,
 						freq: 'm', data: dataByDateMonthly
 					}
 				].filter(z => z.data.filter(aa => aa.value !== null).length !== 0);
@@ -125,50 +127,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		setData('userData', {...getData('userData'), ...{tsValuesGrouped: tsValuesGrouped}, displayDatesQ: displayDatesQ, displayDatesM: displayDatesM});
 		
 		return({tsValuesGrouped: tsValuesGrouped, displayDatesQ: displayDatesQ, displayDatesM: displayDatesM});
-
-		/*
-		// Order values for table
-		const order = [
-			'gdp',
-			'pce',
-			'pceg','pcegd','pcegdmotor','pcegdfurnish','pcegdrec','pcegdother','pcegn','pcegnfood','pcegnclothing','pcegngas','pcegnother',
-			'pces','pceshousing','pceshealth','pcestransport','pcesrec','pcesfood','pcesfinal','pcesother','pcesnonprofit',
-			'pdi','pdin','pdinstruct','pdinequip','pdinip','pdir','pceschange',
-			'nx','ex','exg','exs','im','img','ims',
-			'govt','govtf','govts'
-			];
-		//console.log('fcDataRaw', fcDataRaw);
-		
-		const ncValuesGrouped =		
-			// Nest into array of objects containing each varname
-			[... new Set(ncValues.map(x => x.varname))]
-			.map(function(varname) {
-				const z = ncValues.filter(x => x.varname == varname)[0];
-				return {
-					varname: z.varname,
-					fullname: z.fullname,
-					units: z.units,
-					vdate: z.vdate,
-					units: z.units,
-					d1: z.d1,
-					d2: z.d2,
-					// Let data contain all vintages
-					data: ncValues.filter(x => x.varname == varname).map(x => ({date: x.date, formatdate: x.formatdate, vdate: x.vdate, value: x.value})).sort((a, b) => a[0] - b[0]),
-					tabs: (z.varname === 'gdp' ? 0 : z.fullname.split(':').length)
-				}
-			})
-			// Sort to follow order of const order
-			.sort((a, b) => (order.indexOf(a.varname) > order.indexOf(b.varname) ? 1 : -1))
-			.map((x, i) => ({...x, order: i}));
-			// Now modify data object ine ach so that it is of the form [{vdate: ., []}, {}, {}...]
-			
-			
-		console.log(ncValuesGrouped);
-		
-		setData('userData', {...getData('userData'), ...{ncValuesGrouped: ncValuesGrouped}, ...{ncReleases: ncReleases}});
-		
-		return({ncValuesGrouped: ncValuesGrouped, ncReleases: ncReleases});
-		*/
 	
 	})
 	/********** DRAW CHART & TABLE **********/
@@ -597,9 +555,17 @@ function drawTable(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM) {
 				return {
 					showAllVarnames: 0,
 					order: i,
+					units: x.units,
+					d1: x.d1,
 					disptabs: x.disptabs,
 					disprank: x.disprank,
-					fullname: (x.fullname.includes(':') ? x.fullname.substring(x.fullname.lastIndexOf(':') + 2) : x.fullname),
+					fullname: 
+						'<span style="font-weight: 600;">' + 
+						(x.fullname.includes(':') ? x.fullname.substring(x.fullname.lastIndexOf(':') + 2) : x.fullname) +
+						'</span>' +
+						'<span class="badge bg-light text-dark ms-2 fst-italic fw-normal">' +
+						(x.d1 === 'apchg' ? 'SAAR%' : (x.d1 === 'base' ? x.units : '')) +
+						'</span>',
 					...Object.fromEntries(
 						x.data.map(z => [
 							z.formatdate,
@@ -627,11 +593,11 @@ function drawTable(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM) {
 				return {...x, ...{
 					visible: (!['Order', 'Tabs'].includes(x.title)),
 					orderable: false,
-					type: (x.title === 'Variable' ? 'string' : 'html-num'),
+					type: (x.title === 'Variable' ? 'html' : 'html-num'),
 					className: (x.title === 'Variable' ? 'dt-left' : 'dt-center'),
 					css: 'font-size: 1.0rem',
 					createdCell: function(td, cellData, rowData, rowIndex, colIndex) {
-						(x.title === 'Variable' ? $(td).css('min-width', '15rem').css('font-weight', '600').css('color', 'rgb(90, 90, 90)') : false);
+						(x.title === 'Variable' ? $(td).css('min-width', '15rem').css('color', 'rgb(90, 90, 90)') : false);
 						(x.title !== 'Variable' ? $(td).css('min-width', '5rem').css('font-weight', '600').css('color', 'rgb(90, 90, 90)') : false);
 
 						(x.title === 'Variable' ? $(td).css('padding-left', String((rowData.disptabs - 1)* 1.5 + .2) + 'rem' ) : false);

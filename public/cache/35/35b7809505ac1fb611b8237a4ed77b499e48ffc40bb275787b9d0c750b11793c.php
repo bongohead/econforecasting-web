@@ -118,6 +118,11 @@ class __TwigTemplate_516126d4db106904f981c8bc9205b8bb3032f166e46a74ff5450e97c1c6
 \t\t\t\t\t\t\t</a>
 \t\t\t\t\t\t</div>
 \t\t\t\t\t</div>
+\t\t\t\t\t<div class=\"card-footer border-top py-1\">
+\t\t\t\t\t\t<div class=\"row align-items-center gx-0\">
+\t\t\t\t\t\t\t<div class=\"col text-end\"><span class=\"fst-italic\" style=\"font-size:.8rem\"><span class=\"badge bg-light text-dark\">SAAR%</span>: seasonally adjusted annualized growth rate</span></div>
+\t\t\t\t\t\t</div>
+\t\t\t\t\t</div>
 \t\t\t\t</div>
             </div>
 \t\t\t
@@ -243,6 +248,11 @@ class __TwigTemplate_516126d4db106904f981c8bc9205b8bb3032f166e46a74ff5450e97c1c6
 \t\t\t\t\t\t\t<a class=\"btn btn-sm btn-link d-block w-100 py-2\" href=\"#!\" style=\"font-family: 'Assistant'; font-size: 1.0rem;text-decoration: none;\">
 \t\t\t\t\t\t\t\t<span class=\"align-middle pe-2\">Show Additional Variables</span><i class=\"bi bi-chevron-down\"></i>
 \t\t\t\t\t\t\t</a>
+\t\t\t\t\t\t</div>
+\t\t\t\t\t</div>
+\t\t\t\t\t<div class=\"card-footer border-top py-1\">
+\t\t\t\t\t\t<div class=\"row align-items-center gx-0\">
+\t\t\t\t\t\t\t<div class=\"col text-end\"><span class=\"fst-italic\" style=\"font-size:.8rem\"><span class=\"badge bg-light text-dark\">SAAR%</span>: seasonally adjusted annualized growth rate</span></div>
 \t\t\t\t\t\t</div>
 \t\t\t\t\t</div>
 \t\t\t\t</div>
