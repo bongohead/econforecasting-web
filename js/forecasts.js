@@ -157,7 +157,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		
 		
 		drawChart('GDP', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
+		drawChart('Housing', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
+		drawChart('Consumer_Sales', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
+		
+		drawChart('Labor_Market', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
 		drawChart('Benchmark_Rates', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
+		drawChart('Stocks_and_Commodities', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
+		drawChart('Currencies', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
+		drawChart('Inflation', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
+		drawChart('Credit', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
 
 		//drawTable('gdp', res.tsValuesGrouped.filter(x => x.dispgroup === 'GDP'), res.displayDates);
 
@@ -227,7 +235,7 @@ function drawCard(dispgroup, colIndex) {
 			</div>
 		</div>
 		<div class="card-body h-100" data-ref-freq="m" style="display:none">
-			<div class="chart-container col-xl-9 col-lg-10 col-12-md"></div>
+			<div class="chart-container" id="chart-container-${dispgroup}-m"></div>
 			<div class="table-container"></div>
 			<div class="card-footer bg-light p-0" style="display:none">
 				<a class="btn btn-sm btn-link d-block w-100 py-2" href="#!" style="font-family: 'Assistant'; font-size: 1.0rem;text-decoration: none;">
@@ -236,7 +244,7 @@ function drawCard(dispgroup, colIndex) {
 			</div>
 		</div>
 		<div class="card-body h-100" data-ref-freq="q" style="display:none">
-			<div class="chart-container" id="chart-container-${dispgroup}"></div>
+			<div class="chart-container" id="chart-container-${dispgroup}-q"></div>
 			<div class="table-container"></div>
 			<div class="card-footer bg-light p-0" style="display:none">
 				<a class="btn btn-sm btn-link d-block w-100 py-2" href="#!" style="font-family: 'Assistant'; font-size: 1.0rem;text-decoration: none;">
@@ -260,219 +268,196 @@ function drawCard(dispgroup, colIndex) {
 }
 
 /*** Draw chart ***/
-function drawChart(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM) {
+function drawChart(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM, freq) {
 	
-	// Create series - each corresponding to a different economic variable
-	const chartData =
-		tsValuesGrouped
-		.filter(x => x.dispgroup === dispgroup & x.freq === 'q')
-		.map((x, i) => (
-			{
-				id: x.varname,
-				name: x.fullname,
-				data: x.data.map(y => [parseInt(moment(y.date).format('x')), y.value]).sort((a, b) => a[0] - b[0]),
-				type: 'line',
-				//dashStyle: (x.fcname === 'hist' ? 'solid' : 'solid'),
-				//lineWidth: (x.varname === 'gdp' ? 4 : 2),
-				opacity: 1,
-				zIndex: 2,
-				color: getColorArray()[i],
-				index: x.disporder // Force legend to order items correctly
-			}
-		));
+	['q', 'm'].forEach(function(freq) {
 		
-	console.log('chartData', chartData);
-	
-	/*
-	// Calculate end date (take the first vintage of the GDP release occuring after the quarter end date)
-	const quarterEndDate = moment(displayQuarter, 'YYYY[Q]Q').add(1, 'Q');
-	console.log('quarterEndDate', quarterEndDate);
-	const chartEndDate0 =
-		ncReleases.filter(x => x.relname == 'Gross Domestic Product')[0].reldates.filter(x => moment(x) > quarterEndDate)[0];
-	// Modified 7-6-21 to automatically guess the date if doesn't exist
-	const chartEndDate = (typeof(chartEndDate0) !== 'undefined' ? chartEndDate0 : quarterEndDate);
-	
-	console.log('chartEndDate', chartEndDate);
-	*/
-	
-	Highcharts.setOptions({
-		lang: {
-			rangeSelectorZoom: 'Display:'
-		},
-        credits: {
-			enabled: true,
-			text: 'econforecasting.com',
-			href: 'https://econforecasting.com'
-        },
-		scrollbar: {
-			enabled: false
-		},
-		tooltip: {
-			style: {
-				fontWeight: 'bold',
-				fontSize: '0.85rem'
-			}
-		},
-		rangeSelector: {
-			buttonTheme: { // styles for the buttons
-				fill: 'var(--bs-econblue)',
-				style: {
-					color: 'white'
-				},
-				states: {
-					hover: {
-						fill: 'var(--bs-econdblue)'
-					},
-					select: {
-						fill: 'var(--bs-econlblue)',
-						style: {
-							color: 'white'
+		// Create series - each corresponding to a different economic variable
+		const chartData =
+			tsValuesGrouped
+			.filter(x => x.dispgroup === dispgroup & x.freq === freq & x.disprank === 1)
+			.map((x, i) => (
+				{
+					id: x.varname,
+					name: x.fullname,
+					data: x.data.map(y => [parseInt(moment(y.date).format('x')), y.value]).sort((a, b) => a[0] - b[0]),
+					type: 'line',
+					zoneAxis: 'x',
+					zones: [
+						{
+							value: parseInt(moment(x.data.filter(y => y.tskey !== 'hist').sort((a, b) => moment(a.date) - moment(b.date))[0].date).format('x')),
+							dashStyle: 'dot',
+						},
+						{
+							dashStyle: 'solid'
 						}
+					],
+					opacity: 1,
+					zIndex: 2,
+					color: getColorArray()[i],
+					index: x.disporder // Force legend to order items correctly
+				}
+			));
+			
+		if (chartData.length === 0) return;
+			
+		console.log('chartData', chartData);
+		
+		
+		Highcharts.setOptions({
+			lang: {
+				rangeSelectorZoom: 'Display:'
+			},
+			credits: {
+				enabled: true,
+				text: 'econforecasting.com',
+				href: 'https://econforecasting.com'
+			},
+			scrollbar: {
+				enabled: false
+			},
+			tooltip: {
+				style: {
+					fontWeight: 'bold',
+					fontSize: '0.85rem'
+				}
+			},
+			rangeSelector: {
+				buttonTheme: { // styles for the buttons
+					fill: 'var(--bs-econblue)',
+					style: {
+						color: 'white'
+					},
+					states: {
+						hover: {
+							fill: 'var(--bs-econdblue)'
+						},
+						select: {
+							fill: 'var(--bs-econlblue)',
+							style: {
+								color: 'white'
+							}
+						}
+					}
+				},
+				inputBoxBorderColor: 'gray',
+				inputStyle: {
+					color: 'black'
+				},
+				labelStyle: {
+					color: 'black',
+				},
+			}
+
+		});
+		
+		
+		const o = {
+			chart: {
+				spacingTop: 10,
+				backgroundColor: 'rgba(255, 255, 255, 0)',
+				plotBackgroundColor: '#FFFFFF',
+				style: {
+					fontFamily: '"Assistant", "sans-serif"',
+					fontColor: 'var(--bs-econgreen)'
+				},
+				height: 300,
+				plotBorderColor: 'black',
+				plotBorderWidth: 2
+			},
+			title: {
+				useHTML: true,
+				//text: '<img class="me-2" width="20" height="20" src="/static/cmefi_short.png"><div style="vertical-align:middle;display:inline"><span>Forecasted ' + displayQuarter + ' GDP Over Time</h5></span>',
+				style: {
+					fontSize: '1.5rem',
+					color: 'var(--bs-econblue)'
+				}
+			},
+			plotOptions: {
+				series: {
+					shadow: true,
+					dataGrouping: {
+						enabled: true,
+						units: [['day', [1]]],
+						forced: true
+					},
+					marker : {
+						enabled: false,
+						radius: 3,
+						symbol: 'triangle'
 					}
 				}
 			},
-			inputBoxBorderColor: 'gray',
-			inputStyle: {
-				color: 'black'
+			rangeSelector: {
+				enabled: false
 			},
-			labelStyle: {
-				color: 'black',
+			xAxis: {
+				type: 'datetime',
+				labels: {
+					style: {
+						color: 'black'
+					},
+					formatter: function() {
+						return (freq === 'q' ? moment(this.value).format('YYYY[Q]Q') : moment(this.value).format('YYYY[M]M'))
+					}
+				},
+				ordinal: false
 			},
-		}
-
+			yAxis: {
+				labels: {
+					reserveSpace: true,
+					style: {
+						color: 'black'
+					},
+					formatter: function () {
+						return this.value.toFixed(1) + '%';
+					}
+				},
+				title: {
+					text: 'Annualized % Change',
+					style: {
+						color: 'black',
+					}
+				},
+				opposite: false
+			},
+			navigator: {
+				enabled: false,
+			},
+			legend: {
+				enabled: true,
+				backgroundColor: 'var(--bs-econpale)',
+				borderColor: 'var(--bs-econblue)',
+				borderWidth: 1,
+				align: 'center',
+				verticalAlign: 'bottom',
+				layout: 'horizontal',
+				title: {
+					text: 'Variables: <span style="font-size: .8rem; color: #666; font-weight: normal; font-style: italic">(click to hide/show)</span>',
+				}
+			},
+			tooltip: {
+				useHTML: true,
+				shared: true,
+				formatter: function () {
+					const points = this.points;
+					const x = this.x;
+					const ud = getData('userData');
+					const text =
+						'<table style="font-size:.75rem">' +
+						'<tr style="border-bottom:1px solid black"><td style="font-weight:600; text-align:center">' + (freq === 'q' ? moment(x).format('YYYY[Q]Q') : moment(x).format('MMMM YYYY')) + '</td></tr>'  +
+						points.map(function(point) {
+							return '<tr><td style="color:' + point.color + '">' + '' + ' ' + point.series.name + ': ' + point.y.toFixed(2) + '%</td></tr>'; // Remove everything in aprantheses
+						}).join('') +
+						'</table>';
+					
+					return text;
+				}
+			},
+			series: chartData
+		};
+		const chart = Highcharts.stockChart('chart-container-' + dispgroup + '-' + freq, o);
 	});
-	
-	//console.log('fcDataParsed', fcDataParsed);
-	/*
-	const grMap = gradient.create(
-	  [0, 1, 24, 48, 72], //array of color stops
-	  ['#17202a', '#2874a6', '#148f77', '#d4ac0d', '#cb4335'], //array of colors corresponding to color stops
-	  'hex' //format of colors in previous parameter - 'hex', 'htmlcolor', 'rgb', or 'rgba'
-	);
-	*/
-	
-	//console.log('chartData', chartData);
-	
-	const o = {
-        chart: {
-			spacingTop: 20,
-            backgroundColor: 'rgba(255, 255, 255, 0)',
-			plotBackgroundColor: '#FFFFFF',
-			style: {
-				fontFamily: '"Assistant", "sans-serif"',
-				fontColor: 'var(--bs-econgreen)'
-			},
-			height: 450,
-			plotBorderColor: 'black',
-			plotBorderWidth: 2
-        },
-        title: {
-			useHTML: true,
-			//text: '<img class="me-2" width="20" height="20" src="/static/cmefi_short.png"><div style="vertical-align:middle;display:inline"><span>Forecasted ' + displayQuarter + ' GDP Over Time</h5></span>',
-			style: {
-				fontSize: '1.5rem',
-				color: 'var(--bs-econblue)'
-			}
-        },
-		/*subtitle: {
-			useHTML: true,
-			text: 
-				'<div class="col-12 btn-group d-inline-block" role="group" id="chart-subtitle-group">' +
-					'<button class="btn btn-secondary btn" style="" type="button" disabled="">Select Nowcast Date:&nbsp;</button>' + 
-					[... new Set(ncValuesGrouped.map(x => x.data.map(y => y.formatdate)).flat())].map(x => 
-					'<button class="btn btn-primary chart-subtitle btn ' + (x === displayQuarter ? 'active' : '') + '" style="" type="button">' + x + '</button>'
-					).join('') +
-				'</div>'
-		},*/
-        plotOptions: {
-			series: {
-				shadow: true,
-				dataGrouping: {
-					enabled: true,
-					units: [['day', [1]]],
-					forced: true
-				},
-				marker : {
-					enabled: false,
-					radius: 3,
-					symbol: 'triangle'
-				}
-			}
-        },
-		rangeSelector: {
-			enabled: false
-		},
-		xAxis: {
-			type: 'datetime',
-            dateTimeLabelFormats: {
-                day: "%m/%d",
-                week: "%m/%d"
-            },
-			labels: {
-				style: {
-					color: 'black'
-				}
-			},
-			//max: parseInt(moment(chartEndDate).add(5, 'day').format('x')),
-			ordinal: false
-		},
-		yAxis: {
-            labels: {
-				reserveSpace: true,
-				style: {
-					color: 'black'
-				},
-                formatter: function () {
-                    return this.value.toFixed(1) + '%';
-                }
-            },
-			title: {
-				text: 'Annualized % Change',
-				style: {
-					color: 'black',
-				}
-			},
-			opposite: false
-		},
-        navigator: {
-            enabled: false,
-        },
-		legend: {
-			enabled: true,
-			backgroundColor: 'var(--bs-econpale)',
-			borderColor: 'var(--bs-econblue)',
-			borderWidth: 1,
-			align: 'center',
-			verticalAlign: 'bottom',
-			layout: 'horizontal',
-			title: {
-				text: 'Nowcasted Variables <span style="font-size: .8rem; color: #666; font-weight: normal; font-style: italic">(click to hide/show)</span>',
-			}
-		},
-        tooltip: {
-            useHTML: true,
-			shared: true,
-			formatter: function () {
-				//console.log(this.points);
-				//console.log(this, moment(this.x).format('YYYY MM DD'));
-				const points = this.points;
-				const x = this.x;
-				const ud = getData('userData');
-				const text =
-					'<table>' +
-					'<tr style="border-bottom:1px solid black"><td style="font-weight:600; text-align:center">' + moment(x).format('MMM Do YY') + '</td></tr>'  +
-					points.map(function(point) {
-						//const freq = ud.ncValuesGrouped.filter(x => x.varname === point.series.options.id)[0].freq;
-						return '<tr><td style="color:' + point.color + '">Nowcast for ' + '' + ' ' + point.series.name + ': ' + point.y.toFixed(2) + '%</td></tr>'; // Remove everything in aprantheses
-					}).join('') +
-					'</table>';
-				
-				return text;
-			}
-        },
-        series: chartData
-	};
-	const chart = Highcharts.stockChart('chart-container-' + dispgroup, o);
 	
 	return;
 }
