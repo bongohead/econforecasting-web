@@ -400,9 +400,13 @@ function drawChart(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM, sel
 			},
 			title: {
 				useHTML: true,
-				text: '<img class="me-2" width="20" height="20" src="/static/cmefi_short.png"><div style="vertical-align:middle;display:inline"><span>Forecasts ' + getData('userData').lastUpdated + ' </h5></span>',
+				text: '<img class="me-2" width="14" height="14" src="/static/cmefi_short.png"><div style="vertical-align:middle;display:inline"><span>Forecasts - Updated ' + moment(getData('userData').lastUpdated).format('MMM Do YYYY') + ' </span></div>',
+				floating: true,
+				verticalAlign: 'top',
+				align: 'center',
+				y: 18,
 				style: {
-					fontSize: '1.5rem',
+					fontSize: '1.0rem',
 					color: 'var(--bs-econblue)'
 				}
 			},
