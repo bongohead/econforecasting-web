@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					value: Number(x.value)
 				};
 			});
-
+			
 		const tsParams =
 			response[1].tsParams.map(function(x) {
 				return {...x
@@ -57,6 +57,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				};
 			});
 			
+		const lastUpdated = moment.max(tsValues.map(x => moment(x.vdate))).format('YYYY-MM-DD');
+
 		// console.log('tsValues', tsValues, 'tsParams', tsParams, 'tsTypes', tsTypes);
 		
 		/* Get varnames to display */
@@ -123,25 +125,25 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				return res;
 			});
 
-		console.log('tsValuesGrouped', tsValuesGrouped);
-		setData('userData', {...getData('userData'), ...{tsValuesGrouped: tsValuesGrouped}, displayDatesQ: displayDatesQ, displayDatesM: displayDatesM});
+		//console.log('tsValuesGrouped', tsValuesGrouped);
+		setData('userData', {...getData('userData'), lastUpdated: lastUpdated, tsValuesGrouped: tsValuesGrouped, displayDatesQ: displayDatesQ, displayDatesM: displayDatesM});
 		
-		return({tsValuesGrouped: tsValuesGrouped, displayDatesQ: displayDatesQ, displayDatesM: displayDatesM});
+		return({tsValuesGrouped: tsValuesGrouped, lastUpdated: lastUpdated, displayDatesQ: displayDatesQ, displayDatesM: displayDatesM});
 	
 	})
 	/********** DRAW CHART & TABLE **********/
 	.then(function(res) {
 		//drawChart(res.ncValuesGrouped, res.ncReleases, displayQuarter = ud.displayQuarter);
-		drawCard('GDP', 1, getColorArray(1));
-		drawCard('Housing', 1, getColorArray(2));
-		drawCard('Consumer_Sales', 1, getColorArray(3));
-		drawCard('Credit', 1, getColorArray(4));
+		drawCard('GDP', 1, res.lastUpdated);
+		drawCard('Housing', 1, res.lastUpdated);
+		drawCard('Consumer_Sales', 1, res.lastUpdated);
+		drawCard('Credit', 1, res.lastUpdated);
 
-		drawCard('Labor_Market', 2, getColorArray(5));
-		drawCard('Benchmark_Rates', 2, getColorArray(6));
-		drawCard('Stocks_and_Commodities', 2, getColorArray(7));
-		drawCard('Currencies', 2, getColorArray(8));
-		drawCard('Inflation', 2, getColorArray(9));
+		drawCard('Labor_Market', 2, res.lastUpdated);
+		drawCard('Benchmark_Rates', 2, res.lastUpdated);
+		drawCard('Stocks_and_Commodities', 2, res.lastUpdated);
+		drawCard('Currencies', 2, res.lastUpdated);
+		drawCard('Inflation', 2, res.lastUpdated);
 
 
 		drawTable('GDP', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
@@ -156,8 +158,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		drawTable('Credit', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
 		
 		document.querySelectorAll('div.card').forEach(function(card, i) {
+			card.style.border = '1px solid ' + getColorArray()[i];
 			card.querySelector('div.card-header').style.color = getColorArray()[i];
 			card.querySelectorAll('table thead th').forEach(x => x.style.backgroundColor = getColorArray()[i]);
+			card.querySelector('.collapse-btn').style.backgroundColor = getColorArray()[i];
+			card.querySelectorAll('.dt-button').forEach(x => {
+				x.style.backgroundColor = getColorArray()[i];
+				x.style.borderColor = getColorArray()[i];
+
+			});
+
 		});
 		
 		drawChart('GDP', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM, 'q');
@@ -218,8 +228,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 });
 
-function drawCard(dispgroup, colIndex, color) {
+function drawCard(dispgroup, colIndex, lastUpdated) {
 	
+	console.log(colIndex);
 	if (![1, 2].includes(colIndex)) throw new Error('Incorrect colIndex.');
 	
 	const html =
@@ -228,9 +239,9 @@ function drawCard(dispgroup, colIndex, color) {
 		<div class="card-header">
 			<div class="row flex-between-center">
 				<div class="col-auto">
-					<span class="mb-0 fw-bolder" style="font-size:.9rem">${dispgroup.replaceAll('_', ' ')} Forecasts</span>
+					<span class="mb-0 fw-bolder" style="font-size:.9rem">${dispgroup.replaceAll('_', ' ').toUpperCase()} FORECASTS</span>
 				</div>
-				<div class="col-auto d-flex">
+				<div class="col-auto ms-auto">
 					<div class="input-group input-group-sm">
 					  <label class="input-group-text">Frequency</label>
 						<select class="form-select form-select-sm select-month me-2">
@@ -238,30 +249,43 @@ function drawCard(dispgroup, colIndex, color) {
 						</select>
 					</div>
 				</div>
+				<div class="col-auto">
+					<button class="btn btn-sm collapse-btn text-white" data-bs-toggle="collapse" href="#card-body-${dispgroup}" type="button"  aria-expanded="true" >
+					Hide/Show
+					</button>
+				</div>
 			</div>
 		</div>
-		<div class="card-body h-100" data-ref-freq="m" style="display:none">
-			<div class="chart-container" id="chart-container-${dispgroup}-m"></div>
-			<div class="table-container"></div>
-			<div class="card-footer bg-light p-0" style="display:none">
-				<a class="btn btn-sm btn-link d-block w-100 py-2" href="#!" style="font-family: 'Assistant'; font-size: 1.0rem;text-decoration: none;">
-					<span class="align-middle pe-2">Show Additional Variables</span><i class="bi bi-chevron-down"></i>
-				</a>
+		<div id="card-body-${dispgroup}" class="collapse show">
+			<div class="card-body h-100" data-ref-freq="m" style="display:none">
+				<div class="chart-container" id="chart-container-${dispgroup}-m"></div>
+				<div class="">Last Updated ${lastUpdated}</div>
+				<div class="table-container mt-2"></div>
+				<div class="card-footer bg-light p-0" style="display:none">
+					<a class="btn btn-sm btn-link d-block w-100 py-2" href="#!" style="font-family: 'Assistant'; font-size: 1.0rem;text-decoration: none;">
+						<span class="align-middle pe-2">Show Additional Variables</span><i class="bi bi-chevron-down"></i>
+					</a>
+				</div>
 			</div>
-		</div>
-		<div class="card-body h-100" data-ref-freq="q" style="display:none">
-			<div class="chart-container" id="chart-container-${dispgroup}-q"></div>
-			<div class="table-container"></div>
-			<div class="card-footer bg-light p-0" style="display:none">
-				<a class="btn btn-sm btn-link d-block w-100 py-2" href="#!" style="font-family: 'Assistant'; font-size: 1.0rem;text-decoration: none;">
-					<span class="align-middle pe-2">Show Additional Variables</span><i class="bi bi-chevron-down"></i>
-				</a>
+			<div class="card-body h-100" data-ref-freq="q" style="display:none">
+				<div class="chart-container" id="chart-container-${dispgroup}-q"></div>
+				<div class="">Last Updated ${lastUpdated}</div>
+				<div class="table-container mt-2"></div>
+				<div class="card-footer bg-light p-0" style="display:none">
+					<a class="btn btn-sm btn-link d-block w-100 py-2" href="#!" style="font-family: 'Assistant'; font-size: 1.0rem;text-decoration: none;">
+						<span class="align-middle pe-2">Show Additional Variables</span><i class="bi bi-chevron-down"></i>
+					</a>
+				</div>
 			</div>
 		</div>
 		<div class="card-footer border-top py-1">
 			<div class="row align-items-center gx-0">
+				<div class="col text-end" style="font-size:.8rem">Values in <span style="color:rgb(150, 150, 150)">grey</span> represent historical data; values in <span style="font-weight:bolder">black</span> represent forecasts.</div>
+			</div>
+			<div class="row align-items-center gx-0">
 				<div class="col text-end"><span class="fst-italic" style="font-size:.8rem"><span class="badge bg-light text-dark">SAAR%</span>: seasonally adjusted annualized growth rate</span></div>
 			</div>
+
 		</div>
 	</div>
 	`
@@ -289,6 +313,7 @@ function drawChart(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM, sel
 					id: x.varname,
 					name: x.fullname,
 					data: x.data.map(y => [parseInt(moment(y.date).format('x')), y.value]).sort((a, b) => a[0] - b[0]),
+					units: (x.d1 === 'apchg' ? 'SAAR%' : (x.d1 === 'pchg' ? '% change from prev period' : (x.d1 === 'base' ? x.units : ''))),
 					type: 'line',
 					zoneAxis: 'x',
 					zones: [
@@ -309,7 +334,7 @@ function drawChart(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM, sel
 			
 		if (chartData.length === 0) return;
 			
-		// console.log('chartData', chartData);
+		console.log('chartData', chartData);
 		
 		
 		Highcharts.setOptions({
@@ -375,7 +400,7 @@ function drawChart(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM, sel
 			},
 			title: {
 				useHTML: true,
-				//text: '<img class="me-2" width="20" height="20" src="/static/cmefi_short.png"><div style="vertical-align:middle;display:inline"><span>Forecasted ' + displayQuarter + ' GDP Over Time</h5></span>',
+				text: '<img class="me-2" width="20" height="20" src="/static/cmefi_short.png"><div style="vertical-align:middle;display:inline"><span>Forecasts ' + getData('userData').lastUpdated + ' </h5></span>',
 				style: {
 					fontSize: '1.5rem',
 					color: 'var(--bs-econblue)'
@@ -422,7 +447,7 @@ function drawChart(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM, sel
 					}
 				},
 				title: {
-					text: 'Annualized % Change',
+					text: chartData[0].units,
 					style: {
 						color: 'black',
 					}
@@ -441,7 +466,7 @@ function drawChart(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM, sel
 				verticalAlign: 'bottom',
 				layout: 'horizontal',
 				title: {
-					text: 'Variables: <span style="font-size: .8rem; color: #666; font-weight: normal; font-style: italic">(click to hide/show)</span>',
+					text: null //'Variables: <span style="font-size: .8rem; color: #666; font-weight: normal; font-style: italic">(click to hide/show)</span>',
 				}
 			},
 			tooltip: {
@@ -452,7 +477,7 @@ function drawChart(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM, sel
 					const x = this.x;
 					const ud = getData('userData');
 					const text =
-						'<table style="font-size:.75rem">' +
+						'<table style="font-size:.7rem">' +
 						'<tr style="border-bottom:1px solid black"><td style="font-weight:600; text-align:center">' + (freq === 'q' ? moment(x).format('YYYY[Q]Q') : moment(x).format('MMMM YYYY')) + '</td></tr>'  +
 						points.map(function(point) {
 							return '<tr><td style="color:' + point.color + '">' + '' + ' ' + point.series.name + ': ' + point.y.toFixed(2) + '%</td></tr>'; // Remove everything in aprantheses
@@ -492,7 +517,7 @@ function drawTable(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM) {
 	
 	// If monthly exists, enable frequency option
 	if (tableRes.filter(x => x.freq === 'm')[0].tsValues.length !== 0) document.querySelector('div.card[data-ref-dispgroup="' + dispgroup + '"] option[value="m"]').disabled = false;
-	
+	else document.querySelector('div.card[data-ref-dispgroup="' + dispgroup + '"] option[value="m"]').style.display = 'none';
 	
 	// Now construct the tables (one per card body)
 	tableRes
@@ -550,7 +575,7 @@ function drawTable(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM) {
 					className: (x.title === 'Variable' ? 'dt-left' : 'dt-center'),
 					css: 'font-size: 1.0rem',
 					createdCell: function(td, cellData, rowData, rowIndex, colIndex) {
-						(x.title === 'Variable' ? $(td).css('min-width', '12rem').css('color', 'rgb(90, 90, 90)') : false);
+						(x.title === 'Variable' ? $(td).css('min-width', '14rem').css('color', 'rgb(90, 90, 90)') : false);
 						/*(x.title !== 'Variable' ? $(td).css('min-width', '2rem').css('font-weight', '500').css('color', 'rgb(90, 90, 90)') : false);*/
 
 						(x.title === 'Variable' ? $(td).css('padding-left', String((rowData.disptabs - 1)* 1.5 + .5) + 'rem' ) : false);
@@ -581,8 +606,8 @@ function drawTable(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM) {
 				"<'row justify-content-center'<'col-12'tr>>" +
 				"<'row justify-content-end'<'col-auto'p>>",
 			buttons: [
-				{extend: 'copyHtml5', text: copySvg + 'Copy', exportOptions: {columns: dtCols.map((x, i) => ({...x, index: i})).filter(x => x.visible).map(x => x.index)}, className: 'btn btn-sm btn-efblue text-white'},
-				{extend: 'csvHtml5', text: dlSvg + 'Download', exportOptions: {columns: dtCols.map((x, i) => ({...x, index: i})).filter(x => x.visible).map(x => x.index)}, className: 'btn btn-sm btn-efblue text-white'}
+				{extend: 'copyHtml5', text: copySvg + 'Copy Data', exportOptions: {columns: dtCols.map((x, i) => ({...x, index: i})).filter(x => x.visible).map(x => x.index)}, className: 'btn btn-sm btn-efblue text-white'},
+				{extend: 'csvHtml5', text: dlSvg + 'Download Data', exportOptions: {columns: dtCols.map((x, i) => ({...x, index: i})).filter(x => x.visible).map(x => x.index)}, className: 'btn btn-sm btn-efblue text-white'}
 			],
 			scrollX: true,
 			fixedColumns: {left: 1},
@@ -623,8 +648,9 @@ function drawTable(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM) {
 		// console.log(dt.rows().data())
 		// Show quarterly by default
 		if (tableSpec.freq === 'q') $(bodyEl).show();
-			
+		
 		dt.draw();
+		
 	});
 
 
