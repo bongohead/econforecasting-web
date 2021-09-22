@@ -132,16 +132,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	/********** DRAW CHART & TABLE **********/
 	.then(function(res) {
 		//drawChart(res.ncValuesGrouped, res.ncReleases, displayQuarter = ud.displayQuarter);
-		drawCard('GDP', 1);
-		drawCard('Housing', 1);
-		drawCard('Consumer_Sales', 1);
-		drawCard('Credit', 1);
+		drawCard('GDP', 1, getColorArray(1));
+		drawCard('Housing', 1, getColorArray(2));
+		drawCard('Consumer_Sales', 1, getColorArray(3));
+		drawCard('Credit', 1, getColorArray(4));
 
-		drawCard('Labor_Market', 2);
-		drawCard('Benchmark_Rates', 2);
-		drawCard('Stocks_and_Commodities', 2);
-		drawCard('Currencies', 2);
-		drawCard('Inflation', 2);
+		drawCard('Labor_Market', 2, getColorArray(5));
+		drawCard('Benchmark_Rates', 2, getColorArray(6));
+		drawCard('Stocks_and_Commodities', 2, getColorArray(7));
+		drawCard('Currencies', 2, getColorArray(8));
+		drawCard('Inflation', 2, getColorArray(9));
 
 
 		drawTable('GDP', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
@@ -155,17 +155,21 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		drawTable('Inflation', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
 		drawTable('Credit', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
 		
+		document.querySelectorAll('div.card').forEach(function(card, i) {
+			card.querySelector('div.card-header').style.color = getColorArray()[i];
+			card.querySelectorAll('table thead th').forEach(x => x.style.backgroundColor = getColorArray()[i]);
+		});
 		
-		drawChart('GDP', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
-		drawChart('Housing', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
-		drawChart('Consumer_Sales', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
+		drawChart('GDP', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM, 'q');
+		drawChart('Housing', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM, 'q');
+		drawChart('Consumer_Sales', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM, 'q');
 		
-		drawChart('Labor_Market', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
-		drawChart('Benchmark_Rates', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
-		drawChart('Stocks_and_Commodities', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
-		drawChart('Currencies', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
-		drawChart('Inflation', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
-		drawChart('Credit', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
+		drawChart('Labor_Market', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM, 'q');
+		drawChart('Benchmark_Rates', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM, 'q');
+		drawChart('Stocks_and_Commodities', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM, 'q');
+		drawChart('Currencies', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM, 'q');
+		drawChart('Inflation', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM, 'q');
+		drawChart('Credit', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM, 'q');
 
 		//drawTable('gdp', res.tsValuesGrouped.filter(x => x.dispgroup === 'GDP'), res.displayDates);
 
@@ -203,7 +207,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		$(newBody).show();
 		const dt = $(document.querySelector('#table-' + refDispgroup + '-freq-' + newFreq)).DataTable();
 		dt.draw();
-
+		
+		const ud = getData('userData');
+		drawChart(refDispgroup, ud.tsValuesGrouped, ud.displayDatesQ, ud.displayDatesM, newFreq)
 		//console.log(refDispgroup, newFreq);
 	});
 	
@@ -212,7 +218,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 });
 
-function drawCard(dispgroup, colIndex) {
+function drawCard(dispgroup, colIndex, color) {
 	
 	if (![1, 2].includes(colIndex)) throw new Error('Incorrect colIndex.');
 	
@@ -268,9 +274,11 @@ function drawCard(dispgroup, colIndex) {
 }
 
 /*** Draw chart ***/
-function drawChart(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM, freq) {
+function drawChart(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM, selectedFreq) {
 	
-	['q', 'm'].forEach(function(freq) {
+	['q', 'm']
+	.filter(x => x == selectedFreq)
+	.forEach(function(freq) {
 		
 		// Create series - each corresponding to a different economic variable
 		const chartData =
@@ -301,7 +309,7 @@ function drawChart(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM, fre
 			
 		if (chartData.length === 0) return;
 			
-		console.log('chartData', chartData);
+		// console.log('chartData', chartData);
 		
 		
 		Highcharts.setOptions({
@@ -615,9 +623,8 @@ function drawTable(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM) {
 		// console.log(dt.rows().data())
 		// Show quarterly by default
 		if (tableSpec.freq === 'q') $(bodyEl).show();
-
-		dt.draw();		
-	
+			
+		dt.draw();
 	});
 
 
