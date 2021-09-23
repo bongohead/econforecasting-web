@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		const displayDatesM = getDates(moment().startOf('month').subtract(2, 'months'), moment().startOf('quarter').add(4 * 12, 'months'), 1, 'months').map(x => moment(x).format('YYYY-MM'));
 				
 				
-		console.log('displayVarnames', displayVarnames);	
+		// console.log('displayVarnames', displayVarnames);	
 		/* Get grouped values for chart - will combine historical values with scenario values */
 		const tsValuesGrouped =
 			displayVarnames
@@ -134,16 +134,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	/********** DRAW CHART & TABLE **********/
 	.then(function(res) {
 		//drawChart(res.ncValuesGrouped, res.ncReleases, displayQuarter = ud.displayQuarter);
-		drawCard('GDP', 1, res.lastUpdated);
-		drawCard('Housing', 1, res.lastUpdated);
-		drawCard('Consumer_Sales', 1, res.lastUpdated);
-		drawCard('Credit', 1, res.lastUpdated);
+		drawCard('GDP', 1);
+		drawCard('Housing', 1);
+		drawCard('Consumer_Sales', 1);
+		drawCard('Credit', 1);
 
-		drawCard('Labor_Market', 2, res.lastUpdated);
-		drawCard('Benchmark_Rates', 2, res.lastUpdated);
-		drawCard('Stocks_and_Commodities', 2, res.lastUpdated);
-		drawCard('Currencies', 2, res.lastUpdated);
-		drawCard('Inflation', 2, res.lastUpdated);
+		drawCard('Labor_Market', 2);
+		drawCard('Benchmark_Rates', 2);
+		drawCard('Stocks_and_Commodities', 2);
+		drawCard('Currencies', 2);
+		drawCard('Inflation', 2);
 
 
 		drawTable('GDP', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM);
@@ -165,21 +165,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			card.querySelectorAll('.dt-button').forEach(x => {
 				x.style.backgroundColor = getColorArray()[i];
 				x.style.borderColor = getColorArray()[i];
-
 			});
 
 		});
 		
-		drawChart('GDP', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM, 'q');
-		drawChart('Housing', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM, 'q');
-		drawChart('Consumer_Sales', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM, 'q');
+		drawChart('GDP', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM, 'q', res.lastUpdated);
+		drawChart('Housing', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM, 'q', res.lastUpdated);
+		drawChart('Consumer_Sales', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM, 'q', res.lastUpdated);
 		
-		drawChart('Labor_Market', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM, 'q');
-		drawChart('Benchmark_Rates', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM, 'q');
-		drawChart('Stocks_and_Commodities', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM, 'q');
-		drawChart('Currencies', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM, 'q');
-		drawChart('Inflation', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM, 'q');
-		drawChart('Credit', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM, 'q');
+		drawChart('Labor_Market', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM, 'q', res.lastUpdated);
+		drawChart('Benchmark_Rates', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM, 'q', res.lastUpdated);
+		drawChart('Stocks_and_Commodities', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM, 'q', res.lastUpdated);
+		drawChart('Currencies', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM, 'q', res.lastUpdated);
+		drawChart('Inflation', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM, 'q', res.lastUpdated);
+		drawChart('Credit', res.tsValuesGrouped, res.displayDatesQ, res.displayDatesM, 'q', res.lastUpdated);
 
 		//drawTable('gdp', res.tsValuesGrouped.filter(x => x.dispgroup === 'GDP'), res.displayDates);
 
@@ -219,7 +218,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		dt.draw();
 		
 		const ud = getData('userData');
-		drawChart(refDispgroup, ud.tsValuesGrouped, ud.displayDatesQ, ud.displayDatesM, newFreq)
+		drawChart(refDispgroup, ud.tsValuesGrouped, ud.displayDatesQ, ud.displayDatesM, newFreq, ud.lastUpdated)
 		//console.log(refDispgroup, newFreq);
 	});
 	
@@ -228,9 +227,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 });
 
-function drawCard(dispgroup, colIndex, lastUpdated) {
+function drawCard(dispgroup, colIndex) {
 	
-	console.log(colIndex);
+	// console.log(colIndex);
 	if (![1, 2].includes(colIndex)) throw new Error('Incorrect colIndex.');
 	
 	const html =
@@ -239,7 +238,7 @@ function drawCard(dispgroup, colIndex, lastUpdated) {
 		<div class="card-header">
 			<div class="row flex-between-center">
 				<div class="col-auto">
-					<span class="mb-0 fw-bolder" style="font-size:.9rem">${dispgroup.replaceAll('_', ' ').toUpperCase()} FORECASTS</span>
+					<span class="mb-0 fw-bolder" style="font-size:1.0rem">${dispgroup.replaceAll('_', ' ').toUpperCase()} FORECASTS</span>
 				</div>
 				<div class="col-auto ms-auto">
 					<div class="input-group input-group-sm">
@@ -259,20 +258,20 @@ function drawCard(dispgroup, colIndex, lastUpdated) {
 		<div id="card-body-${dispgroup}" class="collapse show">
 			<div class="card-body h-100" data-ref-freq="m" style="display:none">
 				<div class="chart-container" id="chart-container-${dispgroup}-m"></div>
-				<div class="">Last Updated ${lastUpdated}</div>
+				<hr>
 				<div class="table-container mt-2"></div>
 				<div class="card-footer bg-light p-0" style="display:none">
-					<a class="btn btn-sm btn-link d-block w-100 py-2" href="#!" style="font-family: 'Assistant'; font-size: 1.0rem;text-decoration: none;">
+					<a class="btn btn-sm btn-link d-block w-100" style="font-family: 'Assistant'; font-size: 0.8rem;text-decoration: none;">
 						<span class="align-middle pe-2">Show Additional Variables</span><i class="bi bi-chevron-down"></i>
 					</a>
 				</div>
 			</div>
 			<div class="card-body h-100" data-ref-freq="q" style="display:none">
 				<div class="chart-container" id="chart-container-${dispgroup}-q"></div>
-				<div class="">Last Updated ${lastUpdated}</div>
+				<hr>
 				<div class="table-container mt-2"></div>
 				<div class="card-footer bg-light p-0" style="display:none">
-					<a class="btn btn-sm btn-link d-block w-100 py-2" href="#!" style="font-family: 'Assistant'; font-size: 1.0rem;text-decoration: none;">
+					<a class="btn btn-sm btn-link d-block w-100" style="font-family: 'Assistant'; font-size: 0.8rem;text-decoration: none;">
 						<span class="align-middle pe-2">Show Additional Variables</span><i class="bi bi-chevron-down"></i>
 					</a>
 				</div>
@@ -298,7 +297,7 @@ function drawCard(dispgroup, colIndex, lastUpdated) {
 }
 
 /*** Draw chart ***/
-function drawChart(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM, selectedFreq) {
+function drawChart(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM, selectedFreq, lastUpdated) {
 	
 	['q', 'm']
 	.filter(x => x == selectedFreq)
@@ -334,7 +333,7 @@ function drawChart(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM, sel
 			
 		if (chartData.length === 0) return;
 			
-		console.log('chartData', chartData);
+		// console.log('chartData', chartData);
 		
 		
 		Highcharts.setOptions({
@@ -400,7 +399,7 @@ function drawChart(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM, sel
 			},
 			title: {
 				useHTML: true,
-				text: '<img class="me-2" width="14" height="14" src="/static/cmefi_short.png"><div style="vertical-align:middle;display:inline"><span>Forecasts - Updated ' + moment(getData('userData').lastUpdated).format('MMM Do YYYY') + ' </span></div>',
+				text: '<img class="me-2" width="14" height="14" src="/static/cmefi_short.png"><div style="vertical-align:middle;display:inline"><span>Forecasts - Updated ' + moment(lastUpdated).format('MMM Do YYYY') + ' </span></div>',
 				floating: true,
 				verticalAlign: 'top',
 				align: 'center',
@@ -463,8 +462,8 @@ function drawChart(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM, sel
 			},
 			legend: {
 				enabled: true,
-				backgroundColor: 'var(--bs-econpale)',
-				borderColor: 'var(--bs-econblue)',
+				backgroundColor: 'rgb(244, 241, 187)',
+				borderColor: '#00ABE7',
 				borderWidth: 1,
 				align: 'center',
 				verticalAlign: 'bottom',
@@ -640,7 +639,7 @@ function drawTable(dispgroup, tsValuesGrouped, displayDatesQ, displayDatesM) {
 		// Create show/hide all variables button for this forecast if this is restricted and there are other non-restricted tables
 		// console.log(tableData.filter(x => ![1, 2].includes(x.disprank)).length);
 		if (tableData.filter(x => ![1, 2].includes(x.disprank)).length !== 0) {
-			console.log('Show');
+			// console.log('Show');
 			$(bodyEl.querySelector('div.card-footer')).show();
 		}
 

@@ -58,22 +58,23 @@ class __TwigTemplate_516126d4db106904f981c8bc9205b8bb3032f166e46a74ff5450e97c1c6
     {
         $macros = $this->macros;
         // line 8
-        echo "<script src=\"https://code.highcharts.com/9.1/highcharts-more.js\"></script>
+        echo "<script src=\"https://code.highcharts.com/9.2/highcharts-more.js\"></script>
+<script src=\"https://code.highcharts.com/9.2/modules/exporting.js\"></script>
 <!--<script src=\"https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js\"></script>-->
 <!--<script src=\"https://cdn.datatables.net/fixedcolumns/3.3.3/js/dataTables.fixedColumns.min.js\"></script>-->
 ";
     }
 
-    // line 13
+    // line 14
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 14
+        // line 15
         echo "<div class=\"row gx-0\" style=\"background-color: var(--bs-efpaleblue)\">
 \t";
-        // line 15
-        $this->loadTemplate("csm-sidebar.html", "forecasts.html", 15)->display($context);
         // line 16
+        $this->loadTemplate("csm-sidebar.html", "forecasts.html", 16)->display($context);
+        // line 17
         echo "\t<div class=\"col-12 col-lg-8 col-xl-9 col-xxl-10 m-auto pt-2 px-2 pb-5\">
 \t
 \t\t<div class=\"row justify-content-center px-3\" style=\"background-color:rgba(25, 50, 20, 0.1)\">
@@ -118,7 +119,7 @@ class __TwigTemplate_516126d4db106904f981c8bc9205b8bb3032f166e46a74ff5450e97c1c6
 
     public function getDebugInfo()
     {
-        return array (  77 => 16,  75 => 15,  72 => 14,  68 => 13,  61 => 8,  57 => 7,  52 => 4,  48 => 3,  37 => 1,);
+        return array (  78 => 17,  76 => 16,  73 => 15,  69 => 14,  61 => 8,  57 => 7,  52 => 4,  48 => 3,  37 => 1,);
     }
 
     public function getSourceContext()
@@ -130,7 +131,8 @@ class __TwigTemplate_516126d4db106904f981c8bc9205b8bb3032f166e46a74ff5450e97c1c6
 {% endblock %}
 
 {% block staticlinks %}
-<script src=\"https://code.highcharts.com/9.1/highcharts-more.js\"></script>
+<script src=\"https://code.highcharts.com/9.2/highcharts-more.js\"></script>
+<script src=\"https://code.highcharts.com/9.2/modules/exporting.js\"></script>
 <!--<script src=\"https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js\"></script>-->
 <!--<script src=\"https://cdn.datatables.net/fixedcolumns/3.3.3/js/dataTables.fixedColumns.min.js\"></script>-->
 {% endblock %}

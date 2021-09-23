@@ -60,20 +60,20 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css\">
 \t<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.6.3/css/all.min.css\" integrity=\"sha512-f2MWjotY+JCWDlE0+QAshlykvZUtIm35A6RHwfYZPdxKgLJpL8B+VVxjpHJwZDsZaWdyHVhlIHoblFYGkmrbhg==\" crossorigin=\"anonymous\" />
 \t
-\t<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css\"/>
+\t<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.datatables.net/1.11.2/css/dataTables.bootstrap5.min.css\"/>
 
 \t<script src=\"https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js\"></script>
-\t<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js\"></script>
+\t<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js\"></script>
 
-\t<script src=\"https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js\"></script>
-\t<script src=\"https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap5.min.js\"></script>
+\t<script src=\"https://cdn.datatables.net/1.11.2/js/jquery.dataTables.min.js\"></script>
+\t<script src=\"https://cdn.datatables.net/1.11.2/js/dataTables.bootstrap5.min.js\"></script>
 \t
-\t<script src=\"https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js\"></script>
-\t<script src=\"https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js\"></script> <!-- HTML export buttons -->
+\t<script src=\"https://cdn.datatables.net/buttons/2.0.0/js/dataTables.buttons.min.js\"></script>
+\t<script src=\"https://cdn.datatables.net/buttons/2.0.0/js/buttons.html5.min.js\"></script> <!-- HTML export buttons -->
 \t
 \t<!-- Version 9.0+ requires AST filtration bypass -->
-\t<script src=\"https://code.highcharts.com/stock/9.1/highstock.js\"></script>
-\t<script src=\"https://code.highcharts.com/9.1/modules/boost.js\"></script>
+\t<script src=\"https://code.highcharts.com/stock/9.2/highstock.js\"></script>
+\t<script src=\"https://code.highcharts.com/9.2/modules/boost.js\"></script>
     ";
         // line 32
         echo ($context["pageJS"] ?? null);
@@ -314,20 +314,20 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css\">
 \t<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.6.3/css/all.min.css\" integrity=\"sha512-f2MWjotY+JCWDlE0+QAshlykvZUtIm35A6RHwfYZPdxKgLJpL8B+VVxjpHJwZDsZaWdyHVhlIHoblFYGkmrbhg==\" crossorigin=\"anonymous\" />
 \t
-\t<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css\"/>
+\t<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.datatables.net/1.11.2/css/dataTables.bootstrap5.min.css\"/>
 
 \t<script src=\"https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js\"></script>
-\t<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js\"></script>
+\t<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js\"></script>
 
-\t<script src=\"https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js\"></script>
-\t<script src=\"https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap5.min.js\"></script>
+\t<script src=\"https://cdn.datatables.net/1.11.2/js/jquery.dataTables.min.js\"></script>
+\t<script src=\"https://cdn.datatables.net/1.11.2/js/dataTables.bootstrap5.min.js\"></script>
 \t
-\t<script src=\"https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js\"></script>
-\t<script src=\"https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js\"></script> <!-- HTML export buttons -->
+\t<script src=\"https://cdn.datatables.net/buttons/2.0.0/js/dataTables.buttons.min.js\"></script>
+\t<script src=\"https://cdn.datatables.net/buttons/2.0.0/js/buttons.html5.min.js\"></script> <!-- HTML export buttons -->
 \t
 \t<!-- Version 9.0+ requires AST filtration bypass -->
-\t<script src=\"https://code.highcharts.com/stock/9.1/highstock.js\"></script>
-\t<script src=\"https://code.highcharts.com/9.1/modules/boost.js\"></script>
+\t<script src=\"https://code.highcharts.com/stock/9.2/highstock.js\"></script>
+\t<script src=\"https://code.highcharts.com/9.2/modules/boost.js\"></script>
     {{ pageJS | raw }}
 
     {% block staticlinks %}{% endblock %}
