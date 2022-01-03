@@ -4,7 +4,6 @@ foreach (glob('/var/www/web-framework/php-files/*.php') as $filename) {
     require_once($filename);
 }
 
-
 if (isset($_POST) && isset($_POST['isAjax'])) {
 	routeAjax(
 		$postVars = $_POST,

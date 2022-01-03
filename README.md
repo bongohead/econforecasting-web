@@ -4,12 +4,15 @@ Description TBA
 - TBD: Use HC 9.1.0, allowlists (https://www.highcharts.com/docs/chart-concepts/labels-and-string-formatting)
 - TBD: 
 
+## 2022-01-01 [v0.20] (Beta Model Release Version)
+- Updated BS5 to 5.1.3
+
 ## 2021-09-21 [v0.17] (Adding Updated Model Forecasts to Site)
 - Added new import files to get data from csm_\* SQL tables
 - Added scenario baseline forecast page
 - Added tables & charts
 - Improved styling/colors
-- Updated SCSS to Bootstrap 5.1
+- Updated SCSS to Bootstrap 5.1.1
 
 ## 2021-09-03 [v0.16] (Minor Update)
 - Updated sitemap

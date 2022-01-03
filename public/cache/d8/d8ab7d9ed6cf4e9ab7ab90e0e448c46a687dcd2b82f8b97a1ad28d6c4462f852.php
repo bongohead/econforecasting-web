@@ -541,6 +541,6 @@ class __TwigTemplate_4848799cd9d7664fb9f430ea315c54eaf57da1e68128344aed928ef98c3
 
 \t
 
-{% endblock %}", "home.html", "/var/www/econforecasting.com/public/templates/home.html");
+{% endblock %}", "home.html", "/var/www/beta.econforecasting.com/public/templates/home.html");
     }
 }

@@ -131,6 +131,6 @@ class __TwigTemplate_e25ee183ff47311ae1ec94944de5f4825819bf344c398a04ad32ee0c775
 \t\t</div>\t\t\t\t
 \t</div>
 </nav>
-", "ac-sidebar.html", "/var/www/econforecasting.com/public/templates/ac-sidebar.html");
+", "ac-sidebar.html", "/var/www/beta.econforecasting.com/public/templates/ac-sidebar.html");
     }
 }

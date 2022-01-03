@@ -500,6 +500,6 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t</script>
 
 </body>
-</html>", "base.html", "/var/www/econforecasting.com/public/templates/base.html");
+</html>", "base.html", "/var/www/beta.econforecasting.com/public/templates/base.html");
     }
 }

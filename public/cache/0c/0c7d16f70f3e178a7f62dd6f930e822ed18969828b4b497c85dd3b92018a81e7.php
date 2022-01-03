@@ -187,6 +187,6 @@ class __TwigTemplate_dba252f9fcc5185da0a6ec7b2e973f237c329d44c83056f12bca370c177
 \t\t
 \t</div>
 </div>
-{% endblock %}", "ac-assets.html", "/var/www/econforecasting.com/public/templates/ac-assets.html");
+{% endblock %}", "ac-assets.html", "/var/www/beta.econforecasting.com/public/templates/ac-assets.html");
     }
 }
