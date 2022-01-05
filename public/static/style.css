@@ -178,7 +178,7 @@ nav.navbar a.nav-link.activepage {
 
 
 
-/** Sidebar **/
+/* Sidebar */
 nav.sidebar {
 	position: sticky;
 	top: 3.4rem;
@@ -196,14 +196,21 @@ nav.sidebar a {
   text-decoration: none;
 }
 
+nav.sidebar span.navbar-header {
+	font-size:1.1rem;
+	color:var(--bs-dark);
+	padding-left:1.5rem;
+	padding-top:.8rem;
+}
+
 /* Main Menu Links */
 nav.sidebar a.nav-link {
 	background-color: transparent;
 	font-weight: 500;
 	font-size: 0.95rem;
-	padding-left: 1.8rem;
-	margin-top: .6rem;
-	color: rgb(94, 110, 130);
+	padding-left: 1.6rem;
+	margin-top: .8rem;
+	color: rgb(54, 70, 90);
 
 }
 nav.sidebar a.nav-link:hover {
@@ -213,22 +220,22 @@ nav.sidebar a.nav-link:hover {
 
 /* Submenu */
 nav.sidebar div.sidebar-submenu > a {
-	padding-left: 2.2rem;
+	padding-left: 2.0rem;
 	padding-top: .25rem;
 	padding-bottom: .25rem;
 	padding-right: 1.2rem;
 	display: block;
-	font-size: .85rem;
+	font-size: .88rem;
 	color: rgb(94, 110, 130);
 }
 
 nav.sidebar div.sidebar-submenu > a.activepage {
-  background-color: var(--bs-econgreen);
+  background-color: var(--bs-cmefi-blue);
   color: white;
 }
 
 nav.sidebar div.sidebar-submenu > a:hover {
-  background-color: var(--bs-econorange);
+  background-color: var(--bs-cmefi-orange);
   color: white;
   cursor: pointer;
 }

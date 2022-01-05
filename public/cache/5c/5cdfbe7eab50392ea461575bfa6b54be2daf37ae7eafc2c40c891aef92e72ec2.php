@@ -102,7 +102,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t\t</a>
 \t\t\t<button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#collapsingNavbarLg\"><span class=\"navbar-toggler-icon\"></span></button>
 
-\t\t\t<div class=\"navbar-collapse collapse justify-content-center\" id=\"collapsingNavbarLg\">
+\t\t\t<div class=\"navbar-collapse collapse justify-content-center me-xxl-5 me-xl-3 ml-lg-0 me-0\" id=\"collapsingNavbarLg\">
 \t\t\t\t<ul class=\"navbar-nav\">\t\t\t\t\t\t
 \t\t\t\t\t<!--<li class=\"nav-item\">
 \t\t\t\t\t\t<a class=\"nav-link\" href=\"/about\"><i class=\"bi bi-bar-chart me-1\"></i>GDP Forecasts</a>
@@ -313,7 +313,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t\t</a>
 \t\t\t<button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#collapsingNavbarLg\"><span class=\"navbar-toggler-icon\"></span></button>
 
-\t\t\t<div class=\"navbar-collapse collapse justify-content-center\" id=\"collapsingNavbarLg\">
+\t\t\t<div class=\"navbar-collapse collapse justify-content-center me-xxl-5 me-xl-3 ml-lg-0 me-0\" id=\"collapsingNavbarLg\">
 \t\t\t\t<ul class=\"navbar-nav\">\t\t\t\t\t\t
 \t\t\t\t\t<!--<li class=\"nav-item\">
 \t\t\t\t\t\t<a class=\"nav-link\" href=\"/about\"><i class=\"bi bi-bar-chart me-1\"></i>GDP Forecasts</a>

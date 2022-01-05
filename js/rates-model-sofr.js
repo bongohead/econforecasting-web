@@ -3,115 +3,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	/********** INITIALIZE **********/
 	$('div.overlay').show();
 	
-	/*** Set Default Data ***/
-	/* Use previous options if set, otherwise use default options stated above.
-	 */ 
-	(function() {
-		
-		const varname = window.location.pathname.split('-').pop();
-		const varFullname =
-			varname === 'ffr' ? 'Effective Federal Funds Rate' 
-			: varname === 'sofr' ? 'Secured Overnight Financing Rate'
-			: varname === 'mort30y' ? '30-Year Fixed-Rate Mortgage Rate'
-			: varname === 'mort15y' ? '15-Year Fixed-Rate Mortgage Rate'
-			: varname === 'inf' ? 'CPI Inflation Rate'
-			: 'NA';
-			
-		const udPrev = getAllData().userData || {};
-		const ud = {
-			... udPrev,
-			... {
-					varname: varname,
-					freq: 'm',
-					varFullname: varFullname,
-					varUnits: varUnits
-				}
-		}
-
-		setData('userData', ud);
-		
-		document.title = varFullname + ' Forecast | Center for Macroeconomic Forecasting & Insights';
-		document.querySelector('meta[name="description"]').setAttribute('content',
-			varname === 'ffr' ? 'Monthly consensus forecasts for the federal funds rate (FFR) derived using a futures model.'
-			: varname === 'sofr' ? 'Monthly consensus forecasts for the secured overnight financing rate (SOFR) derived using a futures model.'
-			: varname === 'mort30y' ? 'Monthly forecasts for the 30-year fixed rate mortgage rate.'
-			: varname === 'mort15y' ? 'Monthly forecasts for the 15-year fixed rate mortgage rate.'
-			: varname === 'mort15y' ? 'Monthly forecasts for the CPI inflation rate.'
-			: ''
-		);
-
-		document.querySelector('#text-container').innerHTML =
-			varname === 'ffr' ?
-			`
-			<div class="d-inline"><span style="vertical-align:middle;font-size:1.4rem; color: var(--bs-econgreen)">OVERVIEW</span></div>
-			<hr class="mt-0 mb-3 bg-econgreen">
-			<p>The federal funds rate is a measure of interbank lending rates for funds held at the Federal Reserve. However, it is more commonly known for being the primary interest rate targeted by the Federal Reserve.</p>
-			<p>This model aims to provide monthly federal fund rate forecasts using data from federal funds futures. Since the model is directly built from market rates and uses no extraneous assumptions, these forecasts can be interpreted as a consensus forecast of future federal funds rates. These forecasts reflect market knowledge and insight regarding future monetary policy.</p>
-			<img class="me-2" width="16" height="16" src="/static/cmefi_short.png"><div class="d-inline"><span style="vertical-align:middle;font-size:1.4rem; color: var(--bs-econgreen)">BASELINE FORECAST - METHODOLOGY</span></div>
-			<hr class="mt-0 mb-3 bg-econgreen">
-			<p>Forecasts are constructed directly using futures data from the CME Group. Monthly expirations for 30-day federal funds futures are converted into rolling future forecast values by subtracting the futures price from 100.</p>
-			<p>Data and forecasts are updated on a daily basis.</p>
-			<div class="d-inline"><span style="vertical-align:middle;font-size:1.4rem; color: var(--bs-econgreen)">ALTERNATE FORECASTS</span></div>
-			<hr class="mt-0 mb-3 bg-econgreen">
-			<p>Forecasts from the U.S. Congressional Budget Office (CBO) are included for comparison purposes.</p>
-			`
-			: varname === 'sofr' ?
-			`
-			<div class="d-inline"><span style="vertical-align:middle;font-size:1.4rem; color: var(--bs-econgreen)">OVERVIEW</span></div>
-			<hr class="mt-0 mb-3 bg-econgreen">
-			<p>The secured overnight financing rate (SOFR) is a broad measure of the cost of borrowing cash overnight collateralized by Treasury securities. The SOFR rate is an important benchmark rate used in the trading of derivatives and interest-rate swaps.</p>
-			<p>This model aims to provide monthly SOFR forecasts using data from federal funds futures. Since the model is directly built from market rates and uses no extraneous assumptions, these forecasts can be interpreted as a consensus forecast of future federal funds rates. These forecasts reflect market knowledge and insight regarding the future path of the SOFR rate.</p>
-			<img class="me-2" width="16" height="16" src="/static/cmefi_short.png"><div class="d-inline"><span style="vertical-align:middle;font-size:1.4rem; color: var(--bs-econgreen)">BASELINE FORECAST - METHODOLOGY</span></div>
-			<hr class="mt-0 mb-3 bg-econgreen">
-			<p>Forecasts are constructed directly using futures data from the CME Group. Monthly expirations for 30-day federal funds futures are converted into rolling future forecast values by subtracting the futures price from 100.</p>
-			<p>Data and forecasts are updated on a daily basis.</p>
-			`
-			: varname === 'mort30y' ?
-			`
-			<div class="d-inline"><span style="vertical-align:middle;font-size:1.4rem; color: var(--bs-econgreen)">OVERVIEW</span></div>
-			<hr class="mt-0 mb-3 bg-econgreen">
-			<p>This model provides monthly 30-year fixed-rate mortgage forecasts for a forecast period of 5 years. This model is built using our <a href="/fc-rates-t-30y"> baseline 30-year Treasury-yield forecast</a> combined with a quantitative model estimating the spread between the 30-Year Treasury and the 30-Year fixed-rate mortgage rate.</p>
-			<img class="me-2" width="16" height="16" src="/static/cmefi_short.png"><div class="d-inline"><span style="vertical-align:middle;font-size:1.4rem; color: var(--bs-econgreen)">BASELINE FORECAST - METHODOLOGY</span></div>
-			<hr class="mt-0 mb-3 bg-econgreen">
-			<p>The mortgage risk premium (the spread between the mortgage rate and the Treasury yield of equivalent maturity) is estimated with a vector autoregression (VAR) model using consensus forecasts of housing prices and new housing starts. Optimal lag length for the VAR is chosen with an out-of-sample cost minimization procedure. Once the mortgage risk premium is forecasted, it is added to our baseline Treasury yield forecast to derive the mortgage rate forecast.</p>
-			<p>Data and forecasts are updated on a daily basis.</p>
-			`
-			: varname === 'mort15y' ?
-			`
-			<div class="d-inline"><span style="vertical-align:middle;font-size:1.4rem; color: var(--bs-econgreen)">OVERVIEW</span></div>
-			<hr class="mt-0 mb-3 bg-econgreen">
-			<p>This model provides monthly 15-year fixed-rate mortgage forecasts for a forecast period of 5 years. This model is built using our <a href="/fc-rates-t-10y"> baseline 10-year Treasury-yield forecast</a> combined with a quantitative model estimating the spread between the 10-Year Treasury and the 15-Year fixed-rate mortgage rate.</p>
-			<img class="me-2" width="16" height="16" src="/static/cmefi_short.png"><div class="d-inline"><span style="vertical-align:middle;font-size:1.4rem; color: var(--bs-econgreen)">BASELINE FORECAST - METHODOLOGY</span></div>
-			<hr class="mt-0 mb-3 bg-econgreen">
-			<p>The mortgage risk premium (the spread between the mortgage rate and the Treasury yield of equivalent maturity) is estimated with a vector autoregression (VAR) model using consensus forecasts of housing prices and new housing starts. Optimal lag length for the VAR is chosen with an out-of-sample cost minimization procedure. Once the mortgage risk premium is forecasted, it is added to our baseline Treasury yield forecast to derive the mortgage rate forecast.</p>
-			<p>Data and forecasts are updated on a daily basis.</p>
-			`
-			: varname === 'inf' ?
-			`
-			<div class="d-inline"><span style="vertical-align:middle;font-size:1.4rem; color: var(--bs-econgreen)">OVERVIEW</span></div>
-			<hr class="mt-0 mb-3 bg-econgreen">
-			<p>This model provides monthly inflation forecasts. In particular, we use the annualized 3-month rolling change in the Consumer Price Index for All Urban Consumers to measure inflation.</p>
-			<p>These forecasts are calculated from Treasury Inflation Protected Securities (TIPS) and are effectively a "market consensus" prediction of inflation.</p>
-			<img class="me-2" width="16" height="16" src="/static/cmefi_short.png"><div class="d-inline"><span style="vertical-align:middle;font-size:1.4rem; color: var(--bs-econgreen)">BASELINE FORECAST - METHODOLOGY</span></div>
-			<hr class="mt-0 mb-3 bg-econgreen">
-			<p>Data from TIPS bonds and Treasury bonds are used to calculate what market participants expect inflation to be over the next thirty years. The term structure is interpolated to derive inflation expectations for each monthly duration interval. Annualized rolling 3-month changes are then calculated to derive monthly forecasts.</p>
-			`
-			: '';
-	})();
-
-
-
 	/********** GET DATA **********/
 	/* Do not transfer data directly between functions - instead have everything work with sessionStorage.
 	 * Put the functions in a bigger $.Deferred function when more cleaning is needed before finalization;
 	 */
-	const ud = getData('userData');
-	const getFcHistoryDfd = getFetch('getFcHistory', toScript = ['fcHistory'], fromAjax = {varname: ud.varname, freq: ud.freq});
-	const getFcForecastDfd = getFetch('getFcForecastLastByVarname', toScript = ['fcForecast'], fromAjax = {varname: ud.varname, freq: null});
+	const ud = getData('rates-model-sofr') || {};
+	const get_hist_values_dfd = getFetch('get_rates_model_hist_values', toScript = ['hist_values'], fromAjax = {varname: 'sofr', freq: 'm'});
+	const get_submodel_values_dfd = getFetch('get_rates_model_submodel_values_last_vintage', toScript = ['submodel_values'], fromAjax = {varname: 'sofr', freq: null});
 	
-	Promise.all([getFcHistoryDfd, getFcForecastDfd]).then(function(response) {
+	Promise.all([get_hist_values_dfd, get_submodel_values_dfd]).then(function(response) {
 		const fcDataRaw =
-			response[0].fcHistory.map(function(x) {
+			response[0].hist_values.map(function(x) {
 				return {...x,
 					cmefi: true,
 					fcname: 'hist',

@@ -8,7 +8,7 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 	routeAjax(
 		$postVars = $_POST,
 		$modelsDir = __DIR__.'/../sql',
-		$db = 'ef'
+		$db = 'cmefi'
 	);
 } else {
 	routePage(
@@ -34,10 +34,12 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 
 			['template' => 'csm-forecasts', 'request' => ['csm-forecasts'], 'title' => 'Forecasts | CMEFI', 'models' => [], 'js' => ['init', 'csm-forecasts']],
 			
+			['template' => 'csm-forecasts', 'request' => ['rates-model-sofr'], 'title' => 'SOFR Forecasts | CMEFI', 'models' => [], 'js' => ['init', 'rates-model-sofr']],
+
 		],
 		errorRoute: ['template' => 'error', 'request' => 'error', 'title' => 'Error', 'js' => []],
 		baseJsFiles: ['functions', 'moment.min', 'moment-timezone-with-data-1970-2030.min', 'gradient-min'],
 		devMode: true,// ($_SERVER['REMOTE_ADDR'] === '24.42.246.68') ? true : false,
-		db: 'ef'
+		db: 'cmefi'
 	);
 }
