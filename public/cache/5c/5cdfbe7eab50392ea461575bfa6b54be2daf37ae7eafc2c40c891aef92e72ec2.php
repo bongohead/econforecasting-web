@@ -57,8 +57,6 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t
     <link rel=\"stylesheet\" type=\"text/css\" href=\"/static/style.css\">
     <link rel=\"stylesheet\" type=\"text/css\" href=\"/static/style-bs.css\">
-\t<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css\">
-\t<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.6.3/css/all.min.css\" integrity=\"sha512-f2MWjotY+JCWDlE0+QAshlykvZUtIm35A6RHwfYZPdxKgLJpL8B+VVxjpHJwZDsZaWdyHVhlIHoblFYGkmrbhg==\" crossorigin=\"anonymous\" />
 \t
 \t<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.datatables.net/1.11.2/css/dataTables.bootstrap5.min.css\"/>
 
@@ -75,14 +73,14 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t<script src=\"https://code.highcharts.com/stock/9.2/highstock.js\"></script>
 \t<script src=\"https://code.highcharts.com/9.2/modules/boost.js\"></script>
     ";
-        // line 32
+        // line 30
         echo ($context["pageJS"] ?? null);
         echo "
 
     ";
-        // line 34
+        // line 32
         $this->displayBlock('staticlinks', $context, $blocks);
-        // line 35
+        // line 33
         echo "\t<!-- Global site tag (gtag.js) - Google Analytics -->
 \t<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-5JBMJCQQD7\"></script>
 \t<script>
@@ -172,9 +170,9 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t
 \t<main >
 \t\t";
-        // line 123
+        // line 121
         $this->displayBlock('content', $context, $blocks);
-        // line 125
+        // line 123
         echo "\t</main>
 
 \t<footer class=\"container-fluid text-white px-0 bg-dark\">
@@ -251,7 +249,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 
 \t<script>
 \t  ";
-        // line 200
+        // line 198
         echo ($context["bodyScript"] ?? null);
         echo "
 \t</script>
@@ -266,17 +264,17 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
         $macros = $this->macros;
     }
 
-    // line 34
+    // line 32
     public function block_staticlinks($context, array $blocks = [])
     {
         $macros = $this->macros;
     }
 
-    // line 123
+    // line 121
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 124
+        // line 122
         echo "\t\t";
     }
 
@@ -292,7 +290,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 
     public function getDebugInfo()
     {
-        return array (  280 => 124,  276 => 123,  270 => 34,  264 => 8,  255 => 200,  178 => 125,  176 => 123,  86 => 35,  84 => 34,  79 => 32,  54 => 10,  51 => 9,  49 => 8,  40 => 1,);
+        return array (  278 => 122,  274 => 121,  268 => 32,  262 => 8,  253 => 198,  176 => 123,  174 => 121,  84 => 33,  82 => 32,  77 => 30,  54 => 10,  51 => 9,  49 => 8,  40 => 1,);
     }
 
     public function getSourceContext()
@@ -311,8 +309,6 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t
     <link rel=\"stylesheet\" type=\"text/css\" href=\"/static/style.css\">
     <link rel=\"stylesheet\" type=\"text/css\" href=\"/static/style-bs.css\">
-\t<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css\">
-\t<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.6.3/css/all.min.css\" integrity=\"sha512-f2MWjotY+JCWDlE0+QAshlykvZUtIm35A6RHwfYZPdxKgLJpL8B+VVxjpHJwZDsZaWdyHVhlIHoblFYGkmrbhg==\" crossorigin=\"anonymous\" />
 \t
 \t<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.datatables.net/1.11.2/css/dataTables.bootstrap5.min.css\"/>
 

@@ -37,7 +37,7 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 		],
 		errorRoute: ['template' => 'error', 'request' => 'error', 'title' => 'Error', 'js' => []],
 		baseJsFiles: ['functions', 'moment.min', 'moment-timezone-with-data-1970-2030.min', 'gradient-min'],
-		devMode:  ($_SERVER['REMOTE_ADDR'] === '24.42.246.68') ? true : false,
+		devMode: true,// ($_SERVER['REMOTE_ADDR'] === '24.42.246.68') ? true : false,
 		db: 'ef'
 	);
 }
