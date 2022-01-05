@@ -97,12 +97,12 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t<div class=\"container-fluid\" style=\"height:.2rem;background-color:rgb(37, 48, 10);\"></div>
 
 \t\t<nav class=\"navbar navbar-expand-md navbar-dark py-1 shadow-sm\">
-\t\t\t<a class=\"navbar-brand py-0 ps-3\" href=\"/\">
+\t\t\t<a class=\"navbar-brand py-0 ps-3 me-0\" href=\"/\">
 \t\t\t\t<img src=\"/static/cmefi-full-white.svg\" alt=\"CMEFI Logo\" class=\"py-0\" height=\"45\">
 \t\t\t</a>
 \t\t\t<button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#collapsingNavbarLg\"><span class=\"navbar-toggler-icon\"></span></button>
 
-\t\t\t<div class=\"navbar-collapse collapse\" id=\"collapsingNavbarLg\">
+\t\t\t<div class=\"navbar-collapse collapse justify-content-center\" id=\"collapsingNavbarLg\">
 \t\t\t\t<ul class=\"navbar-nav\">\t\t\t\t\t\t
 \t\t\t\t\t<!--<li class=\"nav-item\">
 \t\t\t\t\t\t<a class=\"nav-link\" href=\"/about\"><i class=\"bi bi-bar-chart me-1\"></i>GDP Forecasts</a>
@@ -172,73 +172,41 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
         // line 120
         echo "\t</main>
 
-\t<footer class=\"container-fluid text-white px-0 bg-dark\">
-\t  <!-- Grid container -->
-\t  <div class=\"container py-3\">
-\t\t<!--Grid row-->
-\t\t<div class=\"row\">
-\t\t  <!--Grid column-->
-\t\t  <div class=\"col-6 mb-2 mb-md-0\">
-\t\t\t<h5 class=\"text-uppercase\">Links</h5>
-\t\t\t<ul class=\"list-unstyled mb-0\">
-\t\t\t  <li>
-\t\t\t\t<a href=\"https://cmefi.com\" class=\"text-white\">Center for Macroeconomic Forecasting and Insights</a>
-\t\t\t  </li>
-\t\t\t</ul>
-\t\t  </div>
-\t\t  <!--Grid column-->
-
-\t\t  <!--Grid column-->
-\t\t  <div class=\"col-6 mb-2 mb-md-0 text-end\">
-\t\t\t<h5 class=\"text-uppercase mb-0\">CONTACT</h5>
-
-\t\t\t<ul class=\"list-unstyled\">
-\t\t\t  <li>
-\t\t\t\t<a href=\"mailto:charles@cmefi.com\" class=\"text-white\">Email: charles (at) cmefi (dotcom)</a>
-\t\t\t  </li>
-\t\t\t</ul>
-\t\t  </div>
-\t\t  <!--Grid column-->
+\t<footer class=\"container-fluid text-white px-0 pt-4 bg-dark\">
+\t\t<div class=\"container py-3\">
+\t\t\t<div class=\"row\">
+\t\t\t\t<div class=\"col-6 mb-2 mb-md-0\">
+\t\t\t\t\t<h5 class=\"text-uppercase\">Links</h5>
+\t\t\t\t\t<ul class=\"list-unstyled mb-0\">
+\t\t\t\t\t\t<li><a href=\"https://cmefi.com\" class=\"text-white\">Center for Macroeconomic Forecasting and Insights</a></li>
+\t\t\t\t\t</ul>
+\t\t\t\t</div>
+\t\t\t\t<div class=\"col-6 mb-2 mb-md-0 text-end\">
+\t\t\t\t\t<h5 class=\"text-uppercase mb-0\">CONTACT</h5>
+\t\t\t\t\t<ul class=\"list-unstyled\">
+\t\t\t\t\t  <li><a href=\"mailto:charles@cmefi.com\" class=\"text-white\">Email: charles (at) cmefi (dotcom)</a></li>
+\t\t\t\t\t</ul>
+\t\t\t\t</div>
+\t\t\t</div>
 \t\t</div>
-\t\t<!--Grid row-->
-\t  </div>
-\t  <!-- Grid container -->
-
-\t  <!-- Copyright -->
-\t<div class=\"container-fluid\" style=\"background-color: rgba(0, 0, 0, 0.2)\">
-\t\t<div class=\"container text-end p-2\">
-\t\t\t<span>© 2021 <img class=\"mx-1\" width=\"16\" height=\"16\" src=\"/static/cmefi_short.png\"> The Center for Macroeconomic Forecasts &amp; Insights</span>
+\t\t<div class=\"container-fluid\" style=\"background-color: rgba(0, 0, 0, 0.2)\">
+\t\t\t<div class=\"container text-end p-2\">
+\t\t\t\t<span>© 2022 <img class=\"mx-1\" width=\"16\" height=\"16\" src=\"/static/cmefi-short.svg\"> The Center for Macroeconomic Forecasts &amp; Insights</span>
+\t\t\t</div>
 \t\t</div>
-\t</div>
-\t  <!-- Copyright -->
 \t</footer>
 
-\t
-
         
-        
-        
-\t<div class=\"overlay h-100\" id=\"overlay\" style=\"display:none\">
+\t<div class=\"overlay h-100\" id=\"overlay\" style=\"display:none;color:var(--bs-cmefi-green)\">
 \t\t<div class=\"row h-25\">
 \t\t\t<div class=\"\"></div>
 \t\t</div>
-\t\t<div class=\"row\">
-\t\t\t<div class=\"text-center col-12\"><h4 style=\"text-align:center\" id=\"loadmessage\">Loading ...</h4></div>
-\t\t</div>
-\t\t<div class=\"row\">
-\t\t\t<div class=\"sk-circle\">
-\t\t\t\t<div class=\"sk-circle1 sk-child\"></div>
-\t\t\t\t<div class=\"sk-circle2 sk-child\"></div>
-\t\t\t\t<div class=\"sk-circle3 sk-child\"></div>
-\t\t\t\t<div class=\"sk-circle4 sk-child\"></div>
-\t\t\t\t<div class=\"sk-circle5 sk-child\"></div>
-\t\t\t\t<div class=\"sk-circle6 sk-child\"></div>
-\t\t\t\t<div class=\"sk-circle7 sk-child\"></div>
-\t\t\t\t<div class=\"sk-circle8 sk-child\"></div>
-\t\t\t\t<div class=\"sk-circle9 sk-child\"></div>
-\t\t\t\t<div class=\"sk-circle10 sk-child\"></div>
-\t\t\t\t<div class=\"sk-circle11 sk-child\"></div>
-\t\t\t\t<div class=\"sk-circle12 sk-child\"></div>
+\t\t<div class=\"row justify-content-center\">
+\t\t\t<div class=\"col-auto\"><h4>Loading</h4></div>
+\t\t</div>\t\t
+\t\t<div class=\"row justify-content-center\">
+\t\t\t<div class=\"spinner-border\" style=\"width: 6rem; height: 6rem;\" role=\"status\">
+\t\t\t  <span class=\"visually-hidden\">Loading</span>
 \t\t\t</div>
 \t\t</div>
 \t</div>
@@ -246,7 +214,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 
 \t<script>
 \t  ";
-        // line 195
+        // line 163
         echo ($context["bodyScript"] ?? null);
         echo "
 \t</script>
@@ -287,7 +255,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 
     public function getDebugInfo()
     {
-        return array (  275 => 119,  271 => 118,  265 => 32,  259 => 8,  250 => 195,  173 => 120,  171 => 118,  84 => 33,  82 => 32,  77 => 30,  54 => 10,  51 => 9,  49 => 8,  40 => 1,);
+        return array (  243 => 119,  239 => 118,  233 => 32,  227 => 8,  218 => 163,  173 => 120,  171 => 118,  84 => 33,  82 => 32,  77 => 30,  54 => 10,  51 => 9,  49 => 8,  40 => 1,);
     }
 
     public function getSourceContext()
@@ -340,12 +308,12 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t<div class=\"container-fluid\" style=\"height:.2rem;background-color:rgb(37, 48, 10);\"></div>
 
 \t\t<nav class=\"navbar navbar-expand-md navbar-dark py-1 shadow-sm\">
-\t\t\t<a class=\"navbar-brand py-0 ps-3\" href=\"/\">
+\t\t\t<a class=\"navbar-brand py-0 ps-3 me-0\" href=\"/\">
 \t\t\t\t<img src=\"/static/cmefi-full-white.svg\" alt=\"CMEFI Logo\" class=\"py-0\" height=\"45\">
 \t\t\t</a>
 \t\t\t<button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#collapsingNavbarLg\"><span class=\"navbar-toggler-icon\"></span></button>
 
-\t\t\t<div class=\"navbar-collapse collapse\" id=\"collapsingNavbarLg\">
+\t\t\t<div class=\"navbar-collapse collapse justify-content-center\" id=\"collapsingNavbarLg\">
 \t\t\t\t<ul class=\"navbar-nav\">\t\t\t\t\t\t
 \t\t\t\t\t<!--<li class=\"nav-item\">
 \t\t\t\t\t\t<a class=\"nav-link\" href=\"/about\"><i class=\"bi bi-bar-chart me-1\"></i>GDP Forecasts</a>
@@ -413,73 +381,41 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t{% endblock %}
 \t</main>
 
-\t<footer class=\"container-fluid text-white px-0 bg-dark\">
-\t  <!-- Grid container -->
-\t  <div class=\"container py-3\">
-\t\t<!--Grid row-->
-\t\t<div class=\"row\">
-\t\t  <!--Grid column-->
-\t\t  <div class=\"col-6 mb-2 mb-md-0\">
-\t\t\t<h5 class=\"text-uppercase\">Links</h5>
-\t\t\t<ul class=\"list-unstyled mb-0\">
-\t\t\t  <li>
-\t\t\t\t<a href=\"https://cmefi.com\" class=\"text-white\">Center for Macroeconomic Forecasting and Insights</a>
-\t\t\t  </li>
-\t\t\t</ul>
-\t\t  </div>
-\t\t  <!--Grid column-->
-
-\t\t  <!--Grid column-->
-\t\t  <div class=\"col-6 mb-2 mb-md-0 text-end\">
-\t\t\t<h5 class=\"text-uppercase mb-0\">CONTACT</h5>
-
-\t\t\t<ul class=\"list-unstyled\">
-\t\t\t  <li>
-\t\t\t\t<a href=\"mailto:charles@cmefi.com\" class=\"text-white\">Email: charles (at) cmefi (dotcom)</a>
-\t\t\t  </li>
-\t\t\t</ul>
-\t\t  </div>
-\t\t  <!--Grid column-->
+\t<footer class=\"container-fluid text-white px-0 pt-4 bg-dark\">
+\t\t<div class=\"container py-3\">
+\t\t\t<div class=\"row\">
+\t\t\t\t<div class=\"col-6 mb-2 mb-md-0\">
+\t\t\t\t\t<h5 class=\"text-uppercase\">Links</h5>
+\t\t\t\t\t<ul class=\"list-unstyled mb-0\">
+\t\t\t\t\t\t<li><a href=\"https://cmefi.com\" class=\"text-white\">Center for Macroeconomic Forecasting and Insights</a></li>
+\t\t\t\t\t</ul>
+\t\t\t\t</div>
+\t\t\t\t<div class=\"col-6 mb-2 mb-md-0 text-end\">
+\t\t\t\t\t<h5 class=\"text-uppercase mb-0\">CONTACT</h5>
+\t\t\t\t\t<ul class=\"list-unstyled\">
+\t\t\t\t\t  <li><a href=\"mailto:charles@cmefi.com\" class=\"text-white\">Email: charles (at) cmefi (dotcom)</a></li>
+\t\t\t\t\t</ul>
+\t\t\t\t</div>
+\t\t\t</div>
 \t\t</div>
-\t\t<!--Grid row-->
-\t  </div>
-\t  <!-- Grid container -->
-
-\t  <!-- Copyright -->
-\t<div class=\"container-fluid\" style=\"background-color: rgba(0, 0, 0, 0.2)\">
-\t\t<div class=\"container text-end p-2\">
-\t\t\t<span>© 2021 <img class=\"mx-1\" width=\"16\" height=\"16\" src=\"/static/cmefi_short.png\"> The Center for Macroeconomic Forecasts &amp; Insights</span>
+\t\t<div class=\"container-fluid\" style=\"background-color: rgba(0, 0, 0, 0.2)\">
+\t\t\t<div class=\"container text-end p-2\">
+\t\t\t\t<span>© 2022 <img class=\"mx-1\" width=\"16\" height=\"16\" src=\"/static/cmefi-short.svg\"> The Center for Macroeconomic Forecasts &amp; Insights</span>
+\t\t\t</div>
 \t\t</div>
-\t</div>
-\t  <!-- Copyright -->
 \t</footer>
 
-\t
-
         
-        
-        
-\t<div class=\"overlay h-100\" id=\"overlay\" style=\"display:none\">
+\t<div class=\"overlay h-100\" id=\"overlay\" style=\"display:none;color:var(--bs-cmefi-green)\">
 \t\t<div class=\"row h-25\">
 \t\t\t<div class=\"\"></div>
 \t\t</div>
-\t\t<div class=\"row\">
-\t\t\t<div class=\"text-center col-12\"><h4 style=\"text-align:center\" id=\"loadmessage\">Loading ...</h4></div>
-\t\t</div>
-\t\t<div class=\"row\">
-\t\t\t<div class=\"sk-circle\">
-\t\t\t\t<div class=\"sk-circle1 sk-child\"></div>
-\t\t\t\t<div class=\"sk-circle2 sk-child\"></div>
-\t\t\t\t<div class=\"sk-circle3 sk-child\"></div>
-\t\t\t\t<div class=\"sk-circle4 sk-child\"></div>
-\t\t\t\t<div class=\"sk-circle5 sk-child\"></div>
-\t\t\t\t<div class=\"sk-circle6 sk-child\"></div>
-\t\t\t\t<div class=\"sk-circle7 sk-child\"></div>
-\t\t\t\t<div class=\"sk-circle8 sk-child\"></div>
-\t\t\t\t<div class=\"sk-circle9 sk-child\"></div>
-\t\t\t\t<div class=\"sk-circle10 sk-child\"></div>
-\t\t\t\t<div class=\"sk-circle11 sk-child\"></div>
-\t\t\t\t<div class=\"sk-circle12 sk-child\"></div>
+\t\t<div class=\"row justify-content-center\">
+\t\t\t<div class=\"col-auto\"><h4>Loading</h4></div>
+\t\t</div>\t\t
+\t\t<div class=\"row justify-content-center\">
+\t\t\t<div class=\"spinner-border\" style=\"width: 6rem; height: 6rem;\" role=\"status\">
+\t\t\t  <span class=\"visually-hidden\">Loading</span>
 \t\t\t</div>
 \t\t</div>
 \t</div>

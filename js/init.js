@@ -1,9 +1,8 @@
-$(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function(event) {
 
 	(function(){
 		
 		const pathname = window.location.pathname;
-		
 		const navbar = document.querySelector('nav.navbar');
 
 		if (navbar) {
@@ -16,7 +15,6 @@ $(document).ready(function() {
 					};
 				return;
 			});
-
 		}
 		
 		const sidebar = document.querySelector('nav.sidebar');
@@ -26,67 +24,28 @@ $(document).ready(function() {
 				return;
 			})
 		}
-		
-		
-		if (pathname === '/') {
-			document.querySelector('nav.navbar').classList.add('justify-content-center');
-			document.querySelector('header').style.position = 'relative';
-			document.querySelector('nav.navbar > div').classList.add('col-auto');
-			document.querySelector('nav.navbar').style.backgroundColor = 'var(--bs-econdgreen)';
-			document.querySelector('nav.navbar a.navbar-brand').remove();
-			document.querySelectorAll('nav.navbar a.nav-link').forEach(x => x.style.fontSize = '1.1rem');
-
-			const newDiv = document.createElement('div');
-			newDiv.classList.add('bg-econgreen');
-			const newA = document.createElement('a');
-			newA.setAttribute('href', '/');
-			const newImg = document.createElement('img');
-			newImg.setAttribute('src', '/static/cmefi_full_inverted.png');
-			newImg.setAttribute('height', '80');
-			newImg.setAttribute('alt', 'Center for Macroeconomic Forecasts & Insights');
-			newImg.classList.add('mx-auto');
-			newImg.classList.add('d-block');
-			newImg.style.imageRendering = '-webkit-optimize-contrast';
-
-			newDiv.appendChild(newA).appendChild(newImg);
-			
-			document.querySelector('header').insertBefore(newDiv, document.querySelector('nav.navbar'));
-			
-		}
-		
-		
-		
-		// Enables tooltips
-		//$('[data-toggle="tooltip"]').tooltip();
-		
 	})();
 	
-	Highcharts.setOptions({
-		time: {
-			timezone: 'America/New_York'
-		}
-	});
-	
-	Highcharts.theme = {
+	const hc_theme = {
 		colors: ['#E10033', '#000000', '#767676', '#E4E4E4'],
 		chart: {
-		backgroundColor: "#FFF1E0",
+		backgroundColor: "#FFF3E6",
 			style: {
-				fontFamily: '"Assistant", Arial, "sans-serif"',
+				fontFamily: 'var(--bs-font-sans-serif)',
 				color: '#000000'
 			}
 		},
 		title: {
 			align: 'center',
 			style: {
-				fontFamily: '"Assistant", Arial, "sans-serif"',
+				fontFamily: 'var(--bs-font-sans-serif)',
 				color: '#000000'
 			}
 		},
 		subtitle: {
 			align: 'center',
 			style: {
-				fontFamily: '"Assistant", Arial, "sans-serif"',
+				fontFamily: 'var(--bs-font-sans-serif)',
 				color: '#000000'
 			}
 		},
@@ -159,16 +118,27 @@ $(document).ready(function() {
 				}
 			}
 		},
-	legendBackgroundColor: "rgba(0, 0, 0, 0.5)",
-	background2: "#505053",
-	dataLabelsColor: "#B0B0B3",
-	textColor: "#C0C0C0",
-	contrastTextColor: "#F0F0F3",
-	maskColor: "rgba(255,255,255,0.3)"
+		legendBackgroundColor: "rgba(0, 0, 0, 0.5)",
+		background2: "#505053",
+		dataLabelsColor: "#B0B0B3",
+		textColor: "#C0C0C0",
+		contrastTextColor: "#F0F0F3",
+		maskColor: "rgba(255,255,255,0.3)"
 	};
-	// Apply the theme
-	Highcharts.setOptions(Highcharts.theme);
 	
+	
+	Highcharts.setOptions({
+		chart: {
+			style: {
+				fontFamily: 'var(--bs-font-sans-serif)'
+			}
+		},
+		time: {
+			timezone: 'America/New_York'
+		}
+	});
+	// Apply the theme
+	Highcharts.setOptions(hc_theme);
 });
 
 

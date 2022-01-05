@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function(event) {
+	
 	/********** INITIALIZE **********/
 	$('div.overlay').show();
 	
@@ -16,14 +17,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			: varname === 'inf' ? 'CPI Inflation Rate'
 			: 'NA';
 			
-		const varUnits = 
-			varname === 'ffr' ? '%' 
-			: varname === 'sofr' ? '%'
-			: varname === 'mort30y' ? '%'
-			: varname === 'mort15y' ? '%'
-			: varname === 'inf' ? '%'
-			: 'NA';
-
 		const udPrev = getAllData().userData || {};
 		const ud = {
 			... udPrev,
