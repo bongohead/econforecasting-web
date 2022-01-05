@@ -1,12 +1,11 @@
 Description TBA
 
 # CHANGELOG
-- TBD: Use HC 9.1.0, allowlists (https://www.highcharts.com/docs/chart-concepts/labels-and-string-formatting)
-- TBD: 
 
 ## 2022-01-01 [v0.20] (Beta Model Release Version)
 - Improved CSS styline & SCSS settings
 - Updated BS5 to 5.1.3
+- Updated minor version dependencies for Highcharts and DataTables
 - Updated CMEFI logo & fixed Chrome rendering issue
 
 ## 2021-09-21 [v0.17] (Adding Updated Model Forecasts to Site)
