@@ -7,7 +7,7 @@ Description TBA
 ## 2022-01-01 [v0.20] (Beta Model Release Version)
 - Improved CSS styline & SCSS settings
 - Updated BS5 to 5.1.3
-
+- Updated CMEFI logo & fixed Chrome rendering issue
 
 ## 2021-09-21 [v0.17] (Adding Updated Model Forecasts to Site)
 - Added new import files to get data from csm_\* SQL tables

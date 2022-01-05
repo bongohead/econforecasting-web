@@ -98,8 +98,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 
 \t\t<nav class=\"navbar navbar-expand-md navbar-dark py-1 shadow-sm\">
 \t\t\t<a class=\"navbar-brand py-0 ps-3\" href=\"/\">
-\t\t\t\t<img src=\"/static/cmefi_full_inverted.png\" alt=\"CMEFI Logo\" class=\"py-0\" height=\"45\" style=\"image-rendering:-webkit-optimize-contrast\">
-\t\t\t\t<!--<span class=\"navbar-brand my-0 py-0 h2\">The Center for Macroeconomic Forecasts & Insights</span>-->
+\t\t\t\t<img src=\"/static/cmefi-full-white.svg\" alt=\"CMEFI Logo\" class=\"py-0\" height=\"45\">
 \t\t\t</a>
 \t\t\t<button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#collapsingNavbarLg\"><span class=\"navbar-toggler-icon\"></span></button>
 
@@ -168,9 +167,9 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t
 \t<main >
 \t\t";
-        // line 119
+        // line 118
         $this->displayBlock('content', $context, $blocks);
-        // line 121
+        // line 120
         echo "\t</main>
 
 \t<footer class=\"container-fluid text-white px-0 bg-dark\">
@@ -247,7 +246,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 
 \t<script>
 \t  ";
-        // line 196
+        // line 195
         echo ($context["bodyScript"] ?? null);
         echo "
 \t</script>
@@ -268,11 +267,11 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
         $macros = $this->macros;
     }
 
-    // line 119
+    // line 118
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 120
+        // line 119
         echo "\t\t";
     }
 
@@ -288,7 +287,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 
     public function getDebugInfo()
     {
-        return array (  276 => 120,  272 => 119,  266 => 32,  260 => 8,  251 => 196,  174 => 121,  172 => 119,  84 => 33,  82 => 32,  77 => 30,  54 => 10,  51 => 9,  49 => 8,  40 => 1,);
+        return array (  275 => 119,  271 => 118,  265 => 32,  259 => 8,  250 => 195,  173 => 120,  171 => 118,  84 => 33,  82 => 32,  77 => 30,  54 => 10,  51 => 9,  49 => 8,  40 => 1,);
     }
 
     public function getSourceContext()
@@ -342,8 +341,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 
 \t\t<nav class=\"navbar navbar-expand-md navbar-dark py-1 shadow-sm\">
 \t\t\t<a class=\"navbar-brand py-0 ps-3\" href=\"/\">
-\t\t\t\t<img src=\"/static/cmefi_full_inverted.png\" alt=\"CMEFI Logo\" class=\"py-0\" height=\"45\" style=\"image-rendering:-webkit-optimize-contrast\">
-\t\t\t\t<!--<span class=\"navbar-brand my-0 py-0 h2\">The Center for Macroeconomic Forecasts & Insights</span>-->
+\t\t\t\t<img src=\"/static/cmefi-full-white.svg\" alt=\"CMEFI Logo\" class=\"py-0\" height=\"45\">
 \t\t\t</a>
 \t\t\t<button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#collapsingNavbarLg\"><span class=\"navbar-toggler-icon\"></span></button>
 
