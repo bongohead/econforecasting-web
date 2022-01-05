@@ -1,9 +1,15 @@
 /** Bootstrap Style Changes **/
-@import url(//fonts.googleapis.com/css?family=Assistant);
 @import url(//fonts.googleapis.com/css?family=Poppins);
+@import url(//fonts.googleapis.com/css?family=Merriweather);
 @import url(//cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css);
 @import url(//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.6.3/css/all.min.css);
-body {
+
+:root {
+	--bs-font-family-serif: "Merriweather" Lucida, verdana, arial, sans-serif; // Custom variable to be used for paragraphs, etc
+}
+
+p {
+	font-family: var(--bs-font-family-serif);
 }
 
 header {
@@ -124,46 +130,47 @@ div.homepage-links > a > div > span {
 
 /* Top Navbar */
 nav.navbar {
-	background-color: var(--bs-econgreen);
+	background-color: var(--bs-cmefi-green);
 }
 
 /* Top-level dropdown links */
 nav.navbar li.nav-item > a.nav-link {
 	color: rgba(255, 255, 255, .9);
-	font-size: .95rem;
+	font-size: .98rem;
 	border-radius: .25rem;
+	padding: .4rem .6rem;
 }
 
 /* When dropdown is opened */
 nav.navbar li.nav-item > a.nav-link.show {
-	background-color: var(--bs-econorange);
+	background-color: var(--bs-cmefi-blue);
 	color: white;
 }
 
 
 /* Dropdown items */
 nav.navbar ul.dropdown-menu, nav.navbar div.dropdown-menu {
-	background-color: var(--bs-light);
-	border-color: var(--bs-econorange);
+	background-color: var(--bs-cmefi-light);
+	border-color: var(--bs-cmefi-blue);
 	border-radius: .25rem;
 	border-width: 1px;
 	font-size: .9rem;
 }
 
 nav.navbar ul.dropdown-menu a:hover, nav.navbar div.dropdown-menu a:hover {
-	background-color: var(--bs-econorange);
+	background-color: var(--bs-cmefi-blue);
 	color: white;
 }
 
 /* Dropdown items when active */
 nav.navbar a.dropdown-item.activepage {
-	background-color: var(--bs-econgreen);
+	background-color: var(--bs-cmefi-green);
 	color: white;
 }
 
 /* Top-level nav link when dropdown subitem is active */
 nav.navbar a.nav-link.activepage {
-	background-color: var(--bs-econdgreen);
+	background-color: var(--bs-cmefi-dark-green);
 }
 
 

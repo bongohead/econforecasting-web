@@ -94,85 +94,83 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 
 <body>
 \t<header>
-\t\t<div class=\"container-fluid\" style=\"height:.25rem;background-color:rgb(37, 48, 10);\"></div>
+\t\t<div class=\"container-fluid\" style=\"height:.2rem;background-color:rgb(37, 48, 10);\"></div>
 
-\t\t<nav class=\"navbar navbar-expand-md navbar-dark sticky-top py-1 shadow-sm\">
-\t\t\t<div class=\"container-fluid\">
-\t\t\t\t<a class=\"navbar-brand py-0 ps-3\" href=\"/\">
-\t\t\t\t\t<img src=\"/static/cmefi_full_inverted.png\" alt=\"CMEFI Logo\" class=\"py-0\" height=\"45\" style=\"image-rendering:-webkit-optimize-contrast\">
-\t\t\t\t\t<!--<span class=\"navbar-brand my-0 py-0 h2\">The Center for Macroeconomic Forecasts & Insights</span>-->
-\t\t\t\t</a>
-\t\t\t\t<button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#collapsingNavbarLg\"><span class=\"navbar-toggler-icon\"></span></button>
+\t\t<nav class=\"navbar navbar-expand-md navbar-dark py-1 shadow-sm\">
+\t\t\t<a class=\"navbar-brand py-0 ps-3\" href=\"/\">
+\t\t\t\t<img src=\"/static/cmefi_full_inverted.png\" alt=\"CMEFI Logo\" class=\"py-0\" height=\"45\" style=\"image-rendering:-webkit-optimize-contrast\">
+\t\t\t\t<!--<span class=\"navbar-brand my-0 py-0 h2\">The Center for Macroeconomic Forecasts & Insights</span>-->
+\t\t\t</a>
+\t\t\t<button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#collapsingNavbarLg\"><span class=\"navbar-toggler-icon\"></span></button>
 
-\t\t\t\t<div class=\"navbar-collapse collapse\" id=\"collapsingNavbarLg\">
-\t\t\t\t\t<ul class=\"navbar-nav me-auto\">\t\t\t\t\t\t
-\t\t\t\t\t\t<!--<li class=\"nav-item\">
-\t\t\t\t\t\t\t<a class=\"nav-link\" href=\"/about\"><i class=\"bi bi-bar-chart me-1\"></i>GDP Forecasts</a>
-\t\t\t\t\t\t</li>
-\t\t\t\t\t\t-->
-\t\t\t\t\t\t<li class=\"nav-item dropdown\">
-\t\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-bs-toggle=\"dropdown\">
-\t\t\t\t\t\t\t\t<i class=\"bi bi-bar-chart-steps me-1\"></i>Forecast Models
-\t\t\t\t\t\t\t</a>
-\t\t\t\t\t\t\t<div class=\"dropdown-menu\">
-\t\t\t\t\t\t\t\t<div class=\"d-md-flex align-items-start justify-content-start\">
-\t\t\t\t\t\t\t\t\t<div>   
-\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 mx-3 mb-1 border-bottom border-econgreen\" style=\"font-size:1.0rem\">TREASURY YIELDS</div>
-\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-info\">Overview and Methodology</a>
-\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-tcurve\">Full Treasury Yield Forecast</a>
-\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-3m\">3 Month T-Bill Forecast</a>
-\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-1y\">1 Year T-Note Forecast</a>
-\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-10y\">10 Year T-Note Forecast</a>
-\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-30y\">30 Year T-Bond Forecast</a>
-\t\t\t\t\t\t\t\t\t</div>
-\t\t\t\t\t\t\t\t\t<div>
-\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 mx-3 mb-1 border-bottom border-econgreen\" style=\"font-size:1.0rem\">BENCHMARK RATES</div>
-\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-ffr\">Federal Funds Rate Forecast</a>
-\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-sofr\">SOFR Forecast</a>
-\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 mx-3 mt-4 mb-1 border-bottom border-econgreen\" style=\"font-size:1.0rem\">MORTGAGE RATES</div>
-\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-mort15y\">15-Year Mortgage Rate</a>
-\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-mort30y\">30-Year Mortgage Rate</a>
-
-\t\t\t\t\t\t\t\t\t</div>
-\t\t\t\t\t\t\t\t\t<div>
-\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 mx-3 mb-1 border-bottom border-econgreen\" style=\"font-size:1.0rem\">MACRO INDICATORS</div>
-\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-macro-inf\">Inflation Rate</a>
-\t\t\t\t\t\t\t\t\t</div>
+\t\t\t<div class=\"navbar-collapse collapse\" id=\"collapsingNavbarLg\">
+\t\t\t\t<ul class=\"navbar-nav\">\t\t\t\t\t\t
+\t\t\t\t\t<!--<li class=\"nav-item\">
+\t\t\t\t\t\t<a class=\"nav-link\" href=\"/about\"><i class=\"bi bi-bar-chart me-1\"></i>GDP Forecasts</a>
+\t\t\t\t\t</li>
+\t\t\t\t\t-->
+\t\t\t\t\t<li class=\"nav-item dropdown\">
+\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-bs-toggle=\"dropdown\">
+\t\t\t\t\t\t\t<i class=\"bi bi-bar-chart-steps me-1\"></i>Forecast Models
+\t\t\t\t\t\t</a>
+\t\t\t\t\t\t<div class=\"dropdown-menu\">
+\t\t\t\t\t\t\t<div class=\"d-md-flex align-items-start justify-content-start\">
+\t\t\t\t\t\t\t\t<div>   
+\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 mx-3 mb-1 border-bottom border-econgreen\" style=\"font-size:1.0rem\">TREASURY YIELDS</div>
+\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-info\">Overview and Methodology</a>
+\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-tcurve\">Full Treasury Yield Forecast</a>
+\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-3m\">3 Month T-Bill Forecast</a>
+\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-1y\">1 Year T-Note Forecast</a>
+\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-10y\">10 Year T-Note Forecast</a>
+\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-30y\">30 Year T-Bond Forecast</a>
+\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t\t<div>
+\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 mx-3 mb-1 border-bottom border-econgreen\" style=\"font-size:1.0rem\">BENCHMARK RATES</div>
+\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-ffr\">Federal Funds Rate Forecast</a>
+\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-sofr\">SOFR Forecast</a>
+\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 mx-3 mt-4 mb-1 border-bottom border-econgreen\" style=\"font-size:1.0rem\">MORTGAGE RATES</div>
+\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-mort15y\">15-Year Mortgage Rate</a>
+\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-mort30y\">30-Year Mortgage Rate</a>
 
 \t\t\t\t\t\t\t\t</div>
-\t\t\t\t\t\t\t\t <div class=\"dropdown-divider\"></div>
-\t\t\t\t\t\t\t</div>
-\t\t\t\t\t\t</li>
-\t\t\t\t\t\t<li class=\"nav-item dropdown\">
-\t\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-bs-toggle=\"dropdown\">
-\t\t\t\t\t\t\t\t<i class=\"bi bi-pie-chart-fill me-1\"></i>Nowcast Models
-\t\t\t\t\t\t\t</a>
-\t\t\t\t\t\t\t<ul class=\"dropdown-menu\">
-\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/nc-gdp\"><span style=\"margin-left: 1rem\">GDP & Subcomponents</span></a></li>
-\t\t\t\t\t\t\t</ul>
-\t\t\t\t\t\t</li>
+\t\t\t\t\t\t\t\t<div>
+\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 mx-3 mb-1 border-bottom border-econgreen\" style=\"font-size:1.0rem\">MACRO INDICATORS</div>
+\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-macro-inf\">Inflation Rate</a>
+\t\t\t\t\t\t\t\t</div>
 
-\t\t\t\t\t\t<li class=\"nav-item dropdown\">
-\t\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-bs-toggle=\"dropdown\">
-\t\t\t\t\t\t\t\t<i class=\"bi bi-gear-wide-connected me-1\"></i>Indicators and Indices
-\t\t\t\t\t\t\t</a>
-\t\t\t\t\t\t\t<ul class=\"dropdown-menu\">
-\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/ac-assets\"><span style=\"margin-left: 1rem\">Asset Correlation Index</span></a></li>
-\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/ac-regions\"><span style=\"margin-left: 1rem\">Regional Correlation Index</span></a></li>
-\t\t\t\t\t\t\t</ul>
-\t\t\t\t\t\t</li>
-\t\t\t\t\t\t
-\t\t\t\t\t</ul>
-\t\t\t\t</div>
+\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t <div class=\"dropdown-divider\"></div>
+\t\t\t\t\t\t</div>
+\t\t\t\t\t</li>
+\t\t\t\t\t<li class=\"nav-item dropdown\">
+\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-bs-toggle=\"dropdown\">
+\t\t\t\t\t\t\t<i class=\"bi bi-pie-chart-fill me-1\"></i>Nowcast Models
+\t\t\t\t\t\t</a>
+\t\t\t\t\t\t<ul class=\"dropdown-menu\">
+\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/nc-gdp\"><span style=\"margin-left: 1rem\">GDP & Subcomponents</span></a></li>
+\t\t\t\t\t\t</ul>
+\t\t\t\t\t</li>
+
+\t\t\t\t\t<li class=\"nav-item dropdown\">
+\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-bs-toggle=\"dropdown\">
+\t\t\t\t\t\t\t<i class=\"bi bi-gear-wide-connected me-1\"></i>Indicators and Indices
+\t\t\t\t\t\t</a>
+\t\t\t\t\t\t<ul class=\"dropdown-menu\">
+\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/ac-assets\"><span style=\"margin-left: 1rem\">Asset Correlation Index</span></a></li>
+\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/ac-regions\"><span style=\"margin-left: 1rem\">Regional Correlation Index</span></a></li>
+\t\t\t\t\t\t</ul>
+\t\t\t\t\t</li>
+\t\t\t\t\t
+\t\t\t\t</ul>
 \t\t\t</div>
 \t\t</nav>
 \t</header>
 \t
 \t<main >
 \t\t";
-        // line 121
+        // line 119
         $this->displayBlock('content', $context, $blocks);
-        // line 123
+        // line 121
         echo "\t</main>
 
 \t<footer class=\"container-fluid text-white px-0 bg-dark\">
@@ -249,7 +247,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 
 \t<script>
 \t  ";
-        // line 198
+        // line 196
         echo ($context["bodyScript"] ?? null);
         echo "
 \t</script>
@@ -270,11 +268,11 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
         $macros = $this->macros;
     }
 
-    // line 121
+    // line 119
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 122
+        // line 120
         echo "\t\t";
     }
 
@@ -290,7 +288,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 
     public function getDebugInfo()
     {
-        return array (  278 => 122,  274 => 121,  268 => 32,  262 => 8,  253 => 198,  176 => 123,  174 => 121,  84 => 33,  82 => 32,  77 => 30,  54 => 10,  51 => 9,  49 => 8,  40 => 1,);
+        return array (  276 => 120,  272 => 119,  266 => 32,  260 => 8,  251 => 196,  174 => 121,  172 => 119,  84 => 33,  82 => 32,  77 => 30,  54 => 10,  51 => 9,  49 => 8,  40 => 1,);
     }
 
     public function getSourceContext()
@@ -340,76 +338,74 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 
 <body>
 \t<header>
-\t\t<div class=\"container-fluid\" style=\"height:.25rem;background-color:rgb(37, 48, 10);\"></div>
+\t\t<div class=\"container-fluid\" style=\"height:.2rem;background-color:rgb(37, 48, 10);\"></div>
 
-\t\t<nav class=\"navbar navbar-expand-md navbar-dark sticky-top py-1 shadow-sm\">
-\t\t\t<div class=\"container-fluid\">
-\t\t\t\t<a class=\"navbar-brand py-0 ps-3\" href=\"/\">
-\t\t\t\t\t<img src=\"/static/cmefi_full_inverted.png\" alt=\"CMEFI Logo\" class=\"py-0\" height=\"45\" style=\"image-rendering:-webkit-optimize-contrast\">
-\t\t\t\t\t<!--<span class=\"navbar-brand my-0 py-0 h2\">The Center for Macroeconomic Forecasts & Insights</span>-->
-\t\t\t\t</a>
-\t\t\t\t<button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#collapsingNavbarLg\"><span class=\"navbar-toggler-icon\"></span></button>
+\t\t<nav class=\"navbar navbar-expand-md navbar-dark py-1 shadow-sm\">
+\t\t\t<a class=\"navbar-brand py-0 ps-3\" href=\"/\">
+\t\t\t\t<img src=\"/static/cmefi_full_inverted.png\" alt=\"CMEFI Logo\" class=\"py-0\" height=\"45\" style=\"image-rendering:-webkit-optimize-contrast\">
+\t\t\t\t<!--<span class=\"navbar-brand my-0 py-0 h2\">The Center for Macroeconomic Forecasts & Insights</span>-->
+\t\t\t</a>
+\t\t\t<button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#collapsingNavbarLg\"><span class=\"navbar-toggler-icon\"></span></button>
 
-\t\t\t\t<div class=\"navbar-collapse collapse\" id=\"collapsingNavbarLg\">
-\t\t\t\t\t<ul class=\"navbar-nav me-auto\">\t\t\t\t\t\t
-\t\t\t\t\t\t<!--<li class=\"nav-item\">
-\t\t\t\t\t\t\t<a class=\"nav-link\" href=\"/about\"><i class=\"bi bi-bar-chart me-1\"></i>GDP Forecasts</a>
-\t\t\t\t\t\t</li>
-\t\t\t\t\t\t-->
-\t\t\t\t\t\t<li class=\"nav-item dropdown\">
-\t\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-bs-toggle=\"dropdown\">
-\t\t\t\t\t\t\t\t<i class=\"bi bi-bar-chart-steps me-1\"></i>Forecast Models
-\t\t\t\t\t\t\t</a>
-\t\t\t\t\t\t\t<div class=\"dropdown-menu\">
-\t\t\t\t\t\t\t\t<div class=\"d-md-flex align-items-start justify-content-start\">
-\t\t\t\t\t\t\t\t\t<div>   
-\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 mx-3 mb-1 border-bottom border-econgreen\" style=\"font-size:1.0rem\">TREASURY YIELDS</div>
-\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-info\">Overview and Methodology</a>
-\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-tcurve\">Full Treasury Yield Forecast</a>
-\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-3m\">3 Month T-Bill Forecast</a>
-\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-1y\">1 Year T-Note Forecast</a>
-\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-10y\">10 Year T-Note Forecast</a>
-\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-30y\">30 Year T-Bond Forecast</a>
-\t\t\t\t\t\t\t\t\t</div>
-\t\t\t\t\t\t\t\t\t<div>
-\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 mx-3 mb-1 border-bottom border-econgreen\" style=\"font-size:1.0rem\">BENCHMARK RATES</div>
-\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-ffr\">Federal Funds Rate Forecast</a>
-\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-sofr\">SOFR Forecast</a>
-\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 mx-3 mt-4 mb-1 border-bottom border-econgreen\" style=\"font-size:1.0rem\">MORTGAGE RATES</div>
-\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-mort15y\">15-Year Mortgage Rate</a>
-\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-mort30y\">30-Year Mortgage Rate</a>
-
-\t\t\t\t\t\t\t\t\t</div>
-\t\t\t\t\t\t\t\t\t<div>
-\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 mx-3 mb-1 border-bottom border-econgreen\" style=\"font-size:1.0rem\">MACRO INDICATORS</div>
-\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-macro-inf\">Inflation Rate</a>
-\t\t\t\t\t\t\t\t\t</div>
+\t\t\t<div class=\"navbar-collapse collapse\" id=\"collapsingNavbarLg\">
+\t\t\t\t<ul class=\"navbar-nav\">\t\t\t\t\t\t
+\t\t\t\t\t<!--<li class=\"nav-item\">
+\t\t\t\t\t\t<a class=\"nav-link\" href=\"/about\"><i class=\"bi bi-bar-chart me-1\"></i>GDP Forecasts</a>
+\t\t\t\t\t</li>
+\t\t\t\t\t-->
+\t\t\t\t\t<li class=\"nav-item dropdown\">
+\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-bs-toggle=\"dropdown\">
+\t\t\t\t\t\t\t<i class=\"bi bi-bar-chart-steps me-1\"></i>Forecast Models
+\t\t\t\t\t\t</a>
+\t\t\t\t\t\t<div class=\"dropdown-menu\">
+\t\t\t\t\t\t\t<div class=\"d-md-flex align-items-start justify-content-start\">
+\t\t\t\t\t\t\t\t<div>   
+\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 mx-3 mb-1 border-bottom border-econgreen\" style=\"font-size:1.0rem\">TREASURY YIELDS</div>
+\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-info\">Overview and Methodology</a>
+\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-tcurve\">Full Treasury Yield Forecast</a>
+\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-3m\">3 Month T-Bill Forecast</a>
+\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-1y\">1 Year T-Note Forecast</a>
+\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-10y\">10 Year T-Note Forecast</a>
+\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-t-30y\">30 Year T-Bond Forecast</a>
+\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t\t<div>
+\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 mx-3 mb-1 border-bottom border-econgreen\" style=\"font-size:1.0rem\">BENCHMARK RATES</div>
+\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-ffr\">Federal Funds Rate Forecast</a>
+\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-sofr\">SOFR Forecast</a>
+\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 mx-3 mt-4 mb-1 border-bottom border-econgreen\" style=\"font-size:1.0rem\">MORTGAGE RATES</div>
+\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-mort15y\">15-Year Mortgage Rate</a>
+\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-rates-mort30y\">30-Year Mortgage Rate</a>
 
 \t\t\t\t\t\t\t\t</div>
-\t\t\t\t\t\t\t\t <div class=\"dropdown-divider\"></div>
-\t\t\t\t\t\t\t</div>
-\t\t\t\t\t\t</li>
-\t\t\t\t\t\t<li class=\"nav-item dropdown\">
-\t\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-bs-toggle=\"dropdown\">
-\t\t\t\t\t\t\t\t<i class=\"bi bi-pie-chart-fill me-1\"></i>Nowcast Models
-\t\t\t\t\t\t\t</a>
-\t\t\t\t\t\t\t<ul class=\"dropdown-menu\">
-\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/nc-gdp\"><span style=\"margin-left: 1rem\">GDP & Subcomponents</span></a></li>
-\t\t\t\t\t\t\t</ul>
-\t\t\t\t\t\t</li>
+\t\t\t\t\t\t\t\t<div>
+\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 mx-3 mb-1 border-bottom border-econgreen\" style=\"font-size:1.0rem\">MACRO INDICATORS</div>
+\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/fc-macro-inf\">Inflation Rate</a>
+\t\t\t\t\t\t\t\t</div>
 
-\t\t\t\t\t\t<li class=\"nav-item dropdown\">
-\t\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-bs-toggle=\"dropdown\">
-\t\t\t\t\t\t\t\t<i class=\"bi bi-gear-wide-connected me-1\"></i>Indicators and Indices
-\t\t\t\t\t\t\t</a>
-\t\t\t\t\t\t\t<ul class=\"dropdown-menu\">
-\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/ac-assets\"><span style=\"margin-left: 1rem\">Asset Correlation Index</span></a></li>
-\t\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/ac-regions\"><span style=\"margin-left: 1rem\">Regional Correlation Index</span></a></li>
-\t\t\t\t\t\t\t</ul>
-\t\t\t\t\t\t</li>
-\t\t\t\t\t\t
-\t\t\t\t\t</ul>
-\t\t\t\t</div>
+\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t <div class=\"dropdown-divider\"></div>
+\t\t\t\t\t\t</div>
+\t\t\t\t\t</li>
+\t\t\t\t\t<li class=\"nav-item dropdown\">
+\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-bs-toggle=\"dropdown\">
+\t\t\t\t\t\t\t<i class=\"bi bi-pie-chart-fill me-1\"></i>Nowcast Models
+\t\t\t\t\t\t</a>
+\t\t\t\t\t\t<ul class=\"dropdown-menu\">
+\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/nc-gdp\"><span style=\"margin-left: 1rem\">GDP & Subcomponents</span></a></li>
+\t\t\t\t\t\t</ul>
+\t\t\t\t\t</li>
+
+\t\t\t\t\t<li class=\"nav-item dropdown\">
+\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-bs-toggle=\"dropdown\">
+\t\t\t\t\t\t\t<i class=\"bi bi-gear-wide-connected me-1\"></i>Indicators and Indices
+\t\t\t\t\t\t</a>
+\t\t\t\t\t\t<ul class=\"dropdown-menu\">
+\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/ac-assets\"><span style=\"margin-left: 1rem\">Asset Correlation Index</span></a></li>
+\t\t\t\t\t\t\t<li><a class=\"dropdown-item\" href=\"/ac-regions\"><span style=\"margin-left: 1rem\">Regional Correlation Index</span></a></li>
+\t\t\t\t\t\t</ul>
+\t\t\t\t\t</li>
+\t\t\t\t\t
+\t\t\t\t</ul>
 \t\t\t</div>
 \t\t</nav>
 \t</header>
