@@ -34,7 +34,7 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 
 			['template' => 'csm-forecasts', 'request' => ['csm-forecasts'], 'title' => 'Forecasts | CMEFI', 'models' => [], 'js' => ['init', 'csm-forecasts']],
 			
-			['template' => 'csm-forecasts', 'request' => ['rates-model-sofr'], 'title' => 'SOFR Forecasts | CMEFI', 'models' => [], 'js' => ['init', 'rates-model-sofr']],
+			['template' => 'rates-model-sofr', 'request' => ['rates-model-sofr'], 'title' => 'SOFR Forecasts | CMEFI', 'models' => [], 'js' => ['init', 'rates-model-sofr']],
 
 		],
 		errorRoute: ['template' => 'error', 'request' => 'error', 'title' => 'Error', 'js' => []],

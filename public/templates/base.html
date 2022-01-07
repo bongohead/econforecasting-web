@@ -28,7 +28,8 @@
 	<script src="https://code.highcharts.com/stock/9.3/highstock.js"></script>
 	<script src="https://code.highcharts.com/9.3/modules/boost.js"></script>
     {{ pageJS | raw }}
-
+	
+	<!-- Static Links -->
     {% block staticlinks %}{% endblock %}
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-5JBMJCQQD7"></script>
@@ -114,7 +115,7 @@
 		</nav>
 	</header>
 	
-	<main >
+	<main class="pb-5">
 		{% block content %}
 		{% endblock %}
 	</main>

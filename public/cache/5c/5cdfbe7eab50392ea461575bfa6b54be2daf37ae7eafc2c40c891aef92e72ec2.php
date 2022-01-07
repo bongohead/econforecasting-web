@@ -76,11 +76,12 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
         // line 30
         echo ($context["pageJS"] ?? null);
         echo "
-
+\t
+\t<!-- Static Links -->
     ";
-        // line 32
-        $this->displayBlock('staticlinks', $context, $blocks);
         // line 33
+        $this->displayBlock('staticlinks', $context, $blocks);
+        // line 34
         echo "\t<!-- Global site tag (gtag.js) - Google Analytics -->
 \t<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-5JBMJCQQD7\"></script>
 \t<script>
@@ -165,11 +166,11 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t</nav>
 \t</header>
 \t
-\t<main >
+\t<main class=\"pb-5\">
 \t\t";
-        // line 118
+        // line 119
         $this->displayBlock('content', $context, $blocks);
-        // line 120
+        // line 121
         echo "\t</main>
 
 \t<footer class=\"container-fluid text-white px-0 pt-4 bg-dark\">
@@ -214,7 +215,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 
 \t<script>
 \t  ";
-        // line 163
+        // line 164
         echo ($context["bodyScript"] ?? null);
         echo "
 \t</script>
@@ -229,17 +230,17 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
         $macros = $this->macros;
     }
 
-    // line 32
+    // line 33
     public function block_staticlinks($context, array $blocks = [])
     {
         $macros = $this->macros;
     }
 
-    // line 118
+    // line 119
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 119
+        // line 120
         echo "\t\t";
     }
 
@@ -255,7 +256,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 
     public function getDebugInfo()
     {
-        return array (  243 => 119,  239 => 118,  233 => 32,  227 => 8,  218 => 163,  173 => 120,  171 => 118,  84 => 33,  82 => 32,  77 => 30,  54 => 10,  51 => 9,  49 => 8,  40 => 1,);
+        return array (  244 => 120,  240 => 119,  234 => 33,  228 => 8,  219 => 164,  174 => 121,  172 => 119,  85 => 34,  83 => 33,  77 => 30,  54 => 10,  51 => 9,  49 => 8,  40 => 1,);
     }
 
     public function getSourceContext()
@@ -290,7 +291,8 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t<script src=\"https://code.highcharts.com/stock/9.3/highstock.js\"></script>
 \t<script src=\"https://code.highcharts.com/9.3/modules/boost.js\"></script>
     {{ pageJS | raw }}
-
+\t
+\t<!-- Static Links -->
     {% block staticlinks %}{% endblock %}
 \t<!-- Global site tag (gtag.js) - Google Analytics -->
 \t<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-5JBMJCQQD7\"></script>
@@ -376,7 +378,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t</nav>
 \t</header>
 \t
-\t<main >
+\t<main class=\"pb-5\">
 \t\t{% block content %}
 \t\t{% endblock %}
 \t</main>

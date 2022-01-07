@@ -39,7 +39,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			align: 'center',
 			style: {
 				fontFamily: 'var(--bs-font-sans-serif)',
-				color: '#000000'
+				color: 'var(--bs-cmefi-green)',
+				fontSize: '1.2rem'
 			}
 		},
 		subtitle: {
@@ -135,6 +136,49 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		},
 		time: {
 			timezone: 'America/New_York'
+		},
+		credits: {
+			enabled: true,
+			text: 'econforecasting.com',
+			href: 'https://econforecasting.com'
+        },
+		lang: {
+			rangeSelectorZoom: 'Display:'
+		},
+		scrollbar: {
+			enabled: false
+		},
+		tooltip: {
+			style: {
+				fontWeight: 'bold',
+				fontSize: '0.85rem'
+			}
+		},
+		rangeSelector: {
+			buttonTheme: { // styles for the buttons
+				fill: 'var(--bs-econblue)',
+				style: {
+					color: 'white'
+				},
+				states: {
+					hover: {
+						fill: 'var(--bs-econdblue)'
+					},
+					select: {
+						fill: 'var(--bs-econlblue)',
+						style: {
+							color: 'white'
+						}
+					}
+				}
+			},
+			inputBoxBorderColor: 'gray',
+			inputStyle: {
+				color: 'black'
+			},
+			labelStyle: {
+				color: 'black',
+			},
 		}
 	});
 	// Apply the theme

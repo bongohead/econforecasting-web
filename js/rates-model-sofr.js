@@ -12,55 +12,69 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	const get_submodel_values_dfd = getFetch('get_rates_model_submodel_values_last_vintage', toScript = ['submodel_values'], fromAjax = {varname: 'sofr', freq: null});
 	
 	Promise.all([get_hist_values_dfd, get_submodel_values_dfd]).then(function(response) {
-		const fcDataRaw =
-			response[0].hist_values.map(function(x) {
-				return {...x,
-					cmefi: true,
-					fcname: 'hist',
-					freq: ud.freq,
-					fullname: 'Historical Data',
-					shortname: 'Historical Data'
-				};
-			}).concat(response[1].fcForecast)
-			.map(function(x) {
-				return {...x,
-					value: parseFloat(x.value)
-				};
-			});
-		//console.log('fcDataRaw', fcDataRaw);
+		const ts_data_raw =
+			response[0].hist_values.map(x => ({
+				tskey: 'hist',
+				freq: 'm',
+				vdate: moment().format('YYYY-MM-DD'),
+				date: x.date,
+				value: parseFloat(x.value)
+			})).concat(response[1].submodel_values.map(x => ({
+				tskey: x.submodel,
+				freq: x.freq,
+				vdate: x.vdate,
+				date: x.date, 
+				value: parseFloat(x.value)
+			}))
+			);
+		//console.log('ts_data_raw', ts_data_raw);
 		
 		// Returns [{fcname: hist, data: [[],..]}, ...] MAX 5 years
-		const fcDataParsed = 
-			[... new Set(fcDataRaw.map(x => x.fcname))] // Get list of obs_dates
-			.map(function(fc) { // Group each value of the original array under the correct obs_date
+		const ts_data_parsed = 
+			[... new Set(ts_data_raw.map(x => x.tskey))] // Get list of dates
+			.map(function(tskey) { // Group each value of the original array under the correct date
 				
-				const z = fcDataRaw.filter(x => x.fcname === fc)[0];
+				const z = ts_data_raw.filter(x => x.tskey === tskey)[0];
 				return {
-					fcname: fc,
+					tskey: tskey,
 					freq: z.freq,
-					cmefi: z.cmefi,
-					shortname: z.shortname,
-					fullname: z.fullname,
+					ts_type: 
+						z.tskey ==='hist' ? 'hist'
+						: z.tskey === 'cme' ? 'primary'
+						: 'secondary',
+					shortname: 
+						z.tskey === 'hist' ? 'Historical Data' 
+						: z.tskey === 'cme' ? 'Market Consensus'
+						: 'Other',
+					fullname: 
+						z.tskey === 'hist' ? 'Historical Data' 
+						: z.tskey === 'cme' ? 'Consensus Futures-Derived'
+						: 'Other',
 					freq: z.freq,
-					vintage_date: z.vintage_date || null,
-					data: fcDataRaw.filter(x => x.fcname === fc).filter(x => moment(x.obs_date) <= moment().add(5, 'years')).map(x => [x.obs_date, x.value]).sort((a, b) => a[0] - b[0])
+					vdate: z.vdate || null,
+					data: ts_data_raw.filter(x => x.tskey === tskey)
+						.filter(x => moment(x.date) <= moment().add(5, 'years'))
+						.map(x => [x.date, x.value]).sort((a, b) => a[0] - b[0])
 				}
 			})
 			//Sort so that CMEFI forecasts are first and historical data is last
 			.sort((a, b) =>
-				(a.cmefi === true && a.fcname !== 'hist' ? -1 : (b.cmefi === true && b.fcname !== 'hist' ? 1 : (a.fcname === 'hist' ? 1 : (b.fcname === 'hist' ? -1 : 0))))
+				a.ts_type === 'primary' && a.ts_type !== 'hist' ? -1
+				: b.ts_type === 'primary' && b.fcname !== 'hist' ? 1 
+				: a.ts_type === 'hist' ? 1 
+				: b.ts_type === 'hist' ? -1
+				: 0
 			).map((x, i) => ({...x, order: i}));
-			
-		//console.log('fcDataParsed', fcDataParsed);
+
+		//console.log('ts_data_parsed', ts_data_parsed);
 		
-		setData('userData', {...getData('userData'), ...{fcDataParsed: fcDataParsed}});
-		
-		return(fcDataParsed);
+		setData('rates-model-sofr', {...getData('rates-model-sofr'), ...{ts_data_parsed: ts_data_parsed}});
+		return(ts_data_parsed);
 	})
 	/********** DRAW CHART & TABLE **********/
-	.then(function(fcDataParsed) {
-		drawChart(fcDataParsed, getData('userData').varFullname, getData('userData').varUnits);
-		drawTable(fcDataParsed, getData('userData').varFullname, getData('userData').varUnits);
+	.then(function(ts_data_parsed) {
+		drawChart(ts_data_parsed);
+		drawTable(ts_data_parsed);
 		$('div.overlay').hide();
 	});
 
@@ -68,54 +82,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 
 /*** Draw chart ***/
-function drawChart(fcDataParsed, varFullname, varUnits) {
-	
-	Highcharts.setOptions({
-		lang: {
-			rangeSelectorZoom: 'Display:'
-		},
-        credits: {
-			enabled: true,
-			text: 'econforecasting.com',
-			href: 'https://econforecasting.com'
-        },
-		scrollbar: {
-			enabled: false
-		},
-		tooltip: {
-			style: {
-				fontWeight: 'bold',
-				fontSize: '0.85rem'
-			}
-		},
-		rangeSelector: {
-			buttonTheme: { // styles for the buttons
-				fill: 'var(--bs-econblue)',
-				style: {
-					color: 'white'
-				},
-				states: {
-					hover: {
-						fill: 'var(--bs-econdblue)'
-					},
-					select: {
-						fill: 'var(--bs-econlblue)',
-						style: {
-							color: 'white'
-						}
-					}
-				}
-			},
-			inputBoxBorderColor: 'gray',
-			inputStyle: {
-				color: 'black'
-			},
-			labelStyle: {
-				color: 'black',
-			},
-		}
-
-	});
+function drawChart(ts_data_parsed) {
 	
 	//console.log('fcDataParsed', fcDataParsed);
 	/*
@@ -126,32 +93,31 @@ function drawChart(fcDataParsed, varFullname, varUnits) {
 	);
 	*/
 	
-	const chartData =
-		fcDataParsed
+	const chart_data =
+		ts_data_parsed
 		.map((x, i) => (
 			{
-				id: x.fcname,
-				name: (x.fcname !== 'hist' ? x.shortname + ' Forecast (Updated ' + moment(x.vintage_date).format('MM/DD/YY') + ')': x.shortname),
+				id: x.tskey,
+				name: (x.tskey !== 'hist' ? x.shortname + ' Forecast (Updated ' + moment(x.vdate).format('MM/DD/YY') + ')': x.shortname),
 				data: x.data.map(x => [parseInt(moment(x[0]).format('x')), x[1]]),
 				type: 'spline',
-				dashStyle: (x.fcname === 'hist' ? 'solid' : 'solid'),
-				lineWidth: (x.fcname === 'hist' ? 4 : 2),
-				color: (x.fcname === 'hist' ? 'black' : ['var(--bs-econlred)', 'var(--bs-econorange)', 'var(--bs-econlgreen)', 'var(--bs-econblue)'][i]),
+				dashStyle: (x.tskey === 'hist' ? 'solid' : 'solid'),
+				lineWidth: (x.tskey === 'hist' ? 3 : 3),
+				color: (x.tskey === 'hist' ? 'black' : ['var(--bs-cmefi-blue)', 'var(--bs-cmefi-green)', 'var(--bs-cmefi-orange)'][i]),
 				opacity: 2,
-				visible: (x.cmefi === true),
-				index: i // Force legend to order items correctly
-				//(x.type === 'history' || moment(x.date).month() === moment(fcDataParsed.filter(x => x.type === 'history').slice(-1)[0].date).month() + 1)
+				visible: (x.ts_type === 'primary' || x.ts_type === 'hist', true),
+				index: i
 			}
 		));
-	//console.log('chartData', chartData);
+	// console.log('chart_data', chart_data);
 	
 	const o = {
         chart: {
-			spacingTop: 20,
+			spacingTop: 15,
             backgroundColor: 'rgba(255, 255, 255, 0)',
 			plotBackgroundColor: '#FFFFFF',
 			style: {
-				fontColor: 'var(--bs-econgreen)'
+				fontColor: 'var(--bs-cmefi-green)'
 			},
 			height: 450,
 			plotBorderColor: 'black',
@@ -159,18 +125,23 @@ function drawChart(fcDataParsed, varFullname, varUnits) {
         },
         title: {
 			useHTML: true,
-			text: '<img class="me-2" width="20" height="20" src="/static/cmefi_short.png"><div style="vertical-align:middle;display:inline"><span>' + varFullname + '</h5></span>',
+			text: 
+				'<img class="me-1" width="18" height="18" src="/static/cmefi-short.svg">' +
+				'<div style="vertical-align:middle;display:inline"><span>Secured Overnight Financing Rate (SOFR) Forecasts</span></div>',
 			style: {
-				fontSize: '1.5rem',
-				color: 'var(--bs-econblue)'
+				fontSize: '1.3rem',
+				color: 'var(--bs-dark)'
 			}
         },
 		caption: {
-			text: 'Shaded areas indicate recessions'
+			text: 'Shaded areas indicate recessions',
+			style: {
+				fontSize: '0.75rem'
+			}
 		},
         plotOptions: {
 			series: {
-				shadow: true,
+				//shadow: true,
 				dataGrouping: {
 					enabled: true,
 					units: [['day', [1]]]
@@ -185,36 +156,37 @@ function drawChart(fcDataParsed, varFullname, varUnits) {
 		rangeSelector: {
 			buttons: [
 				{
-					text: '1 Year',
+					text: '1Y Forecast',
 					events: {
 						click: function(e) {
-							chart.xAxis[0].setExtremes(moment().add(-12, 'M').toDate().getTime(), moment().add(12, 'M').toDate().getTime());
+							chart.xAxis[0].setExtremes(moment().add(-24, 'M').toDate().getTime(), moment().add(12, 'M').toDate().getTime());
 							return false;
 						}
 					}
 				}, {
-					text: '2 Year',
+					text: '2Y Forecast',
 					events: {
 						click: function(e) {
-							chart.xAxis[0].setExtremes(moment().add(-12, 'M').toDate().getTime(), moment().add(24, 'M').toDate().getTime());
+							chart.xAxis[0].setExtremes(moment().add(-24, 'M').toDate().getTime(), moment().add(24, 'M').toDate().getTime());
 							return false;
 						}
 					}
 				}, {
-					text: '5 Year',
+					text: '5Y Forecast',
 					events: {
 						click: function(e) {
-							chart.xAxis[0].setExtremes(moment().add(-12, 'M').toDate().getTime(), moment().add(60, 'M').toDate().getTime());
+							chart.xAxis[0].setExtremes(moment().add(-24, 'M').toDate().getTime(), moment().add(60, 'M').toDate().getTime());
 							return false;
 						}
 					}
 				}, {
 					type: 'all',
-					text: 'All Historical Data'
+					text: 'Full Historical Data & Forecast'
 				}
 			],
 			buttonTheme: { // styles for the buttons
-				width: '5rem'
+				width: '6rem',
+				padding: 5
 			}
 		},
 		xAxis: {
@@ -227,7 +199,7 @@ function drawChart(fcDataParsed, varFullname, varUnits) {
 			{color: '#ffd9b3', from: Date.UTC(2007, 12, 1), to: Date.UTC(2009, 6, 30)},
 			{color: '#ffd9b3', from: Date.UTC(2001, 3, 1), to: Date.UTC(2001, 11, 30)}],
 			ordinal: false,
-			min: moment().add(-12, 'M').toDate().getTime(),
+			min: moment().add(-24, 'M').toDate().getTime(),
 			max: moment().add(60, 'M').toDate().getTime(),
 			labels: {
 				style: {
@@ -246,7 +218,7 @@ function drawChart(fcDataParsed, varFullname, varUnits) {
                 }
             },
 			title: {
-				text: varUnits,
+				text: 'Percent (%)',
 				style: {
 					color: 'black',
 				}
@@ -278,14 +250,14 @@ function drawChart(fcDataParsed, varFullname, varUnits) {
 				//console.log(this, moment(this.x).format('YYYY MM DD'));
 				const points = this.points;
 				const x = this.x;
-				const ud = getData('userData');
+				const ud = getData('rates-model-sofr');
 				const text =
 					'<table>' +
 					'<tr style="border-bottom:1px solid black"><td>DATE</td><td style="font-weight:600">' +
-						'FORECAST' +
+						'DATA' +
 					'</td></tr>' +
 					points.map(function(point) {
-						const freq = ud.fcDataParsed.filter(x => x.fcname === point.series.options.id)[0].freq;
+						const freq = ud.ts_data_parsed.filter(x => x.tskey === point.series.options.id)[0].freq;
 						return '<tr><td style="padding-right:1rem; color:'+point.series.color+'">' + (freq === 'm' ? moment(x).format('MMM YYYY') : moment(x).format('YYYY[Q]Q')) +'</td><td style="color:' + point.color + '">' + point.series.name.replace(/ *\([^)]*\) */g, "") + ': ' + point.y.toFixed(2) + '%</td></tr>'; // Remove everything in aprantheses
 					}).join('') +
 					'</table>';
@@ -293,7 +265,7 @@ function drawChart(fcDataParsed, varFullname, varUnits) {
 				return text;
 			}
         },
-        series: chartData
+        series: chart_data
 	};
 	const chart = Highcharts.stockChart('chart-container', o);
 	
@@ -303,25 +275,21 @@ function drawChart(fcDataParsed, varFullname, varUnits) {
 
 
 
-function drawTable(fcDataParsed, varFullname, varUnits) {
+function drawTable(ts_data_parsed) {
 	
 	//console.log('fcDataParsed', fcDataParsed);
 	// Turn into list of series
 	// Separate tab for each table
-	const tableData = fcDataParsed
-	.forEach(function(x, i) {
+	const table_data = ts_data_parsed.forEach(function(x, i) {
 		//console.log(x.fcname);
 		const seriesData =
-			(x.fcname === 'hist') ?
+			(x.tskey === 'hist') ?
 			x.data.map(y => ({date: (x.freq === 'q' ? moment(y[0]).format('YYYY[Q]Q') : moment(y[0]).format('YYYY-MM')), type: 'Historical Data', value: y[1].toFixed(4)})) :
-			/*fcDataParsed.filter(x => x.fcname === 'hist')[0].data.slice(-4).map(y => ({date: (x.freq === 'q' ? moment(y[0]).format('YYYY[Q]Q') : moment(y[0]).format('YYYY-MM')), type: 'Historical Data', value: y[1]}))
-				.concat(x.data.map(y => ({date: (x.freq === 'q' ? moment(y[0]).format('YYYY[Q]Q') : moment(y[0]).format('YYYY-MM')), type: 'Forecast', value: y[1]})));
-				*/
 			x.data.map(y => ({date: (x.freq === 'q' ? moment(y[0]).format('YYYY[Q]Q') : moment(y[0]).format('YYYY-MM')), type: 'Forecast', value: y[1].toFixed(4)}));
 		const dtCols = [
 			{title: 'Date', data: 'date'},
 			{title: 'Type', data: 'type'},
-			{title: varFullname + ' (' + varUnits + ')', data: 'value'}
+			{title: 'SOFR (%)', data: 'value'}
 		].map(function(x, i) {
 			return {...x, ...{
 				visible: (x.title !== 'Type'),
@@ -356,13 +324,9 @@ function drawTable(fcDataParsed, varFullname, varUnits) {
 				{extend: 'copyHtml5', text: copySvg + 'Copy', exportOptions: {columns: [0, 2]}, className: 'btn btn-sm btn-econgreen'},
 				{extend: 'csvHtml5', text: dlSvg + 'Download', exportOptions: {columns: [0, 2]}, className: 'btn btn-sm btn-econgreen'}
 			],
-			order: (x.fcname === 'hist' ? [[0, 'desc']] : [[0, 'asc']]),
+			order: (x.tskey === 'hist' ? [[0, 'desc']] : [[0, 'asc']]),
 			paging: true,
 			pagingType: 'numbers',
-			language: {
-				search: "Filter By Date:",
-				searchPlaceholder: "YYYY-MM"
-			},
 			responsive: true,
 			createdRow: function(row, data, dataIndex) {
 				/*if (data.type === 'history')  {
@@ -379,17 +343,17 @@ function drawTable(fcDataParsed, varFullname, varUnits) {
 		const li = document.createElement('li');
 		li.classList.add('list-group-item');
 		li.classList.add('w-100'); // Needed to get the thing to vertically align
-		li.textContent = (x.fcname !== 'hist' ? x.shortname + ' Forecast' : x.shortname);
-		li.setAttribute('data-ref-table', x.fcname); 
+		li.textContent = (x.tskey !== 'hist' ? x.shortname + ' Forecast' : x.shortname);
+		li.setAttribute('data-ref-table', x.tskey); 
 		if (i === 0) li.classList.add('active');
 		document.querySelector('#li-container').appendChild(li);
 		
 		// Add last updated text
 		const updatedDiv = document.createElement('div');
 		const updatedSpan = document.createElement('span');
-		updatedDiv.id = 'updated-' + x.fcname;
+		updatedDiv.id = 'updated-' + x.tskey;
 		updatedDiv.classList.add('text-end');
-		updatedSpan.textContent = (x.fcname !== 'hist' ? x.shortname + ' Forecast Updated ' + x.vintage_date : '');
+		updatedSpan.textContent = (x.tskey !== 'hist' ? x.shortname + ' Forecast Updated ' + x.vdate : '');
 		updatedSpan.classList.add('text-muted');
 		updatedSpan.style.fontSize = '0.9rem';
 		updatedDiv.appendChild(updatedSpan);
@@ -402,7 +366,7 @@ function drawTable(fcDataParsed, varFullname, varUnits) {
 		table.classList.add('table');
 		table.classList.add('data-table');
 		table.classList.add('w-100');
-		table.id = 'table-' + x.fcname;
+		table.id = 'table-' + x.tskey;
 		document.querySelector('#tables-container').appendChild(table);
 		
 
@@ -415,7 +379,7 @@ function drawTable(fcDataParsed, varFullname, varUnits) {
 		//console.log(table.parentElement);
 		const downloadDiv = table.closest('.dataTables_wrapper').querySelector('.dt-buttons');
 		downloadDiv.classList.add('float-end');
-		downloadDiv.id = 'download-' + x.fcname;
+		downloadDiv.id = 'download-' + x.tskey;
 		if (i !== 0) downloadDiv.style.display = 'none'
 		$('#tables-container .d-inline').after($(downloadDiv).detach());
 		
@@ -438,38 +402,8 @@ function drawTable(fcDataParsed, varFullname, varUnits) {
 			
 			$('#tables-container div.text-end').hide();
 			$('#updated-' + this.getAttribute('data-ref-table')).show();
-
 			
 		}, false);
-
-		
-		/*const btnEl = $('#tablediv.dt-buttons').addClass('float-end').attr('id', 'download-' + x.fcname).detach();
-		$('div.d-inline').after(btnEl);
-		*/
-		/*
-		new $.fn.dataTable.Buttons( dTable, {
-			buttons: [
-				{
-					text: 'Button 1',
-					action: function ( e, dt, node, conf ) {
-						console.log( 'Button 1 clicked on' );
-					}
-				},
-				{
-					text: 'Button 2',
-					action: function ( e, dt, node, conf ) {
-						console.log( 'Button 2 clicked on' );
-					}
-				}
-			]
-		} );
-	 
-		dTable.buttons.container().prependTo(
-			dTable.table().container()
-		);
-		*/
-
-		
 	});
 	
 	
