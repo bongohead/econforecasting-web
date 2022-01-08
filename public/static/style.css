@@ -81,22 +81,35 @@ footer {
 }
 
 /* Forecast table */
+
 #li-container {
-	border: 1px solid var(--bs-econblue);
+	margin: 1rem 2rem 2rem 2rem;
+	border: 1px solid var(--bs-cmefi-green);
 }
 #li-container > li {
 	font-size: .85rem;
 	line-height: 1.0rem;
 	padding: .5rem;
 	text-align: center;
+	border: none !important;
 }
 #li-container > li:hover {
 	cursor: pointer;
 }
 #li-container > li.active {
-	background-color: var(--bs-econblue);
+	background-color: var(--bs-cmefi-green);
 }
 
+
+/* Buttons */
+button.dt-button {
+	color: rgb(64, 74, 87);
+	box-shadow: 0 0 0 1px rgba(43, 45, 80, 0.1), 0 2px 5px 0 rgba(43, 45, 80, 0.08), 0 1px 1.5px 0 rgba(0, 0, 0, 0.07), 0 1px 2px 0 rgba(0, 0, 0, 0.08);
+}
+button.dt-button:hover {
+	color: rgb(44, 54, 67);
+	box-shadow: 0 0 0 1px rgba(43, 45, 80, 0.1), 0 2px 5px 0 rgba(43, 45, 80, 0.1), 0 3px 9px 0 rgba(43, 45, 80, 0.08), 0 1px 1.5px 0 rgba(0, 0, 0, 0.08), 0 1px 2px 0 rgba(0, 0, 0, 0.08)
+}
 
 
 /* Homepage links */
@@ -244,8 +257,9 @@ nav.sidebar div.sidebar-submenu > a:hover {
 
 /* Datatable */
 
+/*
 table.dataTable th {
-	background-color: var(--bs-efblue);/*rgb(48, 79, 11);*/
+	background-color: var(--bs-efblue);
 	color: white;
 	font-size: .90rem;
 }
@@ -258,11 +272,22 @@ table.dataTable th:last-child {
 	border-radius:0 .5rem .5rem 0;
 }
 
+*/
+
+table.dataTable.data-table th {
+	background-color: transparent;
+	color: rgb(30, 50, 50);
+	font-size: .90rem;
+}
 
 table.dataTable.data-table td {
     padding: .25rem .5rem;
     font-size: 0.82rem;
 	border: none;
+	font-family: var(--bs-font-family-serif);
+}
+li.paginate_button.page-item {
+	font-size: .80rem;
 }
 
 table.dataTable.summary-table td {

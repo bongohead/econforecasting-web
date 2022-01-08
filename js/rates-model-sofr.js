@@ -134,7 +134,9 @@ function drawChart(ts_data_parsed) {
 			}
         },
 		caption: {
-			text: 'Shaded areas indicate recessions',
+			useHTML: true,
+			text: 'Data represents monthly-averaged values; shaded areas indicate recessions',
+
 			style: {
 				fontSize: '0.75rem'
 			}
@@ -321,8 +323,8 @@ function drawTable(ts_data_parsed) {
 				"<'row justify-content-center'<'col-12'tr>>" +
 				"<'row justify-content-end'<'col-auto'p>>",
 			buttons: [
-				{extend: 'copyHtml5', text: copySvg + 'Copy', exportOptions: {columns: [0, 2]}, className: 'btn btn-sm btn-econgreen'},
-				{extend: 'csvHtml5', text: dlSvg + 'Download', exportOptions: {columns: [0, 2]}, className: 'btn btn-sm btn-econgreen'}
+				{extend: 'copyHtml5', text: copySvg + 'Copy', exportOptions: {columns: [0, 2]}, className: 'btn btn-sm'},
+				{extend: 'csvHtml5', text: dlSvg + 'Download', exportOptions: {columns: [0, 2]}, className: 'btn btn-sm'}
 			],
 			order: (x.tskey === 'hist' ? [[0, 'desc']] : [[0, 'asc']]),
 			paging: true,
@@ -342,23 +344,20 @@ function drawTable(ts_data_parsed) {
 		// Create button for this forecast
 		const li = document.createElement('li');
 		li.classList.add('list-group-item');
-		li.classList.add('w-100'); // Needed to get the thing to vertically align
-		li.textContent = (x.tskey !== 'hist' ? x.shortname + ' Forecast' : x.shortname);
+				li.classList.add('d-flex');
+
+		li.classList.add('justify-content-between');
+		li.classList.add('align-items-center');
+
+		//li.classList.add('w-100'); // Needed to get the thing to vertically align
+		li.innerHTML =
+			(x.tskey !== 'hist' ? x.shortname + ' Forecast' : x.shortname) +
+			'<span style="font-size:0.8rem;color: rgb(180, 180, 180)" >' +
+			('Updated ' + moment(x.vdate).format('MM/DD/YYYY')) +
+			 '</span>';
 		li.setAttribute('data-ref-table', x.tskey); 
 		if (i === 0) li.classList.add('active');
 		document.querySelector('#li-container').appendChild(li);
-		
-		// Add last updated text
-		const updatedDiv = document.createElement('div');
-		const updatedSpan = document.createElement('span');
-		updatedDiv.id = 'updated-' + x.tskey;
-		updatedDiv.classList.add('text-end');
-		updatedSpan.textContent = (x.tskey !== 'hist' ? x.shortname + ' Forecast Updated ' + x.vdate : '');
-		updatedSpan.classList.add('text-muted');
-		updatedSpan.style.fontSize = '0.9rem';
-		updatedDiv.appendChild(updatedSpan);
-		document.querySelector('#li-container').after(updatedDiv);
-		if (i !== 0) updatedDiv.style.display = 'none';
 		
 		
 		// Create table and style it
@@ -381,7 +380,7 @@ function drawTable(ts_data_parsed) {
 		downloadDiv.classList.add('float-end');
 		downloadDiv.id = 'download-' + x.tskey;
 		if (i !== 0) downloadDiv.style.display = 'none'
-		$('#tables-container .d-inline').after($(downloadDiv).detach());
+		$('#tables-container > div > span').after($(downloadDiv).detach());
 		
 		/* Now add event listener */
 		li.addEventListener('click', function() { 
@@ -396,13 +395,9 @@ function drawTable(ts_data_parsed) {
 			const table = document.querySelector('#table-' + this.getAttribute('data-ref-table'));
 			$(table).parents('div.dataTables_wrapper').first().show();
 			
-			
-			$('#tables-container div.dt-buttons').hide();
+			$('#data-card div.dt-buttons').hide();
 			$('#download-' + this.getAttribute('data-ref-table')).show();
-			
-			$('#tables-container div.text-end').hide();
-			$('#updated-' + this.getAttribute('data-ref-table')).show();
-			
+						
 		}, false);
 	});
 	
