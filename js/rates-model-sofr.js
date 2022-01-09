@@ -103,7 +103,8 @@ function drawChart(ts_data_parsed) {
 				type: 'spline',
 				dashStyle: (x.tskey === 'hist' ? 'solid' : 'solid'),
 				lineWidth: (x.tskey === 'hist' ? 3 : 3),
-				color: (x.tskey === 'hist' ? 'black' : ['var(--bs-cmefi-blue)', 'var(--bs-cmefi-green)', 'var(--bs-cmefi-orange)'][i]),
+				//['var(--bs-cmefi-blue)', 'var(--bs-cmefi-green)', 'var(--bs-cmefi-orange)'][i]
+				color: (x.tskey === 'hist' ? 'black' : getColorArray()[i]),
 				opacity: 2,
 				visible: (x.ts_type === 'primary' || x.ts_type === 'hist', true),
 				index: i
@@ -344,11 +345,9 @@ function drawTable(ts_data_parsed) {
 		// Create button for this forecast
 		const li = document.createElement('li');
 		li.classList.add('list-group-item');
-				li.classList.add('d-flex');
-
+		li.classList.add('d-flex');
 		li.classList.add('justify-content-between');
 		li.classList.add('align-items-center');
-
 		//li.classList.add('w-100'); // Needed to get the thing to vertically align
 		li.innerHTML =
 			(x.tskey !== 'hist' ? x.shortname + ' Forecast' : x.shortname) +
