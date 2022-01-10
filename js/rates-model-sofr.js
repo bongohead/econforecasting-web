@@ -73,6 +73,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	})
 	/********** DRAW CHART & TABLE **********/
 	.then(function(ts_data_parsed) {
+		drawDates(ts_data_parsed);
 		drawChart(ts_data_parsed);
 		drawTable(ts_data_parsed);
 		$('div.overlay').hide();
@@ -80,6 +81,19 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 });
 
+
+/*** Draw last updated date in description paragraphs ***/
+function drawDates(ts_data_parsed) {
+	
+	ts_data_parsed.filter(x => 
+		document.querySelectorAll('#description-date-' + x.tskey).length == 1
+	).forEach(x =>
+		document.querySelector('#description-date-' + x.tskey).textContent = moment(x.vdate).format('MMM Do YYYY')
+	);
+	var myElement = document.getElementById("myElementID");
+
+	
+};
 
 /*** Draw chart ***/
 function drawChart(ts_data_parsed) {
@@ -235,14 +249,14 @@ function drawChart(ts_data_parsed) {
         },
 		legend: {
 			enabled: true,
-			backgroundColor: 'var(--bs-econpale)',
-			borderColor: 'var(--bs-econblue)',
+			backgroundColor: 'var(--bs-efpale)',
+			borderColor: 'var(--bs-cmefi-dark)',
 			borderWidth: 1,
 			align: 'center',
 			verticalAlign: 'bottom',
 			layout: 'horizontal',
 			title: {
-				text: 'Available Forecasts <span style="font-size: .8rem; color: #666; font-weight: normal; font-style: italic">(click to hide/show)</span>',
+				text: 'Available Forecasts <span style="font-size: .8rem; color: #666; font-weight: normal; font-style: italic">(click below to hide/show)</span>',
 			}
 		},
         tooltip: {

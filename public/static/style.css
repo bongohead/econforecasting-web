@@ -165,7 +165,7 @@ nav.navbar li.nav-item > a.nav-link.show {
 
 /* Dropdown items */
 nav.navbar ul.dropdown-menu, nav.navbar div.dropdown-menu {
-	background-color: var(--bs-cmefi-light);
+	background-color: var(--bs-light);
 	border-color: var(--bs-cmefi-blue);
 	border-radius: .25rem;
 	border-width: 1px;
@@ -321,7 +321,7 @@ table.dataTable tr {
 }
 
 table.dataTable tr.odd  {
-    background-color: rgba(200, 230, 245, .35);
+    background-color: var(--bs-cmefi-light-warm);
 }
 
 table.dataTable tr:hover td {
@@ -329,6 +329,17 @@ table.dataTable tr:hover td {
 	color: white !important;
 }
 
+/** DT Paginate BUttons **/
+.page-item.active .page-link {
+    background-color: var(--bs-efpale) !important;
+    border: 1px solid  rgba(220, 220, 220) !important;
+}
+.page-link {
+    color: black !important;
+}
+.page-link:focus {
+	box-shadow: none !important;
+}
 /** Loading Spinner **/
 .overlay {
     background: #D3D3D3;

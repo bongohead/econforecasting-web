@@ -156,16 +156,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		},
 		rangeSelector: {
 			buttonTheme: { // styles for the buttons
-				fill: 'var(--bs-econblue)',
+				fill: 'var(--bs-cmefi-blue)',
 				style: {
 					color: 'white'
 				},
 				states: {
 					hover: {
-						fill: 'var(--bs-econdblue)'
+						fill: 'var(--bs-cmefi-dark-blue)'
 					},
 					select: {
-						fill: 'var(--bs-econlblue)',
+						fill: 'var(--bs-cmefi-light-blue)',
 						style: {
 							color: 'white'
 						}
