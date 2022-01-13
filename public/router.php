@@ -35,6 +35,7 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 			['template' => 'csm-forecasts', 'request' => ['csm-forecasts'], 'title' => 'Forecasts | CMEFI', 'models' => [], 'js' => ['init', 'csm-forecasts']],
 			
 			['template' => 'rates-model-sofr', 'request' => ['rates-model-sofr'], 'title' => 'SOFR Forecasts | CMEFI', 'models' => [], 'js' => ['init', 'rates-model-sofr']],
+			['template' => 'rates-model-ffr', 'request' => ['rates-model-ffr'], 'title' => 'Federal Funds Rate Forecasts | CMEFI', 'models' => [], 'js' => ['init', 'rates-model-ffr']],
 
 		],
 		errorRoute: ['template' => 'error', 'request' => 'error', 'title' => 'Error', 'js' => []],
