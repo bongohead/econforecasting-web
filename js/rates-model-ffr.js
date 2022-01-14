@@ -45,10 +45,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					shortname: 
 						z.tskey === 'hist' ? 'Historical Data' 
 						: z.tskey === 'cme' ? 'Market Consensus'
+						: z.tskey === 'cbo' ? 'CBO Model'
+						: z.tskey === 'wsj' ? 'WSJ Survey'
 						: 'Other',
 					fullname: 
 						z.tskey === 'hist' ? 'Historical Data' 
-						: z.tskey === 'cme' ? 'Consensus Futures-Derived'
+						: z.tskey === 'cme' ? 'Consensus Futures-Derived Forecast'
+						: z.tskey === 'cbo' ? 'U.S. Congressional Budget Office Forecast'
+						: z.tskey === 'wsj' ? 'Wall Street Journal Economic Forecasting Survey'
 						: 'Other',
 					freq: z.freq,
 					vdate: z.vdate || null,
