@@ -5,16 +5,24 @@ window.addEventListener('DOMContentLoaded', () => {
 		{group: 'Interest Rates', fullname: 'Secured Overnight Financing Rate (SOFR)', url: 'rates-model-sofr'}
 	];
 	
-	console.log([...new Set(page_list.map(x => x.group))]);
-	
-	console.log( page_list.map(x => ({[x.group]: x.fullname})));
-
 	// API Basic Configuration Object
 	const autocomplete_config = {
 		placeHolder: "Search for Economic Variables...",
 		data: {
 			keys: [...new Set(page_list.map(x => x.group))],
 			src: page_list.map(x => ({[x.group]: x.fullname}))
+		},
+		resultsList: {
+			tag: "ul",
+			id: "autoComplete_list",
+			class: "results_list",
+			destination: "#autoComplete",
+			position: "afterend",
+			maxResults: 5,
+			noResults: true,
+			element: (list, data) => {
+				list.setAttribute("data-parent", "food-list");
+			},
 		},
 		resultItem: {
 			highlight: {
@@ -24,7 +32,6 @@ window.addEventListener('DOMContentLoaded', () => {
 	}
 	
 	const autoCompleteJS = new autoComplete(autocomplete_config);
-	
 	
 	autoCompleteJS.input.addEventListener("selection", function (event) {
 		const feedback = event.detail;
@@ -36,13 +43,13 @@ window.addEventListener('DOMContentLoaded', () => {
 		// Replace Input value with the selected value
 		autoCompleteJS.input.value = selection;
 		// Console log autoComplete data feedback
-		console.log(feedback);
+		//console.log(feedback);
+		getDir(page_list.filter(x => x.fullname == selection)[0]);
 	});
 	
 	
 }); 
 
 const getDir = function(page_obj) {
-	
 	console.log(page_obj);
 }
