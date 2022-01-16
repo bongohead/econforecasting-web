@@ -18,7 +18,6 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 		toScript: [],
 		jsDir: __DIR__.'/../js',
 		routes: [
-			['template' => 'home', 'request' => ['', 'home'], 'title' => 'The Center for Macroeconomic Forecasting & Insights', 'models' => [], 'js' => ['init']],
 			['template' => 'ac-assets', 'request' => ['ac-assets'], 'title' => 'Asset Cross-Correlation Index | Center for Macroeconomic Forecasting & Insights', 'models' => [], 'js' => ['init', 'ac-assets']],
 			['template' => 'ac-assets-hm', 'request' => ['ac-assets-hm'], 'title' => 'Asset Cross-Correlation | Center for Macroeconomic Forecasting & Insights', 'models' => [], 'js' => ['init', 'ac-assets-hm']],
 			['template' => 'ac-regions', 'request' => ['ac-regions'], 'title' => 'Regional Cross-Correlation Index | Center for Macroeconomic Forecasting & Insights', 'models' => [], 'js' => ['init', 'ac-regions']],
@@ -34,6 +33,7 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 
 			['template' => 'csm-forecasts', 'request' => ['csm-forecasts'], 'title' => 'Forecasts | CMEFI', 'models' => [], 'js' => ['init', 'csm-forecasts']],
 			
+			['template' => 'home', 'request' => ['', 'home'], 'title' => 'The Center for Macroeconomic Forecasting & Insights | CMEFI', 'models' => [], 'js' => ['init', 'home']],
 			['template' => 'rates-model-sofr', 'request' => ['rates-model-sofr'], 'title' => 'SOFR Forecasts | CMEFI', 'models' => [], 'js' => ['init', 'rates-model-sofr']],
 			['template' => 'rates-model-ffr', 'request' => ['rates-model-ffr'], 'title' => 'Federal Funds Rate Forecasts | CMEFI', 'models' => [], 'js' => ['init', 'rates-model-ffr']],
 			['template' => 'rates-model-treasury', 'request' => ['rates-model-treasury-3m'], 'title' => '3 Month Treasury Yield Forecast | CMEFI', 'models' => [], 'js' => ['init', 'rates-model-treasury']],
