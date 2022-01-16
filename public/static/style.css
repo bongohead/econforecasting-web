@@ -95,6 +95,8 @@ footer {
 }
 #li-container > li:hover {
 	cursor: pointer;
+	background-color: var(--bs-cmefi-dark-blue);
+	color: white;
 }
 #li-container > li.active {
 	background-color: var(--bs-cmefi-blue);

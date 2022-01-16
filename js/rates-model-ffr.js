@@ -187,7 +187,7 @@ function drawChart(ts_data_parsed) {
 					events: {
 						click: function(e) {
 							const state = $('#chart-container').highcharts().rangeSelector.buttons[0].state;
-							chart.xAxis[0].setExtremes(moment().add(-24, 'M').toDate().getTime(), moment().add(12, 'M').toDate().getTime());
+							chart.xAxis[0].setExtremes(moment().add(-36, 'M').toDate().getTime(), moment().add(12, 'M').toDate().getTime());
 							$('#chart-container').highcharts().rangeSelector.buttons[0].setState(state === 0 ? 2 : 0);
 							return false;
 						}
@@ -197,7 +197,7 @@ function drawChart(ts_data_parsed) {
 					events: {
 						click: function(e) {
 							const state = $('#chart-container').highcharts().rangeSelector.buttons[1].state;
-							chart.xAxis[0].setExtremes(moment().add(-24, 'M').toDate().getTime(), moment().add(24, 'M').toDate().getTime());
+							chart.xAxis[0].setExtremes(moment().add(-36, 'M').toDate().getTime(), moment().add(24, 'M').toDate().getTime());
 							$('#chart-container').highcharts().rangeSelector.buttons[1].setState(state === 0 ? 2 : 0);
 							return false;
 						}
@@ -207,7 +207,7 @@ function drawChart(ts_data_parsed) {
 					events: {
 						click: function(e) {
 							const state = $('#chart-container').highcharts().rangeSelector.buttons[2].state;
-							chart.xAxis[0].setExtremes(moment().add(-24, 'M').toDate().getTime(), moment().add(60, 'M').toDate().getTime());
+							chart.xAxis[0].setExtremes(moment().add(-36, 'M').toDate().getTime(), moment().add(60, 'M').toDate().getTime());
 							$('#chart-container').highcharts().rangeSelector.buttons[2].setState(state === 0 ? 2 : 0);
 							return false;
 						}
@@ -228,11 +228,11 @@ function drawChart(ts_data_parsed) {
                 day: "%m-%d-%Y",
                 week: "%m-%d-%Y"
             },
-			plotBands: [{color: '#ffd9b3', from: Date.UTC(2020, 2, 1), to: Date.UTC(2021, 2, 28)},
-			{color: '#ffd9b3', from: Date.UTC(2007, 12, 1), to: Date.UTC(2009, 6, 30)},
-			{color: '#ffd9b3', from: Date.UTC(2001, 3, 1), to: Date.UTC(2001, 11, 30)}],
+			plotBands: [{color: '#D8D8D8', from: Date.UTC(2020, 2, 1), to: Date.UTC(2021, 2, 28)},
+			{color: '#D8D8D8', from: Date.UTC(2007, 12, 1), to: Date.UTC(2009, 6, 30)},
+			{color: '#D8D8D8', from: Date.UTC(2001, 3, 1), to: Date.UTC(2001, 11, 30)}],
 			ordinal: false,
-			min: moment().add(-24, 'M').toDate().getTime(),
+			min: moment().add(-36, 'M').toDate().getTime(),
 			max: moment().add(60, 'M').toDate().getTime(),
 			labels: {
 				style: {
