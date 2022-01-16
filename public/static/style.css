@@ -85,7 +85,7 @@ footer {
 
 #li-container {
 	margin: 1.5rem 2rem 1.5rem 2rem;
-	border: 1px solid var(--bs-cmefi-green);
+	border: 1px solid var(--bs-cmefi-blue);
 }
 #li-container > li {
 	font-size: .85rem;
@@ -97,7 +97,7 @@ footer {
 	cursor: pointer;
 }
 #li-container > li.active {
-	background-color: var(--bs-cmefi-green);
+	background-color: var(--bs-cmefi-blue);
 }
 
 

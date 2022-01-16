@@ -3,13 +3,38 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	/********** INITIALIZE **********/
 	$('div.overlay').show();
 	
+	(function() {
+		const varname = 't' + window.location.pathname.split('-').pop().padStart(3, '0');
+		const fullname =
+			varname === 't03m' ? '3 Month Treasury Bill' 
+			: varname === 't06m' ? '6 Month Treasury Bill'
+			: varname === 't01y' ? '1 Year Treasury Note'
+			: varname === 't02y' ? '2 Year Treasury Note'
+			: varname === 't05y' ? '5 Year Treasury Note'
+			: varname === 't10y' ? '10 Year Treasury Note'
+			: varname === 't20y' ? '20 Year Treasury Bond'
+			: varname === 't30y' ? '30 Year Treasury Bond'
+			: 'NA'
+			
+		document.querySelector('meta[name="description"]').setAttribute('content', 'Treasury yield forecasts for ' + fullname + '.');
+		//document.querySelectorAll('span.t-varname').forEach(x => x.textContent = tFullname);
+		document.title  = fullname + ' Forecast | CMEFI';
+		const ud_prev = getAllData()['rates-model-treasury'] || {};
+		const ud = {... ud_prev, ... {
+				varname: varname,
+				fullname: fullname
+			}};
+		setData('rates-model-treasury', ud);
+	})();
+
+
 	/********** GET DATA **********/
 	/* Do not transfer data directly between functions - instead have everything work with sessionStorage.
 	 * Put the functions in a bigger $.Deferred function when more cleaning is needed before finalization;
 	 */
-	const ud = getData('rates-model-ffr') || {};
-	const get_hist_values_dfd = getFetch('get_rates_model_hist_values', toScript = ['hist_values'], fromAjax = {varname: 'ffr', freq: 'm'});
-	const get_submodel_values_dfd = getFetch('get_rates_model_submodel_values_last_vintage', toScript = ['submodel_values'], fromAjax = {varname: 'ffr', freq: null});
+	const ud = getData('rates-model-treasury') || {};
+	const get_hist_values_dfd = getFetch('get_rates_model_hist_values', toScript = ['hist_values'], fromAjax = {varname: ud.varname, freq: 'm'});
+	const get_submodel_values_dfd = getFetch('get_rates_model_submodel_values_last_vintage', toScript = ['submodel_values'], fromAjax = {varname: ud.varname, freq: null});
 	
 	Promise.all([get_hist_values_dfd, get_submodel_values_dfd]).then(function(response) {
 		const ts_data_raw =
@@ -19,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				vdate: moment().format('YYYY-MM-DD'),
 				date: x.date,
 				value: parseFloat(x.value)
-			})).concat(response[1].submodel_values.filter(x => ['wsj', 'cme', 'cbo'].includes(x.submodel)).map(x => ({
+			})).concat(response[1].submodel_values.filter(x => ['tdns', 'spf', 'cbo'].includes(x.submodel)).map(x => ({
 				tskey: x.submodel,
 				freq: x.freq,
 				vdate: x.vdate,
@@ -40,19 +65,19 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					freq: z.freq,
 					ts_type: 
 						z.tskey ==='hist' ? 'hist'
-						: z.tskey === 'cme' ? 'primary'
+						: z.tskey === 'tdns' ? 'primary'
 						: 'secondary',
 					shortname: 
 						z.tskey === 'hist' ? 'Historical Data' 
-						: z.tskey === 'cme' ? 'Market Consensus'
-						: z.tskey === 'cbo' ? 'CBO Model'
-						: z.tskey === 'wsj' ? 'WSJ Survey'
+						: z.tskey === 'tdns' ? 'Market Consensus'
+						: z.tskey === 'spf' ? 'CBO Model'
+						: z.tskey === 'cbo' ? 'WSJ Survey'
 						: 'Other',
 					fullname: 
 						z.tskey === 'hist' ? 'Historical Data' 
-						: z.tskey === 'cme' ? 'Consensus Futures-Derived Forecast'
-						: z.tskey === 'cbo' ? 'U.S. Congressional Budget Office Forecast'
-						: z.tskey === 'wsj' ? 'Wall Street Journal Economic Forecasting Survey'
+						: z.tskey === 'tdns' ? 'Consensus Market-Derived Forecast'
+						: z.tskey === 'spf' ? 'U.S. Congressional Budget Office Forecast'
+						: z.tskey === 'cbo' ? 'Wall Street Journal Economic Forecasting Survey'
 						: 'Other',
 					freq: z.freq,
 					vdate: z.vdate || null,
@@ -78,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	/********** DRAW CHART & TABLE **********/
 	.then(function(ts_data_parsed) {
 		drawDates(ts_data_parsed);
-		drawChart(ts_data_parsed);
+		drawChart(ts_data_parsed, ud.fullname);
 		drawTable(ts_data_parsed);
 		$('div.overlay').hide();
 	});
@@ -100,7 +125,7 @@ function drawDates(ts_data_parsed) {
 };
 
 /*** Draw chart ***/
-function drawChart(ts_data_parsed) {
+function drawChart(ts_data_parsed, fullname) {
 	
 	//console.log('fcDataParsed', fcDataParsed);
 	/*
@@ -152,7 +177,7 @@ function drawChart(ts_data_parsed) {
 			useHTML: true,
 			text: 
 				'<img class="me-1" width="18" height="18" src="/static/cmefi-short.svg">' +
-				'<div style="vertical-align:middle;display:inline"><span>Effective Federal Funds Rate (FFR) Forecasts</span></div>',
+				'<div style="vertical-align:middle;display:inline"><span>' + fullname + ' Forecasts</span></div>',
 			style: {
 				fontSize: '1.3rem',
 				color: 'var(--bs-dark)'
@@ -313,7 +338,7 @@ function drawTable(ts_data_parsed) {
 	//console.log('fcDataParsed', fcDataParsed);
 	// Turn into list of series
 	// Separate tab for each table
-	const table_data = ts_data_parsed.sort((a, b) => a.ts_type === 'hist' ? -1 : b.ts_type === 'primary' ? -1: 1).forEach(function(x, i) {
+	const table_data = ts_data_parsed.sort((a, b) => a.ts_type === 'hist' ? -1 : b.ts_type === 'hist' ? 1 : a.ts_type === 'primary' ? -1: 0).forEach(function(x, i) {
 		//console.log(x.fcname);
 		const seriesData =
 			(x.tskey === 'hist') ?
@@ -385,7 +410,7 @@ function drawTable(ts_data_parsed) {
 			('Updated ' + moment(x.vdate).format('MM/DD/YYYY')) +
 			 '</span>';
 		li.setAttribute('data-ref-table', x.tskey); 
-		if (i === 0) li.classList.add('active');
+		if (x.ts_type === 'primary') li.classList.add('active');
 		document.querySelector('#li-container').appendChild(li);
 		
 		

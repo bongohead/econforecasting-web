@@ -313,7 +313,7 @@ function drawTable(ts_data_parsed) {
 	//console.log('fcDataParsed', fcDataParsed);
 	// Turn into list of series
 	// Separate tab for each table
-	const table_data = ts_data_parsed.sort((a, b) => a.ts_type === 'hist' ? -1 : b.ts_type === 'primary' ? -1: 1).forEach(function(x, i) {
+	const table_data = ts_data_parsed.sort((a, b) => a.ts_type === 'hist' ? -1 : b.ts_type === 'hist' ? 1 : a.ts_type === 'primary' ? -1: 0).forEach(function(x, i) {
 		//console.log(x.fcname);
 		const seriesData =
 			(x.tskey === 'hist') ?
@@ -385,7 +385,7 @@ function drawTable(ts_data_parsed) {
 			('Updated ' + moment(x.vdate).format('MM/DD/YYYY')) +
 			 '</span>';
 		li.setAttribute('data-ref-table', x.tskey); 
-		if (i === 0) li.classList.add('active');
+		if (x.ts_type === 'primary') li.classList.add('active');
 		document.querySelector('#li-container').appendChild(li);
 		
 		
