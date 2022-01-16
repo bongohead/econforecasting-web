@@ -167,7 +167,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					select: {
 						fill: 'var(--bs-cmefi-light-blue)',
 						style: {
-							color: 'white'
+							color: 'white',
+							fontWeight: 'normal'
 						}
 					}
 				}

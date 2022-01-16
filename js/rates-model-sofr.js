@@ -115,8 +115,9 @@ function drawChart(ts_data_parsed) {
 				name: (x.tskey !== 'hist' ? x.shortname + ' Forecast (Updated ' + moment(x.vdate).format('MM/DD/YY') + ')': x.shortname),
 				data: x.data.map(x => [parseInt(moment(x[0]).format('x')), x[1]]),
 				type: 'spline',
-				dashStyle: (x.tskey === 'hist' ? 'solid' : 'solid'),
-				lineWidth: (x.tskey === 'hist' ? 3 : 3),
+				dashStyle: (x.tskey === 'hist' ? 'Solid' : 'ShortDash'),
+				lineWidth: (x.tskey === 'hist' ? 5 : 3),
+				legendIndex: (x.ts_type === 'hist' ? 0 : x.ts_type == 'primary' ? 1 : 2),
 				//['var(--bs-cmefi-blue)', 'var(--bs-cmefi-green)', 'var(--bs-cmefi-orange)'][i]
 				color: (x.tskey === 'hist' ? 'black' : getColorArray()[i]),
 				opacity: 2,
@@ -176,7 +177,9 @@ function drawChart(ts_data_parsed) {
 					text: '1Y Forecast',
 					events: {
 						click: function(e) {
+							const state = $('#chart-container').highcharts().rangeSelector.buttons[0].state;
 							chart.xAxis[0].setExtremes(moment().add(-24, 'M').toDate().getTime(), moment().add(12, 'M').toDate().getTime());
+							$('#chart-container').highcharts().rangeSelector.buttons[0].setState(state === 0 ? 2 : 0);
 							return false;
 						}
 					}
@@ -184,7 +187,9 @@ function drawChart(ts_data_parsed) {
 					text: '2Y Forecast',
 					events: {
 						click: function(e) {
+							const state = $('#chart-container').highcharts().rangeSelector.buttons[1].state;
 							chart.xAxis[0].setExtremes(moment().add(-24, 'M').toDate().getTime(), moment().add(24, 'M').toDate().getTime());
+							$('#chart-container').highcharts().rangeSelector.buttons[1].setState(state === 0 ? 2 : 0);
 							return false;
 						}
 					}
@@ -192,7 +197,9 @@ function drawChart(ts_data_parsed) {
 					text: '5Y Forecast',
 					events: {
 						click: function(e) {
+							const state = $('#chart-container').highcharts().rangeSelector.buttons[2].state;
 							chart.xAxis[0].setExtremes(moment().add(-24, 'M').toDate().getTime(), moment().add(60, 'M').toDate().getTime());
+							$('#chart-container').highcharts().rangeSelector.buttons[2].setState(state === 0 ? 2 : 0);
 							return false;
 						}
 					}
@@ -297,7 +304,7 @@ function drawTable(ts_data_parsed) {
 	//console.log('fcDataParsed', fcDataParsed);
 	// Turn into list of series
 	// Separate tab for each table
-	const table_data = ts_data_parsed.forEach(function(x, i) {
+	const table_data = ts_data_parsed.sort((a, b) => a.ts_type === 'hist' ? -1 : b.ts_type === 'primary' ? -1: 1).forEach(function(x, i) {
 		//console.log(x.fcname);
 		const seriesData =
 			(x.tskey === 'hist') ?
