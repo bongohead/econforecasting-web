@@ -5,6 +5,7 @@ Description TBA
 ## 2022-01-01 [v0.20] (Beta Model Release Version)
 - Added new SOFR forecast page
 - Added new FFR forecast page
+- Added new homepage w/autocomplete
 - Improved CSS styline & SCSS settings
 - Updated BS5 to 5.1.3
 - Updated minor version dependencies for Highcharts and DataTables
