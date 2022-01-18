@@ -36,6 +36,7 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 			['template' => 'home', 'request' => ['', 'home'], 'title' => 'The Center for Macroeconomic Forecasting & Insights | CMEFI', 'models' => [], 'js' => ['init', 'home']],
 			['template' => 'rates-model-sofr', 'request' => ['rates-model-sofr'], 'title' => 'SOFR Forecasts | CMEFI', 'models' => [], 'js' => ['init', 'rates-model-sofr']],
 			['template' => 'rates-model-ffr', 'request' => ['rates-model-ffr'], 'title' => 'Federal Funds Rate Forecasts | CMEFI', 'models' => [], 'js' => ['init', 'rates-model-ffr']],
+			['template' => 'rates-model-treasury-summary', 'request' => ['rates-model-treasury-summary'], 'title' => 'Full Treasury Yield Forecast | CMEFI', 'models' => [], 'js' => ['init', 'rates-model-treasury-summary']],
 			['template' => 'rates-model-treasury', 'request' => ['rates-model-treasury-3m'], 'title' => '3 Month Treasury Yield Forecast | CMEFI', 'models' => [], 'js' => ['init', 'rates-model-treasury']],
 			['template' => 'rates-model-treasury', 'request' => ['rates-model-treasury-6m'], 'title' => '6 Month Treasury Yield Forecast | CMEFI', 'models' => [], 'js' => ['init', 'rates-model-treasury']],
 			['template' => 'rates-model-treasury', 'request' => ['rates-model-treasury-1y'], 'title' => '1 Year Treasury Yield Forecast | CMEFI', 'models' => [], 'js' => ['init', 'rates-model-treasury']],

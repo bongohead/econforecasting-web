@@ -1,4 +1,6 @@
 <?php
+$vars_to_bind = array();
+
 $submodel_values = $sql -> select("
 SELECT submodel, freq, date, vdate, value
 FROM 

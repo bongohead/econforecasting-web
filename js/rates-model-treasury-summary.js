@@ -5,25 +5,25 @@ $(document).ready(function() {
 
 
 	/********** GET DATA **********/
-	/* Do not transfer data directly between functions - instead have everything work with sessionStorage.
-	 * Put the functions in a bigger $.Deferred function when more cleaning is needed before finalization;
-	 */
-    const loadData = $.Deferred(function(dfd) {
-		const ud = getData('userData');
-		const getFcHistoryDfd = getTcurveHistory();
-		const getFcForecastDfd = getFcForecast(fcname ='dns');
-
-		$.when(getFcHistoryDfd, getFcForecastDfd).done(function(fcHistory, fcForecast) {
-			const fcHistoryParsed =
-				[... new Set(fcHistory
-				.map(x => x.obs_date))] // Get list of obs_dates
-				.map(function(d) { // Group each value of the original array under the correct obs_date
-					return {
-						date: d,
-						type: 'history',
-						data: fcHistory.filter(x => x.obs_date == d).map(x => [x.ttm, x.value]).sort((a, b) => a[0] - b[0]); // Sort according to largest value
-					}
-				});
+	const ud = getData('rates-model-treasury') || {};
+	const get_hist_values_dfd = getFetch('get_rates_model_hist_values', toScript = ['hist_values'], fromAjax = {varname: ud.varname, freq: 'm'});
+	const get_submodel_values_dfd = getFetch('get_rates_model_yield_curve_last_vintage', toScript = ['submodel_values'], fromAjax = {varname: ud.varname, freq: null});
+	
+	Promise.all([get_hist_values_dfd, get_submodel_values_dfd]).then(function(response) {
+		
+		const ts_data_hist = response[0];
+		const ts_data_forecast = response[1];
+		console.log(ts_data_hist, ts_data_forecast);
+		/*
+		const ts_data_hist =
+			[... new Set(response[0].map(x => x.obs_date))] // Get list of obs_dates
+			.map(function(d) { // Group each value of the original array under the correct obs_date
+				return {
+					date: d,
+					type: 'history',
+					data: fcHistory.filter(x => x.obs_date == d).map(x => [x.ttm, x.value]).sort((a, b) => a[0] - b[0]); // Sort according to largest value
+				}
+			});
 			
 			const fcForecastParsed =
 				[... new Set(fcForecast
@@ -47,53 +47,25 @@ $(document).ready(function() {
 					}
 				}
 			);
-			dfd.resolve();
-		});
-		return dfd.promise();
-	});
-	
-	
-	
+
+		*/
+		//console.log('ts_data_parsed', ts_data_parsed);
+		
+		//setData('rates-model-treasury', {...getData('rates-model-treasury'), ...{ts_data_parsed: ts_data_parsed}});
+		//return(ts_data_parsed);
+	})
 	/********** DRAW CHART & TABLE **********/
-	loadData.done(function() {
-		const ud = getData('userData');
-		drawChart(ud.fcDataParsed);
-		drawTable(ud.fcDataParsed);
-		$('#overlay').hide();
+	.then(function(ts_data_parsed) {
+		/*console.log('ts_data_parsed', ts_data_parsed);
+		drawDates(ts_data_parsed);
+		drawChart(ts_data_parsed, ud.fullname);
+		drawTable(ts_data_parsed);
+		$('div.overlay').hide();
+		*/
 	});
+
 	
 });
-
-/*** Get relevant data ***/
-function getTcurveHistory(freq) {
-	const dfd = $.Deferred();
-	getAJAX('getTcurveHistory', toScript = ['fcHistory'], fromAjax = {}).done(function(ajaxRes) {
-		const fcHistory = JSON.parse(ajaxRes).fcHistory.map(function(x) {
-			x.value = parseFloat(x.value);
-			x.obs_date = (x.obs_date);
-			x.ttm = parseInt(x.varname.substring(1, 3)) * (x.varname.substring(3, 4) === 'm' ? 1 : 12);
-			return x;
-		});
-		dfd.resolve(fcHistory);
-		});
-	return dfd.promise();
-}
-
-/*** Get relevant data ***/
-function getFcForecast(fcname) {
-	const dfd = $.Deferred();
-	getAJAX('getFcForecastLastByFcname', toScript = ['fcForecast'], fromAjax = {fcname: fcname}).done(function(ajaxRes) {
-		const fcForecast = JSON.parse(ajaxRes).fcForecast.map(function(x) {
-			x.vintage_date = (x.vintage_date);
-			x.obs_date = (x.obs_date);
-			x.value = parseFloat(x.value);
-			x.ttm = parseInt(x.varname.substring(1, 3)) * (x.varname.substring(3, 4) === 'm' ? 1 : 12);
-			return x;
-		});
-		dfd.resolve(fcForecast);
-		});
-	return dfd.promise();
-}
 
 
 /*** Draw chart ***/

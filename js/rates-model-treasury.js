@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	
 	/********** INITIALIZE **********/
 	$('div.overlay').show();
-	
+
 	(function() {
 		const varname = 't' + window.location.pathname.split('-').pop().padStart(3, '0');
 		const fullname =
@@ -28,9 +28,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 
 	/********** GET DATA **********/
-	/* Do not transfer data directly between functions - instead have everything work with sessionStorage.
-	 * Put the functions in a bigger $.Deferred function when more cleaning is needed before finalization;
-	 */
 	const ud = getData('rates-model-treasury') || {};
 	const get_hist_values_dfd = getFetch('get_rates_model_hist_values', toScript = ['hist_values'], fromAjax = {varname: ud.varname, freq: 'm'});
 	const get_submodel_values_dfd = getFetch('get_rates_model_submodel_values_last_vintage', toScript = ['submodel_values'], fromAjax = {varname: ud.varname, freq: null});
@@ -43,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				vdate: moment().format('YYYY-MM-DD'),
 				date: x.date,
 				value: parseFloat(x.value)
-			})).concat(response[1].submodel_values.filter(x => ['tdns', 'spf', 'cbo'].includes(x.submodel)).map(x => ({
+			})).concat(response[1].submodel_values.filter(x => ['tdns', 'spf', 'cbo', 'wsj', 'fnma'].includes(x.submodel)).map(x => ({
 				tskey: x.submodel,
 				freq: x.freq,
 				vdate: x.vdate,
@@ -69,14 +66,18 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					shortname: 
 						z.tskey === 'hist' ? 'Historical Data' 
 						: z.tskey === 'tdns' ? 'Market Consensus'
-						: z.tskey === 'spf' ? 'CBO Model'
-						: z.tskey === 'cbo' ? 'WSJ Survey'
+						: z.tskey === 'cbo' ? 'CBO Model'
+						: z.tskey === 'spf' ? 'Philadelphia Fed'
+						: z.tskey === 'wsj' ? 'WSJ Survey'
+						: z.tskey === 'fnma' ? 'Fannie Mae'
 						: 'Other',
 					fullname: 
 						z.tskey === 'hist' ? 'Historical Data' 
 						: z.tskey === 'tdns' ? 'Consensus Market-Derived Forecast'
-						: z.tskey === 'spf' ? 'U.S. Congressional Budget Office Forecast'
-						: z.tskey === 'cbo' ? 'Wall Street Journal Economic Forecasting Survey'
+						: z.tskey === 'cbo' ? 'U.S. Congressional Budget Office Forecast'
+						: z.tskey === 'spf' ? 'Philadelphia Fed Survey of Professional Forecasters'
+						: z.tskey === 'wsj' ? 'Wall Street Journal Economic Survey'
+						: z.tskey === 'fnma' ? 'Fannie Mae'
 						: 'Other',
 					freq: z.freq,
 					vdate: z.vdate || null,
@@ -96,11 +97,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 		//console.log('ts_data_parsed', ts_data_parsed);
 		
-		setData('rates-model-ffr', {...getData('rates-model-ffr'), ...{ts_data_parsed: ts_data_parsed}});
+		setData('rates-model-treasury', {...getData('rates-model-treasury'), ...{ts_data_parsed: ts_data_parsed}});
 		return(ts_data_parsed);
 	})
 	/********** DRAW CHART & TABLE **********/
 	.then(function(ts_data_parsed) {
+		console.log('ts_data_parsed', ts_data_parsed);
 		drawDates(ts_data_parsed);
 		drawChart(ts_data_parsed, ud.fullname);
 		drawTable(ts_data_parsed);
@@ -307,7 +309,7 @@ function drawChart(ts_data_parsed, fullname) {
 				//console.log(this, moment(this.x).format('YYYY MM DD'));
 				const points = this.points;
 				const x = this.x;
-				const ud = getData('rates-model-ffr');
+				const ud = getData('rates-model-treasury');
 				const text =
 					'<table>' +
 					'<tr style="border-bottom:1px solid black"><td>DATE</td><td style="font-weight:600">' +
@@ -346,7 +348,7 @@ function drawTable(ts_data_parsed) {
 		const dtCols = [
 			{title: 'Date', data: 'date'},
 			{title: 'Type', data: 'type'},
-			{title: 'FFR (%)', data: 'value'}
+			{title: 'Yield (%)', data: 'value'}
 		].map(function(x, i) {
 			return {...x, ...{
 				visible: (x.title !== 'Type'),
