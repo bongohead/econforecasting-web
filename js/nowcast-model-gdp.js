@@ -1,55 +1,35 @@
 document.addEventListener("DOMContentLoaded", function(event) {
+	
 	/********** INITIALIZE **********/
 	$('div.overlay').show();
 	
-	/*** Set Default Data ***/
-	/* Use previous options if set, otherwise use default options stated above.
-	 */ 
-	(function() {
-		const udPrev = getAllData().userData || {};
-		const ud = {
-			... udPrev,
-			... {
-					displayQuarter: moment().format('YYYY[Q]Q')
-				}
-		}
-
-		setData('userData', ud);
-
-	})();
-
-
-
 	/********** GET DATA **********/
-	/* Do not transfer data directly between functions - instead have everything work with sessionStorage.
-	 * Put the functions in a bigger $.Deferred function when more cleaning is needed before finalization;
-	 */
-	const ud = getData('userData');
-	const getNcValuesDfd = getFetch('getNcValuesByGroup', toScript = ['ncValues'], fromAjax = {dispgroup: 'GDP', freq: 'q'});
-	const getNcReleases = getFetch('getNcReleases', toScript = ['ncReleases'], fromAjax = {});
+	const ud = {...getData('nowcast-model-gdp') || {}, display_quarter: moment().format('YYYY[Q]Q')};
+	const get_gdp_values_dfd = getFetch('get_nowcast_model_gdp_values', toScript = ['gdp_values'], fromAjax = {});
+	const get_releases_dfd = getFetch('get_nowcast_model_releases', toScript = ['releases'], fromAjax = {});
 
-	Promise.all([getNcValuesDfd, getNcReleases]).then(function(response) {
+	Promise.all([get_gdp_values_dfd, get_releases_dfd]).then(function(response) {
 		
-		const ncValues =
-			response[0].ncValues.map(function(x) {
-				return {...x,
-					date: (x.date),
-					vdate: (x.vdate),
-					value: parseFloat(x.value),
-					formatdate: String(moment(x.date).year()) + 'Q' + String(Math.ceil((moment(x.date).month() + 1)/3))
-				};
-			});
+		console.log(response[0].gdp_values, response[1].releases);
+		
+		const gdp_values =
+			response[0].gdp_values.map(x => ({
+				bdate: x.bdate,
+				date: x.date,
+				pretty_date: String(moment(x.date).year()) + 'Q' + String(Math.ceil(moment(x.date).month()/3 + 1)),
+				fullname: x.fullname,
+				value: parseFloat(x.value),
+				varname: x.varname
+			}))
 			
-		const ncReleases =
-			response[1].ncReleases.map(function(x) {
-				return {
-					id: x.id,
-					count: x.count,
-					link: x.link,
-					relname: x.relname,
-					seriesnames: JSON.parse(x.seriesnames),
-					reldates: JSON.parse(x.reldates)
-				};
+		const releases =
+			response[1].releases.map(x => ({
+				id: x.id,
+				count: x.count,
+				link: x.link,
+				relname: x.relname,
+				seriesnames: JSON.parse(x.seriesnames),
+				reldates: JSON.parse(x.reldates)
 			});
 			
 		console.log(ncValues, ncReleases);
@@ -64,7 +44,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			'govt','govtf','govts'
 			];
 		//console.log('fcDataRaw', fcDataRaw);
-		
+		*/
+		/*
 		const ncValuesGrouped =		
 			// Nest into array of objects containing each varname
 			[... new Set(ncValues.map(x => x.varname))]
@@ -94,17 +75,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		setData('userData', {...getData('userData'), ...{ncValuesGrouped: ncValuesGrouped}, ...{ncReleases: ncReleases}});
 		
 		return({ncValuesGrouped: ncValuesGrouped, ncReleases: ncReleases});
-	
+		*/
 	})
 	/********** DRAW CHART & TABLE **********/
 	.then(function(res) {
-		drawChart(res.ncValuesGrouped, res.ncReleases, displayQuarter = ud.displayQuarter);
-		drawTable(res.ncValuesGrouped);
+		//drawChart(res.ncValuesGrouped, res.ncReleases, displayQuarter = ud.displayQuarter);
+		//drawTable(res.ncValuesGrouped);
 		$('div.overlay').hide();
 	});
 	
 	
+	
+	
 	/********** EVENT LISTENERS FOR DATE SWITCH **********/
+	/*
 	$('#chart-container').on('click', '#chart-subtitle-group > button.chart-subtitle', function() {
 		const newDisplayQuarter = this.innerHTML;
 		
@@ -113,8 +97,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		
 		return;
     });
-	
+	*/
 	/********** EVENT LISTENERS FOR DATA CALENDAR HOVER **********/
+	/*
 	$('#release-container').on('mouseenter', 'li.release-calendar-date', function() {
 		console.log(this.id.replace('li-', ''));
 		const chart = $('#chart-container').highcharts();
@@ -130,6 +115,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		const chart = $('#chart-container').highcharts();
 		chart.xAxis[0].removePlotLine('release-calendar-indicator');
 	});
+	*/
 
 });
 
