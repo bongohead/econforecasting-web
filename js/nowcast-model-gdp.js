@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	/********** DRAW CHART & TABLE **********/
 	.then(function(res) {
 		drawChart(res.gdp_values_grouped, res.releases, res.display_quarter, res.display_quarters);
-		drawTable(res.gdp_values_grouped);
+		drawTable(res.gdp_values_grouped, res.display_quarters);
 		$('div.overlay').hide();
 	});
 	
@@ -431,17 +431,18 @@ function drawTable(gdp_values_grouped) {
 	
 	console.log('gdp_values_grouped', gdp_values_grouped);
 	
-	// Get last vdate - only show last vintage date data
-	const vdate = gdp_values_grouped.map(x => x.data.map(y => y.vdate)).flat().sort().slice(-1)[0];
-	console.log('vdate', vdate);
-	$('#vdate').text(moment(vdate).format('MMM Do') + ' ');
+	// Get last bdate - only show last vintage date data
+	const bdate = gdp_values_grouped.map(x => x.data.map(y => y.bdate)).flat().sort().slice(-1)[0];
 	
-	// Get list of unique date values 
-	const uniqueDates = [... new Set(gdp_values_grouped.map(x => x.data.map(y => y.formatdate)).flat())].sort()
-		//.map((x, i) => ({date: x.substr(-1), formatdate = x}));
+	// Get display quarters for table 
+	// Get all dates available for bdate
+	const tbl_display_quarters = [... new Set(gdp_values_grouped.map(x => x.data.filter(y => y.bdate == bdate)).flat().map(x => x.pretty_date))];
+	
+	$('#vdate').text(moment(bdate).format('MMM Do') + ' ');
+	
 	const dtCols = 
 		[{title: 'Order', data: 'order'}, {title: 'Tabs', data: 'tabs'}, {title: 'NOWCAST', data: 'fancyname'}]
-		.concat(uniqueDates.map((x, i) => ({title: x, data: x})))
+		.concat(tbl_display_quarters.map((x, i) => ({title: x, data: x})))
 		.map(function(x, i) {
 			return {...x, ...{
 				visible: (!['Order', 'Tabs'].includes(x.title)),
@@ -455,16 +456,14 @@ function drawTable(gdp_values_grouped) {
 			}
 			}
 		});
-	
-	
-	console.log(uniqueDates);
+		
 	const tableData =
 		gdp_values_grouped.map(function(x) {
 			return {
 				order: x.order,
 				tabs: x.tabs,
-				fancyname: x.fullname,
-				...Object.fromEntries(x.data.filter(y => y.vdate == vdate).map(z => [z.formatdate, z.value.toFixed(1)]))
+				fancyname: x.fullname.split(':').pop(),
+				...Object.fromEntries(x.data.filter(y => y.bdate == bdate).map(z => [z.pretty_date, z.value.toFixed(1)]))
 				};
 		});
 	
