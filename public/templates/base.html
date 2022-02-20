@@ -18,11 +18,11 @@
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
-	<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-	<script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+	<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
 	
-	<script src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
-	<script src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js"></script> <!-- HTML export buttons -->
+	<script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script> <!-- HTML export buttons -->
 	
 	<!-- Version 9.0+ requires AST filtration bypass -->
 	<script src="https://code.highcharts.com/stock/9.3/highstock.js"></script>
@@ -77,29 +77,52 @@
 									<div class="dropdown-header py-0 mx-3 mb-1 border-bottom border-econgreen" style="font-size:1.0rem">BENCHMARK RATES</div>
 									<a class="dropdown-item" href="/rates-model-ffr">Federal Funds Rate Forecast</a>
 									<a class="dropdown-item" href="/rates-model-sofr">SOFR Forecast</a>
+									<!--
 									<div class="dropdown-header py-0 mx-3 mt-4 mb-1 border-bottom border-econgreen" style="font-size:1.0rem">MORTGAGE RATES</div>
 									<a class="dropdown-item" href="/fc-rates-mort15y">15-Year Mortgage Rate</a>
 									<a class="dropdown-item" href="/fc-rates-mort30y">30-Year Mortgage Rate</a>
-
+									-->
 								</div>
-								<div>
-									<div class="dropdown-header py-0 mx-3 mb-1 border-bottom border-econgreen" style="font-size:1.0rem">MACRO INDICATORS</div>
-									<a class="dropdown-item" href="/fc-macro-inf">Inflation Rate</a>
-								</div>
-
 							</div>
 							 <div class="dropdown-divider"></div>
 						</div>
 					</li>
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-							<i class="bi bi-pie-chart-fill me-1"></i>Nowcast Models
+							<i class="bi bi-pie-chart-fill me-1"></i>Macroeconomic Forecasts
+						</a>
+						<div class="dropdown-menu">
+							<div class="d-md-flex align-items-start justify-content-start">
+								<div>   
+									<div class="dropdown-header py-0 mx-3 mb-1 border-bottom border-econgreen" style="font-size:1.0rem">GDP</div>
+									<a class="dropdown-item" href="/fc-rates-t-info">GDP Nowcasts</a>
+									<a class="dropdown-item" href="/fc-rates-tcurve">GDP & Consumption Forecasts</a>
+								</div>
+								<div>
+									<div class="dropdown-header py-0 mx-3 mb-1 border-bottom border-econgreen" style="font-size:1.0rem">OTHER</div>
+									<a class="dropdown-item" href="/rates-model-ffr">Inflation</a>
+									<!--
+									<div class="dropdown-header py-0 mx-3 mt-4 mb-1 border-bottom border-econgreen" style="font-size:1.0rem">MORTGAGE RATES</div>
+									<a class="dropdown-item" href="/fc-rates-mort15y">15-Year Mortgage Rate</a>
+									<a class="dropdown-item" href="/fc-rates-mort30y">30-Year Mortgage Rate</a>
+									-->
+								</div>
+							</div>
+							 <div class="dropdown-divider"></div>
+						</div>
+					</li>
+					<!--
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+							<i class="bi bi-pie-chart-fill me-1"></i>Macroeconomic Forecasts
 						</a>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="/nc-gdp"><span style="margin-left: 1rem">GDP & Subcomponents</span></a></li>
+							<li><a class="dropdown-item" href="/nc-gdp"><span style="margin-left: 1rem">GDP Nowcasts</span></a></li>
+							<li><a class="dropdown-item" href="/nc-gdp"><span style="margin-left: 1rem">GDP, Consumption, and Subcomponents</span></a></li>
 						</ul>
 					</li>
-
+					-->
+					<!--
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
 							<i class="bi bi-gear-wide-connected me-1"></i>Indicators and Indices
@@ -109,7 +132,7 @@
 							<li><a class="dropdown-item" href="/ac-regions"><span style="margin-left: 1rem">Regional Correlation Index</span></a></li>
 						</ul>
 					</li>
-					
+					-->
 				</ul>
 			</div>
 		</nav>

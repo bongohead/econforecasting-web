@@ -7,87 +7,76 @@ $(document).ready(function() {
 	/* Use previous options if set, otherwise use default options stated above.
 	 */ 
 	(function() {
-			
-		const udPrev = getAllData().userData || {};
-		const ud = {
-			... udPrev,
-			... {
-				}
-		}
-
-		setData('userData', ud);
-		
+		const ud_prev = getAllData()['rates-model-treasury-curve'] || {};
+		const ud = {... ud_prev, ... {}};
+		setData('rates-model-treasury-curve', ud);
 	})();
 
 
 
 	/********** GET DATA **********/
-	/* Do not transfer data directly between functions - instead have everything work with sessionStorage.
-	 * Put the functions in a bigger $.Deferred function when more cleaning is needed before finalization;
-	 */
-    const loadData = $.Deferred(function(dfd) {
-		const ud = getData('userData');
-		const getFcHistoryDfd = getTcurveHistory();
-		const getFcForecastDfd = getFcForecast(fcname ='dns');
-
-		$.when(getFcHistoryDfd, getFcForecastDfd).done(function(fcHistory, fcForecast) {
-			const fcHistoryParsed =
-				[... new Set(fcHistory
-				.map(x => x.obs_date))] // Get list of obs_dates
-				.map(function(d) { // Group each value of the original array under the correct obs_date
-					return {
-						date: d,
-						type: 'history',
-						data: fcHistory.filter(x => x.obs_date == d).map(x => [x.ttm, x.value]).sort((a, b) => a[0] - b[0]); // Sort according to largest value
-					}
-				});
-			
-			const fcForecastParsed =
-				[... new Set(fcForecast
-				.map(x => x.obs_date))] // Get list of obs_dates
-				.map(function(d) { // Group each value of the original array under the correct obs_date
-					return {
-						date: d,
-						type: 'forecast',
-						data: fcForecast.filter(x => x.obs_date == d).map(x => [x.ttm, x.value]).sort((a, b) => a[0] - b[0]); // Sort according to largest value
-					}
-				});
+	const ud = getData('rates-model-treasury-curve') || {};
+	const get_hist_values_dfd = getFetch('get_rates_model_treasury_hist_values', toScript = ['treasury_hist_values'], fromAjax = {});
+	const get_treasury_values_dfd = getFetch('get_rates_model_treasury_values_last_vintage', toScript = ['treasury_values'], fromAjax = {});
+	Promise.all([get_hist_values_dfd, get_treasury_values_dfd]).then(function(response) {
 				
-			const fcDataParsed = fcHistoryParsed.concat(fcForecastParsed).map((x, i) => ({...x, ...{dateIndex: i}}));
-			//console.log('fcDataParsed', fcDataParsed);
-			setData(
-				'userData',
-				{
-					...getData('userData'),
-					...{
-						fcDataParsed: fcDataParsed,
-						playState: 'pause',
-						playIndex: fcDataParsed.filter(x => x.type === 'forecast')[0].dateIndex
-					}
-				}
-			);
-			dfd.resolve();
-		});
-		return dfd.promise();
-	});
-	
-	
-	
+		const hist_values_raw = response[0].treasury_hist_values.map(x => ({
+			date: x.date,
+			value: parseFloat(x.value),
+			ttm: parseInt(x.ttm)
+			}));
+		//console.log('hist_values_raw', hist_values_raw);
+		
+		const hist_values =
+			[... new Set(hist_values_raw.map(x => x.date))] // Get list of obs_dates
+			.map(d => ({
+					date: d,
+					type: 'history',
+					data: hist_values_raw.filter(x => x.date == d).map(x => [x.ttm, x.value]).sort((a, b) => a[0] - b[0]); // Sort according to largest value
+			}));
+		//console.log('hist_values', hist_values);
+		
+		const forecast_values_0 = response[1].treasury_values.map(x => ({
+			vdate : x.vdate,
+			date: x.date,
+			value: parseFloat(x.value),
+			ttm: parseInt(x.ttm)
+		}));
+		
+		const forecast_values =
+			[... new Set(forecast_values_0.map(x => x.date))]
+			.map(d => ({ // Group each value of the original array under the correct obs_date
+				date: d,
+				type: 'forecast',
+				data: forecast_values_0.filter(x => x.date == d).map(x => [x.ttm, x.value]).sort((a, b) => a[0] - b[0]); // Sort according to largest value
+			}));
+		//console.log('forecast_values', forecast_values);
+		
+		const treasury_data = hist_values.concat(forecast_values).map((x, i) => ({...x, ...{date_index: i}}));
+		const res = {
+			treasury_data: treasury_data,
+			play_state: 'pause',
+			play_index: treasury_data.filter(x => x.type === 'forecast')[0].date_index
+		};
+		console.log('res', res);
+		setData('rates-model-treasury-curve', {...getData('rates-model-treasury-curve'), ...res});
+		return(res);
+	})
 	/********** DRAW CHART & TABLE **********/
-	loadData.done(function() {
-		const ud = getData('userData');
-		drawChart(ud.fcDataParsed, ud.playIndex);
-		drawTable(ud.fcDataParsed, ud.playIndex);
-		$('#overlay').hide();
+	.then(function(res) {
+		console.log('treasury_data', res.treasury_data);
+		drawChart(res.treasury_data, res.play_index);
+		//drawTable(ud.treasury_data, ud.playIndex);
+		$('div.overlay').hide();
 	});
-	
-	
+		
 	
 	/********** EVENT LISTENERS FOR PLAYING **********/
+	/*
 	$('#chart-container').on('click', '#chart-subtitle-group > button.chart-subtitle', function() {
 		const ud = getData('userData');
 		const clickedPlayDirection = $(this).data('dir');
-		if (ud.playState == null) return;
+		if (ud.play_state == null) return;
            
 		if (clickedPlayDirection === 'pause') {
 			var newPlayState = 'pause';
@@ -97,7 +86,7 @@ $(document).ready(function() {
 			var newPlayState = 'pause';
 			var newPlayIndex = (clickedPlayDirection === 'start') ? 0 : ud.fcDataParsed.length - 1;
 		}
-		/* If click back & index greater than 5, head back by 5, otherwise 0 */
+		// If click back & index greater than 5, head back by 5, otherwise 0 
 		else if (clickedPlayDirection === 'back' || clickedPlayDirection === 'forward') {
 			var newPlayState = clickedPlayDirection;
 			if (clickedPlayDirection === 'back') var newPlayIndex = (ud.playIndex >= 1) ? ud.playIndex - 1 : 0;
@@ -105,59 +94,25 @@ $(document).ready(function() {
 		}
 		console.log('clicked', clickedPlayDirection, newPlayState, newPlayIndex);
 				           
-		setData('userData', {...getData('userData'), ...{playState: newPlayState, playIndex: newPlayIndex}});
+		setData('userData', {...getData('userData'), ...{play_state: newPlayState, play_index: newPlayIndex}});
 		if (clickedPlayDirection !== 'pause') updateChart();
 		else updateButtons();
 		
 		return;
     });
+	*/
 
 });
 
-/*** Get relevant data ***/
-function getTcurveHistory(freq) {
-	const dfd = $.Deferred();
-	getAJAX('getTcurveHistory', toScript = ['fcHistory'], fromAjax = {}).done(function(ajaxRes) {
-		const fcHistory = JSON.parse(ajaxRes).fcHistory.map(function(x) {
-			x.value = parseFloat(x.value);
-			x.obs_date = (x.obs_date);
-			x.ttm = parseInt(x.varname.substring(1, 3)) * (x.varname.substring(3, 4) === 'm' ? 1 : 12);
-			return x;
-		});
-		dfd.resolve(fcHistory);
-		});
-	return dfd.promise();
-}
-
-/*** Get relevant data ***/
-function getFcForecast(fcname) {
-	const dfd = $.Deferred();
-	getAJAX('getFcForecastLastByFcname', toScript = ['fcForecast'], fromAjax = {fcname: fcname}).done(function(ajaxRes) {
-		const fcForecast = JSON.parse(ajaxRes).fcForecast.map(function(x) {
-			x.vintage_date = (x.vintage_date);
-			x.obs_date = (x.obs_date);
-			x.value = parseFloat(x.value);
-			x.ttm = parseInt(x.varname.substring(1, 3)) * (x.varname.substring(3, 4) === 'm' ? 1 : 12);
-			return x;
-		});
-		dfd.resolve(fcForecast);
-		});
-	return dfd.promise();
-}
-
-
 /*** Draw chart ***/
-function drawChart(fcDataParsed, playIndex) {
-	
+function drawChart(treasury_data, play_index) {
 	Highcharts.AST.allowedAttributes.push('data-dir');
-	
 	const o = {
         chart: {
 			spacingTop: 10,
             backgroundColor: 'rgba(255, 255, 255, 0)',
 			plotBackgroundColor: '#FFFFFF',
 			style: {
-				fontFamily: '"Assistant", "sans-serif"',
 				fontcolor: 'rgb(48, 79, 11)'
 			},
 			height: 400,
@@ -165,26 +120,21 @@ function drawChart(fcDataParsed, playIndex) {
 			plotBorderWidth: 2,
 			events: {
 				load: function() {
-					// this = chart
-					// console.log('chart1', this);
-					// Get top of plot area distance from chart
 					const distFromTop = this.chartHeight - (this.marginBottom + this.plotHeight) + 40;
 					const distFromLeft = 50;
 					console.log(distFromTop, distFromLeft);
 					this.renderer
-						.text('Forecast for ' + moment(fcDataParsed[playIndex].date).format('MMM YYYY'), distFromLeft, distFromTop)
+						.text('Forecast for ' + moment(treasury_data[play_index].date).format('MMM YYYY'), distFromLeft, distFromTop)
 						.attr({'id': 'date-text', fill: 'rgb(33, 177, 151)', 'font-size': '1.5rem'})
 						.add();
 					
 					/* Now render non-changing historical data on RHS */
 					this.renderer
-						.text('Current Yield Curve: ' + moment(fcDataParsed[playIndex - 1].date).format('MMM YYYY'), distFromLeft, distFromTop + 40)
+						.text('Current Yield Curve: ' + moment(treasury_data[play_index - 1].date).format('MMM YYYY'), distFromLeft, distFromTop + 40)
 						.attr({'id': 'date-text', fill: 'darkred', 'font-size': '1.5rem'})
 						.add();
-
 				}
 			}
-
         },
         credits: {
 			enabled: false
@@ -250,7 +200,7 @@ function drawChart(fcDataParsed, playIndex) {
 			}
         },
         series: [{
-            data: fcDataParsed[playIndex].data,
+            data: treasury_data[play_index].data,
 			name: 'Yield',
             type: 'area',
             color: 'rgb(33, 177, 151)',
@@ -268,7 +218,7 @@ function drawChart(fcDataParsed, playIndex) {
 			zIndex: 2,
 			fillOpacity: 0.5
         }, {
-            data: fcDataParsed[playIndex - 1].data,
+            data: treasury_data[play_index - 1].data,
 			name: 'Current Yield',
             type: 'area',
             color: 'red',
@@ -281,14 +231,12 @@ function drawChart(fcDataParsed, playIndex) {
 	};
 	const chart = Highcharts.chart('chart-container', o);
 	
-	
 	const o2 = {
         chart: {
 			spacingTop: 0,
             backgroundColor: 'rgba(255, 255, 255, 0)',
 			plotBackgroundColor: 'rgba(255, 255, 255, 0)',
 			style: {
-				fontFamily: '"Assistant", "sans-serif"',
 				fontcolor: 'rgb(48, 79, 11)'
 			},
 			height: 150,
@@ -306,17 +254,11 @@ function drawChart(fcDataParsed, playIndex) {
 					const endForecast = Math.max(...this.series[0].points.filter(x => x.type === 'forecast').map(x => x.plotX));
 					this.renderer
 						.path(['M', startHistory, axisDistFromTop, 'L', (endHistory + startForecast)/2, axisDistFromTop])
-						.attr({
-							'stroke-width': 2,
-							stroke: 'darkblue'
-							})
+						.attr({'stroke-width': 2, stroke: 'darkblue'})
 						.add();
 					this.renderer
 						.path(['M', (endHistory + startForecast)/2, axisDistFromTop, 'L', endForecast, axisDistFromTop])
-						.attr({
-							'stroke-width': 2,
-							stroke: 'rgb(33, 177, 151)'
-							})
+						.attr({'stroke-width': 2, stroke: 'rgb(33, 177, 151)'})
 						.add();
 					this.renderer
 						.text('Historical Data', (endHistory + startForecast)/2 - 100, axisDistFromTop - 5)
@@ -352,13 +294,13 @@ function drawChart(fcDataParsed, playIndex) {
             },
 			//startOnTick: true,
 			//endOnTick: true,
-			min: new Date(fcDataParsed[0].date).getTime(),
-			max: new Date(fcDataParsed[fcDataParsed.length - 1].date).getTime(),
+			min: new Date(treasury_data[0].date).getTime(),
+			max: new Date(treasury_data[treasury_data.length - 1].date).getTime(),
 			lineWidth: 0,
 			offset: -45,
 			tickInterval: 12 * 3 * 30 * 24 * 3600 * 1000,
 			plotLines: [{
-				value: parseInt(moment(fcDataParsed[playIndex].date).format('x')),
+				value: parseInt(moment(treasury_data[play_index].date).format('x')),
 				color: 'rgba(255,0,0,.5)',
 				width: 5,
 				id: 'plot-line',
@@ -382,15 +324,12 @@ function drawChart(fcDataParsed, playIndex) {
 				point: {
 					events: {
 						click: function () {
-							'userData',
-							setData('userData', {
-								...getData('userData'),
-								...{
-									playState: 'pause',
-									playIndex: this.dateIndex
-									}
+							'rates-model-treasury-curve',
+							setData('rates-model-treasury-curve', {
+								...getData('rates-model-treasury-curve'),
+								...{play_state: 'pause', play_index: this.date_index}
 							});
-							console.log(this.dateIndex);
+							//console.log(this.date_index);
 							updateChart();
 							updateChart2();
 							updateButtons();
@@ -419,7 +358,7 @@ function drawChart(fcDataParsed, playIndex) {
 			href: 'https://econforecasting.com'
         },
         series: [{
-            data: fcDataParsed.map(x => ({x: parseInt(moment(x.date).format('x')), low: -1, high: 1, y: x.data.filter(y => y[0] === 120)[0][1], dateIndex: x.dateIndex, type: x.type})),
+            data: treasury_data.map(x => ({x: parseInt(moment(x.date).format('x')), low: -1, high: 1, y: x.data.filter(y => y[0] === 120)[0][1], date_index: x.date_index, type: x.type})),
             type: 'arearange',
             color: 'rgba(255, 255, 255, 0)',
             fillColor: 'rgba(255, 255, 255, 0)',
@@ -428,8 +367,7 @@ function drawChart(fcDataParsed, playIndex) {
 			}
         }]
 	};
-		
-	
+
 	const chart2 = Highcharts.chart('chart-container-2', o2);
 	return;
 }
@@ -549,7 +487,7 @@ function drawTable(fcDataParsed, playIndex) {
 
 /*** Update Chart ***/
 function updateChart() {
-	let ud = getData('userData');
+	let ud = getData('rates-model-treasury-curve');
 	const chart = $('#chart-container').highcharts();
 	/* Return if playstate = paused; this is necessary to shut off the auto-repeating nature of this function */
 	if (ud.fcDataParsed === undefined || ud.playIndex === undefined) return;

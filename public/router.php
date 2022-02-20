@@ -37,7 +37,8 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 			['template' => 'rates-model-sofr', 'request' => ['rates-model-sofr'], 'title' => 'SOFR Forecasts | econforecasting.com', 'models' => [], 'js' => ['init', 'rates-model-sofr']],
 			['template' => 'rates-model-ffr', 'request' => ['rates-model-ffr'], 'title' => 'Federal Funds Rate Forecasts | econforecasting.com', 'models' => [], 'js' => ['init', 'rates-model-ffr']],
 			
-			//['template' => 'rates-model-treasury-summary', 'request' => ['rates-model-treasury-summary'], 'title' => 'Full Treasury Yield Forecast | econforecasting.com', 'models' => [], 'js' => ['init', 'rates-model-treasury-summary']],
+			['template' => 'rates-model-treasury-summary', 'request' => ['rates-model-treasury-summary'], 'title' => 'Yield Forecast Overview | econforecasting.com', 'models' => [], 'js' => ['init', 'rates-model-treasury-summary']],
+			['template' => 'rates-model-treasury-curve', 'request' => ['rates-model-treasury-curve'], 'title' => 'Treasury Yield Curve Forecasts | econforecasting.com', 'models' => [], 'js' => ['init', 'rates-model-treasury-curve']],
 			['template' => 'rates-model-treasury', 'request' => ['rates-model-treasury-3m'], 'title' => '3 Month Treasury Yield Forecast | econforecasting.com', 'models' => [], 'js' => ['init', 'rates-model-treasury']],
 			['template' => 'rates-model-treasury', 'request' => ['rates-model-treasury-6m'], 'title' => '6 Month Treasury Yield Forecast | econforecasting.com', 'models' => [], 'js' => ['init', 'rates-model-treasury']],
 			['template' => 'rates-model-treasury', 'request' => ['rates-model-treasury-1y'], 'title' => '1 Year Treasury Yield Forecast | econforecasting.com', 'models' => [], 'js' => ['init', 'rates-model-treasury']],

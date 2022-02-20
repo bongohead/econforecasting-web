@@ -29,9 +29,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 	/********** GET DATA **********/
 	const ud = getData('rates-model-treasury') || {};
+	
+	const get_forecast_values_dfd = getFetch('get_forecast_values_last_vintage', toScript = ['forecast_values'], fromAjax = {varname: ud.varname, freq: 'm', form: 'd1'}, 10000, true);
+
 	const get_hist_values_dfd = getFetch('get_rates_model_hist_values', toScript = ['hist_values'], fromAjax = {varname: ud.varname, freq: 'm'});
 	const get_submodel_values_dfd = getFetch('get_rates_model_submodel_values_last_vintage', toScript = ['submodel_values'], fromAjax = {varname: ud.varname, freq: null});
 	
+	Promise.all([get_forecast_values_dfd]).then(function(response) {
+		console.log(response[0]);
+	});
+
 	Promise.all([get_hist_values_dfd, get_submodel_values_dfd]).then(function(response) {
 		const ts_data_raw =
 			response[0].hist_values.map(x => ({

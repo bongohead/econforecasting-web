@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	$('div.overlay').show();
 	
 	/********** GET DATA **********/
-	const ud = {...getData('nowcast-model-gdp') || {}, display_quarter: moment().format('YYYY[Q]Q')};
+	const ud = {...getData('nowcast-model-gdp') || {}};
 	const get_gdp_values_dfd = getFetch('get_nowcast_model_gdp_values', toScript = ['gdp_values'], fromAjax = {});
 	const get_releases_dfd = getFetch('get_nowcast_model_releases', toScript = ['releases'], fromAjax = {});
 
@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		const default_disp_quarter =
 			moment.min([...new Set(gdp_values.filter(x => x.bdate === last_bdate).map(x => x.date))]
 			.map(x => moment(x))).format('YYYY[Q]Q');
+
 		// Get list of all display quarters to include
 		const display_quarters = 
 			[...new Set(gdp_values.map(x => x.pretty_date))].
@@ -70,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			.sort((a, b) => (gdp_varnames.indexOf(a.varname) > gdp_varnames.indexOf(b.varname) ? 1 : -1))
 			.map((x, i) => ({...x, order: i}));
 			
-		console.log('gdp_values_grouped', gdp_values_grouped);
+		// console.log('gdp_values_grouped', gdp_values_grouped);
 		
 		const res = {gdp_values_grouped: gdp_values_grouped, releases: releases, display_quarter: default_disp_quarter, display_quarters: display_quarters};
 		setData('nowcast-model-gdp', {...getData('nowcast-model-gdp'), ...res});
@@ -93,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	
 	/********** EVENT LISTENERS FOR DATA CALENDAR HOVER **********/
 	$('#release-container').on('mouseenter', 'li.release-calendar-date', function() {
-		console.log(this.id.replace('li-', ''));
+		//console.log(this.id.replace('li-', ''));
 		const chart = $('#chart-container').highcharts();
 		chart.xAxis[0].addPlotLine({
 			value: parseInt(moment(this.id.replace('li-', '')).format('x')),
@@ -101,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			width: 3,
 			id: 'release-calendar-indicator'
 		  });
-		console.log('highcharts');
+		//console.log('highcharts');
 	});
 	$('#release-container').on('mouseleave', 'li.release-calendar-date', function() {
 		const chart = $('#chart-container').highcharts();
