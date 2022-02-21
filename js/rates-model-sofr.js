@@ -4,30 +4,31 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	$('div.overlay').show();
 	
 	/********** GET DATA **********/
-	/* Do not transfer data directly between functions - instead have everything work with sessionStorage.
-	 * Put the functions in a bigger $.Deferred function when more cleaning is needed before finalization;
-	 */
-	const ud = getData('rates-model-sofr') || {};
-	const get_hist_values_dfd = getFetch('get_rates_model_hist_values', toScript = ['hist_values'], fromAjax = {varname: 'sofr', freq: 'm'});
-	const get_submodel_values_dfd = getFetch('get_rates_model_submodel_values_last_vintage', toScript = ['submodel_values'], fromAjax = {varname: 'sofr', freq: null});
+	const ud = getData('rates-model-treasury') || {};
+	const get_forecast_hist_values_last_vintage = getFetch('get_forecast_hist_values_last_vintage', ['forecast_hist_values'], {varname: 'sofr', freq: 'm', form: 'd1'}, 10000, false);	
+	const get_forecast_values_dfd = getFetch('get_forecast_values_last_vintage', ['forecast_values'], {varname: 'sofr', freq: ['m', 'q'], form: 'd1'}, 10000, false);
 	
-	Promise.all([get_hist_values_dfd, get_submodel_values_dfd]).then(function(response) {
+	Promise.all([get_forecast_hist_values_last_vintage, get_forecast_values_dfd]).then(function(response) {
 		const ts_data_raw =
-			response[0].hist_values.map(x => ({
+			response[0].forecast_hist_values.map(x => ({
 				tskey: 'hist',
 				freq: 'm',
+				fullname: 'Historical Data',
+				shortname: 'Historical Data',
 				vdate: moment().format('YYYY-MM-DD'),
 				date: x.date,
 				value: parseFloat(x.value)
-			})).concat(response[1].submodel_values.map(x => ({
-				tskey: x.submodel,
+			})).concat(response[1].forecast_values.filter(x => ['int', 'spf', 'cbo', 'wsj', 'fnma'].includes(x.forecast)).map(x => ({
+				tskey: x.forecast,
 				freq: x.freq,
+				fullname: x.forecast === 'int' ? 'Consensus Market Derived Forecast' : x.fullname,
+				shortname: x.forecast === 'int' ? 'Market Consensus' : x.shortname,
 				vdate: x.vdate,
 				date: x.date, 
 				value: parseFloat(x.value)
 			}))
 			);
-		//console.log('ts_data_raw', ts_data_raw);
+		// console.log('ts_data_raw', ts_data_raw);
 		
 		// Returns [{fcname: hist, data: [[],..]}, ...] MAX 5 years
 		const ts_data_parsed = 
@@ -40,20 +41,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					freq: z.freq,
 					ts_type: 
 						z.tskey ==='hist' ? 'hist'
-						: z.tskey === 'cme' ? 'primary'
+						: z.tskey === 'int' ? 'primary'
 						: 'secondary',
-					shortname: 
-						z.tskey === 'hist' ? 'Historical Data' 
-						: z.tskey === 'cme' ? 'Market Consensus'
-						: 'Other',
-					fullname: 
-						z.tskey === 'hist' ? 'Historical Data' 
-						: z.tskey === 'cme' ? 'Consensus Futures-Derived'
-						: 'Other',
+					shortname: z.shortname,
+					fullname: z.fullname,
 					freq: z.freq,
 					vdate: z.vdate || null,
 					data: ts_data_raw.filter(x => x.tskey === tskey)
-						.filter(x => moment(x.date) <= moment().add(5, 'years'))
+						.filter(x => moment(x.date) <= moment().add(10, 'years'))
 						.map(x => [x.date, x.value]).sort((a, b) => a[0] - b[0])
 				}
 			})
@@ -65,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				: b.ts_type === 'hist' ? -1
 				: 0
 			).map((x, i) => ({...x, order: i}));
-
+			
 		//console.log('ts_data_parsed', ts_data_parsed);
 		
 		setData('rates-model-sofr', {...getData('rates-model-sofr'), ...{ts_data_parsed: ts_data_parsed}});
@@ -112,11 +107,17 @@ function drawChart(ts_data_parsed) {
 		.map((x, i) => (
 			{
 				id: x.tskey,
-				name: (x.tskey !== 'hist' ? x.shortname + ' Forecast (Updated ' + moment(x.vdate).format('MM/DD/YY') + ')': x.shortname),
+				name:
+					x.shortname +
+					' <span style="font-size:.8rem;font-weight:normal">(' +
+						'Updated ' + moment(x.vdate).format('MM/DD/YY') +
+						(x.freq === 'q' ? '; Quarterly Frequency' : '; Monthly Frequency')  + 
+					')</span>',
 				data: x.data.map(x => [parseInt(moment(x[0]).format('x')), x[1]]),
 				type: 'spline',
 				dashStyle: (x.tskey === 'hist' ? 'Solid' : 'ShortDash'),
-				lineWidth: (x.tskey === 'hist' ? 5 : 3),
+				lineWidth: (x.ts_type === 'hist' ? 5 : 3),
+				zIndex: (x.ts_type === 'hist' ? 3 : x.ts_type == 'primary' ? 3 : 1),
 				legendIndex: (x.ts_type === 'hist' ? 0 : x.ts_type == 'primary' ? 1 : 2),
 				//['var(--bs-cmefi-blue)', 'var(--bs-cmefi-green)', 'var(--bs-cmefi-orange)'][i]
 				color: (x.tskey === 'hist' ? 'black' : getColorArray()[i]),
@@ -135,7 +136,7 @@ function drawChart(ts_data_parsed) {
 			style: {
 				fontColor: 'var(--bs-cmefi-green)'
 			},
-			height: 450,
+			height: 500,
 			plotBorderColor: 'black',
 			plotBorderWidth: 2
         },
@@ -269,12 +270,10 @@ function drawChart(ts_data_parsed) {
         tooltip: {
             useHTML: true,
 			shared: true,
+			backgroundColor: 'rgba(255, 255, 255, .8)',
 			formatter: function () {
-				//console.log(this.points);
-				//console.log(this, moment(this.x).format('YYYY MM DD'));
 				const points = this.points;
-				const x = this.x;
-				const ud = getData('rates-model-sofr');
+				const ud = getData('rates-model-ffr');
 				const text =
 					'<table>' +
 					'<tr style="border-bottom:1px solid black"><td>DATE</td><td style="font-weight:600">' +
@@ -282,10 +281,18 @@ function drawChart(ts_data_parsed) {
 					'</td></tr>' +
 					points.map(function(point) {
 						const freq = ud.ts_data_parsed.filter(x => x.tskey === point.series.options.id)[0].freq;
-						return '<tr><td style="padding-right:1rem; color:'+point.series.color+'">' + (freq === 'm' ? moment(x).format('MMM YYYY') : moment(x).format('YYYY[Q]Q')) +'</td><td style="color:' + point.color + '">' + point.series.name.replace(/ *\([^)]*\) */g, "") + ': ' + point.y.toFixed(2) + '%</td></tr>'; // Remove everything in aprantheses
+						const str =
+							'<tr>' +
+								'<td style="padding-right:1rem; color:'+point.series.color+'">' +
+									(freq === 'm' ? moment(point.x).format('MMM YYYY') : moment(point.x).format('YYYY[Q]Q')) +
+								'</td>' + 
+								'<td style="color:' + point.color + '">' +
+									point.series.name.replace(/ *\([^)]*\) */g, "") + ': ' + point.y.toFixed(2) +
+								'%</td>' + 
+							'</tr>'; // Remove everything in aprantheses
+						return str;
 					}).join('') +
 					'</table>';
-				
 				return text;
 			}
         },

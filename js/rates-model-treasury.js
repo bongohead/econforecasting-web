@@ -29,33 +29,30 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 	/********** GET DATA **********/
 	const ud = getData('rates-model-treasury') || {};
+	const get_forecast_hist_values_last_vintage = getFetch('get_forecast_hist_values_last_vintage', ['forecast_hist_values'], {varname: ud.varname, freq: ['m'], form: 'd1'}, 10000, true);	
+	const get_forecast_values_dfd = getFetch('get_forecast_values_last_vintage', ['forecast_values'], {varname: ud.varname, freq: ['m', 'q'], form: 'd1'}, 10000, true);
 	
-	const get_forecast_values_dfd = getFetch('get_forecast_values_last_vintage', toScript = ['forecast_values'], fromAjax = {varname: ud.varname, freq: 'm', form: 'd1'}, 10000, true);
-
-	const get_hist_values_dfd = getFetch('get_rates_model_hist_values', toScript = ['hist_values'], fromAjax = {varname: ud.varname, freq: 'm'});
-	const get_submodel_values_dfd = getFetch('get_rates_model_submodel_values_last_vintage', toScript = ['submodel_values'], fromAjax = {varname: ud.varname, freq: null});
-	
-	Promise.all([get_forecast_values_dfd]).then(function(response) {
-		console.log(response[0]);
-	});
-
-	Promise.all([get_hist_values_dfd, get_submodel_values_dfd]).then(function(response) {
+	Promise.all([get_forecast_hist_values_last_vintage, get_forecast_values_dfd]).then(function(response) {
 		const ts_data_raw =
-			response[0].hist_values.map(x => ({
+			response[0].forecast_hist_values.map(x => ({
 				tskey: 'hist',
 				freq: 'm',
+				fullname: 'Historical Data',
+				shortname: 'Historical Data',
 				vdate: moment().format('YYYY-MM-DD'),
 				date: x.date,
 				value: parseFloat(x.value)
-			})).concat(response[1].submodel_values.filter(x => ['tdns', 'spf', 'cbo', 'wsj', 'fnma'].includes(x.submodel)).map(x => ({
-				tskey: x.submodel,
+			})).concat(response[1].forecast_values.filter(x => ['int', 'spf', 'cbo', 'wsj', 'fnma'].includes(x.forecast) & moment(x.vdate) <= moment(x.date).add(30, 'days')).map(x => ({
+				tskey: x.forecast,
 				freq: x.freq,
+				fullname: x.forecast === 'int' ? 'Consensus Market Derived Forecast' : x.fullname,
+				shortname: x.forecast === 'int' ? 'Market Consensus' : x.shortname,
 				vdate: x.vdate,
 				date: x.date, 
 				value: parseFloat(x.value)
 			}))
 			);
-		console.log('ts_data_raw', ts_data_raw);
+		// console.log('ts_data_raw', ts_data_raw);
 		
 		// Returns [{fcname: hist, data: [[],..]}, ...] MAX 5 years
 		const ts_data_parsed = 
@@ -68,24 +65,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					freq: z.freq,
 					ts_type: 
 						z.tskey ==='hist' ? 'hist'
-						: z.tskey === 'tdns' ? 'primary'
+						: z.tskey === 'int' ? 'primary'
 						: 'secondary',
-					shortname: 
-						z.tskey === 'hist' ? 'Historical Data' 
-						: z.tskey === 'tdns' ? 'Market Consensus'
-						: z.tskey === 'cbo' ? 'CBO Model'
-						: z.tskey === 'spf' ? 'Philadelphia Fed'
-						: z.tskey === 'wsj' ? 'WSJ Survey'
-						: z.tskey === 'fnma' ? 'Fannie Mae'
-						: 'Other',
-					fullname: 
-						z.tskey === 'hist' ? 'Historical Data' 
-						: z.tskey === 'tdns' ? 'Consensus Market-Derived Forecast'
-						: z.tskey === 'cbo' ? 'U.S. Congressional Budget Office Forecast'
-						: z.tskey === 'spf' ? 'Philadelphia Fed Survey of Professional Forecasters'
-						: z.tskey === 'wsj' ? 'Wall Street Journal Economic Survey'
-						: z.tskey === 'fnma' ? 'Fannie Mae'
-						: 'Other',
+					shortname: z.shortname,
+					fullname: z.fullname,
 					freq: z.freq,
 					vdate: z.vdate || null,
 					data: ts_data_raw.filter(x => x.tskey === tskey)
@@ -102,14 +85,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				: 0
 			).map((x, i) => ({...x, order: i}));
 
-		//console.log('ts_data_parsed', ts_data_parsed);
+		// console.log('ts_data_parsed', ts_data_parsed);
 		
 		setData('rates-model-treasury', {...getData('rates-model-treasury'), ...{ts_data_parsed: ts_data_parsed}});
 		return(ts_data_parsed);
 	})
 	/********** DRAW CHART & TABLE **********/
 	.then(function(ts_data_parsed) {
-		console.log('ts_data_parsed', ts_data_parsed);
 		drawDates(ts_data_parsed);
 		drawChart(ts_data_parsed, ud.fullname);
 		drawTable(ts_data_parsed);
@@ -128,8 +110,6 @@ function drawDates(ts_data_parsed) {
 		document.querySelector('#description-date-' + x.tskey).textContent = moment(x.vdate).format('MMM Do YYYY')
 	);
 	var myElement = document.getElementById("myElementID");
-
-	
 };
 
 /*** Draw chart ***/
@@ -150,7 +130,7 @@ function drawChart(ts_data_parsed, fullname) {
 			{
 				id: x.tskey,
 				name:
-					(x.tskey !== 'hist' ? x.shortname + ' Forecast': x.shortname) +
+					x.shortname +
 					' <span style="font-size:.8rem;font-weight:normal">(' +
 						'Updated ' + moment(x.vdate).format('MM/DD/YY') +
 						(x.freq === 'q' ? '; Quarterly Frequency' : '; Monthly Frequency')  + 
@@ -158,7 +138,8 @@ function drawChart(ts_data_parsed, fullname) {
 				data: x.data.map(x => [parseInt(moment(x[0]).format('x')), x[1]]),
 				type: 'line',
 				dashStyle: (x.tskey === 'hist' ? 'Solid' : 'ShortDash'),
-				lineWidth: (x.tskey === 'hist' ? 5 : 3),
+				lineWidth: (x.ts_type === 'hist' ? 5 : 3),
+				zIndex: (x.ts_type === 'hist' ? 3 : x.ts_type == 'primary' ? 3 : 1),
 				legendIndex: (x.ts_type === 'hist' ? 0 : x.ts_type == 'primary' ? 1 : 2),
 				//['var(--bs-cmefi-blue)', 'var(--bs-cmefi-green)', 'var(--bs-cmefi-orange)'][i]
 				color: (x.tskey === 'hist' ? 'black' : getColorArray()[i]),
@@ -177,7 +158,7 @@ function drawChart(ts_data_parsed, fullname) {
 			style: {
 				fontColor: 'var(--bs-cmefi-green)'
 			},
-			height: 450,
+			height: 500,
 			plotBorderColor: 'black',
 			plotBorderWidth: 2
         },
@@ -311,12 +292,10 @@ function drawChart(ts_data_parsed, fullname) {
         tooltip: {
             useHTML: true,
 			shared: true,
+			backgroundColor: 'rgba(255, 255, 255, .8)',
 			formatter: function () {
-				//console.log(this.points);
-				//console.log(this, moment(this.x).format('YYYY MM DD'));
 				const points = this.points;
-				const x = this.x;
-				const ud = getData('rates-model-treasury');
+				const ud = getData('rates-model-ffr');
 				const text =
 					'<table>' +
 					'<tr style="border-bottom:1px solid black"><td>DATE</td><td style="font-weight:600">' +
@@ -324,10 +303,18 @@ function drawChart(ts_data_parsed, fullname) {
 					'</td></tr>' +
 					points.map(function(point) {
 						const freq = ud.ts_data_parsed.filter(x => x.tskey === point.series.options.id)[0].freq;
-						return '<tr><td style="padding-right:1rem; color:'+point.series.color+'">' + (freq === 'm' ? moment(x).format('MMM YYYY') : moment(x).format('YYYY[Q]Q')) +'</td><td style="color:' + point.color + '">' + point.series.name.replace(/ *\([^)]*\) */g, "") + ': ' + point.y.toFixed(2) + '%</td></tr>'; // Remove everything in aprantheses
+						const str =
+							'<tr>' +
+								'<td style="padding-right:1rem; color:'+point.series.color+'">' +
+									(freq === 'm' ? moment(point.x).format('MMM YYYY') : moment(point.x).format('YYYY[Q]Q')) +
+								'</td>' + 
+								'<td style="color:' + point.color + '">' +
+									point.series.name.replace(/ *\([^)]*\) */g, "") + ': ' + point.y.toFixed(2) +
+								'%</td>' + 
+							'</tr>'; // Remove everything in aprantheses
+						return str;
 					}).join('') +
 					'</table>';
-				
 				return text;
 			}
         },

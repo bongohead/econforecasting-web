@@ -1,6 +1,6 @@
 <?php
 // Returns the last forecast from each forecast model for the given variable.
-// Takes as input an array of forecasts, an array of varnames, a single freq, and a single form
+// Takes as input a string/array of varnames, a string/array of freqs, a string/array/null of forecasts, and a string/array/null of forms
 // Allows selection of:
 //  - 1+ varname (passing none returns nothing)
 //  - 1+ frequency (passing none returns nothing)
@@ -21,7 +21,7 @@ $form_str = $vars_to_bind['form'] != '' ? 'AND form = ANY(:form::VARCHAR[])' : '
 $col_str = implode(',', array_merge(
 	isset($fromAjax['varname']) && count((array) $fromAjax['varname']) === 1 ? [] : ['varname'],
 	isset($fromAjax['freq']) && count((array) $fromAjax['freq']) === 1 ? [] : ['freq'],
-	isset($fromAjax['forecast']) && count((array) $fromAjax['forecast']) === 1 ? [] : ['forecast'],
+	isset($fromAjax['forecast']) && count((array) $fromAjax['forecast']) === 1 ? [] : ['forecast, f.fullname, f.shortname'],
 	isset($fromAjax['form']) && count((array) $fromAjax['form']) === 1 ? [] : ['form'],
 	['vdate', 'date', 'value']
 	));
@@ -46,5 +46,6 @@ FROM
 		ORDER BY forecast, varname, form, freq, date
 	) a 
 ) b
+LEFT JOIN forecasts f ON b.forecast = f.id
 WHERE max_vdate = vdate
 ", $vars_to_bind);
