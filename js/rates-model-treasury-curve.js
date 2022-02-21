@@ -1,4 +1,4 @@
-$(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function(event) {
 
 	/********** INITIALIZE **********/
 	$('div.overlay').show();
@@ -12,35 +12,32 @@ $(document).ready(function() {
 		setData('rates-model-treasury-curve', ud);
 	})();
 
-
-
 	/********** GET DATA **********/
 	const ud = getData('rates-model-treasury-curve') || {};
-	const get_hist_values_dfd = getFetch('get_rates_model_treasury_hist_values', toScript = ['treasury_hist_values'], fromAjax = {});
-	const get_treasury_values_dfd = getFetch('get_rates_model_treasury_values_last_vintage', toScript = ['treasury_values'], fromAjax = {});
-	Promise.all([get_hist_values_dfd, get_treasury_values_dfd]).then(function(response) {
-				
-		const hist_values_raw = response[0].treasury_hist_values.map(x => ({
+	const get_forecast_hist_values_last_vintage = getFetch('get_forecast_hist_values_last_vintage', ['forecast_hist_values'], {forecast: 'int', varname: ['t01m', 't03m', 't06m', 't01y', 't05y', 't07y', 't10y', 't20y', 't30y'], freq: 'm', form: 'd1'}, 10000, false);	
+	const get_forecast_values_dfd = getFetch('get_forecast_values_last_vintage', ['forecast_values'], {varname: ['t01m', 't03m', 't06m', 't01y', 't05y', 't07y', 't10y', 't20y', 't30y'], freq: 'm', form: 'd1'}, 10000, false);
+	Promise.all([get_forecast_hist_values_last_vintage, get_forecast_values_dfd]).then(function(response) {
+		const hist_values_raw = response[0].forecast_hist_values.map(x => ({
 			date: x.date,
 			value: parseFloat(x.value),
-			ttm: parseInt(x.ttm)
+			ttm: parseInt(x.varname.substring(1, 3)) * (x.varname.substring(3, 4) === 'm' ? 1 : 12)
 			}));
 		//console.log('hist_values_raw', hist_values_raw);
 		
 		const hist_values =
 			[... new Set(hist_values_raw.map(x => x.date))] // Get list of obs_dates
 			.map(d => ({
-					date: d,
-					type: 'history',
-					data: hist_values_raw.filter(x => x.date == d).map(x => [x.ttm, x.value]).sort((a, b) => a[0] - b[0]); // Sort according to largest value
+				date: d,
+				type: 'history',
+				data: hist_values_raw.filter(x => x.date == d).map(x => [x.ttm, x.value]).sort((a, b) => a[0] - b[0]); // Sort according to largest value
 			}));
 		//console.log('hist_values', hist_values);
 		
-		const forecast_values_0 = response[1].treasury_values.map(x => ({
+		const forecast_values_0 = response[1].forecast_values.map(x => ({
 			vdate : x.vdate,
 			date: x.date,
 			value: parseFloat(x.value),
-			ttm: parseInt(x.ttm)
+			ttm: parseInt(x.varname.substring(1, 3)) * (x.varname.substring(3, 4) === 'm' ? 1 : 12)
 		}));
 		
 		const forecast_values =
@@ -58,7 +55,7 @@ $(document).ready(function() {
 			play_state: 'pause',
 			play_index: treasury_data.filter(x => x.type === 'forecast')[0].date_index
 		};
-		console.log('res', res);
+		// console.log('res', res);
 		setData('rates-model-treasury-curve', {...getData('rates-model-treasury-curve'), ...res});
 		return(res);
 	})
@@ -66,41 +63,40 @@ $(document).ready(function() {
 	.then(function(res) {
 		console.log('treasury_data', res.treasury_data);
 		drawChart(res.treasury_data, res.play_index);
-		//drawTable(ud.treasury_data, ud.playIndex);
+		drawTable(res.treasury_data);
 		$('div.overlay').hide();
 	});
 		
 	
 	/********** EVENT LISTENERS FOR PLAYING **********/
-	/*
 	$('#chart-container').on('click', '#chart-subtitle-group > button.chart-subtitle', function() {
-		const ud = getData('userData');
+		const ud = getData('rates-model-treasury-curve');
 		const clickedPlayDirection = $(this).data('dir');
 		if (ud.play_state == null) return;
            
 		if (clickedPlayDirection === 'pause') {
 			var newPlayState = 'pause';
-			var newPlayIndex = ud.playIndex;
+			var newPlayIndex = ud.play_index;
 		}
 		else if (clickedPlayDirection === 'start' || clickedPlayDirection === 'end') {
 			var newPlayState = 'pause';
-			var newPlayIndex = (clickedPlayDirection === 'start') ? 0 : ud.fcDataParsed.length - 1;
+			var newPlayIndex = (clickedPlayDirection === 'start') ? 0 : ud.treasury_data.length - 1;
 		}
 		// If click back & index greater than 5, head back by 5, otherwise 0 
 		else if (clickedPlayDirection === 'back' || clickedPlayDirection === 'forward') {
 			var newPlayState = clickedPlayDirection;
-			if (clickedPlayDirection === 'back') var newPlayIndex = (ud.playIndex >= 1) ? ud.playIndex - 1 : 0;
-			else var newPlayIndex = (ud.playIndex + 1 <= ud.fcDataParsed.length - 1) ? ud.playIndex + 1 : ud.fcDataParsed.length;
+			if (clickedPlayDirection === 'back') var newPlayIndex = (ud.play_index >= 1) ? ud.play_index - 1 : 0;
+			else var newPlayIndex = (ud.play_index + 1 <= ud.treasury_data.length - 1) ? ud.play_index + 1 : ud.treasury_data.length;
 		}
 		console.log('clicked', clickedPlayDirection, newPlayState, newPlayIndex);
 				           
-		setData('userData', {...getData('userData'), ...{play_state: newPlayState, play_index: newPlayIndex}});
+		setData('rates-model-treasury-curve', {...getData('rates-model-treasury-curve'), ...{play_state: newPlayState, play_index: newPlayIndex}});
 		if (clickedPlayDirection !== 'pause') updateChart();
 		else updateButtons();
 		
 		return;
     });
-	*/
+
 
 });
 
@@ -375,13 +371,12 @@ function drawChart(treasury_data, play_index) {
 
 
 
-function drawTable(fcDataParsed, playIndex) {
+function drawTable(treasury_data) {
 	
-	console.log('fcDataParsed', fcDataParsed);
 	
 	// Get list of ttm's present in data as array of form [{num: 1, fmt: '1m'}, {num: 3, fmt: '3m'}, ...]
 	const ttmsList =
-		[...new Set(fcDataParsed.map(x => (x.data.map(y => y[0]))).flat(1))].sort((a, b) => a > b ? 1 : -1)
+		[...new Set(treasury_data.map(x => (x.data.map(y => y[0]))).flat(1))].sort((a, b) => a > b ? 1 : -1)
 		.map(x => ({num: x, fmt: (x >= 12 ? x/12 + 'y' : x + 'm')}));
 	
 	// Get obj of form 1m: 1, 3m: 3, 6m: 6, etc..
@@ -390,7 +385,7 @@ function drawTable(fcDataParsed, playIndex) {
 	*/
 	// Create array of objects with each object of form {date: , 1m: , 3m: , ...,} returning null if data is unavailable
 	const fcDataTable =
-		fcDataParsed.map(function(x) {
+		treasury_data.map(function(x) {
 			let res = {
 				date: moment(x.date).format('YYYY-MM'),
 				type: x.type
@@ -489,47 +484,47 @@ function drawTable(fcDataParsed, playIndex) {
 function updateChart() {
 	let ud = getData('rates-model-treasury-curve');
 	const chart = $('#chart-container').highcharts();
-	/* Return if playstate = paused; this is necessary to shut off the auto-repeating nature of this function */
-	if (ud.fcDataParsed === undefined || ud.playIndex === undefined) return;
+	/* Return if play_state = paused; this is necessary to shut off the auto-repeating nature of this function */
+	if (ud.treasury_data === undefined || ud.play_index === undefined) return;
 	const timeStart = new Date().getTime();
   
 	/* Get the new active date */
-    const newData = ud.fcDataParsed[ud.playIndex].data;
-    const newDate = ud.fcDataParsed[ud.playIndex].date;
+    const newData = ud.treasury_data[ud.play_index].data;
+    const newDate = ud.treasury_data[ud.play_index].date;
 
 	/* Update data */
 	//console.log('Updating data...', newData);
 	
 	/* Update chart data and colors */
 	chart.series[0].setData(newData, redraw = true, animation = {duration: 250}, updatePoints = true);
-	chart.series[0].update({color: (ud.fcDataParsed[ud.playIndex].type === 'forecast' ? 'rgb(33, 177, 151)' : '#3333A2')})
+	chart.series[0].update({color: (ud.treasury_data[ud.play_index].type === 'forecast' ? 'rgb(33, 177, 151)' : '#3333A2')})
 	
 	/* Update chart title*/
-	if (ud.fcDataParsed[ud.playIndex].type === 'history') {
+	if (ud.treasury_data[ud.play_index].type === 'history') {
 		document.querySelector('#date-text').style.fill = 'darkblue';
-		document.querySelector('#date-text').textContent = 'Historical curve for ' + moment(ud.fcDataParsed[ud.playIndex].date).format('MMM YYYY');
+		document.querySelector('#date-text').textContent = 'Historical curve for ' + moment(ud.treasury_data[ud.play_index].date).format('MMM YYYY');
 	} else {
 		document.querySelector('#date-text').style.fill = 'rgb(33, 177, 151)';
-		document.querySelector('#date-text').textContent = 'Forecasted curve for ' + moment(ud.fcDataParsed[ud.playIndex].date).format('MMM YYYY');
+		document.querySelector('#date-text').textContent = 'Forecasted curve for ' + moment(ud.treasury_data[ud.play_index].date).format('MMM YYYY');
 	}
 	
 	/* Handle pause/unpause */
 	//If at end or beginning, auto-pause
-	if (ud.playIndex <= 0 ) {
-	  ud.playState = 'pause';
-	  ud.playIndex = 0;
+	if (ud.play_index <= 0 ) {
+	  ud.play_state = 'pause';
+	  ud.play_index = 0;
 	}
-	else if (ud.playIndex >= ud.fcDataParsed.length - 1) {
-	  ud.playState = 'pause';
-	  ud.playIndex = ud.fcDataParsed.length - 1;
+	else if (ud.play_index >= ud.treasury_data.length - 1) {
+	  ud.play_state = 'pause';
+	  ud.play_index = ud.treasury_data.length - 1;
 	}
 	else {
-	  if (ud.playState === 'forward')  ud.playIndex = ud.playIndex + 1;
-	  else ud.playIndex = ud.playIndex - 1;
+	  if (ud.play_state === 'forward')  ud.play_index = ud.play_index + 1;
+	  else ud.play_index = ud.play_index - 1;
 	}
 	
 	/* Update userdata */
-	setData('userData', {...ud, ...{}});
+	setData('rates-model-treasury-curve', {...ud, ...{}});
 	
 	updateButtons();
 	updateChart2();
@@ -537,17 +532,17 @@ function updateChart() {
 	const timeEnd = new Date().getTime();
 	const timeWait = 250 /*timeEnd - timeStart < 5000 ? 5000 - (timeEnd - timeStart) : 5000*/;
   
-	if (ud.playState !== 'pause') setTimeout(function() {updateChart();}, timeWait);
+	if (ud.play_state !== 'pause') setTimeout(function() {updateChart();}, timeWait);
 	return;
 }
 
 
 function updateChart2() {
-	const ud = getData('userData');
+	const ud = getData('rates-model-treasury-curve');
 	const chart = $('#chart-container-2').highcharts();
     chart.xAxis[0].removePlotLine('plot-line');
     chart.xAxis[0].addPlotLine({
-        value: parseInt(moment(ud.fcDataParsed[ud.playIndex].date).format('x')),
+        value: parseInt(moment(ud.treasury_data[ud.play_index].date).format('x')),
         color: 'rgba(255,0,0,.5)',
         width: 5,
         id: 'plot-line',
@@ -563,16 +558,16 @@ function updateChart2() {
 }
 
 function updateButtons() {
-	const ud = getData('userData');
+	const ud = getData('rates-model-treasury-curve');
 	/* Update buttons */
 	const buttons = $('#chart-subtitle-group').find('button.chart-subtitle').removeClass('active').prop('disabled', false).end();
-	//console.log('updateButtons', ud.playState, ud.playIndex, ud.fcDataParsed.length - 1, buttons);
+	//console.log('updateButtons', ud.play_state, ud.play_index, ud.treasury_data.length - 1, buttons);
 
-	if (ud.playIndex === 0) buttons.find('[data-dir="start"],[data-dir="back"]').prop('disabled', true);
-	else if (ud.playIndex === ud.fcDataParsed.length - 1) buttons.find('[data-dir="end"],[data-dir="forward"]').prop('disabled', true);
-	if (ud.playState === 'pause') buttons.find('[data-dir="pause"]').addClass('active', true);
-	else if (ud.playState === 'back') buttons.find('[data-dir="back"]').addClass('active', true);
-	else if (ud.playState === 'forward') buttons.find('[data-dir="forward"]').addClass('active', true);
+	if (ud.play_index === 0) buttons.find('[data-dir="start"],[data-dir="back"]').prop('disabled', true);
+	else if (ud.play_index === ud.treasury_data.length - 1) buttons.find('[data-dir="end"],[data-dir="forward"]').prop('disabled', true);
+	if (ud.play_state === 'pause') buttons.find('[data-dir="pause"]').addClass('active', true);
+	else if (ud.play_state === 'back') buttons.find('[data-dir="back"]').addClass('active', true);
+	else if (ud.play_state === 'forward') buttons.find('[data-dir="forward"]').addClass('active', true);
 	else buttons.find('[data-dir="forward"]').addClass('active', true);
 }
 

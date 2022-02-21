@@ -1,4 +1,4 @@
-$(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function(event) {
 
 	/********** INITIALIZE **********/
 	$('div.overlay').show();
