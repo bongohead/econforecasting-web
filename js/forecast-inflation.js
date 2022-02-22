@@ -4,9 +4,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	$('div.overlay').show();
 	
 	/********** GET DATA **********/
-	const ud = getData('rates-model-treasury') || {};
-	const get_forecast_hist_values_last_vintage = getFetch('get_forecast_hist_values_last_vintage', ['forecast_hist_values'], {varname: 'sofr', freq: 'm', form: 'd1'}, 10000, false);	
-	const get_forecast_values_dfd = getFetch('get_forecast_values_last_vintage', ['forecast_values'], {varname: 'sofr', freq: ['m', 'q'], form: 'd1'}, 10000, false);
+	const ud = getData('forecast-inflation') || {};
+	const get_forecast_hist_values_last_vintage = getFetch('get_forecast_hist_values_last_vintage', ['forecast_hist_values'], {varname: 'cpi', freq: 'm', form: 'd1'}, 10000, false);	
+	const get_forecast_values_dfd = getFetch('get_forecast_values_last_vintage', ['forecast_values'], {varname: 'cpi', freq: ['m', 'q'], form: 'd1'}, 10000, false);
 	
 	Promise.all([get_forecast_hist_values_last_vintage, get_forecast_values_dfd]).then(function(response) {
 		const ts_data_raw =
@@ -18,11 +18,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				vdate: moment().format('YYYY-MM-DD'),
 				date: x.date,
 				value: parseFloat(x.value)
-			})).concat(response[1].forecast_values.filter(x => ['int', 'spf', 'cbo', 'wsj', 'fnma'].includes(x.forecast)).map(x => ({
+			})).concat(response[1].forecast_values.filter(x => ['int', 'einf', 'spf', 'cbo', 'wsj', 'fnma'].includes(x.forecast)).map(x => ({
 				tskey: x.forecast,
 				freq: x.freq,
-				fullname: x.forecast === 'int' ? 'Consensus Market Derived Forecast' : x.fullname,
-				shortname: x.forecast === 'int' ? 'Market Consensus' : x.shortname,
+				fullname: x.forecast === 'einf' ? 'Consensus Market Derived Forecast' : x.fullname,
+				shortname: x.forecast === 'einf' ? 'Market Consensus' : x.shortname,
 				vdate: x.vdate,
 				date: x.date, 
 				value: parseFloat(x.value)
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					freq: z.freq,
 					ts_type: 
 						z.tskey ==='hist' ? 'hist'
-						: z.tskey === 'int' ? 'primary'
+						: z.tskey === 'einf' ? 'primary'
 						: 'secondary',
 					shortname: z.shortname,
 					fullname: z.fullname,
@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			
 		//console.log('ts_data_parsed', ts_data_parsed);
 		
-		setData('rates-model-sofr', {...getData('rates-model-sofr'), ...{ts_data_parsed: ts_data_parsed}});
+		setData('forecast-inflation', {...getData('forecast-inflation'), ...{ts_data_parsed: ts_data_parsed}});
 		return(ts_data_parsed);
 	})
 	/********** DRAW CHART & TABLE **********/
@@ -122,7 +122,7 @@ function drawChart(ts_data_parsed) {
 				//['var(--bs-cmefi-blue)', 'var(--bs-cmefi-green)', 'var(--bs-cmefi-orange)'][i]
 				color: (x.tskey === 'hist' ? 'black' : getColorArray()[i]),
 				opacity: 2,
-				visible: (x.ts_type === 'primary' || x.ts_type === 'hist', true),
+				visible: (x.ts_type === 'primary' || x.ts_type === 'hist'),
 				index: i
 			}
 		));
@@ -144,7 +144,7 @@ function drawChart(ts_data_parsed) {
 			useHTML: true,
 			text: 
 				'<img class="me-1" width="18" height="18" src="/static/cmefi-short.svg">' +
-				'<div style="vertical-align:middle;display:inline"><span>Secured Overnight Financing Rate (SOFR) Forecasts</span></div>',
+				'<div style="vertical-align:middle;display:inline"><span>U.S. Inflation Forecast</span></div>',
 			style: {
 				fontSize: '1.3rem',
 				color: 'var(--bs-dark)'
@@ -243,7 +243,7 @@ function drawChart(ts_data_parsed) {
                 }
             },
 			title: {
-				text: 'Percent (%)',
+				text: 'YoY % Change in CPI',
 				style: {
 					color: 'black',
 				}
@@ -273,7 +273,7 @@ function drawChart(ts_data_parsed) {
 			backgroundColor: 'rgba(255, 255, 255, .8)',
 			formatter: function () {
 				const points = this.points;
-				const ud = getData('rates-model-ffr');
+				const ud = getData('forecast-inflation');
 				const text =
 					'<table>' +
 					'<tr style="border-bottom:1px solid black"><td>DATE</td><td style="font-weight:600">' +
@@ -378,8 +378,8 @@ function drawTable(ts_data_parsed) {
 		li.classList.add('align-items-center');
 		//li.classList.add('w-100'); // Needed to get the thing to vertically align
 		li.innerHTML =
-			(x.tskey !== 'hist' ? x.shortname + ' Forecast' : x.shortname) +
-			'<span style="font-size:0.8rem;color: rgb(180, 180, 180)" >' +
+			x.shortname +
+			'<span style="font-size:0.7rem;color: rgb(180, 180, 180)" >' +
 			('Updated ' + moment(x.vdate).format('MM/DD/YYYY')) +
 			 '</span>';
 		li.setAttribute('data-ref-table', x.tskey); 

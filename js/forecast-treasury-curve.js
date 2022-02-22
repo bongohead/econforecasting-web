@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			}));
 		//console.log('hist_values', hist_values);
 		
-		const forecast_values_0 = response[1].forecast_values.map(x => ({
+		const forecast_values_raw = response[1].forecast_values.map(x => ({
 			vdate : x.vdate,
 			date: x.date,
 			value: parseFloat(x.value),
@@ -41,11 +41,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		}));
 		
 		const forecast_values =
-			[... new Set(forecast_values_0.map(x => x.date))]
+			[... new Set(forecast_values_raw.map(x => x.date))]
 			.map(d => ({ // Group each value of the original array under the correct obs_date
 				date: d,
 				type: 'forecast',
-				data: forecast_values_0.filter(x => x.date == d).map(x => [x.ttm, x.value]).sort((a, b) => a[0] - b[0]); // Sort according to largest value
+				data: forecast_values_raw.filter(x => x.date == d).map(x => [x.ttm, x.value]).sort((a, b) => a[0] - b[0]); // Sort according to largest value
 			}));
 		//console.log('forecast_values', forecast_values);
 		
@@ -198,7 +198,7 @@ function drawChart(treasury_data, play_index) {
         series: [{
             data: treasury_data[play_index].data,
 			name: 'Yield',
-            type: 'area',
+            type: 'areaspline',
             color: 'rgb(33, 177, 151)',
 			/*
 			fillColor: {
@@ -216,7 +216,7 @@ function drawChart(treasury_data, play_index) {
         }, {
             data: treasury_data[play_index - 1].data,
 			name: 'Current Yield',
-            type: 'area',
+            type: 'areaspline',
             color: 'red',
 			marker: {
 				enabled: true

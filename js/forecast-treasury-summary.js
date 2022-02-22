@@ -6,62 +6,55 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 	/********** GET DATA **********/
 	const ud = getData('rates-model-treasury') || {};
-	const get_hist_values_dfd = getFetch('get_rates_model_hist_values', toScript = ['hist_values'], fromAjax = {varname: ud.varname, freq: 'm'});
-	const get_submodel_values_dfd = getFetch('get_rates_model_yield_curve_last_vintage', toScript = ['submodel_values'], fromAjax = {varname: ud.varname, freq: null});
+	const get_forecast_hist_values_last_vintage = getFetch('get_forecast_hist_values_last_vintage', ['forecast_hist_values'], {forecast: 'int', varname: ['t01m', 't03m', 't06m', 't01y', 't05y', 't07y', 't10y', 't20y', 't30y'], freq: 'm', form: 'd1'}, 10000, false);	
+	const get_forecast_values_dfd = getFetch('get_forecast_values_last_vintage', ['forecast_values'], {varname: ['t01m', 't03m', 't06m', 't01y', 't05y', 't07y', 't10y', 't20y', 't30y'], freq: 'm', form: 'd1'}, 10000, false);
 	
-	Promise.all([get_hist_values_dfd, get_submodel_values_dfd]).then(function(response) {
+	Promise.all([get_forecast_hist_values_last_vintage, get_forecast_values_dfd]).then(function(response) {
 		
 		const ts_data_hist = response[0];
 		const ts_data_forecast = response[1];
 		console.log(ts_data_hist, ts_data_forecast);
-		/*
-		const ts_data_hist =
-			[... new Set(response[0].map(x => x.obs_date))] // Get list of obs_dates
-			.map(function(d) { // Group each value of the original array under the correct obs_date
-				return {
-					date: d,
-					type: 'history',
-					data: fcHistory.filter(x => x.obs_date == d).map(x => [x.ttm, x.value]).sort((a, b) => a[0] - b[0]); // Sort according to largest value
-				}
-			});
-			
-			const fcForecastParsed =
-				[... new Set(fcForecast
-				.map(x => x.obs_date))] // Get list of obs_dates
-				.map(function(d) { // Group each value of the original array under the correct obs_date
-					return {
-						date: d,
-						type: 'forecast',
-						data: fcForecast.filter(x => x.obs_date == d).map(x => [x.ttm, x.value]).sort((a, b) => a[0] - b[0]); // Sort according to largest value
-					}
-				});
-				
-			const fcDataParsed = fcHistoryParsed.concat(fcForecastParsed).map((x, i) => ({...x, ...{dateIndex: i}}));
-			//console.log('fcDataParsed', fcDataParsed);
-			setData(
-				'userData',
-				{
-					...getData('userData'),
-					...{
-						fcDataParsed: fcDataParsed
-					}
-				}
-			);
-
-		*/
-		//console.log('ts_data_parsed', ts_data_parsed);
 		
-		//setData('rates-model-treasury', {...getData('rates-model-treasury'), ...{ts_data_parsed: ts_data_parsed}});
-		//return(ts_data_parsed);
+		const hist_values_raw = response[0].forecast_hist_values.map(x => ({
+			date: x.date,
+			value: parseFloat(x.value),
+			ttm: parseInt(x.varname.substring(1, 3)) * (x.varname.substring(3, 4) === 'm' ? 1 : 12)
+			}));
+
+		const hist_values =
+			[... new Set(hist_values_raw.map(x => x.date))]
+			.map(d => ({
+				date: d,
+				type: 'history',
+				data: hist_values_raw.filter(x => x.date == d).map(x => [x.ttm, x.value]).sort((a, b) => a[0] - b[0]); // Sort according to largest value
+			}));
+			
+		//console.log('hist_values', hist_values);
+		
+		const forecast_values_raw = response[1].forecast_values.map(x => ({
+			vdate : x.vdate,
+			date: x.date,
+			value: parseFloat(x.value),
+			ttm: parseInt(x.varname.substring(1, 3)) * (x.varname.substring(3, 4) === 'm' ? 1 : 12)
+		}));
+		
+		const forecast_values =
+			[... new Set(forecast_values_raw.map(x => x.date))]
+			.map(d => ({
+				date: d,
+				type: 'forecast',
+				data: forecast_values_raw.filter(x => x.date == d).map(x => [x.ttm, x.value]).sort((a, b) => a[0] - b[0]); // Sort according to largest value
+			}));
+			
+		const treasury_data = hist_values.concat(forecast_values).map((x, i) => ({...x, ...{date_index: i}}));
+		setData('rates-model-treasury-summary', {...getData('rates-model-treasury-summary'), ...{treasury_data: treasury_data}});
+		return(treasury_data);
 	})
 	/********** DRAW CHART & TABLE **********/
-	.then(function(ts_data_parsed) {
-		/*console.log('ts_data_parsed', ts_data_parsed);
-		drawDates(ts_data_parsed);
-		drawChart(ts_data_parsed, ud.fullname);
-		drawTable(ts_data_parsed);
+	.then(function(treasury_data) {
+		drawChart(treasury_data);
+		drawTable(treasury_data);
 		$('div.overlay').hide();
-		*/
 	});
 
 	
@@ -69,9 +62,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 
 /*** Draw chart ***/
-function drawChart(fcDataParsed) {
+function drawChart(treasury_data) {
 	
-	//console.log('fcDataParsed', fcDataParsed);
+	//console.log('treasury_data', treasury_data);
 	
 	const grMap = gradient.create(
 	  [0, 1, 24, 48, 72], //array of color stops
@@ -80,8 +73,8 @@ function drawChart(fcDataParsed) {
 	);
 	
 	const chartData =
-		fcDataParsed.filter(x => x.type === 'history').slice(-1) // Get last historical forecast
-		.concat(fcDataParsed.filter(x => x.type === 'forecast').slice(0, 71)) // Get first 24 forecasts
+		treasury_data.filter(x => x.type === 'history').slice(-1) // Get last historical forecast
+		.concat(treasury_data.filter(x => x.type === 'forecast').slice(0, 71)) // Get first 24 forecasts
 		.map((x, i) => (
 			{
 				name: moment(x.date).format('MMM YYYY') + ' ' + (x.type === 'history' ? '(Historical)' : '(Forecast)'),
@@ -90,7 +83,7 @@ function drawChart(fcDataParsed) {
 				color: gradient.valToColor(i, grMap, 'hex'),
 				dashStyle: (x.type === 'history' ? 'solid' : 'shortdot'),
 				visible: i === 0 || i % 6 === 1
-				//(x.type === 'history' || moment(x.date).month() === moment(fcDataParsed.filter(x => x.type === 'history').slice(-1)[0].date).month() + 1)
+				//(x.type === 'history' || moment(x.date).month() === moment(treasury_data.filter(x => x.type === 'history').slice(-1)[0].date).month() + 1)
 			}
 		));
 	//console.log('chartData', chartData);
@@ -180,20 +173,20 @@ function drawChart(fcDataParsed) {
 
 
 
-function drawTable(fcDataParsed) {
+function drawTable(treasury_data) {
 	
-	//console.log('fcDataParsed', fcDataParsed);
+	//console.log('treasury_data', treasury_data);
 	
 	// Get list of ttm's present in data as array of form [{num: 1, fmt: '1m'}, {num: 3, fmt: '3m'}, ...]
 	const ttmsList =
-		[...new Set(fcDataParsed.map(x => (x.data.map(y => y[0]))).flat(1))].sort((a, b) => a > b ? 1 : -1)
+		[...new Set(treasury_data.map(x => (x.data.map(y => y[0]))).flat(1))].sort((a, b) => a > b ? 1 : -1)
 		.map(x => ({num: x, fmt: (x >= 12 ? x/12 + 'y' : x + 'm')}))
 		.filter(x => !['1m', '6m', '2y', '5y', '7y', '20y'].includes(x.fmt)) ;
 	
 	// Get obj of form 1m: 1, 3m: 3, 6m: 6, etc..
 	// Create array of objects with each object of form {date: , 1m: , 3m: , ...,} returning null if data is unavailable
 	const fcDataTable =
-		fcDataParsed.map(function(x) {
+		treasury_data.map(function(x) {
 			let res = {
 				date: moment(x.date).format('MMM YYYY') + (x.type === 'forecast' ? '*' : ''),
 				type: x.type

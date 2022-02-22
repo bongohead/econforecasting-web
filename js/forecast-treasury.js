@@ -400,8 +400,8 @@ function drawTable(ts_data_parsed) {
 		li.classList.add('align-items-center');
 		//li.classList.add('w-100'); // Needed to get the thing to vertically align
 		li.innerHTML =
-			(x.tskey !== 'hist' ? x.shortname + ' Forecast' : x.shortname) +
-			'<span style="font-size:0.8rem;color: rgb(180, 180, 180)" >' +
+			x.shortname +
+			'<span style="font-size:0.7rem;color: rgb(180, 180, 180)" >' +
 			('Updated ' + moment(x.vdate).format('MM/DD/YYYY')) +
 			 '</span>';
 		li.setAttribute('data-ref-table', x.tskey); 
