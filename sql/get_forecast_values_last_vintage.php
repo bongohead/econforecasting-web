@@ -21,7 +21,7 @@ $form_str = $vars_to_bind['form'] != '' ? 'AND form = ANY(:form::VARCHAR[])' : '
 $col_str = implode(',', array_merge(
 	isset($fromAjax['varname']) && count((array) $fromAjax['varname']) === 1 ? [] : ['varname'],
 	isset($fromAjax['freq']) && count((array) $fromAjax['freq']) === 1 ? [] : ['freq'],
-	isset($fromAjax['forecast']) && count((array) $fromAjax['forecast']) === 1 ? [] : ['forecast, f.fullname, f.shortname'],
+	isset($fromAjax['forecast']) && count((array) $fromAjax['forecast']) === 1 ? [] : ['forecast, f.external, f.shortname, f.description'],
 	isset($fromAjax['form']) && count((array) $fromAjax['form']) === 1 ? [] : ['form'],
 	['vdate', 'date', 'value']
 	));

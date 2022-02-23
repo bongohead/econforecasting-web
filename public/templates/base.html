@@ -65,24 +65,32 @@
 						<div class="dropdown-menu">
 							<div class="d-md-flex align-items-start justify-content-start">
 								<div>   
-									<div class="dropdown-header py-0 mx-3 mb-1 border-bottom border-econgreen" style="font-size:1.0rem">TREASURY YIELDS</div>
-									<a class="dropdown-item" href="/fc-rates-t-info">Overview and Methodology</a>
-									<a class="dropdown-item" href="/fc-rates-tcurve">Full Treasury Yield Forecast</a>
-									<a class="dropdown-item" href="/rates-model-treasury-1y">3 Month T-Bill Forecast</a>
-									<a class="dropdown-item" href="/rates-model-treasury-10y">1 Year T-Note Forecast</a>
-									<a class="dropdown-item" href="/rates-model-treasury-20y">10 Year T-Note Forecast</a>
-									<a class="dropdown-item" href="/rates-model-treasury-30y">30 Year T-Bond Forecast</a>
+									<div class="dropdown-header py-0 mx-3 mb-1 border-bottom border-black" style="font-size:1.0rem">TREASURY YIELDS</div>
+									<a class="dropdown-item" href="/forecast-treasury-summary">Overview and Methodology</a>
+									<a class="dropdown-item" href="/forecast-treasury-curve">Yield Curve Forecast</a>
+									<a class="dropdown-item" href="/forecast-treasury-1y">3 Month T-Bill Forecast</a>
+									<a class="dropdown-item" href="/forecast-treasury-10y">1 Year T-Note Forecast</a>
+									<a class="dropdown-item" href="/forecast-treasury-20y">10 Year T-Note Forecast</a>
+									<a class="dropdown-item" href="/forecast-treasury-30y">30 Year T-Bond Forecast</a>
 								</div>
 								<div>
-									<div class="dropdown-header py-0 mx-3 mb-1 border-bottom border-econgreen" style="font-size:1.0rem">BENCHMARK RATES</div>
-									<a class="dropdown-item" href="/rates-model-ffr">Federal Funds Rate Forecast</a>
-									<a class="dropdown-item" href="/rates-model-sofr">SOFR Forecast</a>
+									<div class="dropdown-header py-0 mx-3 mb-1 border-bottom border-black" style="font-size:1.0rem">BENCHMARK RATES</div>
+									<a class="dropdown-item" href="/forecast-ffr">Federal Funds Rate Forecast</a>
+									<a class="dropdown-item" href="/forecast-sofr">SOFR Forecast</a>
+									<a class="dropdown-item" href="/forecast-ameribor">AMERIBOR Forecast</a>
+									<a class="dropdown-item" href="/forecast-bsby">BSBY Forecast</a>
 									<!--
-									<div class="dropdown-header py-0 mx-3 mt-4 mb-1 border-bottom border-econgreen" style="font-size:1.0rem">MORTGAGE RATES</div>
-									<a class="dropdown-item" href="/fc-rates-mort15y">15-Year Mortgage Rate</a>
-									<a class="dropdown-item" href="/fc-rates-mort30y">30-Year Mortgage Rate</a>
+									<div class="dropdown-header py-0 mx-3 mt-4 mb-1 border-bottom border-black" style="font-size:1.0rem">MORTGAGE RATES</div>
+									<a class="dropdown-item" href="/forecast-mort15y">15-Year Mortgage Rate</a>
+									<a class="dropdown-item" href="/forecast-mort30y">30-Year Mortgage Rate</a>
 									-->
 								</div>
+								<div>
+									<div class="dropdown-header py-0 mx-3 mb-1 border-bottom border-black" style="font-size:1.0rem">MORTGAGE RATES</div>
+									<a class="dropdown-item" href="/forecast-mort15y">15-Year Mortgage Rate</a>
+									<a class="dropdown-item" href="/forecast-mort30y">30-Year Mortgage Rate</a>
+								</div>
+
 							</div>
 							 <div class="dropdown-divider"></div>
 						</div>
@@ -94,18 +102,13 @@
 						<div class="dropdown-menu">
 							<div class="d-md-flex align-items-start justify-content-start">
 								<div>   
-									<div class="dropdown-header py-0 mx-3 mb-1 border-bottom border-econgreen" style="font-size:1.0rem">GDP</div>
+									<div class="dropdown-header py-0 mx-3 mb-1 border-bottom border-black" style="font-size:1.0rem">GDP</div>
 									<a class="dropdown-item" href="/fc-rates-t-info">GDP Nowcasts</a>
 									<a class="dropdown-item" href="/fc-rates-tcurve">GDP & Consumption Forecasts</a>
 								</div>
 								<div>
-									<div class="dropdown-header py-0 mx-3 mb-1 border-bottom border-econgreen" style="font-size:1.0rem">OTHER</div>
-									<a class="dropdown-item" href="/rates-model-ffr">Inflation</a>
-									<!--
-									<div class="dropdown-header py-0 mx-3 mt-4 mb-1 border-bottom border-econgreen" style="font-size:1.0rem">MORTGAGE RATES</div>
-									<a class="dropdown-item" href="/fc-rates-mort15y">15-Year Mortgage Rate</a>
-									<a class="dropdown-item" href="/fc-rates-mort30y">30-Year Mortgage Rate</a>
-									-->
+									<div class="dropdown-header py-0 mx-3 mb-1 border-bottom border-black" style="font-size:1.0rem">OTHER</div>
+									<a class="dropdown-item" href="/forecast-inflation">Inflation</a>
 								</div>
 							</div>
 							 <div class="dropdown-divider"></div>
@@ -138,7 +141,7 @@
 		</nav>
 	</header>
 	
-	<main class="pb-5">
+	<main class="">
 		{% block content %}
 		{% endblock %}
 	</main>

@@ -21,8 +21,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			})).concat(response[1].forecast_values.filter(x => ['int', 'einf', 'spf', 'cbo', 'wsj', 'fnma'].includes(x.forecast)).map(x => ({
 				tskey: x.forecast,
 				freq: x.freq,
-				fullname: x.forecast === 'einf' ? 'Consensus Market Derived Forecast' : x.fullname,
-				shortname: x.forecast === 'einf' ? 'Market Consensus' : x.shortname,
+				fullname: x.forecast === 'einf' ? 'Consensus Inflation Forecast' : x.fullname,
+				shortname: x.forecast === 'einf' ? 'Consensus Inflation Forecast' : x.shortname,
 				vdate: x.vdate,
 				date: x.date, 
 				value: parseFloat(x.value)
@@ -243,7 +243,7 @@ function drawChart(ts_data_parsed) {
                 }
             },
 			title: {
-				text: 'YoY % Change in CPI',
+				text: '%',
 				style: {
 					color: 'black',
 				}
@@ -320,7 +320,7 @@ function drawTable(ts_data_parsed) {
 		const dtCols = [
 			{title: 'Date', data: 'date'},
 			{title: 'Type', data: 'type'},
-			{title: 'SOFR (%)', data: 'value'}
+			{title: 'CPI Inflation (%)', data: 'value'}
 		].map(function(x, i) {
 			return {...x, ...{
 				visible: (x.title !== 'Type'),
@@ -346,7 +346,7 @@ function drawTable(ts_data_parsed) {
 		const o = {
 			data: seriesData,
 			columns: dtCols,
-			iDisplayLength: 15,
+			iDisplayLength: 20,
 			dom:
 				"<'row justify-content-end'<'col-auto'B>>" +
 				"<'row justify-content-center'<'col-12'tr>>" +

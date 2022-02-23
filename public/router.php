@@ -34,7 +34,9 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 			['template' => 'forecast-benchmark-rates', 'request' => ['forecast-ffr'], 'title' => 'FFR Forecasts | econforecasting.com', 'models' => [], 'js' => ['init', 'forecast-benchmark-rates']],
 			['template' => 'forecast-benchmark-rates', 'request' => ['forecast-bsby'], 'title' => 'BSBY Forecasts | econforecasting.com', 'models' => [], 'js' => ['init', 'forecast-benchmark-rates']],
 			['template' => 'forecast-benchmark-rates', 'request' => ['forecast-ameribor'], 'title' => 'AMERIBOR Forecasts | econforecasting.com', 'models' => [], 'js' => ['init', 'forecast-benchmark-rates']],
-				
+			['template' => 'forecast-benchmark-rates', 'request' => ['forecast-mort30y'], 'title' => '30-Year Mortgage Rate Forecasts | econforecasting.com', 'models' => [], 'js' => ['init', 'forecast-benchmark-rates']],
+			['template' => 'forecast-benchmark-rates', 'request' => ['forecast-mort15y'], 'title' => '15-Year Mortgage Rate | econforecasting.com', 'models' => [], 'js' => ['init', 'forecast-benchmark-rates']],
+
 			['template' => 'forecast-treasury-summary', 'request' => ['forecast-treasury-summary'], 'title' => 'Yield Forecast Overview | econforecasting.com', 'models' => [], 'js' => ['init', 'forecast-treasury-summary']],
 			['template' => 'forecast-treasury-curve', 'request' => ['forecast-treasury-curve'], 'title' => 'Treasury Yield Curve Forecasts | econforecasting.com', 'models' => [], 'js' => ['init', 'forecast-treasury-curve']],
 			['template' => 'forecast-treasury', 'request' => ['forecast-treasury-3m'], 'title' => '3 Month Treasury Yield Forecast | econforecasting.com', 'models' => [], 'js' => ['init', 'forecast-treasury']],

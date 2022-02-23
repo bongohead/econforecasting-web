@@ -10,6 +10,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			: varname === 'ffr' ? 'Federal Funds Rate (FFR)'
 			: varname === 'ameribor' ? 'American Interbank Offered Rate (AMERIBOR)'
 			: varname === 'bsby' ? 'Bloomberg Short-Term Bank Yield Index (BSBY)'
+			: varname === 'mort30y' ? '30-Year Mortgage Rate'
+			: varname === 'mort15y' ? '15-Year Mortgage Rate'
 			: 'NA'
 			
 		document.querySelector('meta[name="description"]').setAttribute('content', 'Benchmark rate forecasts for ' + fullname + '.');
@@ -33,22 +35,24 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			response[0].forecast_hist_values.map(x => ({
 				tskey: 'hist',
 				freq: 'm',
-				fullname: 'Historical Data',
 				shortname: 'Historical Data',
+				description: 'Historical Data',
+				external: false,
 				vdate: moment().format('YYYY-MM-DD'),
 				date: x.date,
 				value: parseFloat(x.value)
 			})).concat(response[1].forecast_values.filter(x => ['int', 'spf', 'cbo', 'wsj', 'fnma'].includes(x.forecast) & moment(x.vdate) <= moment(x.date).add(30, 'days')).map(x => ({
 				tskey: x.forecast,
 				freq: x.freq,
-				fullname: x.forecast === 'int' ? 'Consensus Market Derived Forecast' : x.fullname,
 				shortname: x.forecast === 'int' ? 'Market Consensus' : x.shortname,
+				description: x.description,
+				external: x.external,
 				vdate: x.vdate,
 				date: x.date, 
 				value: parseFloat(x.value)
 			}))
 			);
-		// console.log('ts_data_raw', ts_data_raw);
+		//console.log('ts_data_raw', ts_data_raw);
 		
 		// Returns [{fcname: hist, data: [[],..]}, ...] MAX 5 years
 		const ts_data_parsed = 
@@ -64,7 +68,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 						: z.tskey === 'int' ? 'primary'
 						: 'secondary',
 					shortname: z.shortname,
-					fullname: z.fullname,
+					description: z.description,
+					external: z.external,
 					freq: z.freq,
 					vdate: z.vdate || null,
 					data: ts_data_raw.filter(x => x.tskey === tskey)
@@ -91,6 +96,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		drawDates(ts_data_parsed);
 		drawChart(ts_data_parsed, ud.fullname);
 		drawTable(ts_data_parsed);
+		drawDescription(ts_data_parsed, ud.varname);
 		$('div.overlay').hide();
 	});
 
@@ -140,7 +146,7 @@ function drawChart(ts_data_parsed, fullname) {
 				//['var(--bs-cmefi-blue)', 'var(--bs-cmefi-green)', 'var(--bs-cmefi-orange)'][i]
 				color: (x.tskey === 'hist' ? 'black' : getColorArray()[i]),
 				opacity: 2,
-				visible: (x.ts_type === 'primary' || x.ts_type === 'hist', true),
+				visible: (x.ts_type === 'primary' || x.ts_type === 'hist'),
 				index: i
 			}
 		));
@@ -197,7 +203,13 @@ function drawChart(ts_data_parsed, fullname) {
 					events: {
 						click: function(e) {
 							const state = $('#chart-container').highcharts().rangeSelector.buttons[0].state;
-							chart.xAxis[0].setExtremes(moment().add(-36, 'M').toDate().getTime(), moment().add(12, 'M').toDate().getTime());
+							chart.xAxis[0].setExtremes(
+								Math.max(
+									moment.min(...ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => moment(x[0]))).toDate().getTime(),
+									moment().add(-36, 'M').toDate().getTime()
+									),
+								moment().add(12, 'M').toDate().getTime()
+								);
 							$('#chart-container').highcharts().rangeSelector.buttons[0].setState(state === 0 ? 2 : 0);
 							return false;
 						}
@@ -207,7 +219,13 @@ function drawChart(ts_data_parsed, fullname) {
 					events: {
 						click: function(e) {
 							const state = $('#chart-container').highcharts().rangeSelector.buttons[1].state;
-							chart.xAxis[0].setExtremes(moment().add(-36, 'M').toDate().getTime(), moment().add(24, 'M').toDate().getTime());
+							chart.xAxis[0].setExtremes(
+								Math.max(
+									moment.min(...ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => moment(x[0]))).toDate().getTime(),
+									moment().add(-36, 'M').toDate().getTime()
+									),
+								moment().add(24, 'M').toDate().getTime()
+								);
 							$('#chart-container').highcharts().rangeSelector.buttons[1].setState(state === 0 ? 2 : 0);
 							return false;
 						}
@@ -217,7 +235,13 @@ function drawChart(ts_data_parsed, fullname) {
 					events: {
 						click: function(e) {
 							const state = $('#chart-container').highcharts().rangeSelector.buttons[2].state;
-							chart.xAxis[0].setExtremes(moment().add(-36, 'M').toDate().getTime(), moment().add(60, 'M').toDate().getTime());
+							chart.xAxis[0].setExtremes(
+								Math.max(
+									moment.min(...ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => moment(x[0]))).toDate().getTime(),
+									moment().add(-36, 'M').toDate().getTime()
+									),
+								moment().add(60, 'M').toDate().getTime()
+								);
 							$('#chart-container').highcharts().rangeSelector.buttons[2].setState(state === 0 ? 2 : 0);
 							return false;
 						}
@@ -242,7 +266,12 @@ function drawChart(ts_data_parsed, fullname) {
 			{color: '#D8D8D8', from: Date.UTC(2007, 12, 1), to: Date.UTC(2009, 6, 30)},
 			{color: '#D8D8D8', from: Date.UTC(2001, 3, 1), to: Date.UTC(2001, 11, 30)}],
 			ordinal: false,
-			min: moment().add(-36, 'M').toDate().getTime(),
+			min:
+				Math.max(
+					// Show max of either 3 years ago or first historical date. This handles situations where the first historical date is very recent.
+					moment.min(...ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => moment(x[0]))).toDate().getTime(),
+					moment().add(-36, 'M').toDate().getTime()
+					),
 			max: moment().add(60, 'M').toDate().getTime(),
 			labels: {
 				style: {
@@ -291,7 +320,7 @@ function drawChart(ts_data_parsed, fullname) {
 			backgroundColor: 'rgba(255, 255, 255, .8)',
 			formatter: function () {
 				const points = this.points;
-				const ud = getData('rates-model-ffr');
+				const ud = getData('forecast-benchmark-rates');
 				const text =
 					'<table>' +
 					'<tr style="border-bottom:1px solid black"><td>DATE</td><td style="font-weight:600">' +
@@ -451,4 +480,44 @@ function drawTable(ts_data_parsed) {
 }
 
 
+function drawDescription(ts_data_parsed, varname) {
+	
+	const description_html =
+		varname === 'sofr' ? `<p>
+		The secured overnight financing rate (SOFR) is a major 
+		<a href="https://www.investopedia.com/terms/r/referencerate.asp" target="_blank">benchmark interest rate</a> in the world 
+		economy. 
+		The rate measures the cost of overnight inter-bank borrowing rates for loans collaterized by Treasury securities.
+		SOFR was created in 2019 as a replacement for the London interbank 
+		offered rate (Libor) following the 
+		<a href="https://en.wikipedia.org/wiki/Libor_scandal" target="_blank" >2012 rate manipulation scandal</a>. 
+		In the U.S., all new loan contracts created in 2022 or later are required to use SOFR in lieu of Libor.</p>`
+		: varname === 'ffr' ? 'FFR-placeholder'
+		: '';
+	console.log(description_html);
+	document.querySelector('#variable-description').innerHTML = description_html + '<hr>';
+
+	
+	const primary_forecast_html =
+		varname === 'sofr' ? `<p> Our Market Consensus Forecast is generated by utilizing data on publicly-traded SOFR futures, where market participants 
+		can make bets on the future value of SOFR rates. Our model derives the mean market expectation from this data. The term structure
+		is interpolated and smoothed using a Diebold-Li three-factor parametrization<a href="#ref1"><sup>[1]</sup></a>, generating the 
+		final forecast.</p>
+		<p>This forecast can be interpreted as the mean market-expected values of future SOFR rates.</p>
+		<p>Model forecasts are scheduled to be updated daily, following close of major U.S. equities markets. </p>`
+		: 'PLACEHOLDER';
+	document.querySelector('#primary-forecast').innerHTML = primary_forecast_html + '<hr>';
+	
+
+	const external_forecasts = ts_data_parsed.filter(x => x.external === true);
+	if (external_forecasts.length === 0) return;
+
+	const external_forecast_html =
+		'<div class="pt-2">Other included forecasts are from external sources:' +
+			'<ul>' +
+				external_forecasts.map(x => '<li>' + x.description + '</li>').join('\n') +
+			'</ul><hr></div>'
+	document.querySelector('#external-forecasts').innerHTML = external_forecast_html;
+	return;
+}
 
