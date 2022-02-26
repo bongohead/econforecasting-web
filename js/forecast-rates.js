@@ -4,9 +4,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	$('div.overlay').show();
 
 	(function() {
-		const varname = 't' + window.location.pathname.split('-').pop().padStart(3, '0');
+		const varname = window.location.pathname.split('-').pop().padStart(3, '0');
 		const fullname =
-			varname === 't03m' ? '3 Month Treasury Bill' 
+			varname === 'sofr' ? 'Secured Overnight Financing Rate (SOFR)' 
+			: varname === 'ffr' ? 'Federal Funds Rate (FFR)'
+			: varname === 'ameribor' ? 'American Interbank Offered Rate (AMERIBOR)'
+			: varname === 'bsby' ? 'Bloomberg Short-Term Bank Yield Index (BSBY)'
+			: varname === 'mort30y' ? '30-Year Mortgage Rate'
+			: varname === 'mort15y' ? '15-Year Mortgage Rate'
+			: varname === 't03m' ? '3 Month Treasury Bill' 
 			: varname === 't06m' ? '6 Month Treasury Bill'
 			: varname === 't01y' ? '1 Year Treasury Note'
 			: varname === 't02y' ? '2 Year Treasury Note'
@@ -16,43 +22,45 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			: varname === 't30y' ? '30 Year Treasury Bond'
 			: 'NA'
 			
-		document.querySelector('meta[name="description"]').setAttribute('content', 'Treasury yield forecasts for ' + fullname + '.');
+		document.querySelector('meta[name="description"]').setAttribute('content', 'Benchmark rate forecasts for ' + fullname + '.');
 		//document.querySelectorAll('span.t-varname').forEach(x => x.textContent = tFullname);
-		const ud_prev = getAllData()['rates-model-treasury'] || {};
+		const ud_prev = getAllData()['forecast-benchmark-rates'] || {};
 		const ud = {... ud_prev, ... {
 				varname: varname,
 				fullname: fullname
 			}};
-		setData('rates-model-treasury', ud);
+		setData('forecast-benchmark-rates', ud);
 	})();
 
 
 	/********** GET DATA **********/
-	const ud = getData('rates-model-treasury') || {};
-	const get_forecast_hist_values_last_vintage = getFetch('get_forecast_hist_values_last_vintage', ['forecast_hist_values'], {varname: ud.varname, freq: ['m'], form: 'd1'}, 10000, true);	
-	const get_forecast_values_dfd = getFetch('get_forecast_values_last_vintage', ['forecast_values'], {varname: ud.varname, freq: ['m', 'q'], form: 'd1'}, 10000, true);
+	const ud = getData('forecast-benchmark-rates') || {};
+	const get_forecast_hist_values_last_vintage = getFetch('get_forecast_hist_values_last_vintage', ['forecast_hist_values'], {varname: ud.varname, freq: ['m'], form: 'd1'}, 10000, false);	
+	const get_forecast_values_dfd = getFetch('get_forecast_values_last_vintage', ['forecast_values'], {varname: ud.varname, freq: ['m', 'q'], form: 'd1'}, 10000, false);
 	
 	Promise.all([get_forecast_hist_values_last_vintage, get_forecast_values_dfd]).then(function(response) {
 		const ts_data_raw =
 			response[0].forecast_hist_values.map(x => ({
 				tskey: 'hist',
 				freq: 'm',
-				fullname: 'Historical Data',
 				shortname: 'Historical Data',
+				description: 'Historical Data',
+				external: false,
 				vdate: moment().format('YYYY-MM-DD'),
 				date: x.date,
 				value: parseFloat(x.value)
 			})).concat(response[1].forecast_values.filter(x => ['int', 'spf', 'cbo', 'wsj', 'fnma'].includes(x.forecast) & moment(x.vdate) <= moment(x.date).add(30, 'days')).map(x => ({
 				tskey: x.forecast,
 				freq: x.freq,
-				fullname: x.forecast === 'int' ? 'Consensus Market Derived Forecast' : x.fullname,
 				shortname: x.forecast === 'int' ? 'Market Consensus' : x.shortname,
+				description: x.description,
+				external: x.external,
 				vdate: x.vdate,
 				date: x.date, 
 				value: parseFloat(x.value)
 			}))
 			);
-		// console.log('ts_data_raw', ts_data_raw);
+		//console.log('ts_data_raw', ts_data_raw);
 		
 		// Returns [{fcname: hist, data: [[],..]}, ...] MAX 5 years
 		const ts_data_parsed = 
@@ -68,7 +76,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 						: z.tskey === 'int' ? 'primary'
 						: 'secondary',
 					shortname: z.shortname,
-					fullname: z.fullname,
+					description: z.description,
+					external: z.external,
 					freq: z.freq,
 					vdate: z.vdate || null,
 					data: ts_data_raw.filter(x => x.tskey === tskey)
@@ -87,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 		// console.log('ts_data_parsed', ts_data_parsed);
 		
-		setData('rates-model-treasury', {...getData('rates-model-treasury'), ...{ts_data_parsed: ts_data_parsed}});
+		setData('forecast-benchmark-rates', {...getData('forecast-benchmark-rates'), ...{ts_data_parsed: ts_data_parsed}});
 		return(ts_data_parsed);
 	})
 	/********** DRAW CHART & TABLE **********/
@@ -167,7 +176,7 @@ function drawChart(ts_data_parsed, fullname) {
 			useHTML: true,
 			text: 
 				'<img class="me-1" width="18" height="18" src="/static/cmefi-short.svg">' +
-				'<div style="vertical-align:middle;display:inline"><span>' + fullname + ' Forecasts</span></div>',
+				'<div style="vertical-align:middle;display:inline"><span>' + fullname + ' Forecast</span></div>',
 			style: {
 				fontSize: '1.3rem',
 				color: 'var(--bs-dark)'
@@ -175,7 +184,7 @@ function drawChart(ts_data_parsed, fullname) {
         },
 		caption: {
 			useHTML: true,
-			text: 'Data represents monthly values; shaded areas indicate recessions',
+			text: 'Data represents monthly-averaged values; shaded areas indicate recessions',
 
 			style: {
 				fontSize: '0.75rem'
@@ -202,7 +211,13 @@ function drawChart(ts_data_parsed, fullname) {
 					events: {
 						click: function(e) {
 							const state = $('#chart-container').highcharts().rangeSelector.buttons[0].state;
-							chart.xAxis[0].setExtremes(moment().add(-36, 'M').toDate().getTime(), moment().add(12, 'M').toDate().getTime());
+							chart.xAxis[0].setExtremes(
+								Math.max(
+									moment.min(...ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => moment(x[0]))).toDate().getTime(),
+									moment().add(-36, 'M').toDate().getTime()
+									),
+								moment().add(12, 'M').toDate().getTime()
+								);
 							$('#chart-container').highcharts().rangeSelector.buttons[0].setState(state === 0 ? 2 : 0);
 							return false;
 						}
@@ -212,7 +227,13 @@ function drawChart(ts_data_parsed, fullname) {
 					events: {
 						click: function(e) {
 							const state = $('#chart-container').highcharts().rangeSelector.buttons[1].state;
-							chart.xAxis[0].setExtremes(moment().add(-36, 'M').toDate().getTime(), moment().add(24, 'M').toDate().getTime());
+							chart.xAxis[0].setExtremes(
+								Math.max(
+									moment.min(...ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => moment(x[0]))).toDate().getTime(),
+									moment().add(-36, 'M').toDate().getTime()
+									),
+								moment().add(24, 'M').toDate().getTime()
+								);
 							$('#chart-container').highcharts().rangeSelector.buttons[1].setState(state === 0 ? 2 : 0);
 							return false;
 						}
@@ -222,7 +243,13 @@ function drawChart(ts_data_parsed, fullname) {
 					events: {
 						click: function(e) {
 							const state = $('#chart-container').highcharts().rangeSelector.buttons[2].state;
-							chart.xAxis[0].setExtremes(moment().add(-36, 'M').toDate().getTime(), moment().add(60, 'M').toDate().getTime());
+							chart.xAxis[0].setExtremes(
+								Math.max(
+									moment.min(...ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => moment(x[0]))).toDate().getTime(),
+									moment().add(-36, 'M').toDate().getTime()
+									),
+								moment().add(60, 'M').toDate().getTime()
+								);
 							$('#chart-container').highcharts().rangeSelector.buttons[2].setState(state === 0 ? 2 : 0);
 							return false;
 						}
@@ -247,7 +274,12 @@ function drawChart(ts_data_parsed, fullname) {
 			{color: '#D8D8D8', from: Date.UTC(2007, 12, 1), to: Date.UTC(2009, 6, 30)},
 			{color: '#D8D8D8', from: Date.UTC(2001, 3, 1), to: Date.UTC(2001, 11, 30)}],
 			ordinal: false,
-			min: moment().add(-36, 'M').toDate().getTime(),
+			min:
+				Math.max(
+					// Show max of either 3 years ago or first historical date. This handles situations where the first historical date is very recent.
+					moment.min(...ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => moment(x[0]))).toDate().getTime(),
+					moment().add(-36, 'M').toDate().getTime()
+					),
 			max: moment().add(60, 'M').toDate().getTime(),
 			labels: {
 				style: {
@@ -296,7 +328,7 @@ function drawChart(ts_data_parsed, fullname) {
 			backgroundColor: 'rgba(255, 255, 255, .8)',
 			formatter: function () {
 				const points = this.points;
-				const ud = getData('rates-model-ffr');
+				const ud = getData('forecast-benchmark-rates');
 				const text =
 					'<table>' +
 					'<tr style="border-bottom:1px solid black"><td>DATE</td><td style="font-weight:600">' +
@@ -454,7 +486,6 @@ function drawTable(ts_data_parsed) {
 	
 	return;
 }
-
 
 
 function drawDescription(ts_data_parsed, varname) {
