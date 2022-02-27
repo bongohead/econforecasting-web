@@ -238,7 +238,7 @@ nav.sidebar div.sidebar-submenu > a {
 	padding-left: 2.0rem;
 	padding-top: .25rem;
 	padding-bottom: .25rem;
-	padding-right: 1.2rem;
+	padding-right: 2.5rem;
 	display: block;
 	font-size: .88rem;
 	color: rgb(94, 110, 130);
@@ -323,17 +323,17 @@ table.dataTable tr {
 }
 
 table.dataTable tr.odd  {
-    background-color: var(--bs-cmefi-light-warm);
+    background-color: rgba(200, 230, 245, .35); /*var(--bs-cmefi-light-warm);*/
 }
 
 table.dataTable tr:hover td {
-	background-color: rgba(0, 0, 158) !important;
+	background-color: var(--bs-cmefi-orange) !important;
 	color: white !important;
 }
 
 /** DT Paginate BUttons **/
 .page-item.active .page-link {
-    background-color: var(--bs-efpale) !important;
+    background-color: rgba(200, 230, 245, .35) !important; /*var(--bs-efpale) !important;*/
     border: 1px solid  rgba(220, 220, 220) !important;
 }
 .page-link {

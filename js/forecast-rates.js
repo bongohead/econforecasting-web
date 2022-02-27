@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			})).concat(response[1].forecast_values.filter(x => ['int', 'spf', 'cbo', 'wsj', 'fnma'].includes(x.forecast) & moment(x.vdate) <= moment(x.date).add(30, 'days')).map(x => ({
 				tskey: x.forecast,
 				freq: x.freq,
-				shortname: x.forecast === 'int' ? 'Market Consensus' : x.shortname,
+				shortname: x.forecast === 'int' ? 'Market Consensus Forecast' : x.shortname,
 				description: x.description,
 				external: x.external,
 				vdate: x.vdate,
@@ -516,35 +516,35 @@ function drawDescription(ts_data_parsed, varname) {
 	const primary_forecast_html =
 		varname === 'sofr' 
 			? 
-			`<p> Our Market Consensus Forecast for the secured overnight financing rate (SOFR) is generated utilizing data on publicly-traded SOFR futures 
+			`<p>Our <strong>Market Consensus Forecast</strong> for the secured overnight financing rate (SOFR) is generated utilizing data on publicly-traded SOFR futures 
 			and other closely related benchmark interest rates. 
 			Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
 			parametrization model, generating the final forecast.</p>
 			<p>This forecast can be interpreted as the mean market-expected values of future SOFR values.</p>`
 		: varname === 'ffr'
 			? 
-			`<p> Our Market Consensus Forecast for the federal funds rate rate (FFR) is generated utilizing data on publicly-traded FFR futures 
+			`<p>Our <strong>Market Consensus Forecast</strong> for the federal funds rate rate (FFR) is generated utilizing data on publicly-traded FFR futures 
 			and other closely related benchmark interest rates. 
 			Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
 			parametrization model, generating the final forecast.</p>
 			<p>This forecast can be interpreted as the mean market-expected values of future FFR values.</p>`
 		: varname === 'ameribor'
 			?
-			`<p> Our Market Consensus Forecast for the Ameribor Unsecured Overnight Rate (AMERIBOR) is generated utilizing data on publicly-traded AMERIBOR futures 
+			`<p>Our <strong>Market Consensus Forecast</strong> for the Ameribor Unsecured Overnight Rate (AMERIBOR) is generated utilizing data on publicly-traded AMERIBOR futures 
 			and other closely related benchmark interest rates. 
 			Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
 			parametrization model, generating the final forecast.</p>
 			<p>This forecast can be interpreted as the mean market-expected values of future AMERIBOR values.</p>`
 		: varname === 'bsby'
 			?
-			`<p> Our Market Consensus Forecast for the Bloomberg Short-Term Bank Yield Index (BSBY) is generated utilizing data on publicly-traded BSBY futures 
+			`<p>Our <strong>Market Consensus Forecast</strong> for the Bloomberg Short-Term Bank Yield Index (BSBY) is generated utilizing data on publicly-traded BSBY futures 
 			and other closely related benchmark interest rates. 
 			Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
 			parametrization model, generating the final forecast.</p>
 			<p>This forecast can be interpreted as the mean market-expected values of future BSBY values.</p>`
 		: ['mort15y', 'mort30y'].includes(varname)
 			?
-			`<p> Our Market Consensus Forecast for the 15 and 30 year fixed rate mortgage rates are derived from combining our 
+			`<p>Our <strong>Market Consensus Forecast</strong> for the 15 and 30 year fixed rate mortgage rates are derived from combining our 
 			<a href="/forecast-t10y">Market Consensus Forecast for Treasury yields</a> with survey-based forecasts for housing prices.</p>
 			<p>First, using historical data, we calculate historical mortgage-Treasury yield spreads; a model is then used to calculate the relationship 
 			between these spreads and housing prices. 
@@ -575,7 +575,7 @@ function drawDescription(ts_data_parsed, varname) {
 	}
 	
 	const citation_html =
-		'Recommended citation for the Consensus Forecast:</br>' + 
+		'Recommended citation for the Market Consensus Forecast:</br>' + 
 		'<span class="fw-lighter text-muted">' + 
 			'<em>econforecasting.com</em>, The Center for Macroeconomic Forecasts and Insights (' + new Date().getFullYear() + '). ' +
 			'Consensus Interest Rate Forecast. Retrieved from ' + window.location.href + '.' 

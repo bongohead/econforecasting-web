@@ -18,13 +18,57 @@ MathJax = {
 {% endblock %}
 
 {% block content %}
-<div class="row gx-0">
+<div class="row gx-0" style="background-color:rgb(237, 242, 249)">
 	{% include 'forecast-sidebar-rates.html' %}
-	<div class="col-12 col-lg-8 col-xl-9 col-xxl-9 m-auto pt-0 px-2 pb-5">
-	
-		<div class="row justify-content-center px-3" style="background-color:rgba(25, 50, 20, 0.1)">
-			<div id="chart-container" class="col-xl-9 col-lg-10 col-12-md">
+	<div class="col mx-2 pb-5">
+		<div class="container-xxl">
+
+			<div class="row g-0">
+				<div class="col-12 px-0">
+						<div class="card my-3 mx-0 rounded shadow-sm">
+							<div class="card-body py-0">
+								<div id="chart-container" ></div>
+							</div>
+						</div>
+				</div>
 			</div>
+			
+			<div class="row g-0">
+			
+				<div class="col-xxl-4 col-lg-6 pe-lg-2 mb-3">
+					<div id="data-card" class="card shadow-sm">
+						<div class="card-body" id="tables-container">
+							<div class="mb-2"><span style="vertical-align:middle;font-size:1.3rem;">DATA</span></div>
+							<ul class="list-group list-group-vertical m-3" id="li-container">
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-xxl-8 col-lg-6 ps-lg-2 mb-3" id="text-container">
+					<div class="card shadow-sm">
+						<div class="card-body" style="font-size:.92rem">
+						
+							<div class="mb-2"><span style="vertical-align:middle;font-size:1.3rem;">DESCRIPTION</span></div>
+							<div id="variable-description"></div>
+							<div class="mb-2"><span style="vertical-align:middle;font-size:1.3rem;">FORECAST MODELS</span></div>
+							<div id="primary-forecast"></div>
+							<div id="external-forecasts"></div>
+							<hr class="mt-5">
+							<div id="citation" style="line-height:1rem;font-size:.75rem"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	<!--
+	<div class="col-12 col-lg-8 col-xl-9 col-xxl-9 m-auto pt-0 px-2 pb-5">
+		<div class="row justify-content-center px-3" style="background-color:rgba(25, 50, 20, 0.1)">
+			<div id="chart-container" class="col-xl-9 col-lg-10 col-12-md"></div>
 		</div>
 		<div class="row justify-content-center pt-3 px-3">
 		
@@ -55,12 +99,8 @@ MathJax = {
 				<table id="table-container" class="table summary-table w-100"></table>
 				</div>
 			</div>
-
-		
 		</div>
-		
-
-		
 	</div>
+	-->
 </div>
 {% endblock %}

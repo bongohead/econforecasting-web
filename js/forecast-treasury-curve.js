@@ -4,17 +4,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	$('div.overlay').show();
 	
 	/*** Set Default Data ***/
-	/* Use previous options if set, otherwise use default options stated above.
-	 */ 
 	(function() {
-		const ud_prev = getAllData()['rates-model-treasury-curve'] || {};
+		const ud_prev = getAllData()['forecast-treasury-curve'] || {};
 		const ud = {... ud_prev, ... {}};
-		setData('rates-model-treasury-curve', ud);
+		setData('forecast-treasury-curve', ud);
 	})();
 
 	/********** GET DATA **********/
-	const ud = getData('rates-model-treasury-curve') || {};
+	const ud = getData('forecast-treasury-curve') || {};
 	const get_forecast_hist_values_last_vintage = getFetch('get_forecast_hist_values_last_vintage', ['forecast_hist_values'], {forecast: 'int', varname: ['t01m', 't03m', 't06m', 't01y', 't05y', 't07y', 't10y', 't20y', 't30y'], freq: 'm', form: 'd1'}, 10000, false);	
+	// Don't bother with t07y
 	const get_forecast_values_dfd = getFetch('get_forecast_values_last_vintage', ['forecast_values'], {varname: ['t01m', 't03m', 't06m', 't01y', 't05y', 't07y', 't10y', 't20y', 't30y'], freq: 'm', form: 'd1'}, 10000, false);
 	Promise.all([get_forecast_hist_values_last_vintage, get_forecast_values_dfd]).then(function(response) {
 		const hist_values_raw = response[0].forecast_hist_values.map(x => ({
@@ -39,7 +38,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			value: parseFloat(x.value),
 			ttm: parseInt(x.varname.substring(1, 3)) * (x.varname.substring(3, 4) === 'm' ? 1 : 12)
 		}));
-		
+
+		const forecast_vdate = forecast_values_raw[0].vdate;		
 		const forecast_values =
 			[... new Set(forecast_values_raw.map(x => x.date))]
 			.map(d => ({ // Group each value of the original array under the correct obs_date
@@ -52,25 +52,28 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		const treasury_data = hist_values.concat(forecast_values).map((x, i) => ({...x, ...{date_index: i}}));
 		const res = {
 			treasury_data: treasury_data,
+			forecast_vdate: forecast_vdate,
 			play_state: 'pause',
 			play_index: treasury_data.filter(x => x.type === 'forecast')[0].date_index
 		};
 		// console.log('res', res);
-		setData('rates-model-treasury-curve', {...getData('rates-model-treasury-curve'), ...res});
+		setData('forecast-treasury-curve', {...getData('forecast-treasury-curve'), ...res});
 		return(res);
 	})
 	/********** DRAW CHART & TABLE **********/
 	.then(function(res) {
-		console.log('treasury_data', res.treasury_data);
-		drawChart(res.treasury_data, res.play_index);
+		//console.log('treasury_data', res.treasury_data);
+		drawChart(res.treasury_data, res.play_index, res.forecast_vdate);
+		drawChartAlt(res.treasury_data);
 		drawTable(res.treasury_data);
+		addCitation();
+		addVdate(res.forecast_vdate);
 		$('div.overlay').hide();
 	});
-		
 	
 	/********** EVENT LISTENERS FOR PLAYING **********/
 	$('#chart-container').on('click', '#chart-subtitle-group > button.chart-subtitle', function() {
-		const ud = getData('rates-model-treasury-curve');
+		const ud = getData('forecast-treasury-curve');
 		const clickedPlayDirection = $(this).data('dir');
 		if (ud.play_state == null) return;
            
@@ -88,9 +91,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			if (clickedPlayDirection === 'back') var newPlayIndex = (ud.play_index >= 1) ? ud.play_index - 1 : 0;
 			else var newPlayIndex = (ud.play_index + 1 <= ud.treasury_data.length - 1) ? ud.play_index + 1 : ud.treasury_data.length;
 		}
-		console.log('clicked', clickedPlayDirection, newPlayState, newPlayIndex);
+		//console.log('clicked', clickedPlayDirection, newPlayState, newPlayIndex);
 				           
-		setData('rates-model-treasury-curve', {...getData('rates-model-treasury-curve'), ...{play_state: newPlayState, play_index: newPlayIndex}});
+		setData('forecast-treasury-curve', {...getData('forecast-treasury-curve'), ...{play_state: newPlayState, play_index: newPlayIndex}});
 		if (clickedPlayDirection !== 'pause') updateChart();
 		else updateButtons();
 		
@@ -101,16 +104,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 });
 
 /*** Draw chart ***/
-function drawChart(treasury_data, play_index) {
+function drawChart(treasury_data, play_index, forecast_vdate) {
 	Highcharts.AST.allowedAttributes.push('data-dir');
 	const o = {
         chart: {
 			spacingTop: 10,
-            backgroundColor: 'rgba(255, 255, 255, 0)',
-			plotBackgroundColor: '#FFFFFF',
-			style: {
-				fontcolor: 'rgb(48, 79, 11)'
-			},
+            backgroundColor: 'transparent',
+			plotBackgroundColor: 'transparent',
 			height: 400,
 			plotBorderColor: 'rgb(33, 37, 41)',
 			plotBorderWidth: 2,
@@ -118,16 +118,15 @@ function drawChart(treasury_data, play_index) {
 				load: function() {
 					const distFromTop = this.chartHeight - (this.marginBottom + this.plotHeight) + 40;
 					const distFromLeft = 50;
-					console.log(distFromTop, distFromLeft);
+					//console.log(distFromTop, distFromLeft);
 					this.renderer
 						.text('Forecast for ' + moment(treasury_data[play_index].date).format('MMM YYYY'), distFromLeft, distFromTop)
-						.attr({'id': 'date-text', fill: 'rgb(33, 177, 151)', 'font-size': '1.5rem'})
+						.attr({'id': 'date-text', fill: 'forestgreen', 'font-size': '1.5rem'})
 						.add();
-					
 					/* Now render non-changing historical data on RHS */
 					this.renderer
 						.text('Current Yield Curve: ' + moment(treasury_data[play_index - 1].date).format('MMM YYYY'), distFromLeft, distFromTop + 40)
-						.attr({'id': 'date-text', fill: 'darkred', 'font-size': '1.5rem'})
+						.attr({'id': 'date-text', fill: 'black', 'font-size': '1.5rem'})
 						.add();
 				}
 			}
@@ -139,15 +138,15 @@ function drawChart(treasury_data, play_index) {
 			useHTML: true,
 			text: 
 			'<div class="row text-center justify-content-center">'+
-				'<span class="my-0 py-1" style="font-size: 1.3rem;">TREASURY YIELD CURVE</span>'+
+				'<span class="my-0 py-1" style="font-size: 1.3rem;">Treasury Curve Forecasts (Updated ' + moment(forecast_vdate).format('MMM Do') + ')</span>'+
 			'</div>'+
 			'<div class="row text-center"><div class="col-12 btn-group d-inline-block" role="group" id="chart-subtitle-group">' +
-				'<button class="btn btn-secondary btn-sm" style="font-size:.8rem" type="button" >Click to show changes over time&nbsp;</button>'+
-				'<button class="btn btn-primary btn-sm chart-subtitle" style="font-size:.8rem" type="button" data-dir="start" style="letter-spacing:-2px">&#10074;&#9664;&#9664;</button>' +
-				'<button class="btn btn-primary btn-sm chart-subtitle" style="font-size:.8rem" type="button" data-dir="back">&#9664;</button>' +
-				'<button class="btn btn-primary btn-sm chart-subtitle" style="font-size:.8rem" type="button" data-dir="pause" >&#10074;&#10074;</button>' +
-				'<button class="btn btn-primary btn-sm chart-subtitle" style="font-size:.8rem" type="button" data-dir="forward" >&#9654;</button>' +
-				'<button class="btn btn-primary btn-sm chart-subtitle" style="font-size:.8rem" type="button" data-dir="end" style="letter-spacing:-2px" >&#9654;&#9654;&#10074;</button>' +
+				'<button class="btn btn-cmefi-dark text-light btn-sm" style="font-size:.8rem" type="button" >Hit "play" to show changes over time!&nbsp;</button>'+
+				'<button class="btn btn-primary btn-sm chart-subtitle" style="font-size:.8rem" type="button" data-dir="start" style="letter-spacing:-2px"><i class="bi bi-skip-backward"></i></button>' +
+				'<button class="btn btn-primary btn-sm chart-subtitle" style="font-size:.8rem" type="button" data-dir="back"><i class="bi bi-caret-left"></i></button>' +
+				'<button class="btn btn-primary btn-sm chart-subtitle" style="font-size:.8rem" type="button" data-dir="pause" ><i class="bi bi-pause"></i></button>' +
+				'<button class="btn btn-primary btn-sm chart-subtitle" style="font-size:.8rem" type="button" data-dir="forward" ><i class="bi bi-caret-right"></i></button>' +
+				'<button class="btn btn-primary btn-sm chart-subtitle" style="font-size:.8rem" type="button" data-dir="end" style="letter-spacing:-2px" ><i class="bi bi-skip-forward"></i></button>' +
 			'</div></div>'
         },
 		xAxis: {
@@ -163,6 +162,9 @@ function drawChart(treasury_data, play_index) {
 		yAxis: {
 			title: {
 				text: null
+			},
+			labels: {
+				format: '{value}%'
 			},
 			min: 0,
 			max: 8
@@ -199,7 +201,7 @@ function drawChart(treasury_data, play_index) {
             data: treasury_data[play_index].data,
 			name: 'Yield',
             type: 'areaspline',
-            color: 'rgb(33, 177, 151)',
+            color: 'forestgreen',
 			/*
 			fillColor: {
                 linearGradient: [0, 0, 0, 300],
@@ -216,8 +218,8 @@ function drawChart(treasury_data, play_index) {
         }, {
             data: treasury_data[play_index - 1].data,
 			name: 'Current Yield',
-            type: 'areaspline',
-            color: 'red',
+            type: 'spline',
+            color: 'black',
 			marker: {
 				enabled: true
 			},
@@ -250,19 +252,19 @@ function drawChart(treasury_data, play_index) {
 					const endForecast = Math.max(...this.series[0].points.filter(x => x.type === 'forecast').map(x => x.plotX));
 					this.renderer
 						.path(['M', startHistory, axisDistFromTop, 'L', (endHistory + startForecast)/2, axisDistFromTop])
-						.attr({'stroke-width': 2, stroke: 'darkblue'})
+						.attr({'stroke-width': 2, stroke: 'firebrick'})
 						.add();
 					this.renderer
 						.path(['M', (endHistory + startForecast)/2, axisDistFromTop, 'L', endForecast, axisDistFromTop])
-						.attr({'stroke-width': 2, stroke: 'rgb(33, 177, 151)'})
+						.attr({'stroke-width': 2, stroke: 'forestgreen'})
 						.add();
 					this.renderer
 						.text('Historical Data', (endHistory + startForecast)/2 - 100, axisDistFromTop - 5)
-						.css({color: 'darkblue', fontSize: '.8rem'})
+						.css({color: 'firebrick', fontSize: '.8rem'})
 						.add();
 					this.renderer
 						.text('Forecasts', (endHistory + startForecast)/2 + 100, axisDistFromTop - 5)
-						.css({color: 'rgb(33, 177, 151)', fontSize: '.8rem'})
+						.css({color: 'forestgreen', fontSize: '.8rem'})
 						.add();
 				}
 			}
@@ -270,6 +272,7 @@ function drawChart(treasury_data, play_index) {
 		title: {
 			text: null,
 		},
+		exporting: false,
 		subtitle: {
 			text: 'CLICK ON THE TIMELINE BELOW TO NAVIGATE'
 		},
@@ -320,9 +323,9 @@ function drawChart(treasury_data, play_index) {
 				point: {
 					events: {
 						click: function () {
-							'rates-model-treasury-curve',
-							setData('rates-model-treasury-curve', {
-								...getData('rates-model-treasury-curve'),
+							'forecast-treasury-curve',
+							setData('forecast-treasury-curve', {
+								...getData('forecast-treasury-curve'),
 								...{play_state: 'pause', play_index: this.date_index}
 							});
 							//console.log(this.date_index);
@@ -396,7 +399,7 @@ function drawTable(treasury_data) {
 			});
 			return res;
 		});
-	console.log('fcDataTable', fcDataTable, ttmsList);
+	//console.log('fcDataTable', fcDataTable, ttmsList);
 	
 	const dtCols =
 		[
@@ -413,19 +416,19 @@ function drawTable(treasury_data) {
 				className: 'dt-center'
 			}};
 		});
-	console.log('dtCols', dtCols, fcDataTable.filter(x => x.type === 'history'));
+	//console.log('dtCols', dtCols, fcDataTable.filter(x => x.type === 'history'));
 	const o = {
 		data: fcDataTable.filter(x => x.type === 'history'),
 		columns: dtCols,
-		iDisplayLength: 25,
+		iDisplayLength: 15,
 		dom:
 			"<'row pb-1 justify-content-end'<'col-auto'f>>" +
 			"<'row justify-content-end'<'col-auto'B>>" +
 			"<'row justify-content-center'<'col-12'tr>>" +
 			"<'row justify-content-end'<'col-auto'p>>",
 		buttons: [
-			{extend: 'copyHtml5', text: 'Copy', exportOptions: {columns: [0, 1]}, className: 'btn btn-sm btn-secondary'},
-			{extend: 'csvHtml5', text: 'Download', exportOptions: {columns: [0, 1]}, className: 'btn btn-sm btn-secondary'}
+			{extend: 'copyHtml5', text: 'Copy', exportOptions: {columns: [0, 1]}, className: 'btn btn-sm btn-light'},
+			{extend: 'csvHtml5', text: 'Download', exportOptions: {columns: [0, 1]}, className: 'btn btn-sm btn-light'}
 		],
 		order: [[0, 'desc']],
 		paging: true,
@@ -447,34 +450,6 @@ function drawTable(treasury_data) {
 	
 	$('#table-container').DataTable(o).draw();
 	$('#table-container-2').DataTable(o2).draw();
-
-	
-	/*
-			
-	const o2 = {
-		data: fcForecast,
-		columns: dtCols,
-		iDisplayLength: 25,
-		dom:
-			"<'row pb-1 justify-content-end'<'col-auto'f>>" +
-			"<'row justify-content-end'<'col-auto'B>>" +
-			"<'row justify-content-center'<'col-12'tr>>" +
-			"<'row justify-content-end'<'col-auto'p>>",
-		buttons: [
-			{extend: 'copyHtml5', text: 'Copy to clipboard', exportOptions: {columns: [0, 1]}, className: 'btn btn-sm btn-dark'},
-			{extend: 'csvHtml5', text: 'Export to CSV', exportOptions: {columns: [0, 1]}, className: 'btn btn-sm btn-dark'}
-		],
-		order: [[0, 'asc']],
-		paging: true,
-		pagingType: 'numbers',
-		language: {
-			search: "Filter By Date:",
-			searchPlaceholder: "YYYY-MM-DD"
-		}
-	}
-	
-	$('#table-container-2').DataTable(o2).draw();
-*/
 	return;
 }
 
@@ -482,7 +457,7 @@ function drawTable(treasury_data) {
 
 /*** Update Chart ***/
 function updateChart() {
-	let ud = getData('rates-model-treasury-curve');
+	let ud = getData('forecast-treasury-curve');
 	const chart = $('#chart-container').highcharts();
 	/* Return if play_state = paused; this is necessary to shut off the auto-repeating nature of this function */
 	if (ud.treasury_data === undefined || ud.play_index === undefined) return;
@@ -497,14 +472,14 @@ function updateChart() {
 	
 	/* Update chart data and colors */
 	chart.series[0].setData(newData, redraw = true, animation = {duration: 250}, updatePoints = true);
-	chart.series[0].update({color: (ud.treasury_data[ud.play_index].type === 'forecast' ? 'rgb(33, 177, 151)' : '#3333A2')})
+	chart.series[0].update({color: (ud.treasury_data[ud.play_index].type === 'forecast' ? 'forestgreen' : 'firebrick')})
 	
 	/* Update chart title*/
 	if (ud.treasury_data[ud.play_index].type === 'history') {
-		document.querySelector('#date-text').style.fill = 'darkblue';
+		document.querySelector('#date-text').style.fill = 'firebrick';
 		document.querySelector('#date-text').textContent = 'Historical curve for ' + moment(ud.treasury_data[ud.play_index].date).format('MMM YYYY');
 	} else {
-		document.querySelector('#date-text').style.fill = 'rgb(33, 177, 151)';
+		document.querySelector('#date-text').style.fill = 'forestgreen';
 		document.querySelector('#date-text').textContent = 'Forecasted curve for ' + moment(ud.treasury_data[ud.play_index].date).format('MMM YYYY');
 	}
 	
@@ -524,7 +499,7 @@ function updateChart() {
 	}
 	
 	/* Update userdata */
-	setData('rates-model-treasury-curve', {...ud, ...{}});
+	setData('forecast-treasury-curve', {...ud, ...{}});
 	
 	updateButtons();
 	updateChart2();
@@ -538,7 +513,7 @@ function updateChart() {
 
 
 function updateChart2() {
-	const ud = getData('rates-model-treasury-curve');
+	const ud = getData('forecast-treasury-curve');
 	const chart = $('#chart-container-2').highcharts();
     chart.xAxis[0].removePlotLine('plot-line');
     chart.xAxis[0].addPlotLine({
@@ -558,7 +533,7 @@ function updateChart2() {
 }
 
 function updateButtons() {
-	const ud = getData('rates-model-treasury-curve');
+	const ud = getData('forecast-treasury-curve');
 	/* Update buttons */
 	const buttons = $('#chart-subtitle-group').find('button.chart-subtitle').removeClass('active').prop('disabled', false).end();
 	//console.log('updateButtons', ud.play_state, ud.play_index, ud.treasury_data.length - 1, buttons);
@@ -571,3 +546,126 @@ function updateButtons() {
 	else buttons.find('[data-dir="forward"]').addClass('active', true);
 }
 
+function addCitation() {
+	const citation_html =
+		'Recommended citation for the Consensus Forecast:</br>' + 
+		'<span class="fw-lighter text-muted">' + 
+			'<em>econforecasting.com</em>, The Center for Macroeconomic Forecasts and Insights (' + new Date().getFullYear() + '). ' +
+			'Consensus Interest Rate Forecast. Retrieved from ' + window.location.href + '.' 
+		'</span>'
+	document.querySelector('#citation').innerHTML = citation_html;
+}
+
+function addVdate(forecast_vdate) {
+	document.querySelector('#last-updated').innerHTML = moment(forecast_vdate).format('MMM Do, YYYY');
+}
+
+
+/*** Draw chart ***/
+function drawChartAlt(treasury_data) {
+	
+	//console.log('treasury_data', treasury_data);
+	
+	const grMap = gradient.create(
+	  [0, 1, 24, 48, 72], //array of color stops
+	  ['#17202a', '#2874a6', '#148f77', '#d4ac0d', '#cb4335'], //array of colors corresponding to color stops
+	  'hex' //format of colors in previous parameter - 'hex', 'htmlcolor', 'rgb', or 'rgba'
+	);
+	
+	const chartData =
+		treasury_data.filter(x => x.type === 'history').slice(-1) // Get last historical forecast
+		.concat(treasury_data.filter(x => x.type === 'forecast').slice(0, 71)) // Get first 24 forecasts
+		.map((x, i) => (
+			{
+				name: moment(x.date).format('MMM YYYY') + ' ' + (x.type === 'history' ? '*' : ''),
+				data: x.data,
+				type: 'spline',
+				color: gradient.valToColor(i, grMap, 'hex'),
+				dashStyle: (x.type === 'history' ? 'solid' : 'shortdot'),
+				visible: i === 0 || i % 6 === 1
+				//(x.type === 'history' || moment(x.date).month() === moment(treasury_data.filter(x => x.type === 'history').slice(-1)[0].date).month() + 1)
+			}
+		));
+	//console.log('chartData', chartData);
+	
+	const o = {
+        chart: {
+			spacingTop: 5,
+            backgroundColor: 'rgba(255, 255, 255, 0)',
+			plotBackgroundColor: '#FFFFFF',
+			style: {
+				fontColor: 'var(--bs-cmefi-green)'
+			},
+			height: 650,
+			plotBorderColor: 'rgb(33, 37, 41)',
+			plotBorderWidth: 2
+        },
+        credits: {
+			enabled: true,
+			text: '* Historical data; <a href="https://econforecasting.com">econforecasting.com</a>'
+			//href: 'https://econforecasting.com'
+        },
+        title: {
+			text: 'Yield Curve By Date'
+        },
+		plotOptions: {
+			series: {
+				opacity: 0.9,
+				lineWidth: 1.5,
+				marker: {
+					enabled: true
+				}
+			}
+		},
+		xAxis: {
+			title: {
+				text: 'Time to Maturity (Months)',
+				style: {
+					fontSize: '1.0rem'
+				}
+			},
+			min: 0,
+			//max: 360
+		},
+		yAxis: {
+			title: {
+				text: 'Yield (%)',
+				style: {
+					fontSize: '1.0rem'
+				}
+			},
+			endOnTick: false
+		},
+		legend: {
+			enabled: true,
+			layout: 'horizontal',
+			verticalAlign: 'bottom',
+			align: 'center',
+			title: {
+				text: 'Forecasted Month <span style="font-style:italic;font-size:.9em">(Click to Show/Hide)</span>'
+			}
+		},
+        tooltip: {
+            useHTML: true,
+			shared: true,
+			formatter: function () {
+				const points = this.points; // SOlves issue of tooltip not updating correctly with chart
+				const tVarname = points[0].x >= 12 ? points[0].x/12 + ' Year Treasury Yield' : points[0].x + ' Month Treasury Yield'
+				//console.log(points);
+				const text =
+					'<table>' +
+					'<tr style="border-bottom:1px solid black"><td style="text-align:center;font-weight:600">' +
+						tVarname +
+					'</td></tr>' +
+					points.map(point => '<tr><td style="text-align:center;color:' + point.color + '">' + point.series.name + ': ' + point.y.toFixed(2) + '%</td></tr>').join('') +
+					'</table>';
+				//console.log(text);
+				return text;
+			}
+        },
+        series: chartData
+	};
+	const chart = Highcharts.chart('chart-container-alt', o);
+	
+	return;
+}

@@ -5,13 +5,71 @@
 {% endblock %}
 
 {% block staticlinks %}
-<script src="https://code.highcharts.com/9.1/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/9.3/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>  
 <script src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>
 {% endblock %}
 
 {% block content %}
-<div class="row gx-0">
-	{% include 'fc-rates-sidebar.html' %}
+<div class="row gx-0" style="background-color:rgb(237, 242, 249)">
+	{% include 'forecast-sidebar-rates.html' %}
+	<div class="col mx-2 pb-5">
+		<div class="container-xxl">
+
+			<div class="row g-0">
+				<div class="col-12 px-0">
+						<div class="card my-3 mx-0 rounded shadow-sm">
+							<div class="card-body py-0">
+								<div id="chart-container"></div>
+								<div id="chart-container-2"></div>
+							</div>
+						</div>
+				</div>
+			</div>
+			
+			<div class="row g-0">
+			
+				<div class="col-xxl-6 col-lg-12 pe-xxl-2 mb-3 order-xxl-1 order-lg-2">
+				
+					<div class="card shadow-sm mb-2">
+						<div class="card-body">
+							<div class="mb-2"><span style="vertical-align:middle;font-size:1.3rem;">FORECAST DATA</span></div>
+							<table id="table-container-2" class="table data-table w-100"></table>
+						</div>
+					</div>
+					
+					<div class="card shadow-sm">
+						<div class="card-body">
+							<div class="mb-2"><span style="vertical-align:middle;font-size:1.3rem;">HISTORICAL DATA</span></div>
+							<table id="table-container" class="table data-table w-100"></table>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="col-xxl-6 col-lg-12 ps-xxl-2 mb-3 order-xxl-2 order-lg-1">
+					<div class="card shadow-sm">
+						<div class="card-body" style="font-size:.92rem">
+							<div class="mb-2"><span style="vertical-align:middle;font-size:1.3rem;">FORECAST DESCRIPTION</span></div>
+							<p>Our <strong>Market Consensus Treasury Forecast</strong> is a model that calculates the average market expectated forecast of U.S. Treasury yield rates.</p>
+							<p>It is derived using current <a href="https://www.treasury.gov/resource-center/data-chart-center/Pages/index.aspx">Treasury bond market data</a> 
+							as well as futures market data. For each point in the yield term structure, our model derives the mean market-expected yield rate. 
+							The term structure is then interpolated and smoothed using a three-factor parametrization model, generating the final forecast.</p>
+							<p><strong>The model is updated daily between 16:00 and 20:00 ET.</strong> The last updated occured on <span id="last-updated"></span>.</p>
+							<p>The below graph shows the generated forecasts by month. Click any date in the legend to hide/show the Treasury yield curve at each respective date.</p>
+							<div id="chart-container-alt"></div>
+							<hr class="mt-5">
+							<div id="citation" style="line-height:1rem;font-size:.75rem">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!--
 	<div class="col-12 col-lg-8 col-xl-9 col-xxl-9 m-auto pt-0 px-2 pb-5">
 	
 		<div class="row justify-content-center" style="background-color:rgba(25, 50, 20, 0.1)">
@@ -40,9 +98,7 @@
 			</div>
 
 		</div>
-		
-
-		
 	</div>
+	-->
 </div>
 {% endblock %}
