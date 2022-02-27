@@ -50,7 +50,7 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 			
 			['template' => 'forecast-inflation', 'request' => ['forecast-inflation'], 'title' => 'Inflation Forecast | econforecasting.com', 'models' => [], 'js' => ['init', 'forecast-inflation']],
 			
-			['template' => 'forecast-macro', 'request' => ['forecast-macro'], 'title' => 'GDP Nowcasts | econforecasting.com', 'models' => [], 'js' => ['init', 'nowcast-model-gdp']],
+			['template' => 'forecast-macro', 'request' => ['forecast-gdp'], 'title' => 'U.S. Real GDP Forecast | econforecasting.com', 'models' => [], 'js' => ['init', 'forecast-macro']],
 			['template' => 'nowcast-model-gdp', 'request' => ['nowcast-model-gdp'], 'title' => 'GDP Nowcasts | econforecasting.com', 'models' => [], 'js' => ['init', 'nowcast-model-gdp']],
 
 		],
