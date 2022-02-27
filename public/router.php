@@ -49,7 +49,8 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 			['template' => 'forecast-rates', 'request' => ['forecast-t30y'], 'title' => '30 Year Treasury Yield Forecast | econforecasting.com', 'models' => [], 'js' => ['init', 'forecast-rates']],
 			
 			['template' => 'forecast-inflation', 'request' => ['forecast-inflation'], 'title' => 'Inflation Forecast | econforecasting.com', 'models' => [], 'js' => ['init', 'forecast-inflation']],
-
+			
+			['template' => 'forecast-macro', 'request' => ['forecast-macro'], 'title' => 'GDP Nowcasts | econforecasting.com', 'models' => [], 'js' => ['init', 'nowcast-model-gdp']],
 			['template' => 'nowcast-model-gdp', 'request' => ['nowcast-model-gdp'], 'title' => 'GDP Nowcasts | econforecasting.com', 'models' => [], 'js' => ['init', 'nowcast-model-gdp']],
 
 		],

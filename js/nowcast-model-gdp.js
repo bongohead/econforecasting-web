@@ -9,30 +9,30 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	const get_releases_dfd = getFetch('get_nowcast_model_releases', toScript = ['releases'], fromAjax = {});
 
 	Promise.all([get_gdp_values_dfd, get_releases_dfd]).then(function(response) {
-		
-		//console.log(response[0].gdp_values, response[1].releases);
-		
+				
 		const gdp_values =
 			response[0].gdp_values.map(x => ({
-				bdate: x.bdate,
+				bdate: x.vdate,
 				date: x.date,
 				pretty_date: x.pretty_date,
 				value: parseFloat(x.value),
 				varname: x.varname,
 				fullname: x.fullname
 			}));
+		
 		const releases =
 			response[1].releases.map(x => ({
-				relkey: x.relkey,
-				relname: x.relname,
-				relurl: x.relurl,
-				relname: x.relname,
-				reldates: JSON.parse(x.reldates)
+				id: x.id,
+				fullname: x.fullname,
+				url: x.url,
+				input_varnames: JSON.parse(x.input_varnames),
+				release_dates: JSON.parse(x.release_dates)
 			}));
 		console.log('gdp_values', gdp_values, 'releases', releases);
 		
 		// Get last backtest date in the dataset
 		const last_bdate = moment.max(...[... new Set(gdp_values.map(x => x.bdate))].map(x => moment(x))).format('YYYY-MM-DD');
+		
 		// Get first obs of last date to use as default display quarter
 		const default_disp_quarter =
 			moment.min([...new Set(gdp_values.filter(x => x.bdate === last_bdate).map(x => x.date))]
@@ -114,7 +114,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 /*** Draw chart ***/
 function drawChart(gdp_values_grouped, releases, display_quarter, display_quarters) {
-	console.log(display_quarters);
+	
+	//console.log(display_quarters);
+	
 	// Create series - each corresponding to a different economic variable
 	const chart_data =
 		gdp_values_grouped
@@ -141,7 +143,7 @@ function drawChart(gdp_values_grouped, releases, display_quarter, display_quarte
 	// Calculate end date (take the first vintage of the GDP release occuring after the quarter end date)
 	const quarter_end_date = moment(display_quarter, 'YYYY[Q]Q').add(1, 'Q');
 	//console.log('quarter_end_date', quarter_end_date);
-	const chart_end_date_0 = releases.filter(x => x.relkey == 'BEA.GDP')[0].reldates.filter(x => moment(x) > quarter_end_date)[0];
+	const chart_end_date_0 = releases.filter(x => x.id == 'BEA.GDP')[0].release_dates.filter(x => moment(x) > quarter_end_date)[0];
 	// Modified 7-6-21 to automatically guess the date if doesn't exist
 	const chart_end_date = (typeof(chart_end_date_0) !== 'undefined' ? chart_end_date_0 : quarter_end_date);
 	//console.log('chart_end_date', chart_end_date);
@@ -150,18 +152,18 @@ function drawChart(gdp_values_grouped, releases, display_quarter, display_quarte
 	// Get flattened array of date x releaseid objects
 	const release_series_data =
 		releases
-		.filter(x => x.reldates && x.reldates.length > 0)
-		.map(x => ({...x, reldates: x.reldates.filter(y => moment(y) > moment(chart_data[0].data[0][0]) && moment(y) <= moment(chart_end_date))}))
-		.filter(x => x.reldates.length > 0)
+		.filter(x => x.release_dates)
+		.map(x => ({...x, release_dates: x.release_dates.filter(y => moment(y) > moment(chart_data[0].data[0][0]) && moment(y) <= moment(chart_end_date))}))
+		.filter(x => x.release_dates.length > 0)
 		.map(function(x, i) {
-			return x.reldates.map(function(date) {
+			return x.release_dates.map(function(date) {
 				return {
 					color: getColorArray()[i], // Color value
 					value: date, //parseInt(moment(date).format('x')),
-					relurl: x.relurl,
+					url: x.url,
 					width: 1,
 					label: {
-						text: x.relname
+						text: x.fullname
 					}
 				};
 			})
