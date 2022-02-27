@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			: varname === 't30y' ? '30 Year Treasury Bond'
 			: 'NA'
 			
-		document.querySelector('meta[name="description"]').setAttribute('content', 'Benchmark rate forecasts for ' + fullname + '.');
+		document.querySelector('meta[name="description"]').setAttribute('content', 'Interest rate forecasts for ' + fullname + '.');
 		//document.querySelectorAll('span.t-varname').forEach(x => x.textContent = tFullname);
 		const ud_prev = getAllData()['forecast-benchmark-rates'] || {};
 		const ud = {... ud_prev, ... {
@@ -31,7 +31,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			}};
 		setData('forecast-benchmark-rates', ud);
 	})();
-
 
 	/********** GET DATA **********/
 	const ud = getData('forecast-benchmark-rates') || {};
@@ -71,10 +70,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				return {
 					tskey: tskey,
 					freq: z.freq,
-					ts_type: 
-						z.tskey ==='hist' ? 'hist'
-						: z.tskey === 'int' ? 'primary'
-						: 'secondary',
+					ts_type: z.tskey ==='hist' ? 'hist' : z.tskey === 'int' ? 'primary' : 'secondary',
 					shortname: z.shortname,
 					description: z.description,
 					external: z.external,
@@ -93,7 +89,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				: b.ts_type === 'hist' ? -1
 				: 0
 			).map((x, i) => ({...x, order: i}));
-
 		// console.log('ts_data_parsed', ts_data_parsed);
 		
 		setData('forecast-benchmark-rates', {...getData('forecast-benchmark-rates'), ...{ts_data_parsed: ts_data_parsed}});
@@ -101,26 +96,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	})
 	/********** DRAW CHART & TABLE **********/
 	.then(function(ts_data_parsed) {
-		drawDates(ts_data_parsed);
 		drawChart(ts_data_parsed, ud.fullname);
 		drawTable(ts_data_parsed);
 		drawDescription(ts_data_parsed, ud.varname);
 		$('div.overlay').hide();
 	});
-
-});
-
-
-/*** Draw last updated date in description paragraphs ***/
-function drawDates(ts_data_parsed) {
 	
-	ts_data_parsed.filter(x => 
-		document.querySelectorAll('#description-date-' + x.tskey).length == 1
-	).forEach(x =>
-		document.querySelector('#description-date-' + x.tskey).textContent = moment(x.vdate).format('MMM Do YYYY')
-	);
-	var myElement = document.getElementById("myElementID");
-};
+});
 
 /*** Draw chart ***/
 function drawChart(ts_data_parsed, fullname) {
@@ -491,41 +473,116 @@ function drawTable(ts_data_parsed) {
 function drawDescription(ts_data_parsed, varname) {
 	
 	const description_html =
-		varname === 'sofr' ? `<p>
-		The secured overnight financing rate (SOFR) is a major 
-		<a href="https://www.investopedia.com/terms/r/referencerate.asp" target="_blank">benchmark interest rate</a> in the world 
-		economy. 
-		The rate measures the cost of overnight inter-bank borrowing rates for loans collaterized by Treasury securities.
-		SOFR was created in 2019 as a replacement for the London interbank 
-		offered rate (Libor) following the 
-		<a href="https://en.wikipedia.org/wiki/Libor_scandal" target="_blank" >2012 rate manipulation scandal</a>. 
-		In the U.S., all new loan contracts created in 2022 or later are required to use SOFR in lieu of Libor.</p>`
-		: varname === 'ffr' ? 'FFR-placeholder'
-		: '';
-	console.log(description_html);
+		varname === 'sofr' 
+			? 
+			`<p> This page provides monthly forecasts of the secured overnight financing rate (SOFR), a major <a href="https://www.investopedia.com/terms/r/referencerate.asp">benchmark interest rate</a> in the world 
+			economy. 
+			The rate measures the cost of overnight inter-bank borrowing rates for loans collaterized by Treasury securities.
+			SOFR was created in 2019 as a replacement for the London interbank offered rate (Libor) following the 
+			<a href="https://en.wikipedia.org/wiki/Libor_scandal" >2012 Libor rate manipulation scandal</a>. </p>`
+		: varname === 'ffr'
+			? 
+			`<p>This page provides monthly forecasts of the <a href="https://fred.stlouisfed.org/series/FEDFUNDS">federal funds rate</a>, the short-term 
+			 lending rate between different banks of cash held at the Federal Reserve. The federal funds rate is a critical benchmark rate in the global economy, 
+			 and is the primary rate considered by the Federal Reserve when deciding monetary policy.</p>
+			 <p>Both historical data and forecasted values on this page reflect period average values.</p>`
+		: varname === 'ameribor'
+			? 
+			`<p>This page provides monthly forecasts of the overnight <a href="https://ameribor.net/">American Interbank Offered Rate</a>, a benchmark of the short-term 
+			 lending rate between small and medium sized U.S. banks. The AMERIBOR rate was introduced in 2021 as an alternative to the now-defunct 
+			 London interbank offer rate (Libor).</p>
+			<p>Both historical data and forecasted values on this page reflect period average values.</p>`
+		: varname === 'bsby'
+			?
+			`<p>This page provides monthly forecasts of the <a href="https://www.bloomberg.com/professional/product/indices/bsby/">Bloomberg Short-Term Bank Yield Index</a>, a benchmark of the short-term 
+			 lending rate between large global banks. The BSBY rate was introduced in 2021 as an alternative to the now-defunct 
+			 London interbank offer rate (Libor).</p>
+			<p>Both historical data and forecasted values on this page reflect period average values.</p>`
+		: ['mort15y', 'mort30y'].includes(varname)
+			?
+			`<p>This page provides monthly forecasts of 15 and 30-year fixed rate mortgage rates in the United States. 
+			Historical data is sourced from <a href="https://www.freddiemac.com/pmms">Freddie Mac</a>.</p>
+			<p>Both historical data and forecasted values on this page reflect period average values.</p>`
+		: ['t03m', 't06m', 't01y', 't02y', 't05y', 't10y', 't20y', 't30y'].includes(varname)
+			?
+			`<p>This page provides monthly forecasts of U.S. Treasury bond yields. With over $20 trillion outstanding, Treasury bonds constitute nearly 15% of the global bond market and are the premier safe assets in many 
+			financial markets across the world. Because of this, they are also often utilized as a benchmark measure of the riskless interest rate in the world economy.</p>
+			<p>Both historical data and forecasted values on this page reflect period average values.</p>`
+
+		: 'PLACEHOLDER';
 	document.querySelector('#variable-description').innerHTML = description_html + '<hr>';
 
 	
 	const primary_forecast_html =
-		varname === 'sofr' ? `<p> Our Market Consensus Forecast is generated by utilizing data on publicly-traded SOFR futures, where market participants 
-		can make bets on the future value of SOFR rates. Our model derives the mean market expectation from this data. The term structure
-		is interpolated and smoothed using a Diebold-Li three-factor parametrization<a href="#ref1"><sup>[1]</sup></a>, generating the 
-		final forecast.</p>
-		<p>This forecast can be interpreted as the mean market-expected values of future SOFR rates.</p>
-		<p>Model forecasts are scheduled to be updated daily, following close of major U.S. equities markets. </p>`
-		: 'PLACEHOLDER';
-	document.querySelector('#primary-forecast').innerHTML = primary_forecast_html + '<hr>';
-	
+		varname === 'sofr' 
+			? 
+			`<p> Our Market Consensus Forecast for the secured overnight financing rate (SOFR) is generated utilizing data on publicly-traded SOFR futures 
+			and other closely related benchmark interest rates. 
+			Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
+			parametrization model, generating the final forecast.</p>
+			<p>This forecast can be interpreted as the mean market-expected values of future SOFR values.</p>`
+		: varname === 'ffr'
+			? 
+			`<p> Our Market Consensus Forecast for the federal funds rate rate (FFR) is generated utilizing data on publicly-traded FFR futures 
+			and other closely related benchmark interest rates. 
+			Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
+			parametrization model, generating the final forecast.</p>
+			<p>This forecast can be interpreted as the mean market-expected values of future FFR values.</p>`
+		: varname === 'ameribor'
+			?
+			`<p> Our Market Consensus Forecast for the Ameribor Unsecured Overnight Rate (AMERIBOR) is generated utilizing data on publicly-traded AMERIBOR futures 
+			and other closely related benchmark interest rates. 
+			Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
+			parametrization model, generating the final forecast.</p>
+			<p>This forecast can be interpreted as the mean market-expected values of future AMERIBOR values.</p>`
+		: varname === 'bsby'
+			?
+			`<p> Our Market Consensus Forecast for the Bloomberg Short-Term Bank Yield Index (BSBY) is generated utilizing data on publicly-traded BSBY futures 
+			and other closely related benchmark interest rates. 
+			Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
+			parametrization model, generating the final forecast.</p>
+			<p>This forecast can be interpreted as the mean market-expected values of future BSBY values.</p>`
+		: ['mort15y', 'mort30y'].includes(varname)
+			?
+			`<p> Our Market Consensus Forecast for the 15 and 30 year fixed rate mortgage rates are derived from combining our 
+			<a href="/forecast-t10y">Market Consensus Forecast for Treasury yields</a> with survey-based forecasts for housing prices.</p>
+			<p>First, using historical data, we calculate historical mortgage-Treasury yield spreads; a model is then used to calculate the relationship 
+			between these spreads and housing prices. 
+			We then use survey-based economist forecasts of housing prices to estimate future mortgage-Treasury yield spreads, and add these to our 
+			Market Consensus Forecasts for Treasury yields to arrive at our final estimate.</p>`
+		: ['t03m', 't06m', 't01y', 't02y', 't05y', 't10y', 't20y', 't30y'].includes(varname)
+			? 
+			`<p>Our <strong>Consensus Treasury Forecast</strong> is a model that calculates the average market expectated forecast of U.S. Treasury yield rates. 
+			It is derived using current <a href="https://www.treasury.gov/resource-center/data-chart-center/Pages/index.aspx">Treasury bond market data</a> 
+			as well as futures market data. For each point in the yield term structure, our model derives the mean market-expected yield rate. 
+			The term structure is then interpolated and smoothed using a three-factor parametrization model, generating the final forecast.</p>`
+		: 'Data error - please reload the page'
+		
+	document.querySelector('#primary-forecast').innerHTML =
+		primary_forecast_html +
+		'<p>This model is updated daily. New releases will be made available between 16:00 and 20:00 ET.</p>';
+
 
 	const external_forecasts = ts_data_parsed.filter(x => x.external === true);
-	if (external_forecasts.length === 0) return;
+	if (external_forecasts.length > 0) {
+		const external_forecast_html =
+			'<hr><div class="pt-2">Other included forecasts are from external sources:' +
+				'<ul>' +
+					external_forecasts.map(x => '<li>' + x.description + '</li>').join('\n') +
+				'</ul>' +
+			'</div>';
+		document.querySelector('#external-forecasts').innerHTML = external_forecast_html;
+	}
+	
+	const citation_html =
+		'Recommended citation for the Consensus Forecast:</br>' + 
+		'<span class="fw-lighter text-muted">' + 
+			'<em>econforecasting.com</em>, The Center for Macroeconomic Forecasts and Insights (' + new Date().getFullYear() + '). ' +
+			'Consensus Interest Rate Forecast. Retrieved from ' + window.location.href + '.' 
+		'</span>'
+	document.querySelector('#citation').innerHTML = citation_html;
 
-	const external_forecast_html =
-		'<div class="pt-2">Other included forecasts are from external sources:' +
-			'<ul>' +
-				external_forecasts.map(x => '<li>' + x.description + '</li>').join('\n') +
-			'</ul><hr></div>'
-	document.querySelector('#external-forecasts').innerHTML = external_forecast_html;
+	
 	return;
 }
 
