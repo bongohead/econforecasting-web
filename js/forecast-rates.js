@@ -516,35 +516,35 @@ function drawDescription(ts_data_parsed, varname) {
 	const primary_forecast_html =
 		varname === 'sofr' 
 			? 
-			`<p>Our <strong>Market Consensus Forecast</strong> for the secured overnight financing rate (SOFR) is generated utilizing data on publicly-traded SOFR futures 
+			`<p>Our <strong><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</strong> for the secured overnight financing rate (SOFR) is generated utilizing data on publicly-traded SOFR futures 
 			and other closely related benchmark interest rates. 
 			Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
 			parametrization model, generating the final forecast.</p>
 			<p>This forecast can be interpreted as the mean market-expected values of future SOFR values.</p>`
 		: varname === 'ffr'
 			? 
-			`<p>Our <strong>Market Consensus Forecast</strong> for the federal funds rate rate (FFR) is generated utilizing data on publicly-traded FFR futures 
+			`<p>Our <strong><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</strong> for the federal funds rate rate (FFR) is generated utilizing data on publicly-traded FFR futures 
 			and other closely related benchmark interest rates. 
 			Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
 			parametrization model, generating the final forecast.</p>
 			<p>This forecast can be interpreted as the mean market-expected values of future FFR values.</p>`
 		: varname === 'ameribor'
 			?
-			`<p>Our <strong>Market Consensus Forecast</strong> for the Ameribor Unsecured Overnight Rate (AMERIBOR) is generated utilizing data on publicly-traded AMERIBOR futures 
+			`<p>Our <strong><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</strong> for the Ameribor Unsecured Overnight Rate (AMERIBOR) is generated utilizing data on publicly-traded AMERIBOR futures 
 			and other closely related benchmark interest rates. 
 			Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
 			parametrization model, generating the final forecast.</p>
 			<p>This forecast can be interpreted as the mean market-expected values of future AMERIBOR values.</p>`
 		: varname === 'bsby'
 			?
-			`<p>Our <strong>Market Consensus Forecast</strong> for the Bloomberg Short-Term Bank Yield Index (BSBY) is generated utilizing data on publicly-traded BSBY futures 
+			`<p>Our <strong><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</strong> for the Bloomberg Short-Term Bank Yield Index (BSBY) is generated utilizing data on publicly-traded BSBY futures 
 			and other closely related benchmark interest rates. 
 			Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
 			parametrization model, generating the final forecast.</p>
 			<p>This forecast can be interpreted as the mean market-expected values of future BSBY values.</p>`
 		: ['mort15y', 'mort30y'].includes(varname)
 			?
-			`<p>Our <strong>Market Consensus Forecast</strong> for the 15 and 30 year fixed rate mortgage rates are derived from combining our 
+			`<p>Our <strong><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</strong> for the 15 and 30 year fixed rate mortgage rates are derived from combining our 
 			<a href="/forecast-t10y">Market Consensus Forecast for Treasury yields</a> with survey-based forecasts for housing prices.</p>
 			<p>First, using historical data, we calculate historical mortgage-Treasury yield spreads; a model is then used to calculate the relationship 
 			between these spreads and housing prices. 
@@ -552,7 +552,7 @@ function drawDescription(ts_data_parsed, varname) {
 			Market Consensus Forecasts for Treasury yields to arrive at our final estimate.</p>`
 		: ['t03m', 't06m', 't01y', 't02y', 't05y', 't10y', 't20y', 't30y'].includes(varname)
 			? 
-			`<p>Our <strong>Consensus Treasury Forecast</strong> is a model that calculates the average market expectated forecast of U.S. Treasury yield rates. 
+			`<p>Our <strong><i class="cmefi-logo mx-1"></i>Consensus Treasury Forecast</strong> is a model that calculates the average market expectated forecast of U.S. Treasury yield rates. 
 			It is derived using current <a href="https://www.treasury.gov/resource-center/data-chart-center/Pages/index.aspx">Treasury bond market data</a> 
 			as well as futures market data. For each point in the yield term structure, our model derives the mean market-expected yield rate. 
 			The term structure is then interpolated and smoothed using a three-factor parametrization model, generating the final forecast.</p>`

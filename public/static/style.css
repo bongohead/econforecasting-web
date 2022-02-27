@@ -385,3 +385,14 @@ a.multicol:hover {
 	-ms-flex-align: center;
 	align-items: center;
 }
+
+
+/* Logo */
+.cmefi-logo {
+    background: url('/static/cmefi-short.svg');
+    background-repeat: no-repeat;
+    background-size: cover; 
+    display: inline-block;
+	height: 1em;
+	width: 1em;
+}
