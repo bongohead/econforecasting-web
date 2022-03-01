@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		const primary_forecast =
 			['sofr', 'ffr', 'ameribor', 'bsby', 'mort30y', 'mort15', 't03m', 't06m', 't01y', 't02y', 't05y', 't10y', 't20y', 't30y'].includes(varname) ? 'int'
 			: ['gdp', 'pce'].includes(varname) ? 'comp'
-			: ['inflation'].includes(varname) ? 'einf'
+			: ['cpi'].includes(varname) ? 'einf'
 			: null;
 			
 		//document.querySelectorAll('span.t-varname').forEach(x => x.textContent = tFullname);
@@ -526,6 +526,10 @@ function drawDescription(ts_data_parsed, varname, primary_forecast) {
 		: ['pce'].includes(varname)
 			?
 			`<p>This page provides quarterly forecasts of U.S. real personal consumption. All historical and forecasted values represent seasonally adjusted annualized rates.</p>`
+		: ['cpi'].includes(varname)
+			?
+			`<p>This page provides forecasts of monthly inflation rates, as measured by the year over year percent change in standard headline CPI, 
+			i.e. the <a href="https://www.bls.gov/news.release/cpi.t01.htm">consumer price index for all urban consumers (CPI-U)</a>.</p>`
 		: 'Error';
 	document.querySelector('#variable-description').innerHTML = description_html + '<hr>';
 
@@ -580,6 +584,14 @@ function drawDescription(ts_data_parsed, varname, primary_forecast) {
 			<p>Assigned weights are time-varying and depend on the remaining time until the official data release. For example, high-frequency <a href="/forecast-gdp-nowcast">nowcast</a> models 
 			tend to perform better for short-term forecasts, while qualitative forecasts tend to be better predictors for long-term forecasts; 
 			our model combines these forecasts using a locally linear random forest method to optimize the strengths of each forecast.</p>`
+		: ['cpi'].includes(varname)
+			? 
+			`<p>Our <strong><i class="cmefi-logo mx-1"></i>Consensus Inflation Forecast</strong> is a model that measures the average expected inflation rate. 
+			It is derived using bond market data (utilizing the spread between Treasury Inflation Protected Securities and Treasury yields) 
+			as well as from household survey data. For each point in the forward term structure, our model derives the mean market-expected inflation rate. 
+			The term structure is interpolated and smoothed using a three-factor parametrization model, generating the final forecast.</p>
+			<p>The model is updated monthly, generally on the next business day following the release of CPI inflation data. 
+			The CPI release schedule can be found <a href="https://www.bls.gov/schedule/news_release/cpi.htm">here</a>.</p>`
 		: 'Data error - please reload the page'
 		
 	document.querySelector('#primary-forecast').innerHTML =

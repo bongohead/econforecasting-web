@@ -18,6 +18,7 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 		toScript: [],
 		jsDir: __DIR__.'/../js',
 		routes: [
+		/*
 			['template' => 'ac-assets', 'request' => ['ac-assets'], 'title' => 'Asset Cross-Correlation Index | Center for Macroeconomic Forecasting & Insights', 'models' => [], 'js' => ['init', 'ac-assets']],
 			['template' => 'ac-assets-hm', 'request' => ['ac-assets-hm'], 'title' => 'Asset Cross-Correlation | Center for Macroeconomic Forecasting & Insights', 'models' => [], 'js' => ['init', 'ac-assets-hm']],
 			['template' => 'ac-regions', 'request' => ['ac-regions'], 'title' => 'Regional Cross-Correlation Index | Center for Macroeconomic Forecasting & Insights', 'models' => [], 'js' => ['init', 'ac-regions']],
@@ -27,7 +28,7 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 			['template' => 'forecasts', 'request' => ['forecasts'], 'title' => 'Forecasts | CMEFI', 'models' => [], 'js' => ['init', 'forecasts']],
 
 			['template' => 'csm-forecasts', 'request' => ['csm-forecasts'], 'title' => 'Forecasts | econforecasting.com', 'models' => [], 'js' => ['init', 'csm-forecasts']],
-			
+		*/	
 			['template' => 'home', 'request' => ['', 'home'], 'title' => 'The Center for Macroeconomic Forecasting & Insights | econforecasting.com', 'models' => [], 'js' => ['init', 'home']],
 			
 			['template' => 'forecast-rates', 'request' => ['forecast-sofr'], 'title' => 'SOFR Forecasts | econforecasting.com', 'models' => [], 'js' => ['init', 'forecast-varname']],
@@ -48,10 +49,11 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 			['template' => 'forecast-rates', 'request' => ['forecast-t20y'], 'title' => '20 Year Treasury Yield Forecast | econforecasting.com', 'models' => [], 'js' => ['init', 'forecast-varname']],
 			['template' => 'forecast-rates', 'request' => ['forecast-t30y'], 'title' => '30 Year Treasury Yield Forecast | econforecasting.com', 'models' => [], 'js' => ['init', 'forecast-varname']],
 			
-			['template' => 'forecast-inflation', 'request' => ['forecast-inflation'], 'title' => 'Inflation Forecast | econforecasting.com', 'models' => [], 'js' => ['init', 'forecast-inflation']],
-			
+			['template' => 'forecast-macro', 'request' => ['forecast-cpi'], 'title' => 'Inflation Forecast | econforecasting.com', 'models' => [], 'js' => ['init', 'forecast-varname']],
 			['template' => 'forecast-macro', 'request' => ['forecast-gdp'], 'title' => 'U.S. Real GDP Forecast | econforecasting.com', 'models' => [], 'js' => ['init', 'forecast-varname']],
-			['template' => 'nowcast-model-gdp', 'request' => ['nowcast-model-gdp'], 'title' => 'GDP Nowcasts | econforecasting.com', 'models' => [], 'js' => ['init', 'nowcast-model-gdp']],
+			['template' => 'forecast-macro', 'request' => ['forecast-pce'], 'title' => 'U.S. Real Consumption Forecast | econforecasting.com', 'models' => [], 'js' => ['init', 'forecast-varname']],
+
+			['template' => 'nowcast-gdp', 'request' => ['nowcast-gdp'], 'title' => 'GDP Nowcasts | econforecasting.com', 'models' => [], 'js' => ['init', 'nowcast-gdp']],
 
 		],
 		errorRoute: ['template' => 'error', 'request' => 'error', 'title' => 'Error', 'js' => []],
