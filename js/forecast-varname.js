@@ -5,147 +5,118 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 	(function() {
 		const varname = window.location.pathname.split('-').pop().padStart(3, '0');
-		const fullname =
-			varname === 'sofr' ? 'Secured Overnight Financing Rate (SOFR)' 
-			: varname === 'ffr' ? 'Federal Funds Rate (FFR)'
-			: varname === 'ameribor' ? 'American Interbank Offered Rate (AMERIBOR)'
-			: varname === 'bsby' ? 'Bloomberg Short-Term Bank Yield Index (BSBY)'
-			: varname === 'mort30y' ? '30-Year Mortgage Rate'
-			: varname === 'mort15y' ? '15-Year Mortgage Rate'
-			: varname === 't03m' ? '3 Month Treasury Bill' 
-			: varname === 't06m' ? '6 Month Treasury Bill'
-			: varname === 't01y' ? '1 Year Treasury Note'
-			: varname === 't02y' ? '2 Year Treasury Note'
-			: varname === 't05y' ? '5 Year Treasury Note'
-			: varname === 't10y' ? '10 Year Treasury Note'
-			: varname === 't20y' ? '20 Year Treasury Bond'
-			: varname === 't30y' ? '30 Year Treasury Bond'
-			: varname === 'gdp' ? 'Real GDP'
-			: null
-			
-		const hist_freq = 
-			varname === 'sofr' ? 'm' 
-			: varname === 'ffr' ? 'm'
-			: varname === 'ameribor' ? 'm'
-			: varname === 'bsby' ? 'm'
-			: varname === 'mort30y' ? 'm'
-			: varname === 'mort15y' ? 'm'
-			: varname === 't03m' ? 'm' 
-			: varname === 't06m' ? 'm'
-			: varname === 't01y' ? 'm'
-			: varname === 't02y' ? 'm'
-			: varname === 't05y' ? 'm'
-			: varname === 't10y' ? 'm'
-			: varname === 't20y' ? 'm'
-			: varname === 't30y' ? 'm'
-			: varname === 'gdp' ? 'q'
-			: null
-		
+					
 		const primary_forecast =
-			varname === 'sofr' ? 'int' 
-			: varname === 'ffr' ? 'int'
-			: varname === 'ameribor' ? 'int'
-			: varname === 'bsby' ? 'int'
-			: varname === 'mort30y' ? 'int'
-			: varname === 'mort15y' ? 'int'
-			: varname === 't03m' ? 'int' 
-			: varname === 't06m' ? 'int'
-			: varname === 't01y' ? 'int'
-			: varname === 't02y' ? 'int'
-			: varname === 't05y' ? 'int'
-			: varname === 't10y' ? 'int'
-			: varname === 't20y' ? 'int'
-			: varname === 't30y' ? 'int'
-			: varname === 'gdp' ? null
-			: null
-		
-		document.querySelector('meta[name="description"]').setAttribute('content', 'U.S. Macroeconomic Forecasts for ' + fullname + '.');
+			['sofr', 'ffr', 'ameribor', 'bsby', 'mort30y', 'mort15', 't03m', 't06m', 't01y', 't02y', 't05y', 't10y', 't20y', 't30y'].includes(varname) ? 'int'
+			: ['gdp', 'pce'].includes(varname) ? 'comp'
+			: ['inflation'].includes(varname) ? 'einf'
+			: null;
+			
 		//document.querySelectorAll('span.t-varname').forEach(x => x.textContent = tFullname);
-		const ud_prev = getAllData()['forecast-macro'] || {};
+		const ud_prev = getAllData()['forecast-varname'] || {};
 		const ud = {... ud_prev, ... {
 				varname: varname,
-				fullname: fullname,
-				hist_freq: hist_freq,
 				primary_forecast: primary_forecast
 			}};
-		setData('forecast-macro', ud);
+		setData('forecast-varname', ud);
 	})();
 
 	/********** GET DATA **********/
-	const ud = getData('forecast-macro') || {};
-	const get_forecast_hist_values_last_vintage = getFetch('get_forecast_hist_values_last_vintage', ['forecast_hist_values'], {varname: ud.varname, freq: ud.hist_freq, form: 'd1'}, 10000, false);	
-	const get_forecast_values_dfd = getFetch('get_forecast_values_last_vintage', ['forecast_values'], {varname: ud.varname, freq: ['m', 'q'], form: 'd1'}, 10000, false);
-	
-	Promise.all([get_forecast_hist_values_last_vintage, get_forecast_values_dfd]).then(function(response) {
-		const ts_data_raw =
-			response[0].forecast_hist_values.map(x => ({
-				tskey: 'hist',
-				freq: ud.hist_freq,
-				shortname: 'Historical Data',
-				description: 'Historical Data',
-				external: false,
-				vdate: moment().format('YYYY-MM-DD'),
-				date: x.date,
-				value: parseFloat(x.value)
-				})).concat(response[1].forecast_values.filter(x => ud.hist_freq === 'm' ? moment(x.vdate) <= moment(x.date).add(30, 'days') : true).map(x => ({
+	const ud = getData('forecast-varname') || {};
+	const get_varname_desc = getFetch('get_forecast_variable', ['forecast_variable'], {varname: ud.varname}, 10000, false);
+	Promise.all([get_varname_desc])
+		.then(function(response) {
+			const variable_raw = response[0].forecast_variable[0];
+			return {
+				varname: variable_raw.varname,
+				fullname: variable_raw.fullname,
+				units:
+					variable_raw.d1 === 'base' ? variable_raw.units 
+					: variable_raw.d1 === 'apchg' ? 'Annualized Percent Change (%)' 
+					: '',
+				// Add on aggregated historical frequency to display
+				hist_freq: variable_raw.hist_source_freq === 'q' ? 'q' : 'm'
+			}
+		})
+		// Pull historical data & forecasts
+		.then(function(variable) { 
+			// console.log('variable', variable);
+			const get_forecast_hist_values_last_vintage = getFetch('get_forecast_hist_values_last_vintage', ['forecast_hist_values'], {varname: variable.varname, freq: variable.hist_freq, form: 'd1'}, 10000, false);	
+			const get_forecast_values = getFetch('get_forecast_values_last_vintage', ['forecast_values'], {varname: variable.varname, freq: ['m', 'q'], form: 'd1'}, 10000, false);
+			return Promise.all([variable, get_forecast_hist_values_last_vintage, get_forecast_values]);
+		})
+		// Pull response data & forecasts
+		.then(function(response) {
+			const variable = response[0];
+			document.querySelector('meta[name="description"]').setAttribute('content', 'U.S. Macroeconomic Forecasts for ' + variable.fullname + '.');
+			
+			const ts_data_raw =
+				response[1].forecast_hist_values.map(x => ({
+					tskey: 'hist',
+					freq: variable.hist_freq,
+					shortname: 'Historical Data',
+					description: 'Historical Data',
+					external: false,
+					vdate: moment().format('YYYY-MM-DD'),
+					date: x.date,
+					value: parseFloat(x.value)
+				}))
 				// Filter only monthly forecasts if they are too old
-				tskey: x.forecast,
-				freq: x.freq,
-				shortname: x.shortname,
-				description: x.description,
-				external: x.external,
-				vdate: x.vdate,
-				date: x.date, 
-				value: parseFloat(x.value)
-			}))
-			);
-		//console.log('ts_data_raw', ts_data_raw);
-		
-		// Returns [{fcname: hist, data: [[],..]}, ...] MAX 5 years
-		const ts_data_parsed = 
-			[... new Set(ts_data_raw.map(x => x.tskey))] // Get list of dates
-			.map(function(tskey) { // Group each value of the original array under the correct date
-				
-				const z = ts_data_raw.filter(x => x.tskey === tskey)[0];
-				return {
-					tskey: tskey,
-					freq: z.freq,
-					ts_type: z.tskey === 'hist' ? 'hist' : z.tskey === ud.primary_forecast ? 'primary' : 'secondary',
-					shortname: z.shortname,
-					description: z.description,
-					external: z.external,
-					freq: z.freq,
-					vdate: z.vdate || null,
-					data: ts_data_raw.filter(x => x.tskey === tskey)
-						.filter(x => moment(x.date) <= moment().add(10, 'years'))
-						.map(x => [x.date, x.value]).sort((a, b) => a[0] - b[0])
-				}
-			})
-			//Sort so that CMEFI forecasts are first and historical data is last
-			.sort((a, b) =>
-				a.ts_type === 'primary' && a.ts_type !== 'hist' ? -1
-				: b.ts_type === 'primary' && b.fcname !== 'hist' ? 1 
-				: a.ts_type === 'hist' ? 1 
-				: b.ts_type === 'hist' ? -1
-				: 0
-			).map((x, i) => ({...x, order: i}));
-		// console.log('ts_data_parsed', ts_data_parsed);
-		
-		setData('forecast-macro', {...getData('forecast-macro'), ...{ts_data_parsed: ts_data_parsed}});
-		return(ts_data_parsed);
-	})
-	/********** DRAW CHART & TABLE **********/
-	.then(function(ts_data_parsed) {
-		drawChart(ts_data_parsed, ud.fullname);
-		drawTable(ts_data_parsed);
-		drawDescription(ts_data_parsed, ud.varname);
-		$('div.overlay').hide();
-	});
-	
+				.concat(response[2].forecast_values.filter(x => variable.hist_freq === 'm' ? moment(x.vdate) <= moment(x.date).add(30, 'days') : true).map(x => ({
+					tskey: x.forecast,
+					freq: x.freq,
+					shortname: x.shortname,
+					description: x.description,
+					external: x.external,
+					vdate: x.vdate,
+					date: x.date, 
+					value: parseFloat(x.value)
+				})));
+			//console.log('ts_data_raw', ts_data_raw);
+			
+			// Now group data under tskeys
+			const ts_data_parsed = 
+				[... new Set(ts_data_raw.map(x => x.tskey))] // Get list of dates
+				.map(function(tskey) { // Group each value of the original array under the correct date
+					const z = ts_data_raw.filter(x => x.tskey === tskey)[0];
+					return {
+						tskey: tskey,
+						freq: z.freq,
+						ts_type: z.tskey === 'hist' ? 'hist' : z.tskey === ud.primary_forecast ? 'primary' : 'secondary',
+						shortname: z.shortname,
+						description: z.description,
+						external: z.external,
+						freq: z.freq,
+						vdate: z.vdate || null,
+						data: ts_data_raw.filter(x => x.tskey === tskey)
+							.filter(x => moment(x.date) <= moment().add(10, 'years'))
+							.map(x => [x.date, x.value]).sort((a, b) => a[0] - b[0])
+					}
+				})
+				//Sort so that CMEFI forecasts are first and historical data is last
+				.sort((a, b) =>
+					a.ts_type === 'primary' && a.ts_type !== 'hist' ? -1
+					: b.ts_type === 'primary' && b.fcname !== 'hist' ? 1 
+					: a.ts_type === 'hist' ? 1 
+					: b.ts_type === 'hist' ? -1
+					: 0
+				).map((x, i) => ({...x, order: i}));
+			// console.log('ts_data_parsed', ts_data_parsed);
+			
+			setData('forecast-varname', {...getData('forecast-varname'), ts_data_parsed: ts_data_parsed, ...variable});
+			
+			return({variable, ts_data_parsed});	
+		})
+		.then(function({variable, ts_data_parsed}) {
+			drawChart(ts_data_parsed, variable.fullname, variable.units, variable.hist_freq);
+			drawTable(ts_data_parsed, variable.units);
+			drawDescription(ts_data_parsed, variable.varname, ud.primary_forecast);
+			$('div.overlay').hide();
+		});
 });
 
 /*** Draw chart ***/
-function drawChart(ts_data_parsed, fullname) {
+function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 	
 	//console.log('fcDataParsed', fcDataParsed);
 	/*
@@ -165,7 +136,7 @@ function drawChart(ts_data_parsed, fullname) {
 					x.shortname +
 					' <span style="font-size:.8rem;font-weight:normal">(' +
 						'Updated ' + moment(x.vdate).format('MM/DD/YY') +
-						(x.freq === 'q' ? '; Quarterly Frequency' : '; Monthly Frequency')  + 
+						(x.freq === 'q' ? '; Quarterly Data' : '; Monthly Data')  + 
 					')</span>',
 				data: x.data.map(x => [parseInt(moment(x[0]).format('x')), x[1]]),
 				type: 'line',
@@ -173,7 +144,6 @@ function drawChart(ts_data_parsed, fullname) {
 				lineWidth: (x.ts_type === 'hist' ? 5 : 3),
 				zIndex: (x.ts_type === 'hist' ? 3 : x.ts_type == 'primary' ? 3 : 1),
 				legendIndex: (x.ts_type === 'hist' ? 0 : x.ts_type == 'primary' ? 1 : 2),
-				//['var(--bs-cmefi-blue)', 'var(--bs-cmefi-green)', 'var(--bs-cmefi-orange)'][i]
 				color: (x.tskey === 'hist' ? 'black' : getColorArray()[i]),
 				opacity: 2,
 				visible: (x.ts_type === 'primary' || x.ts_type === 'hist'),
@@ -206,8 +176,7 @@ function drawChart(ts_data_parsed, fullname) {
         },
 		caption: {
 			useHTML: true,
-			text: 'Data represents monthly-averaged values; shaded areas indicate recessions',
-
+			text: 'Shaded area indicate recessions' + (hist_freq === 'm' ? '; Data represents monthly-averaged values when applicable' : ''),
 			style: {
 				fontSize: '0.75rem'
 			}
@@ -320,7 +289,7 @@ function drawChart(ts_data_parsed, fullname) {
                 }
             },
 			title: {
-				text: 'Percent (%)',
+				text: units,
 				style: {
 					color: 'black',
 				}
@@ -337,6 +306,7 @@ function drawChart(ts_data_parsed, fullname) {
 			backgroundColor: 'var(--bs-efpale)',
 			borderColor: 'var(--bs-cmefi-dark)',
 			borderWidth: 1,
+			//useHTML: true,
 			align: 'center',
 			verticalAlign: 'bottom',
 			layout: 'horizontal',
@@ -350,7 +320,7 @@ function drawChart(ts_data_parsed, fullname) {
 			backgroundColor: 'rgba(255, 255, 255, .8)',
 			formatter: function () {
 				const points = this.points;
-				const ud = getData('forecast-macro');
+				const ud = getData('forecast-varname');
 				const text =
 					'<table>' +
 					'<tr style="border-bottom:1px solid black"><td>DATE</td><td style="font-weight:600">' +
@@ -383,7 +353,7 @@ function drawChart(ts_data_parsed, fullname) {
 
 
 
-function drawTable(ts_data_parsed) {
+function drawTable(ts_data_parsed, units) {
 	
 	//console.log('fcDataParsed', fcDataParsed);
 	// Turn into list of series
@@ -397,7 +367,7 @@ function drawTable(ts_data_parsed) {
 		const dtCols = [
 			{title: 'Date', data: 'date'},
 			{title: 'Type', data: 'type'},
-			{title: 'Yield (%)', data: 'value'}
+			{title: units, data: 'value'}
 		].map(function(x, i) {
 			return {...x, ...{
 				visible: (x.title !== 'Type'),
@@ -455,9 +425,11 @@ function drawTable(ts_data_parsed) {
 		li.classList.add('align-items-center');
 		//li.classList.add('w-100'); // Needed to get the thing to vertically align
 		li.innerHTML =
-			x.shortname +
+			'<span>' +
+				(x.ts_type === 'primary' ? '<i class="cmefi-logo me-1"></i>' : '') + x.shortname +
+			'</span>' + 
 			'<span style="font-size:0.7rem;color: rgb(180, 180, 180)" >' +
-			('Updated ' + moment(x.vdate).format('MM/DD/YYYY')) +
+				('Updated ' + moment(x.vdate).format('MM/DD/YYYY')) +
 			 '</span>';
 		li.setAttribute('data-ref-table', x.tskey); 
 		if (x.ts_type === 'primary') li.classList.add('active');
@@ -510,7 +482,7 @@ function drawTable(ts_data_parsed) {
 }
 
 
-function drawDescription(ts_data_parsed, varname) {
+function drawDescription(ts_data_parsed, varname, primary_forecast) {
 	
 	const description_html =
 		varname === 'sofr' 
@@ -548,8 +520,13 @@ function drawDescription(ts_data_parsed, varname) {
 			`<p>This page provides monthly forecasts of U.S. Treasury bond yields. With over $20 trillion outstanding, Treasury bonds constitute nearly 15% of the global bond market and are the premier safe assets in many 
 			financial markets across the world. Because of this, they are also often utilized as a benchmark measure of the riskless interest rate in the world economy.</p>
 			<p>Both historical data and forecasted values on this page reflect period average values.</p>`
-
-		: 'PLACEHOLDER';
+		: ['gdp'].includes(varname)
+			?
+			`<p>This page provides quarterly forecasts of U.S. real GDP. All historical and forecasted values represent seasonally adjusted annualized rates.</p>`
+		: ['pce'].includes(varname)
+			?
+			`<p>This page provides quarterly forecasts of U.S. real personal consumption. All historical and forecasted values represent seasonally adjusted annualized rates.</p>`
+		: 'Error';
 	document.querySelector('#variable-description').innerHTML = description_html + '<hr>';
 
 	
@@ -596,6 +573,13 @@ function drawDescription(ts_data_parsed, varname) {
 			It is derived using current <a href="https://www.treasury.gov/resource-center/data-chart-center/Pages/index.aspx">Treasury bond market data</a> 
 			as well as futures market data. For each point in the yield term structure, our model derives the mean market-expected yield rate. 
 			The term structure is then interpolated and smoothed using a three-factor parametrization model, generating the final forecast.</p>`
+		: ['gdp', 'pce'].includes(varname)
+			? 
+			`<p>Our <strong><i class="cmefi-logo mx-1"></i>Composite Forecast Model</strong> is a model of models, 
+			optimally finding weights between different qualitative and quantitative forecasts to generate a single composite forecast.<p>
+			<p>Assigned weights are time-varying and depend on the remaining time until the official data release. For example, high-frequency <a href="/forecast-gdp-nowcast">nowcast</a> models 
+			tend to perform better for short-term forecasts, while qualitative forecasts tend to be better predictors for long-term forecasts; 
+			our model combines these forecasts using a locally linear random forest method to optimize the strengths of each forecast.</p>`
 		: 'Data error - please reload the page'
 		
 	document.querySelector('#primary-forecast').innerHTML =
@@ -603,10 +587,10 @@ function drawDescription(ts_data_parsed, varname) {
 		'<p>This model is updated daily. New releases will be made available between 16:00 and 20:00 ET.</p>';
 
 
-	const external_forecasts = ts_data_parsed.filter(x => x.external === true);
+	const external_forecasts = ts_data_parsed.filter(x => x.tskey != primary_forecast & x.tskey != 'hist');
 	if (external_forecasts.length > 0) {
 		const external_forecast_html =
-			'<hr><div class="pt-2">Other included forecasts are from external sources:' +
+			'<hr><div class="pt-2">Other included forecasts on this page are from external sources:' +
 				'<ul>' +
 					external_forecasts.map(x => '<li>' + x.description + '</li>').join('\n') +
 				'</ul>' +
@@ -614,14 +598,19 @@ function drawDescription(ts_data_parsed, varname) {
 		document.querySelector('#external-forecasts').innerHTML = external_forecast_html;
 	}
 	
+	const primary_forecast_name =
+		primary_forecast === 'int' ? 'Consensus Interest Rate Forecast Model'
+		: primary_forecast === 'einf' ? 'Consensus Inflation Model'
+		: primary_forecast === 'comp' ? 'Composite Forecast Model'
+		: ''
+
 	const citation_html =
-		'Recommended citation for the Market Consensus Forecast:</br>' + 
+		'Recommended citation for the ' + primary_forecast_name + ':</br>' + 
 		'<span class="fw-lighter text-muted">' + 
 			'<em>econforecasting.com</em>, The Center for Macroeconomic Forecasts and Insights (' + new Date().getFullYear() + '). ' +
-			'Consensus Interest Rate Forecast. Retrieved from ' + window.location.href + '.' 
+			primary_forecast_name + '. Retrieved from ' + window.location.href + '.' 
 		'</span>'
 	document.querySelector('#citation').innerHTML = citation_html;
-
 	
 	return;
 }
