@@ -57,28 +57,28 @@ g.append('foreignObject')
 
 
 g.append('text')
-  .text('This page is under construction')
+  .text('404 - You\'ve Reached a Missing Page!')
   .attr('x', 50)
   .attr('y', 100)
   .attr('fill', 'white')
   .attr('font-size', '2.5rem');
   
   g.append('text')
-  .text('CMEFI is a non-partisan think tank working to democratize macroeconomic ')
+  .text('')
   .attr('x', 50)
   .attr('y', 140)
   .attr('fill', 'white')
   .attr('font-size', '1.5rem');
   
   g.append('text')
-  .text('knowledge by making the necessary tools, data, and insights  ')
+  .text('  ')
   .attr('x', 50)
   .attr('y', 170)
   .attr('fill', 'white')
   .attr('font-size', '1.5rem');
 
   g.append('text')
-  .text('more available for all.  ')
+  .text('  ')
   .attr('x', 50)
   .attr('y', 200)
   .attr('fill', 'white')
@@ -87,7 +87,7 @@ g.append('text')
   
   
 // loading city locations from geoJSON
-d3.json("https://econforecasting.com/static/geonames_cities_500k.json", function(error, data) {
+d3.json("/static/geonames_cities_500k.json", function(error, data) {
 
          // Handle errors getting and parsing the data
          if (error) { return error; }
