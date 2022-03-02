@@ -18,6 +18,7 @@ $releases = $sql -> select("
 			WHERE nc_dfm_input = TRUE
 			GROUP BY release
 		) v on r.id = v.release
+	WHERE r.id NOT IN ('MOO.BOND', 'NYF.FFR')
 	)
 UNION ALL
 	(

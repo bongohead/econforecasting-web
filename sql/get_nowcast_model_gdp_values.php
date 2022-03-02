@@ -16,7 +16,7 @@ WHERE
 	v.form = 'd1'
 	AND p.dispgroup = 'GDP' 
 	AND vdate >= CURRENT_DATE + interval '-6 months'
-	AND date <= CURRENT_DATE + interval '+9 months'
+	AND date <= CURRENT_DATE + interval '+6 months'
 	AND v.forecast = 'now'
 	AND p.varname <> 'cbi'
 ", $vars_to_bind);

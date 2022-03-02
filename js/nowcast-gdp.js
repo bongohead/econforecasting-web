@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				input_varnames: JSON.parse(x.input_varnames),
 				release_dates: JSON.parse(x.release_dates)
 			}));
-		console.log('gdp_values', gdp_values, 'releases', releases);
+		//console.log('gdp_values', gdp_values, 'releases', releases);
 		
 		// Get last backtest date in the dataset
 		const last_bdate = moment.max(...[... new Set(gdp_values.map(x => x.bdate))].map(x => moment(x))).format('YYYY-MM-DD');
@@ -168,7 +168,7 @@ function drawChart(gdp_values_grouped, releases, display_quarter, display_quarte
 				};
 			})
 		}).flat();
-	console.log('release_series_data', release_series_data);
+	//console.log('release_series_data', release_series_data);
 	
 	// Now get this data as a date => release id obj
 	const release_data =
@@ -207,10 +207,10 @@ function drawChart(gdp_values_grouped, releases, display_quarter, display_quarte
 			'<li href="#" id="li-' + x[0].value + '" class="list-group-item list-group-item-action release-calendar-date">' +
 				'<div class="d-flex justify-content-between align-items-center">' +
 					moment(x[0].value).format('MMMM Do') +
-					'<span class="badge bg-econgreen">' + x.length + '</span>' +
+					'<span class="badge bg-cmefi-green">' + x.length + '</span>' +
 				'</div>' +
 				'<ul class="ps-2" style="font-size:.8rem">' +
-					x.map(y => '<li><a ' + (line_names.includes(y.label.text) ? 'class="fw-bolder text-danger"' : '') +' href="'+(y.label != null ? y.relurl : '') + '">' + y.label.text + '</a></li>').join('\n') +
+					x.map(y => '<li><a ' + (line_names.includes(y.label.text) ? 'class="fw-bolder text-danger"' : '') +' target="_blank" href="'+(y.label != null ? y.url : '') + '">' + y.label.text + '</a></li>').join('\n') +
 				'</ul>' +
 			'</li>'
 		}).join('\n') +
@@ -292,27 +292,23 @@ function drawChart(gdp_values_grouped, releases, display_quarter, display_quarte
 			spacingTop: 20,
             backgroundColor: 'rgba(255, 255, 255, 0)',
 			plotBackgroundColor: '#FFFFFF',
-			style: {
-				fontFamily: '"Assistant", "sans-serif"',
-				fontColor: 'var(--bs-econgreen)'
-			},
 			height: 450,
 			plotBorderColor: 'black',
 			plotBorderWidth: 2
         },
         title: {
 			useHTML: true,
-			text: '<img class="me-2" width="20" height="20" src="/static/cmefi_short.png"><div style="vertical-align:middle;display:inline"><span>Forecasted ' + display_quarter + ' GDP Over Time</h5></span>',
+			text: '<img class="me-2" width="20" height="20" src="/static/cmefi_short.png"><div style="vertical-align:middle;display:inline"><span>Nowcasted ' + display_quarter + ' GDP Over Time</h5></span>',
 			style: {
 				fontSize: '1.5rem',
-				color: 'var(--bs-econblue)'
+				color: 'var(--bs-cmefi-blue)'
 			}
         },
 		subtitle: {
 			useHTML: true,
 			text: 
 				'<div class="col-12 btn-group d-inline-block" role="group" id="chart-subtitle-group">' +
-					'<button class="btn btn-secondary btn" style="" type="button" disabled="">Select Nowcast Date:&nbsp;</button>' + 
+					'<button class="btn btn-secondary btn" style="" type="button" disabled="">Select Forecasted Quarter:&nbsp;</button>' + 
 					display_quarters
 					.map(x => 
 					'<button class="btn btn-primary chart-subtitle btn ' + (x === display_quarter ? 'active' : '') + '" style="" type="button">' + x + '</button>'
@@ -343,6 +339,9 @@ function drawChart(gdp_values_grouped, releases, display_quarter, display_quarte
                 day: "%m/%d",
                 week: "%m/%d"
             },
+			title: {
+				text: 'Date of Forecast'
+			},
 			labels: {
 				style: {
 					color: 'black'
@@ -377,7 +376,7 @@ function drawChart(gdp_values_grouped, releases, display_quarter, display_quarte
                 }
             },
 			title: {
-				text: 'Annualized % Change',
+				text: 'Forecasted Annualized % Change',
 				style: {
 					color: 'black',
 				}
@@ -389,8 +388,8 @@ function drawChart(gdp_values_grouped, releases, display_quarter, display_quarte
         },
 		legend: {
 			enabled: true,
-			backgroundColor: 'var(--bs-econpale)',
-			borderColor: 'var(--bs-econblue)',
+			backgroundColor: 'var(--bs-efpale)',
+			borderColor: 'var(--bs-cmefi-dark)',
 			borderWidth: 1,
 			align: 'center',
 			verticalAlign: 'bottom',
@@ -432,7 +431,7 @@ function drawChart(gdp_values_grouped, releases, display_quarter, display_quarte
 
 function drawTable(gdp_values_grouped) {
 	
-	console.log('gdp_values_grouped', gdp_values_grouped);
+	//console.log('gdp_values_grouped', gdp_values_grouped);
 	
 	// Get last bdate - only show last vintage date data
 	const bdate = gdp_values_grouped.map(x => x.data.map(y => y.bdate)).flat().sort().slice(-1)[0];
@@ -470,7 +469,7 @@ function drawTable(gdp_values_grouped) {
 				};
 		});
 	
-	console.log('tableData', tableData);
+	//console.log('tableData', tableData);
 		
 	const copySvg =
 	`<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-clipboard me-1" viewBox="0 0 16 16">
@@ -491,8 +490,8 @@ function drawTable(gdp_values_grouped) {
 			"<'row justify-content-center'<'col-12'tr>>" +
 			"<'row justify-content-end'<'col-auto'p>>",
 		buttons: [
-			{extend: 'copyHtml5', text: copySvg + 'Copy', exportOptions: {columns: dtCols.map((x, i) => ({...x, index: i})).filter(x => x.visible).map(x => x.index)}, className: 'btn btn-sm btn-econgreen'},
-			{extend: 'csvHtml5', text: dlSvg + 'Download', exportOptions: {columns: dtCols.map((x, i) => ({...x, index: i})).filter(x => x.visible).map(x => x.index)}, className: 'btn btn-sm btn-econgreen'}
+			{extend: 'copyHtml5', text: copySvg + 'Copy', exportOptions: {columns: dtCols.map((x, i) => ({...x, index: i})).filter(x => x.visible).map(x => x.index)}, className: 'btn btn-sm btn-light'},
+			{extend: 'csvHtml5', text: dlSvg + 'Download', exportOptions: {columns: dtCols.map((x, i) => ({...x, index: i})).filter(x => x.visible).map(x => x.index)}, className: 'btn btn-sm btn-light'}
 		],
 		paging: false,
 		pagingType: 'numbers',
