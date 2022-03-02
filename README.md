@@ -2,15 +2,20 @@ Description TBA
 
 # CHANGELOG
 
-## 2022-02-12 [v0.20] (Beta Model Release Version)
+## 2022-02-12 [v0.20 -> v1.00] (Beta Model Release Version)
 - Added new SOFR forecast page
 - Added new FFR forecast page
 - Added new homepage w/autocomplete
+- Added new centralized forecast JS template
+- Added new descriptions system for varname forecasts
+- Added inflation forecasts
+- Added composite model forecasts
 - Improved CSS styline & SCSS settings
+- Improved nowcast page
 - Updated BS5 to 5.1.3
 - Updated minor version dependencies for Highcharts and DataTables
 - Updated CMEFI logo & fixed Chrome rendering issue
-
+- Removed most text on error page
 
 ## 2021-09-21 [v0.17] (Adding Updated Model Forecasts to Site)
 - Added new import files to get data from csm_\* SQL tables
