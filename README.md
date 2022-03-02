@@ -2,7 +2,7 @@ Description TBA
 
 # CHANGELOG
 
-## 2022-02-12 [v0.20 -> v1.00] (Beta Model Release Version)
+## 2022-03-02 [v0.20 -> v1.00] (Beta Model Release Version)
 - Added new SOFR forecast page
 - Added new FFR forecast page
 - Added new homepage w/autocomplete
