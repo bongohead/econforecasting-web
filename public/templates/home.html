@@ -22,7 +22,7 @@
 <script src="static/mapGenerator.js"></script>
 <script src="static/tsGenerator.js"></script>
 -->
-<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.6/dist/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.1/dist/autoComplete.min.js"></script>
 <style>
 .autoComplete_wrapper{
 	display: inline-block;
@@ -127,7 +127,7 @@
 </section>
 -->
 <section style="background:linear-gradient(165deg, rgba(230, 255, 255, .8) 50%, rgba(255, 255, 255, .3) 50%)">
-	<div class="container-xxl pt-5 pb-5" style="background:url(/static/test.png) no-repeat right/auto">
+	<div class="container-xxl pt-5 pb-5" style="background:url(/static/test.png) no-repeat right/cover">
 		<div class="row mt-2">
 			<div class="col-12 col-md-12 col-lg-7">
 				<h1 style="max-width: 680px;color:var(--bs-cmefi-blue)">Free compendium of economic<br> forecasts and models</h1>
@@ -138,10 +138,16 @@
 			<div class="col-12 col-lg-6">
 				<h2>What is econforecasting.com<span class="tm" style="bottom: 14px;">™</span>?</h2>
 				<div class="">econforecasting.com<span class="tm" style="bottom: 7px;">™</span> is a project by the 
-				Center of Macroeconomic Forecasting & Insights
+				Center of Macroeconomic Forecasting & Insights to make accessible a public repository of economic forecasts and analysis.
 				<!-- Autocomplete -->
 				<div role="combobox" aria-owns="autoComplete_list" aria-haspopup="true" aria-expanded="false" class="autoComplete_wrapper mt-4">
 					<input id="autoComplete" class="form-control">
+				</div>
+				<div class="m-2 rounded card" style="background-color: rgba(255, 255, 255, .7)">
+					<div class="card-body">
+						Please note: our website is undergoing a major overhaul from March 2022 through September. During this time, 
+						new forecasts and indices will be added regularly.
+					</div>
 				</div>
 				
 
@@ -152,6 +158,8 @@
 </section>
 
 
+<!--
+
 <div class="container-fluid" id="homepage-banner" >
 	<div class="container px-4">
 	<div class="row align-items-lg-center pt-2">
@@ -160,19 +168,6 @@
         <p class="lead mb-4">
         </p>
 
-		<!--
-        <div class="d-flex flex-column flex-md-row">
-          <a href="/docs/5.0/getting-started/introduction/" class="btn btn-lg btn-bd-primary mb-3 me-md-3" onclick="ga('send', 'event', 'Jumbotron actions', 'Get started', 'Get started');">Get started</a>
-          <a href="/docs/5.0/getting-started/download/" class="btn btn-lg btn-outline-secondary mb-3" onclick="ga('send', 'event', 'Jumbotron actions', 'Download', 'Download 5.0.0-beta2');">Download</a>
-        </div>
-        <p class="text-muted mb-0">
-          Currently <strong>v5.0.0-beta2</strong>
-          <span class="px-1">·</span>
-          <a href="https://getbootstrap.com/docs/4.6/getting-started/introduction/" class="link-secondary">v4.6.x docs</a>
-          <span class="px-1">·</span>
-          <a href="/docs/versions/" class="link-secondary">All releases</a>
-        </p>
-		-->
       </div>
 
       <div class="col-10 mx-auto col-md-8 order-md-2 col-lg-6 ">
@@ -222,37 +217,27 @@
       </div>
 	  
 
-		<!--
-        <div class="d-flex flex-column flex-md-row">
-          <a href="/docs/5.0/getting-started/introduction/" class="btn btn-lg btn-bd-primary mb-3 me-md-3" onclick="ga('send', 'event', 'Jumbotron actions', 'Get started', 'Get started');">Get started</a>
-          <a href="/docs/5.0/getting-started/download/" class="btn btn-lg btn-outline-secondary mb-3" onclick="ga('send', 'event', 'Jumbotron actions', 'Download', 'Download 5.0.0-beta2');">Download</a>
-        </div>
-        <p class="text-muted mb-0">
-          Currently <strong>v5.0.0-beta2</strong>
-          <span class="px-1">·</span>
-          <a href="https://getbootstrap.com/docs/4.6/getting-started/introduction/" class="link-secondary">v4.6.x docs</a>
-          <span class="px-1">·</span>
-          <a href="/docs/versions/" class="link-secondary">All releases</a>
-        </p>
-		-->
     </div>
 	</div>  
 </div>
-
+-->
 
 <div class="container-fluid px-0 pb-5" style="background-image:url(static/svg_bg.svg);background-size:cover;background-position:top left">
-	<div class="container-fluid mt-5" style="height:2rem;background-image:linear-gradient(45deg, var(--bs-econblue) 50%, var(--bs-econpale) 50%)">
-		<div class="container px-2 py-0" style="height:2rem;background-image:linear-gradient(45deg, var(--bs-econblue) 50%, rgba(255, 255, 255, 0) 50%)">
+	<div class="container-fluid mt-0" style="height:2rem;background-image:linear-gradient(45deg, rgba(10, 60, 255, .3) 50%, var(--bs-econpale) 50%)">
+		<div class="container px-2 py-0" style="height:2rem;background-color:transparent">
 			<h4 class="text-white">Data & Forecasts</h4>
 		</div>
 	</div>
 
-	<div class="container-fluid">
+
+	<div class="container-fluid pb-5">
 		<div class="container pt-2 pb-2">
 			<div class="row justify-content-center">
 			
 			  <div class="col-12 col-xl-5 border rounded shadow-sm p-3 mx-1 bg-white">
 					<h6 class="d-inline-block mb-2 text-econred fw-bold">Forecasts & Nowcasts</h6>
+					<br><span>Under Construction... stay tuned!</span>
+					<!--
 					<div class="row row-cols-3 row-cols-sm-4 row-cols-md-5 row-cols-lg-6 row-cols-xl-5">
 						<div class="col homepage-links mb-2">
 							<a href="/fc-rates-tcurve" class="d-block text-dark text-decoration-none" style="background-image:linear-gradient(45deg, rgba(255, 255, 255, .9) 50%, rgba(255, 255, 255, .9) 50%), url(/static/svg_fc_rates_tcurve.svg);background-size:100%, 90%;background-repeat:no-repeat;background-position:center center">
@@ -313,11 +298,14 @@
 						</div>
 
 					</div>
+					-->
 			  </div>
 
 			
 			  <div class="col-12 col-xl-5 border rounded shadow-sm p-3 mx-1 bg-white">
 					<h6 class="d-inline-block mb-2 text-econgreen fw-bold">Indicators & Indices</h6>
+					<br><span>Under Construction... stay tuned!</span>
+					<!--
 					<div class="row row-cols-3 row-cols-sm-4 row-cols-md-5 row-cols-lg-6 row-cols-xl-5">
 						<div class="col homepage-links mb-2">
 							<a href="/ac-assets" class="d-block text-dark text-decoration-none" style="background-image:linear-gradient(45deg, rgba(255, 255, 255, .9) 50%, rgba(255, 255, 255, .9)50%), url(/static/svg_ac_assets.svg);background-size:100%, 90%;background-repeat:no-repeat;background-position:center center">
@@ -334,21 +322,22 @@
 							</a>
 						</div>
 					</div>
+					-->
 			  </div>
 			  
 			</div>
 			
 		</div>
 	</div>
+	
+	
 	<div class="container-fluid mt-2" style="height:2rem;background-image:linear-gradient(45deg, var(--bs-econorange) 50%, var(--bs-econpale) 50%)">
 		<div class="container px-2 py-0" style="height:2rem;background-image:linear-gradient(45deg, var(--bs-econorange) 50%, rgba(255, 255, 255, 0) 50%)">
 			<h4 class="text-white">About Us</h4>
 		</div>
 	</div>
-	<div class="container pt-1">
-	<h4>
-	CMEFI is a non-partisan think tank working to democratize macroeconomic knowledge by making the necessary tools, data, and insights more available for all.
-	</h4>
+	<div class="container pt-1 pb-5">
+
 	</div>
 </div>
 
