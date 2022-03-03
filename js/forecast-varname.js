@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			const ts_data_raw =
 				response[1].forecast_hist_values
 					// Filter monthly historical data if same month as current month
-					.filter(x => variable.hist_freq === 'm' ? moment().isSame(x.date, 'month') === false : true)
+					//.filter(x => variable.hist_freq === 'm' ? moment().isSame(x.date, 'month') === false : true)
 					.map(x => ({
 						tskey: 'hist',
 						freq: variable.hist_freq,
@@ -339,11 +339,16 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 							'<tr>' +
 								'<td style="padding-right:1rem; color:'+point.series.color+'">' +
 									(freq === 'm' ? moment(point.x).format('MMM YYYY') : moment(point.x).format('YYYY[Q]Q')) +
+									// If historical data is monthly and is for same month, add asterisk!
+									(hist_freq === 'm' & moment().isSame(moment(point.x), 'month') & point.series.userOptions.id === 'hist' ? '*' : '') +
 								'</td>' + 
 								'<td style="color:' + point.color + '">' +
+									// Remove lal text in parantheses
 									point.series.name.replace(/ *\([^)]*\) */g, "") + ': ' + point.y.toFixed(2) +
 								'%</td>' + 
-							'</tr>'; // Remove everything in aprantheses
+							'</tr>' +
+							// If historical data is monthly and is for same month, add asterisk!
+							(hist_freq === 'm' & moment().isSame(moment(point.x), 'month') & point.series.userOptions.id === 'hist' ? '<tr><td colspan="2" style="color:rgb(102, 102, 102);font-weight:normal;font-style:italic;font-size:.75rem;text-align:right">*Current average of existing data for this month</tr>' : '');
 						return str;
 					}).join('') +
 					'</table>';
