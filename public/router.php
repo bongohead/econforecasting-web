@@ -31,8 +31,8 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 		*/	
 			['template' => 'home', 'request' => ['', 'home'], 'title' => 'The Center for Macroeconomic Forecasting & Insights | econforecasting.com', 'models' => [], 'js' => ['init', 'home']],
 			
-			['template' => 'forecast-rates', 'request' => ['forecast-sofr'], 'title' => 'SOFR Forecasts | econforecasting.com', 'models' => [], 'js' => ['init', 'forecast-varname']],
-			['template' => 'forecast-rates', 'request' => ['forecast-ffr'], 'title' => 'FFR Forecasts | econforecasting.com', 'models' => [], 'js' => ['init', 'forecast-varname']],
+			['template' => 'forecast-rates', 'request' => ['forecast-sofr', 'fc-rates-sofr'], 'title' => 'SOFR Forecasts | econforecasting.com', 'models' => [], 'js' => ['init', 'forecast-varname']],
+			['template' => 'forecast-rates', 'request' => ['forecast-ffr', 'fc-rates-ffr'], 'title' => 'FFR Forecasts | econforecasting.com', 'models' => [], 'js' => ['init', 'forecast-varname']],
 			['template' => 'forecast-rates', 'request' => ['forecast-bsby'], 'title' => 'BSBY Forecasts | econforecasting.com', 'models' => [], 'js' => ['init', 'forecast-varname']],
 			['template' => 'forecast-rates', 'request' => ['forecast-ameribor'], 'title' => 'AMERIBOR Forecasts | econforecasting.com', 'models' => [], 'js' => ['init', 'forecast-varname']],
 			['template' => 'forecast-rates', 'request' => ['forecast-mort30y'], 'title' => '30-Year Mortgage Rate Forecasts | econforecasting.com', 'models' => [], 'js' => ['init', 'forecast-varname']],
@@ -58,7 +58,7 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 		],
 		errorRoute: ['template' => 'error', 'request' => 'error', 'title' => 'Error', 'js' => []],
 		baseJsFiles: ['functions', 'moment.min', 'moment-timezone-with-data-1970-2030.min', 'gradient-min'],
-		devMode: true, //($_SERVER['REMOTE_ADDR'] === '50.4.37.141') ? true : false,
+		devMode: false, //($_SERVER['REMOTE_ADDR'] === '50.4.37.141') ? true : false,
 		db: 'cmefi'
 	);
 }
