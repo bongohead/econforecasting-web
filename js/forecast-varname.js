@@ -51,27 +51,34 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			document.querySelector('meta[name="description"]').setAttribute('content', 'U.S. Macroeconomic Forecasts for ' + variable.fullname + '.');
 			
 			const ts_data_raw =
-				response[1].forecast_hist_values.map(x => ({
-					tskey: 'hist',
-					freq: variable.hist_freq,
-					shortname: 'Historical Data',
-					description: 'Historical Data',
-					external: false,
-					vdate: moment().format('YYYY-MM-DD'),
-					date: x.date,
-					value: parseFloat(x.value)
-				}))
-				// Filter only monthly forecasts if they are too old
-				.concat(response[2].forecast_values.filter(x => variable.hist_freq === 'm' ? moment(x.vdate) <= moment(x.date).add(30, 'days') : true).map(x => ({
-					tskey: x.forecast,
-					freq: x.freq,
-					shortname: x.shortname,
-					description: x.description,
-					external: x.external,
-					vdate: x.vdate,
-					date: x.date, 
-					value: parseFloat(x.value)
-				})));
+				response[1].forecast_hist_values
+					// Filter monthly historical data if same month as current month
+					.filter(x => variable.hist_freq === 'm' ? moment().isSame(x.date, 'month') === false : true)
+					.map(x => ({
+						tskey: 'hist',
+						freq: variable.hist_freq,
+						shortname: 'Historical Data',
+						description: 'Historical Data',
+						external: false,
+						vdate: moment().format('YYYY-MM-DD'),
+						date: x.date,
+						value: parseFloat(x.value)
+					}))
+				.concat(
+					response[2].forecast_values
+						// Filter only monthly forecasts if they are too old
+						.filter(x => variable.hist_freq === 'm' ? moment(x.vdate) <= moment(x.date).add(30, 'days') : true)
+						.map(x => ({
+							tskey: x.forecast,
+							freq: x.freq,
+							shortname: x.shortname,
+							description: x.description,
+							external: x.external,
+							vdate: x.vdate,
+							date: x.date, 
+							value: parseFloat(x.value)
+						}))
+				);
 			//console.log('ts_data_raw', ts_data_raw);
 			
 			// Now group data under tskeys
