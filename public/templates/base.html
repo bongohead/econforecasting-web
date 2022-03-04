@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="description" content="{{description|e}}">
     {% block meta %}{% endblock %}
+	{{ canonical | raw}}
 
     <title>{{title|e}}</title>
     <link rel="icon" type=image/ico href="/static/cmefi-short.png"/>
@@ -14,7 +15,15 @@
     <link rel="stylesheet" type="text/css" href="/static/style.css">
     <link rel="stylesheet" type="text/css" href="/static/style-bs.css">
 	
+	<link rel="preload" href="https://fonts.googleapis.com/css?family=Poppins" as="style">
+	<link rel="preload" href="https://fonts.googleapis.com/css?family=Merriweather" as="style">
+	
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merriweather">
+	
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.2/css/dataTables.bootstrap5.min.css"/>
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"/>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.6.3/css/all.min.css"/>
 
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -69,18 +78,22 @@
 								<div>   
 									<div class="dropdown-header py-0 mx-3 mb-1 border-bottom border-black" style="font-size:1.0rem">TREASURY YIELDS</div>
 									<a class="dropdown-item" href="/forecast-treasury-curve">Yield Curve Forecast</a>
-									<a class="dropdown-item" href="/forecast-t03m">3 Month T-Bill Forecast</a>
-									<a class="dropdown-item" href="/forecast-t01y">1 Year T-Note Forecast</a>
-									<a class="dropdown-item" href="/forecast-t05y">5 Year T-Note Forecast</a>
-									<a class="dropdown-item" href="/forecast-t10y">10 Year T-Note Forecast</a>
-									<a class="dropdown-item" href="/forecast-t30y">30 Year T-Bond Forecast</a>
+									<a class="dropdown-item" href="/forecast-t03m">3 Month T-Bill</a>
+									<a class="dropdown-item" href="/forecast-t01y">1 Year T-Note</a>
+									<a class="dropdown-item" href="/forecast-t05y">5 Year T-Note</a>
+									<a class="dropdown-item" href="/forecast-t10y">10 Year T-Note</a>
+									<a class="dropdown-item" href="/forecast-t20y">20 Year T-Bond</a>
+									<a class="dropdown-item" href="/forecast-t30y">30 Year T-Bond</a>
 								</div>
 								<div>
 									<div class="dropdown-header py-0 mx-3 mb-1 border-bottom border-black" style="font-size:1.0rem">BENCHMARK RATES</div>
-									<a class="dropdown-item" href="/forecast-ffr">Federal Funds Rate Forecast</a>
-									<a class="dropdown-item" href="/forecast-sofr">SOFR Forecast</a>
-									<a class="dropdown-item" href="/forecast-ameribor">AMERIBOR Forecast</a>
-									<a class="dropdown-item" href="/forecast-bsby">BSBY Forecast</a>
+									<a class="dropdown-item" href="/forecast-ffr">Federal Funds Rate</a>
+									<a class="dropdown-item" href="/forecast-sofr">SOFR</a>
+									<a class="dropdown-item" href="/forecast-ameribor">AMERIBOR</a>
+									<a class="dropdown-item" href="/forecast-bsby">BSBY</a>
+									<a class="dropdown-item" href="/forecast-sonia">SONIA Rate</a>
+									<a class="dropdown-item" href="/forecast-estr">Euro Short-Term Rate</a>
+
 									<!--
 									<div class="dropdown-header py-0 mx-3 mt-4 mb-1 border-bottom border-black" style="font-size:1.0rem">MORTGAGE RATES</div>
 									<a class="dropdown-item" href="/forecast-mort15y">15-Year Mortgage Rate</a>
@@ -89,8 +102,8 @@
 								</div>
 								<div>
 									<div class="dropdown-header py-0 mx-3 mb-1 border-bottom border-black" style="font-size:1.0rem">MORTGAGE RATES</div>
-									<a class="dropdown-item" href="/forecast-mort15y">15-Year Mortgage Forecast</a>
-									<a class="dropdown-item" href="/forecast-mort30y">30-Year Mortgage Forecast</a>
+									<a class="dropdown-item" href="/forecast-mort15y">U.S. 15-Year Fixed Rate Mortgage</a>
+									<a class="dropdown-item" href="/forecast-mort30y">U.S. 30-Year Fixed Rate Mortgage</a>
 								</div>
 
 							</div>

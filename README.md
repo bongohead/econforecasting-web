@@ -2,6 +2,12 @@ Description TBA
 
 # CHANGELOG
 
+## 2022-03-03 [1.01] (Minor Optimizations & Additions)
+- Added server-side meta descriptions
+- Added SONIA, ESTR rate pages
+- Fixed bug with tables not rendering correct forecast on load
+- Removed client-side meta descriptions
+
 ## 2022-03-02 [v0.20 -> v1.00] (Beta Model Release Version)
 - Added new SOFR forecast page
 - Added new FFR forecast page

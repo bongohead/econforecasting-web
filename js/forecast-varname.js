@@ -7,7 +7,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		const varname = window.location.pathname.split('-').pop().padStart(3, '0');
 					
 		const primary_forecast =
-			['sofr', 'ffr', 'ameribor', 'bsby', 'mort30y', 'mort15', 't03m', 't06m', 't01y', 't02y', 't05y', 't10y', 't20y', 't30y'].includes(varname) ? 'int'
+			['sofr', 'ffr', 'ameribor', 'bsby', 'mort30y', 'mort15y',
+			't03m', 't06m', 't01y', 't02y', 't05y', 't10y', 't20y', 't30y',
+			'sonia', 'estr'].includes(varname) ? 'int'
 			: ['gdp', 'pce'].includes(varname) ? 'comp'
 			: ['cpi'].includes(varname) ? 'einf'
 			: null;
@@ -48,8 +50,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		// Pull response data & forecasts
 		.then(function(response) {
 			const variable = response[0];
-			document.querySelector('meta[name="description"]').setAttribute('content', 'U.S. Macroeconomic Forecasts for ' + variable.fullname + '.');
-			
+			console.log(response);
 			const ts_data_raw =
 				response[1].forecast_hist_values
 					// Filter monthly historical data if same month as current month
@@ -277,8 +278,15 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 					// Show max of either 3 years ago or first historical date. This handles situations where the first historical date is very recent.
 					moment.min(...ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => moment(x[0]))).toDate().getTime(),
 					moment().add(-36, 'M').toDate().getTime()
-					),
-			max: moment().add(60, 'M').toDate().getTime(),
+				),
+			max: 
+				Math.min(
+					// Show min of either 5 years ahead or last end date of any forecast ( + 1 month).
+					moment.max(
+						getData('forecast-varname').ts_data_parsed.filter(x => x.tskey !== 'hist').map(x => moment(x.data[x.data.length - 1][0]))
+						).add(1, 'month').toDate().getTime(),
+					moment().add(61, 'M').toDate().getTime(),
+				),
 			labels: {
 				style: {
 					color: 'black'
@@ -459,7 +467,7 @@ function drawTable(ts_data_parsed, units) {
 
 		// Draw the table
 		const dTable = $(table).DataTable(o);
-		if (i !== 0) $(table).parents('div.dataTables_wrapper').first().hide();
+		if (x.ts_type !== 'primary') $(table).parents('div.dataTables_wrapper').first().hide();
 		//console.log(dTable);
 
 		// Move the download buttons
@@ -522,6 +530,19 @@ function drawDescription(ts_data_parsed, varname, primary_forecast) {
 			 lending rate between large global banks. The BSBY rate was introduced in 2021 as an alternative to the now-defunct 
 			 London interbank offer rate (Libor).</p>
 			<p>Both historical data and forecasted values on this page reflect period average values.</p>`
+		: varname === 'sonia'
+			?
+			`<p>This page provides monthly forecasts of the Sterling Overnight Interbank Average Rate (SONIA), a measure of overnight lending rates between banks using British 
+			sterling. SONIA is administered by the Bank of England and is frequently used as a standardized measure of risk-free interest rates by U.K. authorities.<p>
+			<p>Both historical data and forecasted values on this page reflect period average values.</p>`
+		: varname === 'estr'
+			?
+			`<p>This page provides monthly forecasts of the Euro short-term rate (&euro;STR), a benchmark of the short-term 
+			 unsecured lending rate in the euro area. The &euro;STR is used as a standard measure of the risk-free rate in the euro area. 
+			 Unlike most risk-free rate benchmarkes, the &euro;STR reflects not just interbank lending, 
+			 but lending between banks, insurers, and money market funds.<p>
+			<p>Both historical data and forecasted values on this page reflect period average values.</p>`
+
 		: ['mort15y', 'mort30y'].includes(varname)
 			?
 			`<p>This page provides monthly forecasts of 15 and 30-year fixed rate mortgage rates in the United States. 
@@ -575,6 +596,21 @@ function drawDescription(ts_data_parsed, varname, primary_forecast) {
 			Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
 			parametrization model, generating the final forecast.</p>
 			<p>This forecast can be interpreted as the mean market-expected values of future BSBY values.</p>`
+		: varname === 'sonia'
+			?
+			`<p>Our <strong><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</strong> for the SONIA rate is generated utilizing data on publicly-traded SONIA futures 
+			and other closely related benchmark interest rates. 
+			Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
+			parametrization model, generating the final forecast.</p>
+			<p>This forecast can be interpreted as the mean market-expected values of future SONIA values.</p>`
+		: varname === 'estr'
+			?
+			`<p>Our <strong><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</strong> for the Euro short-term rate is generated utilizing data on publicly-traded ESTR futures 
+			and other closely related benchmark interest rates. 
+			Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
+			parametrization model, generating the final forecast.</p>
+			<p>This forecast can be interpreted as the mean market-expected values of future ESTR values.</p>`
+
 		: ['mort15y', 'mort30y'].includes(varname)
 			?
 			`<p>Our <strong><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</strong> for the 15 and 30 year fixed rate mortgage rates are derived from combining our 
