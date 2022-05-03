@@ -27,9 +27,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	})();
 	
 	const hc_theme = {
-		colors: ['#E10033', '#000000', '#767676', '#E4E4E4'],
 		chart: {
-		backgroundColor: "#FFF3E6",
 			style: {
 				fontFamily: 'var(--bs-font-sans-serif)',
 				color: '#000000'
@@ -39,8 +37,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			align: 'center',
 			style: {
 				fontFamily: 'var(--bs-font-sans-serif)',
-				color: 'var(--bs-cmefi-green)',
-				fontSize: '1.2rem'
+				color: 'var(--bs-dark)',
+				fontSize: '1.1rem'
 			}
 		},
 		subtitle: {
