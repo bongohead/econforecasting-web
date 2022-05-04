@@ -1,5 +1,8 @@
 Description TBA
 
+# Notes
+- To do live development in prod environment you must disable Cloudflare caching & set the router.php variable to debug = TRUE.
+
 # CHANGELOG
 
 ## 2022-03-03 [1.01] (Minor Optimizations & Additions)

@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			.map(d => ({
 				date: d,
 				type: 'history',
-				data: hist_values_raw.filter(x => x.date == d).map(x => [x.ttm, x.value]).sort((a, b) => a[0] - b[0]); // Sort according to largest value
+				data: hist_values_raw.filter(x => x.date == d).map(x => [x.ttm, x.value]).sort((a, b) => a[0] - b[0]) // Sort according to largest value
 			}));
 		//console.log('hist_values', hist_values);
 		
@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			.map(d => ({ // Group each value of the original array under the correct obs_date
 				date: d,
 				type: 'forecast',
-				data: forecast_values_raw.filter(x => x.date == d).map(x => [x.ttm, x.value]).sort((a, b) => a[0] - b[0]); // Sort according to largest value
+				data: forecast_values_raw.filter(x => x.date == d).map(x => [x.ttm, x.value]).sort((a, b) => a[0] - b[0]) // Sort according to largest value
 			}));
 		//console.log('forecast_values', forecast_values);
 		
