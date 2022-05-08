@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block staticlinks %}
+{% endblock %}
+
+{% block content %}
+<div class="row gx-0" style="background-color:rgb(237, 242, 249)">
+
+	<!-- Open Sidebar-->
+	<nav class="sidebar col-lg-auto d-none d-lg-block px-0 py-2 bg-light" id="sidebar" style="max-width:28rem"> <!-- Hide Sidebar for XS to M Devices -->
+		<div class="nav flex-column">
+			<span class="navbar-header">DOCUMENTATION</span>
+			<hr class="mb-2 mx-2">
+			
+			<span class="text-center pe-3 pt-2 mb-0 pb-0">I. DSP USAGE</span>
+			<a href="#docs-01" data-bs-toggle="collapse" class="nav-link">
+				<div>
+					<span>1. The DSP</span>
+					<i class="bi bi-chevron-compact-down ms-1"></i>
+				</div>
+			</a>
+			<div id="docs-01" class="collapse show sidebar-submenu">
+				<a class="text-truncate" href="/docs-01-01">
+					<i class="bi bi-layers"></i><span class="ps-2">1.1 Intro</span>
+				</a>
+				<a class="text-truncate" href="/docs-01-02">
+					<i class="bi bi-layers"></i><span class="ps-2">1.2 Key Infrastructure</span>
+				</a>
+				<a class="text-truncate" href="/docs-01-03">
+					<i class="bi bi-layers"></i><span class="ps-2">1.3 DevOps</span>
+				</a>
+
+			</div>
+
+			<a href="#docs-02" data-bs-toggle="collapse" class="nav-link">
+				<div>
+					<span>2. Working With Data</span>
+					<i class="bi bi-chevron-compact-down ms-1"></i>
+				</div>
+			</a>
+			<div id="docs-02" class="collapse show sidebar-submenu">
+				<a class="text-truncate" href="/docs-02-01">
+					<i class="bi bi-layers"></i><span class="ps-2">2.1 TSYR Package</span>
+				</a>
+				<a class="text-truncate" href="/docs-02-02">
+					<i class="bi bi-layers"></i><span class="ps-2">2.2 Spark</span>
+				</a>
+				<a class="text-truncate" href="/docs-02-03">
+					<i class="bi bi-layers"></i><span class="ps-2">2.3 Working with DB2</span>
+				</a>
+				<a class="text-truncate" href="/docs-02-04">
+					<i class="bi bi-layers"></i><span class="ps-2">2.4 Working with Hive</span>
+				</a>
+				<a class="text-truncate" href="/docs-02-05">
+					<i class="bi bi-layers"></i><span class="ps-2">2.5 Working with ClickHouse</span>
+				</a>
+				<a class="text-truncate" href="/docs-02-06">
+					<i class="bi bi-layers"></i><span class="ps-2">2.6 Other Databases</span>
+				</a>
+			</div>
+			
+			
+			<span class="text-center pe-3 mb-0 pt-4 pb-0">II. PROJECTS</span>
+			<a href="#docs-03" data-bs-toggle="collapse" class="nav-link">
+				<div>
+					<span>3. Auths/Trans Pipeline</span>
+					<i class="bi bi-chevron-compact-down ms-1"></i>
+				</div>
+			</a>
+			<div id="docs-03" class="collapse show sidebar-submenu">
+				<a class="text-truncate" href="/docs-03-01">
+					<i class="bi bi-layers"></i><span class="ps-2">3.1 Overview</span>
+				</a>
+				<a class="text-truncate" href="/docs-03-02">
+					<i class="bi bi-layers"></i><span class="ps-2">3.2 Selecting DB2 Sources</span>
+				</a>
+				<a class="text-truncate" href="/docs-03-03">
+					<i class="bi bi-layers"></i><span class="ps-2">3.3 DB2 to Hive Subtables</span>
+				</a>
+				<a class="text-truncate" href="/docs-03-04">
+					<i class="bi bi-layers"></i><span class="ps-2">3.4 Hive Subtable Aggregation</span>
+				</a>
+				<a class="text-truncate" href="/docs-03-05">
+					<i class="bi bi-layers"></i><span class="ps-2">3.5 Hive to ClickHouse Pipeline</span>
+				</a>
+				<a class="text-truncate" href="/docs-03-06">
+					<i class="bi bi-layers"></i><span class="ps-2">3.6 Example: New Table</span>
+				</a>
+				<a class="text-truncate" href="/docs-03-07">
+					<i class="bi bi-layers"></i><span class="ps-2">3.7 Other Scripts</span>
+				</a>
+
+			</div>
+			
+			<hr class="my-4">
+
+		</div>
+	</nav>
+	<!-- End Sidebar -->
+
+	<div class="col mx-2 pb-5">
+		<div class="container-xxl">
+		  {% block page %}
+		  {% endblock %}
+		</div>
+	</div>
+</div>
+{% endblock %}

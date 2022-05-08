@@ -5,10 +5,11 @@ Description TBA
 
 # CHANGELOG
 
-## 2022-03-03 [1.01] (Minor Optimizations & Additions)
+## 2022-05-08 [1.01] (Minor Optimizations & Additions, Sentiment Analysis Releases)
 - Added server-side meta descriptions
 - Added SONIA, ESTR rate pages
 - Added limit to max date on forecast chart to be bounded at max date of latest forecast
+- Added sentiment analysis page
 - Fixed bug with tables not rendering correct forecast on load
 - Removed client-side meta descriptions
 

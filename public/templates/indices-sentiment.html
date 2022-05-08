@@ -1,0 +1,57 @@
+{% extends "indices.html" %}
+
+{% block page %}
+<div class="row g-0" id="chart-holder">
+
+</div>
+
+  <div class="row g-0">
+
+  	<div class="col-xxl-4 col-lg-6 pe-lg-2 mb-3">
+  		<div id="data-card" class="card shadow-sm">
+  			<div class="card-body">
+  				<div class="mb-2"><span style="vertical-align:middle;font-size:1.3rem;">Merchant Volumes</span></div>
+  				<table id="table-1" class="table data-table w-100"></table>
+  				<hr>
+        <div style="line-height:1rem;font-size:.75rem;text-align:right">
+          <span class="text-muted">Data represents summed values starting from 2016</span>
+          </div>
+        </div>
+  		</div>
+  	</div>
+
+    <div class="col-xxl-8 col-lg-6 ps-lg-2 mb-3" id="text-container">
+    	<div class="card shadow-sm">
+    		<div class="card-body" style="font-size:.92rem">
+
+    			<div class="mb-3"><span style="vertical-align:middle;font-size:1.3rem;">TOP GAINERS/LOSERS</span></div>
+
+          <p>Change in transaction volume, by time and merchant:</p>
+    			<div class="row">
+    				<div class="col-4">
+    				  <h5 class="text-center text-decoration-underline" style="color:var(--tsys-green)">Since Last Month</h5>
+    					<table id="table-1m" class="w-100 px-2"></table>
+    				</div>
+    				<div class="col-4">
+    				  <h5 class="text-center text-decoration-underline" style="color:var(--tsys-green)">From 12 Months Ago</h5>
+
+    					<table id="table-1y" class="w-100 px-2"></table>
+    				</div>
+    				<div class="col-4">
+    				  <h5 class="text-center text-decoration-underline" style="color:var(--tsys-green)">From 3 Years Ago</h5>
+    					<table id="table-3y" class="w-100 px-2"></table>
+    				</div>
+    			</div>
+
+
+
+    			<div class="mb-2"><span style="vertical-align:middle;font-size:1.3rem;">FORECAST MODELS</span></div>
+    			<div id="primary-forecast"></div>
+    			<div id="external-forecasts"></div>
+    			<hr class="mt-5">
+    			<div id="citation" style="line-height:1rem;font-size:.75rem"></div>
+    		</div>
+    	</div>
+    </div>
+  </div>
+{% endblock %}
