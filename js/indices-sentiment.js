@@ -54,6 +54,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		}).then(function(r) {
 			console.log('cleaned', r);
 			drawCards(r.index_data, r.benchmark_data);
+			drawChart(r.index_data, r.benchmark_data);
 			$('div.overlay').hide();
 		});
 		
@@ -77,7 +78,7 @@ function drawCards(index_data, benchmark_data) {
 	index_data.forEach(function(index, i) {
 		
 		const chart_data = index.data.map(x => [parseInt(moment(x.date).format('x')), x.score_7dma])
-		console.log(chart_data);
+		// console.log(chart_data);
 		const o = {
 			chart: {
 				spacingTop: 15,
@@ -89,6 +90,9 @@ function drawCards(index_data, benchmark_data) {
 			},
 			title: {
 				text: null
+			},
+			credits: {
+				enabled: false
 			},
 			plotOptions: {
 				series: {
@@ -208,13 +212,13 @@ function drawCards(index_data, benchmark_data) {
 	});
 	
 
-	console.log(card_html);
+	//console.log(card_html);
 	return;
 	
 }
 
 /*** Draw chart ***/
-function drawChart(ts_data_parsed, fullname, units, hist_freq) {
+function drawChart(index_data, benchmark_data) {
 	
 	//console.log('fcDataParsed', fcDataParsed);
 	/*
@@ -225,29 +229,100 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 	);
 	*/
 	
-	const chart_data =
-		ts_data_parsed
-		.map((x, i) => (
-			{
-				id: x.tskey,
-				name:
-					x.shortname +
-					' <span style="font-size:.8rem;font-weight:normal">(' +
-						'Updated ' + moment(x.vdate).format('MM/DD/YY') +
-						(x.freq === 'q' ? '; Quarterly Data' : '; Monthly Data')  + 
-					')</span>',
-				data: x.data.map(x => [parseInt(moment(x[0]).format('x')), x[1]]),
-				type: 'line',
-				dashStyle: (x.tskey === 'hist' ? 'Solid' : 'ShortDash'),
-				lineWidth: (x.ts_type === 'hist' ? 5 : 3),
-				zIndex: (x.ts_type === 'hist' ? 3 : x.ts_type == 'primary' ? 3 : 1),
-				legendIndex: (x.ts_type === 'hist' ? 0 : x.ts_type == 'primary' ? 1 : 2),
-				color: (x.tskey === 'hist' ? 'black' : getColorArray()[i]),
-				opacity: 2,
-				visible: (x.ts_type === 'primary' || x.ts_type === 'hist'),
-				index: i
-			}
-		));
+	const index_chart_data = index_data.map((x, i) => ({
+		id: 'index-' + i,
+		name: x.name,
+		last_updated: moment(x.last_updated).format('MM/DD/YY'),
+		data: x.data.map(y => [moment(y.date).toDate().getTime(), y.score_7dma]),
+		type: 'line',
+		dashStyle: 'solid',
+		lineWidth: 4,
+		color: getColorArray()[i],
+		yAxis: 0,
+		zIndex: 3,
+		visible: (x.name === 'Social Media Financial Markets Sentiment Index')
+	}));
+		
+		
+	const benchmark_chart_data = benchmark_data.map((x, i) => ({
+		id: 'benchmark-' + i,
+		name: x.name,
+		data: x.data.map(y => [moment(y.date).toDate().getTime(), y.value]),
+		type: 'area',
+		color: getColorArray()[i + 6],
+		zIndex: 2,
+		//dashStyle: 'dashed',
+		yAxis: 1,
+		visible: (x.name === 'S&P 500'),
+		threshold: null // Use if area/column instead of line, will prevent min from being 0 http://jsfiddle.net/highcharts/jQVaA/14/
+	}));
+	
+	const chart_data = index_chart_data.concat(benchmark_chart_data);
+
+	/****** Add Sentiment Index Legend *****/
+	const legend_indices_html = index_chart_data.map(function(x) {
+		const text =
+			'<li class="list-group-item border-0 bg-transparent py-1" data-legend-index-id="' + x.id + '">' + 
+				'<span style="cursor:pointer">' + 
+					'<i class="bi bi-dash-square-fill pe-1" style="color:' + (x.visible === true ? x.color : 'gray') + '"></i>' +
+					'<span style="color:' + (x.visible === true ? 'black' : 'gray' ) + '">' + x.name + '</span>' + 
+					'<span class="ms-1 badge rounded-pill bg-light text-muted">Updated ' + x.last_updated + '</span>' +
+					//'<span style="color:' + (x.visible === true ? 'black' : 'gray' ) + '"> (Updated' + x.last_updated + ')</span>' +
+				'</span>' + 
+			'</li>';
+		return text;
+	}).join('\n');
+	$('#main-chart-legend-indices').html(legend_indices_html);
+	
+	// Add event listener
+	$('#main-chart-legend-container').on('click', 'li[data-legend-index-id]', function() {
+		const chart = $("#main-chart-container").highcharts();
+		const series = chart.series.filter(x => x.userOptions.id === this.dataset.legendIndexId)[0];
+		if (series.visible === true) {
+			[...this.querySelectorAll('span > i, span > span')].forEach(y => y.style.color = 'gray');
+			series.setVisible(false);
+		} else {
+			this.querySelector('span > i').style.color = series.color;
+			this.querySelector('span > span').style.color = 'black';
+			series.setVisible(true);
+		}
+		return;
+	});
+
+	/****** Add Sentiment Benchmark Legend *****/
+	const legend_benchmarks_html = benchmark_chart_data.map(function(x) {
+		const text =
+			'<li class="list-group-item border-0 bg-transparent py-1" data-legend-benchmark-id="' + x.id + '">' + 
+				'<span style="cursor:pointer">' + 
+					'<i class="bi bi-dash-square-fill pe-1" style="color:' + (x.visible === true ? x.color : 'gray') + '"></i>' +
+					'<span style="color:' + (x.visible === true ? 'black' : 'gray' ) + '">' + x.name + '</span>' + 
+				'</span>' + 
+			'</li>';
+		return text;
+	}).join('\n');
+	$('#main-chart-legend-benchmarks').html(legend_benchmarks_html);
+
+	// Add event listener
+	$('#main-chart-legend-container').on('click', 'li[data-legend-benchmark-id]', function() {
+		const chart = $("#main-chart-container").highcharts();
+		const series = chart.series.filter(x => x.userOptions.id === this.dataset.legendBenchmarkId)[0];
+		
+		chart.series.filter(x => x.userOptions.yAxis === 1 && x.userOptions.id !== this.dataset.legendBenchmarkId && x.visible === true).forEach(x => x.setVisible(false));
+		
+		[...document.querySelector('#main-chart-legend-container').querySelectorAll('li[data-legend-benchmark-id] > span > i, li[data-legend-benchmark-id] > span > span')].forEach(x => x.style.color = 'gray');
+		
+		if (series.visible === true) {
+			[...this.querySelectorAll('span > i, span > span')].forEach(y => y.style.color = 'gray');
+			series.setVisible(false);
+		} else {
+			this.querySelector('span > i').style.color = series.color;
+			this.querySelector('span > span').style.color = 'black';
+			series.setVisible(true);
+		}
+		return;
+	});
+	
+	
 	console.log('chart_data', chart_data);
 	
 	const o = {
@@ -266,7 +341,7 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 			useHTML: true,
 			text: 
 				'<img class="me-1" width="18" height="18" src="/static/cmefi-short.svg">' +
-				'<div style="vertical-align:middle;display:inline"><span>' + fullname + ' Forecast</span></div>',
+				'<div style="vertical-align:middle;display:inline"><span>Economic Sentiment Indices</span></div>',
 			style: {
 				fontSize: '1.3rem',
 				color: 'var(--bs-dark)'
@@ -274,7 +349,7 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
         },
 		caption: {
 			useHTML: true,
-			text: 'Shaded area indicate recessions' + (hist_freq === 'm' ? '; Data represents monthly-averaged values when applicable' : ''),
+			text: 'Shaded area indicate recessions',
 			style: {
 				fontSize: '0.75rem'
 			}
@@ -296,56 +371,55 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 		rangeSelector: {
 			buttons: [
 				{
-					text: '1Y Forecast',
+					text: '<span style="font-size:.75rem">3M</span>',
 					events: {
 						click: function(e) {
-							const state = $('#chart-container').highcharts().rangeSelector.buttons[0].state;
-							chart.xAxis[0].setExtremes(
-								Math.max(
-									moment.min(...ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => moment(x[0]))).toDate().getTime(),
-									moment().add(-36, 'M').toDate().getTime()
-									),
-								moment().add(12, 'M').toDate().getTime()
-								);
-							$('#chart-container').highcharts().rangeSelector.buttons[0].setState(state === 0 ? 2 : 0);
+							const state = $('#main-chart-container').highcharts().rangeSelector.buttons[0].state;
+							chart.xAxis[0].setExtremes(moment().add(-3, 'M').toDate().getTime(), moment().toDate().getTime());
+							$('#main-chart-container').highcharts().rangeSelector.buttons[0].setState(state === 0 ? 2 : 0);
 							return false;
 						}
 					}
 				}, {
-					text: '2Y Forecast',
+					text: '<span style="font-size:.75rem">6M</span>',
 					events: {
 						click: function(e) {
-							const state = $('#chart-container').highcharts().rangeSelector.buttons[1].state;
-							chart.xAxis[0].setExtremes(
-								Math.max(
-									moment.min(...ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => moment(x[0]))).toDate().getTime(),
-									moment().add(-36, 'M').toDate().getTime()
-									),
-								moment().add(24, 'M').toDate().getTime()
-								);
-							$('#chart-container').highcharts().rangeSelector.buttons[1].setState(state === 0 ? 2 : 0);
+							const state = $('#main-chart-container').highcharts().rangeSelector.buttons[1].state;
+							chart.xAxis[0].setExtremes(moment().add(-6, 'M').toDate().getTime(), moment().toDate().getTime());
+							$('#main-chart-container').highcharts().rangeSelector.buttons[1].setState(state === 0 ? 2 : 0);
 							return false;
 						}
 					}
 				}, {
-					text: '5Y Forecast',
+					text: '<span style="font-size:.75rem">1Y</span>',
 					events: {
 						click: function(e) {
-							const state = $('#chart-container').highcharts().rangeSelector.buttons[2].state;
-							chart.xAxis[0].setExtremes(
-								Math.max(
-									moment.min(...ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => moment(x[0]))).toDate().getTime(),
-									moment().add(-36, 'M').toDate().getTime()
-									),
-								moment().add(60, 'M').toDate().getTime()
-								);
-							$('#chart-container').highcharts().rangeSelector.buttons[2].setState(state === 0 ? 2 : 0);
+							const state = $('#main-chart-container').highcharts().rangeSelector.buttons[2].state;
+							chart.xAxis[0].setExtremes(moment().add(-1, 'Y').toDate().getTime(), moment().toDate().getTime());
+							$('#main-chart-container').highcharts().rangeSelector.buttons[2].setState(state === 0 ? 2 : 0);
 							return false;
 						}
 					}
 				}, {
-					type: 'all',
-					text: 'Full Historical Data & Forecast'
+					text: '<span style="font-size:.75rem">YTD</span>',
+					events: {
+						click: function(e) {
+							const state = $('#main-chart-container').highcharts().rangeSelector.buttons[3].state;
+							chart.xAxis[0].setExtremes(moment().startOf('Year').toDate().getTime(), moment().toDate().getTime());
+							$('#main-chart-container').highcharts().rangeSelector.buttons[3].setState(state === 0 ? 2 : 0);
+							return false;
+						}
+					}
+				}, {
+					text: '<span style="font-size:.75rem">All</span>',
+					events: {
+						click: function(e) {
+							const state = $('#main-chart-container').highcharts().rangeSelector.buttons[4].state;
+							chart.xAxis[0].setExtremes(moment('2020-01-01').toDate().getTime(), moment().toDate().getTime());
+							$('#main-chart-container').highcharts().rangeSelector.buttons[4].setState(state === 0 ? 2 : 0);
+							return false;
+						}
+					}
 				}
 			],
 			buttonTheme: { // styles for the buttons
@@ -359,106 +433,57 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
                 day: "%m-%d-%Y",
                 week: "%m-%d-%Y"
             },
-			plotBands: [{color: '#D8D8D8', from: Date.UTC(2020, 2, 1), to: Date.UTC(2021, 2, 28)},
-			{color: '#D8D8D8', from: Date.UTC(2007, 12, 1), to: Date.UTC(2009, 6, 30)},
-			{color: '#D8D8D8', from: Date.UTC(2001, 3, 1), to: Date.UTC(2001, 11, 30)}],
+			plotBands: [
+				{color: '#D8D8D8', from: Date.UTC(2020, 2, 1), to: Date.UTC(2021, 2, 28)},
+				{color: '#D8D8D8', from: Date.UTC(2007, 12, 1), to: Date.UTC(2009, 6, 30)},
+				{color: '#D8D8D8', from: Date.UTC(2001, 3, 1), to: Date.UTC(2001, 11, 30)}
+			],
 			ordinal: false,
-			min:
-				Math.max(
-					// Show max of either 3 years ago or first historical date. This handles situations where the first historical date is very recent.
-					moment.min(...ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => moment(x[0]))).toDate().getTime(),
-					moment().add(-36, 'M').toDate().getTime()
-				),
-			max: 
-				Math.min(
-					// Show min of either 5 years ahead or last end date of any forecast ( + 1 month).
-					moment.max(
-						getData('forecast-varname').ts_data_parsed.filter(x => x.tskey !== 'hist').map(x => moment(x.data[x.data.length - 1][0]))
-						).add(1, 'month').toDate().getTime(),
-					moment().add(61, 'M').toDate().getTime(),
-				),
+			min: moment().add(-1, 'Y').toDate().getTime(), 
+			max: moment().toDate().getTime(),
 			labels: {
 				style: {
 					color: 'black'
 				}
 			}
 		},
-		yAxis: {
-            labels: {
-				reserveSpace: true,
+		yAxis: [{
+			title: {
+				text: 'Sentiment Index',
 				style: {
 					color: 'black'
-				},
-                formatter: function () {
-                    return this.value.toFixed(1) + '%';
-                }
-            },
-			title: {
-				text: units,
-				style: {
-					color: 'black',
 				}
 			},
-			opposite: false
-		},
+			opposite: false,
+			endOnTick: false
+		}, {
+			title: {
+				text: 'Benchmark',
+				style: {
+					color: 'black'
+				}
+			},
+			opposite: true,
+			endOnTick: false
+		}],
         navigator: {
             enabled: true,
 			height: 30,
 			maskFill: 'rgba(48, 79, 11, .3)'
         },
 		legend: {
-			enabled: true,
-			backgroundColor: 'var(--bs-efpale)',
-			borderColor: 'var(--bs-cmefi-dark)',
-			borderWidth: 1,
-			//useHTML: true,
-			align: 'center',
-			verticalAlign: 'bottom',
-			layout: 'horizontal',
-			title: {
-				text: 'Available Forecasts <span style="font-size: .8rem; color: #666; font-weight: normal; font-style: italic">(click below to hide/show)</span>',
-			}
+			enabled: false
 		},
         tooltip: {
             useHTML: true,
 			shared: true,
 			backgroundColor: 'rgba(255, 255, 255, .8)',
-			formatter: function () {
-				const points = this.points;
-				const ud = getData('forecast-varname');
-				const text =
-					'<table>' +
-					'<tr style="border-bottom:1px solid black"><td>DATE</td><td style="font-weight:600">' +
-						'DATA' +
-					'</td></tr>' +
-					points.map(function(point) {
-						const freq = ud.ts_data_parsed.filter(x => x.tskey === point.series.options.id)[0].freq;
-						const str =
-							'<tr>' +
-								'<td style="padding-right:1rem; color:'+point.series.color+'">' +
-									(freq === 'm' ? moment(point.x).format('MMM YYYY') : moment(point.x).format('YYYY[Q]Q')) +
-									// If historical data is monthly and is for same month, add asterisk!
-									(hist_freq === 'm' & moment().isSame(moment(point.x), 'month') & point.series.userOptions.id === 'hist' ? '*' : '') +
-								'</td>' + 
-								'<td style="color:' + point.color + '">' +
-									// Remove lal text in parantheses
-									point.series.name.replace(/ *\([^)]*\) */g, "") + ': ' + point.y.toFixed(2) +
-								'%</td>' + 
-							'</tr>' +
-							// If historical data is monthly and is for same month, add asterisk!
-							(hist_freq === 'm' & moment().isSame(moment(point.x), 'month') & point.series.userOptions.id === 'hist' ? '<tr><td colspan="2" style="color:rgb(102, 102, 102);font-weight:normal;font-style:italic;font-size:.75rem;text-align:right">*Current average of existing data for this month</tr>' : '');
-						return str;
-					}).join('') +
-					'</table>';
-				return text;
-			}
         },
-        series: {
-			data: chart_data
-		}
+        series: chart_data
 	};
-	const chart = Highcharts.stockChart('chart-container', o);
-	
+	const chart = Highcharts.stockChart('main-chart-container', o);
+	chart.rangeSelector.buttons[2].setState(2);
+
 	return;
 }
 

@@ -2,9 +2,23 @@
 
 {% block page %}
 <div class="row g-0" id="chart-holder">
-
 </div>
 
+<div class="row g-0">
+  	<div class="col-12">
+  		<div class="card shadow-sm"><div class="card-body">
+			<div id="main-chart-container"></div>
+			<div id="main-chart-legend-container">
+				<div class="row justify-content-center">
+					<div class="col-auto" style="background-color:var(--bs-cmefi-light-warm)"><b class="ps-3">Sentiment Indices</b><span class="ps-1 fst-italic" style="font-size:.8rem;">(Click below to hide/show)</span><hr class="my-0"><ul class="list-group fw-bolder" id="main-chart-legend-indices" style="font-size:.8rem"></ul></div>
+					<div class="col-auto" style="background-color:var(--bs-cmefi-light-warm)"><b class="ps-3">Benchmarks</b><hr class="my-0"><ul class="list-group fw-bolder" id="main-chart-legend-benchmarks" style="font-size:.8rem"></ul></div>
+				</div>
+			</div>
+		</div></div>
+	</div>
+</div>
+
+<!--
   <div class="row g-0">
 
   	<div class="col-xxl-4 col-lg-6 pe-lg-2 mb-3">
@@ -54,4 +68,5 @@
     	</div>
     </div>
   </div>
+  -->
 {% endblock %}
