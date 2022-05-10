@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	$('div.overlay').show();
 
 	const promises = [
-		getFetch('get_sentiment_analysis_indices', ['indices', 'index_values'], 10000, false),
+		getFetch('get_sentiment_analysis_indices', ['indices', 'index_values', 'index_stats'], 10000, false),
 		getFetch('get_sentiment_analysis_benchmarks', ['benchmarks', 'benchmark_values'], 10000, false),
 
 	];
@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			
 			const indices = r[0].indices;
 			const index_values = r[0].index_values;
+			const index_stats = r[0].index_stats;
 			const index_data = indices.map(function(x) {
 				const data = index_values.filter(y => y.index_id === x.id).map(y => ({
 					date: y.date,
@@ -27,11 +28,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					score_7dma: Number(y.score_7dma),
 					created_at: y.created_at
 				}));
+				const stats = index_stats.filter(y => y.index_id === x.id)[0];
 				return {
 					...x,
+					ch1m: parseFloat(stats.ch1m),
+					ch1w: parseFloat(stats.ch1w),
+					last_val: parseFloat(stats.last_val),
 					data: data,
 					first_date: moment.min(data.map(y => moment(y.date))).format('YYYY-MM-DD'),
-					last_updated: moment.max(data.map(y => moment(y.created_at))).format('YYYY-MM-DD')
+					last_updated: stats.last_updated
 				}
 			});
 			
@@ -67,13 +72,33 @@ function drawCards(index_data, benchmark_data) {
 			<div class="card my-3 mx-2 rounded shadow-sm">
 				<div class="card-body py-0">
 					<span style="vertical-align:middle;font-size:1.0rem;">${x.name}</span>
-					<div class="chart-container" id="chart-container-${i}"></div>
+					<!--<div class="chart-container" id="chart-container-${i}"></div>-->
 				</div>
 			</div>
 		</div>`
 		).join('\n');
 
 	$('#chart-holder').html(card_html);
+	
+	
+	const card_body_html = index_data.map((x, i) => 
+		`<div class="col-lg-4 border-end border-bottom border-lg-0 pb-3 pb-lg-0">
+			<span class="font-sans-serif mb-1 fs-6 pe-2">${x.name}</span>
+			<div class="d-flex">
+				<div class="display-4 fs-4 mb-2 fw-normal font-sans-serif text-warning">
+					${x.last_val}
+				</div>
+				<div class="d-flex flex-column">
+					<p class="mb-1">Test</p>
+					<p>Test</p>
+				</div>
+			</div>
+			<div class="chart-container" id="chart-gauge-${i}"></div>
+			<div class="chart-container" id="chart-container-${i}"></div>
+		</div>`
+		).join('\n');
+
+	$('#top-holder').html(card_body_html);
 
 	index_data.forEach(function(index, i) {
 		
@@ -211,6 +236,98 @@ function drawCards(index_data, benchmark_data) {
 		return;
 	});
 	
+	
+	
+	index_data.forEach(function(index, i) {
+		
+		const o = {
+			chart: {
+				type: 'gauge',
+				plotBackgroundColor: null,
+				plotBackgroundImage: null,
+				plotBorderWidth: 0,
+				plotShadow: false
+			},
+			pane: {
+				startAngle: -150,
+				endAngle: 150,
+				background: [{
+					backgroundColor: {
+						linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+						stops: [
+							[0, '#FFF'],
+							[1, '#333']
+						]
+					},
+					borderWidth: 0,
+					outerRadius: '109%'
+				}, {
+					backgroundColor: {
+						linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+						stops: [
+							[0, '#333'],
+							[1, '#FFF']
+						]
+					},
+					borderWidth: 1,
+					outerRadius: '107%'
+				}, {
+					// default background
+				}, {
+					backgroundColor: '#DDD',
+					borderWidth: 0,
+					outerRadius: '105%',
+					innerRadius: '103%'
+				}]
+			},
+			// the value axis
+			yAxis: {
+				min: 0,
+				max: 100,
+				minorTickInterval: 'auto',
+				minorTickWidth: 1,
+				minorTickLength: 10,
+				minorTickPosition: 'inside',
+				minorTickColor: '#666',
+				tickPixelInterval: 30,
+				tickWidth: 2,
+				tickPosition: 'inside',
+				tickLength: 10,
+				tickColor: '#666',
+				labels: {
+					step: 2,
+					rotation: 'auto'
+				},
+				title: {
+					text: 'km/h'
+				},
+				plotBands: [{
+					from: 50,
+					to: 100,
+					color: '#55BF3B' // green
+				}, {
+					from: 0,
+					to: 15,
+					color: '#DDDF0D' // yellow
+				}, {
+					from: 20,
+					to: 30,
+					color: '#DF5353' // red
+				}]
+			},
+			series: [{
+				name: 'Speed',
+				data: [80],
+				tooltip: {
+					valueSuffix: ' km/h'
+				}
+			}]
+		}
+		
+		const chart = Highcharts.chart('chart-gauge-' + i, o);
+
+		return;
+	});
 
 	//console.log(card_html);
 	return;
