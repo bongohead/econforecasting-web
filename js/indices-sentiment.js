@@ -67,30 +67,19 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 function drawCards(index_data, benchmark_data) {
 	
-	const card_html = index_data.map((x, i) => 
-		`<div class="col-xxl-4 col-xl-6 col-md-12 px-0">
-			<div class="card my-3 mx-2 rounded shadow-sm">
-				<div class="card-body py-0">
-					<span style="vertical-align:middle;font-size:1.0rem;">${x.name}</span>
-					<!--<div class="chart-container" id="chart-container-${i}"></div>-->
-				</div>
-			</div>
-		</div>`
-		).join('\n');
-
-	$('#chart-holder').html(card_html);
-	
 	
 	const card_body_html = index_data.map((x, i) => 
-		`<div class="col-lg-4 border-end border-bottom border-lg-0 pb-3 pb-lg-0">
-			<span class="font-sans-serif mb-1 fs-6 pe-2">${x.name}</span>
+		`<div class="col-lg-4 border-end border-md-0 pb-3 pb-lg-0">
+			<span class="font-sans-serif mb-1 fs-6 pe-2">${x.name} (${moment(x.last_updated).format('MMM Do')})</span>
 			<div class="d-flex">
-				<div class="display-4 fs-4 mb-2 fw-normal font-sans-serif text-warning">
-					${x.last_val}
+				<div class="display-4 fs-2 mb-2 fw-normal font-sans-serif">
+					<span style="color:${x.last_val > 60 ? 'green' : x.last_val >= 40 ? '#d8ca66' : x.last_val >= 20 ? 'orange' : 'red'}">
+						${x.last_val}
+					</span>
 				</div>
-				<div class="d-flex flex-column">
-					<p class="mb-1">Test</p>
-					<p>Test</p>
+				<div class="d-flex flex-column ps-1">
+					<p class="mb-0">${(x.ch1w > 0 ? '<i class="bi bi-arrow-up" style="color:var(--bs-success)"></i>' : '<i class="bi bi-arrow-down" style="color:var(--bs-danger)"></i>') + Math.abs(x.ch1w).toFixed(1)} from 7d ago</p>
+					<p class="mb-0">${(x.ch1m > 0 ? '<i class="bi bi-arrow-up" style="color:var(--bs-success)"></i>' : '<i class="bi bi-arrow-down" style="color:var(--bs-danger)"></i>') + Math.abs(x.ch1m).toFixed(1)} from 30d ago</p>
 				</div>
 			</div>
 			<div class="chart-container" id="chart-gauge-${i}"></div>
@@ -109,7 +98,7 @@ function drawCards(index_data, benchmark_data) {
 				spacingTop: 15,
 				backgroundColor: 'rgba(255, 255, 255, 0)',
 				plotBackgroundColor: '#FFFFFF',
-				height: 400,
+				height: 250,
 				plotBorderColor: 'black',
 				plotBorderWidth: 2
 			},
@@ -173,9 +162,14 @@ function drawCards(index_data, benchmark_data) {
 						}
 					}
 				],
+				buttonPosition: {align: 'right'},
 				buttonTheme: { // styles for the buttons
-					width: '5rem',
-					padding: 4,
+					width: 20,
+					height: 8,
+					style: {
+						fontSize: '.75rem'
+					}
+					//padding: 4,
 				}
 			},
 			xAxis: {
@@ -186,11 +180,6 @@ function drawCards(index_data, benchmark_data) {
 				},
 				min: moment().add(-90, 'd').toDate().getTime(),
 				max: moment().toDate().getTime(),
-				plotBands: [
-					{color: '#D8D8D8', from: Date.UTC(2020, 2, 1), to: Date.UTC(2021, 2, 28)},
-					{color: '#D8D8D8', from: Date.UTC(2007, 12, 1), to: Date.UTC(2009, 6, 30)},
-					{color: '#D8D8D8', from: Date.UTC(2001, 3, 1), to: Date.UTC(2001, 11, 30)}
-				],
 				ordinal: false,
 				labels: {
 					style: {
@@ -246,38 +235,25 @@ function drawCards(index_data, benchmark_data) {
 				plotBackgroundColor: null,
 				plotBackgroundImage: null,
 				plotBorderWidth: 0,
-				plotShadow: false
+				plotShadow: false,
+				spacingTop: -140,
+				marginTop: -140,
+				height: 150
+			},
+			title: {
+				text: null
+			},
+			credits: {
+				enabled: false
 			},
 			pane: {
-				startAngle: -150,
-				endAngle: 150,
+				startAngle: -90,
+				endAngle: 90,
+				center: ['50%', '100%'],
 				background: [{
-					backgroundColor: {
-						linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-						stops: [
-							[0, '#FFF'],
-							[1, '#333']
-						]
-					},
-					borderWidth: 0,
-					outerRadius: '109%'
-				}, {
-					backgroundColor: {
-						linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-						stops: [
-							[0, '#333'],
-							[1, '#FFF']
-						]
-					},
-					borderWidth: 1,
-					outerRadius: '107%'
-				}, {
 					// default background
-				}, {
-					backgroundColor: '#DDD',
-					borderWidth: 0,
-					outerRadius: '105%',
-					innerRadius: '103%'
+					backgroundColor: 'transparent',
+					 borderWidth: 0
 				}]
 			},
 			// the value axis
@@ -302,24 +278,28 @@ function drawCards(index_data, benchmark_data) {
 					text: 'km/h'
 				},
 				plotBands: [{
-					from: 50,
+					from: 60,
 					to: 100,
 					color: '#55BF3B' // green
 				}, {
-					from: 0,
-					to: 15,
+					from: 40,
+					to: 60,
 					color: '#DDDF0D' // yellow
 				}, {
 					from: 20,
-					to: 30,
+					to: 40,
+					color: 'orange' // orange
+				}, {
+					from: 0,
+					to: 20,
 					color: '#DF5353' // red
 				}]
 			},
 			series: [{
-				name: 'Speed',
-				data: [80],
+				name: 'Sentiment Index',
+				data: [index.last_val],
 				tooltip: {
-					valueSuffix: ' km/h'
+					valueSuffix: ''
 				}
 			}]
 		}
@@ -357,7 +337,7 @@ function drawChart(index_data, benchmark_data) {
 		color: getColorArray()[i],
 		yAxis: 0,
 		zIndex: 3,
-		visible: (x.name === 'Social Media Financial Markets Sentiment Index')
+		visible: (x.name === 'Social Media Financial Market Sentiment')
 	}));
 		
 		
