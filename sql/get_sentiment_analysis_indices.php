@@ -21,7 +21,7 @@ $indices = $sql -> select("
 
 $index_values = $sql -> select("
 	SELECT
-		index_id, date, count, ROUND(score_adj, 1) AS score, ROUND(score_adj_7dma, 1) AS score_7dma, DATE(created_at) AS created_at
+		index_id, date, count, ROUND(score_adj, 1) AS score, ROUND(score_adj_7dma, 1) AS score_7dma, ROUND(score_adj_14dma, 1) AS score_14dma, DATE(created_at) AS created_at
 	FROM sentiment_analysis_index_values
 	--INNER JOIN sentiment_analysis_indices ON sentiment_analysis_index_values.index_id = sentiment_analysis_indices.id
 	WHERE index_id IN (1, 2, 3, 4)
@@ -37,9 +37,9 @@ $index_stats = $sql -> select("
 			index_id,
 			date AS last_updated,
 			ROW_NUMBER() OVER (PARTITION BY index_id ORDER BY DATE DESC) AS rrank, 
-			score_adj_7dma as last_val,
-			score_adj_7dma - lag(score_adj_7dma, 7) OVER (PARTITION BY index_id ORDER BY DATE) AS ch1w,
-			score_adj_7dma - lag(score_adj_7dma, 30) OVER (PARTITION BY index_id ORDER BY DATE) AS ch1m
+			score_adj_14dma as last_val,
+			score_adj_14dma - lag(score_adj_14dma, 7) OVER (PARTITION BY index_id ORDER BY DATE) AS ch1w,
+			score_adj_14dma - lag(score_adj_14dma, 30) OVER (PARTITION BY index_id ORDER BY DATE) AS ch1m
 		FROM sentiment_analysis_index_values
 		-- INNER JOIN sentiment_analysis_indices ON sentiment_analysis_index_values.index_id = sentiment_analysis_indices.id
 		WHERE index_id IN (1, 2, 3, 4)

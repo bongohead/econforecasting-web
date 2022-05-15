@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					count: y.count,
 					score: Number(y.score),
 					score_7dma: Number(y.score_7dma),
+					score_14dma: Number(y.score_14dma),
 					created_at: y.created_at
 				}));
 				const stats = index_stats.filter(y => y.index_id === x.id)[0];
@@ -91,7 +92,7 @@ function drawCards(index_data, benchmark_data) {
 
 	index_data.forEach(function(index, i) {
 		
-		const chart_data = index.data.map(x => [parseInt(moment(x.date).format('x')), x.score_7dma])
+		const chart_data = index.data.map(x => [parseInt(moment(x.date).format('x')), x.score_14dma])
 		// console.log(chart_data);
 		const o = {
 			chart: {
@@ -236,9 +237,9 @@ function drawCards(index_data, benchmark_data) {
 				plotBackgroundImage: null,
 				plotBorderWidth: 0,
 				plotShadow: false,
-				spacingTop: -140,
-				marginTop: -140,
-				height: 150
+				spacingTop: -120,
+				marginTop: -120,
+				height: 120
 			},
 			title: {
 				text: null
@@ -337,7 +338,7 @@ function drawChart(index_data, benchmark_data) {
 		color: getColorArray()[i],
 		yAxis: 0,
 		zIndex: 3,
-		visible: (x.name === 'Social Media Financial Market Sentiment')
+		visible: (x.name === 'Social Media Financial Sentiment Index')
 	}));
 		
 		
