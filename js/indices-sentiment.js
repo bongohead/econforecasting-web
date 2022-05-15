@@ -69,7 +69,7 @@ function drawCards(index_data, benchmark_data) {
 	
 	
 	const card_body_html = index_data.map((x, i) => 
-		`<div class="col-lg-4 border-end border-md-0 pb-3 pb-lg-0">
+		`<div class="col-lg-3 col-sm-6 col-xs-12 border-end border-md-0 pb-3 pb-lg-0">
 			<span class="font-sans-serif mb-1 fs-6 pe-2">${x.name} (${moment(x.last_updated).format('MMM Do')})</span>
 			<div class="d-flex">
 				<div class="display-4 fs-2 mb-2 fw-normal font-sans-serif">

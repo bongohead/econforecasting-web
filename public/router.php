@@ -58,7 +58,7 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 			['template' => 'nowcast-gdp', 'request' => ['nowcast-gdp'], 'title' => 'GDP Nowcasts | econforecasting.com', 'description' => 'Our nowcast model is built to provide highly up-to-date forecasts of Gross Domestic Product using the most current data available.', 'models' => [], 'js' => ['init', 'nowcast-gdp']],
 
 
-			['template' => 'indices-sentiment', 'request' => ['indices-sentiment'], 'title' => 'Sentiment Analysis | econforecasting.com', 'description' => 'Our sentiment analysis index provides up-to-date .', 'models' => [], 'js' => ['init', 'indices-sentiment']],
+			['template' => 'indices-sentiment', 'request' => ['sentiment'], 'title' => 'Sentiment Analysis | econforecasting.com', 'description' => 'Our sentiment analysis index provides up-to-date .', 'models' => [], 'js' => ['init', 'indices-sentiment']],
 
 		],
 		errorRoute: ['template' => 'error', 'request' => 'error', 'title' => 'Error', 'js' => []],
