@@ -438,7 +438,12 @@ window.addEventListener('DOMContentLoaded', () => {
 		{group: 'Forecast', fullname: 'AMERIBOR', url: 'forecast-ameribor'},
 		{group: 'US Economy', fullname: 'Gross Domestic Product (GDP)', url: 'forecast-gdp'},
 		{group: 'US Economy', fullname: 'Personal Consumption (PCE)', url: 'forecast-pce'},
-		{group: 'US Economy', fullname: 'CPI Inflation', url: 'forecast-cpi'}
+		
+		{group: 'Sentiment', fullname: 'Social Media Financial Sentiment Index', url: 'sentiment'},
+		{group: 'Sentiment', fullname: 'Traditional Media Financial Sentiment Index', url: 'sentiment'},
+		{group: 'Sentiment', fullname: 'Social Media Labor Market Sentiment Index', url: 'sentiment'},
+		{group: 'Sentiment', fullname: 'Social Media News Sentiment Index', url: 'sentiment'}
+		
 	];
 	
 	// API Basic Configuration Object
@@ -447,7 +452,7 @@ window.addEventListener('DOMContentLoaded', () => {
 		data: {
 			cache: false,
 			// Weird bug - can't be empty 
-			src: page_list.map(x => ({'Forecast': 'poop', 'US Economy' : 'poop', ...{[x.group]: x.fullname}})),
+			src: page_list.map(x => ({'Forecast': 'poop', 'US Economy': 'poop', 'Sentiment': 'poop', ...{[x.group]: x.fullname}})),
 			keys: [...new Set(page_list.map(x => x.group))]
 		},
 		wrapper: false,

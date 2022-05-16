@@ -10,6 +10,8 @@ Description TBA
 - Added SONIA, ESTR rate pages
 - Added limit to max date on forecast chart to be bounded at max date of latest forecast
 - Added sentiment analysis page
+- Added sentiment analysis gauge, ts, emotion charts
+- Added sentiment analysis documentation
 - Fixed bug with tables not rendering correct forecast on load
 - Removed client-side meta descriptions
 

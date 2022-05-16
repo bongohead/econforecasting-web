@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	const promises = [
 		getFetch('get_sentiment_analysis_indices', ['indices', 'index_values', 'index_stats', 'index_roberta_values'], 10000, false),
 		getFetch('get_sentiment_analysis_benchmarks', ['benchmarks', 'benchmark_values'], 10000, false),
+		getFetch('get_sentiment_analysis_subreddit_roberta_values', ['subreddit_roberta_values'], 10000, false),
+		getFetch('get_sentiment_analysis_table_values', ['table_values'], 10000, false),
 
 	];
 
@@ -15,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	Promise.all(promises)
 		.then(function(r) {
 			
-			console.log('raw', r);
+			//console.log('raw', r);
 			
 			const indices = r[0].indices;
 			const index_values = r[0].index_values;
@@ -35,18 +37,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					emotion: y.emotion,
 					value: Number(y.value)
 				}));
-				console.log(roberta_data_raw);
+				//console.log(roberta_data_raw);
 				const roberta_data = [...new Set(roberta_data_raw.map(y => y.emotion))].map((emotion, i) => ({
-					name: emotion,
-					//color: getColorArray()[i],
-					/*
-						emotion === 'fear' ? 'red' :
-						emotion === 'sadness' ? 'blue' :
-						emotion === 'neutral' ? 'gray' :
-						emotion === 'joy' ? 'yellow' :
-						emotion === 'surprise' ? 'turquoise' :
-						'brown',
-					*/
+					emotion: emotion,
 					data: roberta_data_raw.filter(y => y.emotion === emotion).map(y => [moment(y.date).toDate().getTime(), y.value])
 				}));
 				const stats = index_stats.filter(y => y.index_id === x.id)[0];
@@ -77,12 +70,24 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				}
 			});
 			
-			return {index_data: index_data, benchmark_data: benchmark_data};
+			const subreddit_roberta_values = r[2].subreddit_roberta_values.map(x => ({
+				subreddit: x.subreddit,
+				series: JSON.parse(x.series)
+			}));
+			
+			const table_values = r[3].table_values.map(x => ({
+				date: x.date,
+				...JSON.parse(x.data).reduce(((r, c) => Object.assign(r, c)), {})
+			}));
+			
+			return {index_data: index_data, benchmark_data: benchmark_data, subreddit_roberta_values: subreddit_roberta_values, table_values: table_values};
 		
 		}).then(function(r) {
-			console.log('cleaned', r);
+			//console.log('cleaned', r);
 			drawCards(r.index_data, r.benchmark_data);
+			drawEmotionCharts(r.subreddit_roberta_values);
 			drawChart(r.index_data, r.benchmark_data);
+			drawTable(r.index_data, r.table_values);
 			$('div.overlay').hide();
 		});
 		
@@ -129,6 +134,7 @@ function drawCards(index_data, benchmark_data) {
 
 	$('#top-holder').html(card_body_html);
 	
+	// Gaugage
 	index_data.forEach(function(index, i) {
 		
 		const o = {
@@ -140,7 +146,7 @@ function drawCards(index_data, benchmark_data) {
 				plotShadow: false,
 				spacingTop: -120,
 				marginTop: -120,
-				height: 120
+				height: 150
 			},
 			title: {
 				text: null
@@ -212,9 +218,9 @@ function drawCards(index_data, benchmark_data) {
 	});
 	
 
+	// TS
 	index_data.forEach(function(index, i) {
 		
-		// Draw emotions chart
 		
 		const chart_data = index.data.map(x => [parseInt(moment(x.date).format('x')), x.score_14dma])
 		// console.log(chart_data);
@@ -358,11 +364,8 @@ function drawCards(index_data, benchmark_data) {
 
 		return;
 	});
-	
-	
-	
-	
-	
+
+	// Emotions
 	index_data.forEach(function(index, i) {
 		
 		const o = {
@@ -487,7 +490,20 @@ function drawCards(index_data, benchmark_data) {
 				},
 				backgroundColor: 'rgba(255, 255, 255, .8)',
 			},
-			series: index.roberta_data
+			series: index.roberta_data.map((y, j) => ({
+				name: y.emotion,
+				color: y.emotion === 'sadness' ? "#7cb5ec" :
+					y.emotion === 'disgust' ? "#434348" :
+					y.emotion === 'joy' ? "#90ed7d" :
+					y.emotion === 'fear' ? "#f7a35c" :
+					y.emotion === 'surprise' ? "#8085e9" :
+					y.emotion === 'anger' ? "#f15c80" :
+					"#e4d354",//, "#2b908f", "#f45b5b", "#91e8e1"][j],
+				data: y.data
+			})).sort((a, b) => a.name > b.name ? 1 : -1).map((y, j) => ({
+				...y,
+				legendIndex: j
+			}))
 		};
 		const chart = Highcharts.stockChart('chart-emotions-' + i, o);
 		$('#chart-emotions-' + i).highcharts().rangeSelector.buttons[0].setState(2);
@@ -498,6 +514,165 @@ function drawCards(index_data, benchmark_data) {
 
 	//console.log(card_html);
 	return;
+	
+}
+
+/*** Draw charts ***/
+function drawEmotionCharts(subreddit_roberta_values) {
+	
+		
+	const card_body_html = subreddit_roberta_values.map((x, i) => 
+		`<div class="col-xxl-3 col-lg-4 col-xs-6 border p-2">
+			<span class="badge rounded-pill ms-2" style="background-color:var(--bs-cmefi-green)">reddit.com/r/${x.subreddit}</span>
+			<div id="chart-subreddit-emotions-${i}"></div>
+		</div>`
+		).join('\n');
+
+	$('#emotions-container').html(card_body_html);
+	
+	
+	subreddit_roberta_values.forEach(function(index, i) {
+		
+		const o = {
+			chart: {
+				spacingTop: 15,
+				backgroundColor: 'white',
+				plotBackgroundColor: 'white',
+				height: 300,
+				type: 'area'
+			},
+			title: {
+				text: null
+			},
+			credits: {
+				enabled: false
+			},
+			plotOptions: {
+				series: {
+					dataGrouping: {
+						enabled: true,
+						units: [['day', [1]]]
+					}
+				},
+				area: {
+					stacking: 'percent'
+				}
+			},
+			exporting: {
+				enabled: false
+			},
+			rangeSelector: {
+				inputEnabled: false,
+				buttons: [
+					{
+						text: '<span style="font-size:.75rem">3M</span>',
+						events: {
+							click: function(e) {
+								const state = $('#chart-subreddit-emotions-' + i).highcharts().rangeSelector.buttons[0].state;
+								chart.xAxis[0].setExtremes(moment().add(-3, 'M').toDate().getTime(), moment().toDate().getTime());
+								$('#chart-subreddit-emotions-' + i).highcharts().rangeSelector.buttons[0].setState(state === 0 ? 2 : 0);
+								return false;
+							}
+						}
+					}, {
+						text: '<span style="font-size:.75rem">1Y</span>',
+						events: {
+							click: function(e) {
+								const state = $('#chart-subreddit-emotions-' + i).highcharts().rangeSelector.buttons[1].state;
+								chart.xAxis[0].setExtremes(moment().add(-1, 'Y').toDate().getTime(), moment().toDate().getTime());
+								$('#chart-subreddit-emotions-' + i).highcharts().rangeSelector.buttons[1].setState(state === 0 ? 2 : 0);
+								return false;
+							}
+						}
+					}, {
+						text: '<span style="font-size:.75rem">YTD</span>',
+						events: {
+							click: function(e) {
+								const state = $('#chart-subreddit-emotions-' + i).highcharts().rangeSelector.buttons[2].state;
+								chart.xAxis[0].setExtremes(moment().startOf('Year').toDate().getTime(), moment().toDate().getTime());
+								$('#chart-subreddit-emotions-' + i).highcharts().rangeSelector.buttons[2].setState(state === 0 ? 2 : 0);
+								return false;
+							}
+						}
+					}, {
+						text: '<span style="font-size:.75rem">All</span>',
+						events: {
+							click: function(e) {
+								const state = $('#chart-subreddit-emotions-' + i).highcharts().rangeSelector.buttons[3].state;
+								chart.xAxis[0].setExtremes(moment('2020-01-01').toDate().getTime(), moment().toDate().getTime());
+								$('#chart-subreddit-emotions-' + i).highcharts().rangeSelector.buttons[3].setState(state === 0 ? 2 : 0);
+								return false;
+							}
+						}
+					}
+				],
+				buttonPosition: {align: 'right'},
+				buttonTheme: { // styles for the buttons
+					width: 20,
+					height: 8,
+					style: {
+						fontSize: '.75rem'
+					}//,
+					//padding: 3
+				}
+			},
+			xAxis: {
+				type: 'datetime',
+				dateTimeLabelFormats: {
+					day: "%m-%d-%Y",
+					week: "%m-%d-%Y"
+				},
+				min: moment().add(-3, 'M').toDate().getTime(),
+				max: moment().toDate().getTime(),
+				ordinal: false,
+				labels: {
+					style: {
+						color: 'black'
+					}
+				}
+			},
+			yAxis: {
+				labels: {
+					enabled: false
+				},
+				opposite: true
+			},
+			navigator: {
+				enabled: false
+			},
+			legend: {
+				enabled: false
+			},			
+			tooltip: {
+				useHTML: true,
+				shared: true,
+				formatter: function() {
+					const y_points = this.points.map(y =>
+						'<span style="color:' + y.color +  '">' + `${y.series.name[0].toUpperCase()}${y.series.name.slice(1)}` + '</span>: <b>' + y.percentage.toFixed(1) + '%</b>' //+ ' (' + y.y + ')' + ''						
+					).join('<br>');
+					return (moment(this.x).format('LL') + '<br>' + y_points);
+				},
+				backgroundColor: 'rgba(255, 255, 255, .8)',
+			},
+			series: index.series.map((y, j) => ({
+				name: y.emotion,
+				color: y.emotion === 'sadness' ? "#7cb5ec" :
+					y.emotion === 'disgust' ? "#434348" :
+					y.emotion === 'joy' ? "#90ed7d" :
+					y.emotion === 'fear' ? "#f7a35c" :
+					y.emotion === 'surprise' ? "#8085e9" :
+					y.emotion === 'anger' ? "#f15c80" :
+					"#e4d354",//, "#2b908f", "#f45b5b", "#91e8e1"][j],
+				data: y.data
+			})).sort((a, b) => a.name > b.name ? 1 : -1).map((y, j) => ({
+				...y,
+				legendIndex: j
+			}))
+		};
+		const chart = Highcharts.stockChart('chart-subreddit-emotions-' + i, o);
+		$('#chart-subreddit-emotions-' + i).highcharts().rangeSelector.buttons[0].setState(2);
+	});
+	
 	
 }
 
@@ -774,129 +949,63 @@ function drawChart(index_data, benchmark_data) {
 
 
 
-function drawTable(ts_data_parsed, units) {
+function drawTable(index_data, table_values) {
 	
-	//console.log('fcDataParsed', fcDataParsed);
-	// Turn into list of series
-	// Separate tab for each table
-	const table_data = ts_data_parsed.sort((a, b) => a.ts_type === 'hist' ? -1 : b.ts_type === 'hist' ? 1 : a.ts_type === 'primary' ? -1: 0).forEach(function(x, i) {
-		//console.log(x.fcname);
-		const seriesData =
-			(x.tskey === 'hist') ?
-			x.data.map(y => ({date: (x.freq === 'q' ? moment(y[0]).format('YYYY[Q]Q') : moment(y[0]).format('YYYY-MM')), type: 'Historical Data', value: y[1].toFixed(4)})) :
-			x.data.map(y => ({date: (x.freq === 'q' ? moment(y[0]).format('YYYY[Q]Q') : moment(y[0]).format('YYYY-MM')), type: 'Forecast', value: y[1].toFixed(4)}));
-		const dtCols = [
-			{title: 'Date', data: 'date'},
-			{title: 'Type', data: 'type'},
-			{title: units, data: 'value'}
-		].map(function(x, i) {
-			return {...x, ...{
-				visible: (x.title !== 'Type'),
-				orderable: true,
-				ordering: true,
-				type: (x.title === 'Date' ? 'date' : 'num'),
-				className: 'dt-center',
-				css: 'font-size: .9rem'
-			}}
-		});
-		//console.log(dtCols);
 		
-		const copySvg =
-		`<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-clipboard me-1" viewBox="0 0 16 16">
-			<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-			<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
-		</svg>`;
-		const dlSvg = 
-		`<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-download me-1" viewBox="0 0 16 16">
-		  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"></path>
-		  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"></path>
-		</svg>`;
-		const o = {
-			data: seriesData,
-			columns: dtCols,
-			iDisplayLength: 15,
-			dom:
-				"<'row justify-content-end'<'col-auto'B>>" +
-				"<'row justify-content-center'<'col-12'tr>>" +
-				"<'row justify-content-end'<'col-auto'p>>",
-			buttons: [
-				{extend: 'copyHtml5', text: copySvg + 'Copy', exportOptions: {columns: [0, 2]}, className: 'btn btn-sm'},
-				{extend: 'csvHtml5', text: dlSvg + 'Download', exportOptions: {columns: [0, 2]}, className: 'btn btn-sm'}
-			],
-			order: (x.tskey === 'hist' ? [[0, 'desc']] : [[0, 'asc']]),
-			paging: true,
-			pagingType: 'numbers',
-			responsive: true,
-			createdRow: function(row, data, dataIndex) {
-				/*if (data.type === 'history')  {
-					$(row).addClass('dog');
-					$(row).css('color', 'var(--econgreen)');
-				} else {
-					$(row).css('color', 'var(--econred)');
-				}*/
-			}
-		}
-		//console.log('seriesData', seriesData);
+	const series_names = [... new Set(index_data.map(x => x.name))];
 		
-		// Create button for this forecast
-		const li = document.createElement('li');
-		li.classList.add('list-group-item');
-		li.classList.add('d-flex');
-		li.classList.add('justify-content-between');
-		li.classList.add('align-items-center');
-		//li.classList.add('w-100'); // Needed to get the thing to vertically align
-		li.innerHTML =
-			'<span>' +
-				(x.ts_type === 'primary' ? '<i class="cmefi-logo me-1"></i>' : '') + x.shortname +
-			'</span>' + 
-			'<span style="font-size:0.7rem;color: rgb(180, 180, 180)" >' +
-				('Updated ' + moment(x.vdate).format('MM/DD/YYYY')) +
-			 '</span>';
-		li.setAttribute('data-ref-table', x.tskey); 
-		if (x.ts_type === 'primary') li.classList.add('active');
-		document.querySelector('#li-container').appendChild(li);
-		
-		
-		// Create table and style it
-		const table = document.createElement('table');
-		table.classList.add('table');
-		table.classList.add('data-table');
-		table.classList.add('w-100');
-		table.id = 'table-' + x.tskey;
-		document.querySelector('#tables-container').appendChild(table);
-		
-
-		// Draw the table
-		const dTable = $(table).DataTable(o);
-		if (x.ts_type !== 'primary') $(table).parents('div.dataTables_wrapper').first().hide();
-		//console.log(dTable);
-
-		// Move the download buttons
-		//console.log(table.parentElement);
-		const downloadDiv = table.closest('.dataTables_wrapper').querySelector('.dt-buttons');
-		downloadDiv.classList.add('float-end');
-		downloadDiv.id = 'download-' + x.tskey;
-		if (i !== 0) downloadDiv.style.display = 'none'
-		$('#tables-container > div > span').after($(downloadDiv).detach());
-		
-		/* Now add event listener */
-		li.addEventListener('click', function() { 
-			//console.log(this, this.getAttribute('data-ref-table'));
-			// Change active li
-			document.querySelectorAll('#li-container > li').forEach(el => el.classList.remove('active'));
-			this.classList.add('active');
-			
-			// First hide all tables-container
-			$('div.dataTables_wrapper').hide();
-			
-			const table = document.querySelector('#table-' + this.getAttribute('data-ref-table'));
-			$(table).parents('div.dataTables_wrapper').first().show();
-			
-			$('#data-card div.dt-buttons').hide();
-			$('#download-' + this.getAttribute('data-ref-table')).show();
-						
-		}, false);
+	const dt_cols = [
+		{title: 'Date', data: 'date'},
+	].concat(
+		series_names.map(x => ({
+			title: x,
+			data: 'index-id-' + index_data.filter(y => y.name === x)[0].id
+		}))
+	).map(function(x, i) {
+		return {...x, ...{
+			visible: true,
+			orderable: true,
+			ordering: true,
+			type: (x.title === 'Date' ? 'date' : 'num'),
+			className: 'dt-center',
+			css: 'font-size: .9rem',
+			// Due to the method of JSON aggregatino in PostgreSQL clause (needed for pivoting table), inevitable will be some NULL/missing values in some columns
+			defaultContent: '' // ALlow missing/null content - see https://datatables.net/manual/tech-notes/4
+		}}
 	});
+	
+	//console.log(dt_cols, table_values);
+	
+	const copySvg =
+	`<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-clipboard me-1" viewBox="0 0 16 16">
+		<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+		<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+	</svg>`;
+	const dlSvg = 
+	`<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-download me-1" viewBox="0 0 16 16">
+	  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"></path>
+	  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"></path>
+	</svg>`;
+	const o = {
+		data: table_values,
+		columns: dt_cols,
+		iDisplayLength: 15,
+		dom:
+			"<'row justify-content-end'<'col-auto'B>>" +
+			"<'row justify-content-center'<'col-12'tr>>" +
+			"<'row justify-content-end'<'col-auto'p>>",
+		buttons: [
+			{extend: 'copyHtml5', text: copySvg + 'Copy', exportOptions: {columns: [0, 2]}, className: 'btn btn-sm'},
+			{extend: 'csvHtml5', text: dlSvg + 'Download', exportOptions: {columns: [0, 2]}, className: 'btn btn-sm'}
+		],
+		order: [[0, 'desc']],
+		paging: true,
+		pagingType: 'numbers',
+		responsive: true,
+		createdRow: function(row, data, dataIndex) {
+		}
+	}
+	$('#sentiment-table').DataTable(o)
 	
 	
 	return;
