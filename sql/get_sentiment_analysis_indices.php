@@ -25,6 +25,7 @@ $index_values = $sql -> select("
 	FROM sentiment_analysis_index_values
 	--INNER JOIN sentiment_analysis_indices ON sentiment_analysis_index_values.index_id = sentiment_analysis_indices.id
 	WHERE index_id IN (1, 2, 3, 4)
+		AND count > 0
 	ORDER BY index_id, date
 ");
 
@@ -47,3 +48,9 @@ $index_stats = $sql -> select("
 	WHERE rrank = 1
 ");
 
+$index_roberta_values = $sql -> select("
+	SELECT index_id, date, emotion, value
+	FROM sentiment_analysis_index_roberta_values
+	WHERE index_id IN (1, 2, 3, 4) 
+		AND emotion != 'neutral'
+");
