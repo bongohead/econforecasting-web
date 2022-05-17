@@ -5,7 +5,10 @@ Description TBA
 
 # CHANGELOG
 
-## 2022-05-08 [1.01] (Minor Optimizations & Additions, Sentiment Analysis Releases)
+## 2022-05-?? [v1.02] (Cleanup & Homepage)
+- Added homepage improvements
+
+## 2022-05-16 [v1.01] (Minor Optimizations & Additions, Sentiment Analysis Releases)
 - Added server-side meta descriptions
 - Added SONIA, ESTR rate pages
 - Added limit to max date on forecast chart to be bounded at max date of latest forecast
