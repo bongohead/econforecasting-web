@@ -941,7 +941,7 @@ function drawChart(index_data, benchmark_data) {
         series: chart_data
 	};
 	const chart = Highcharts.stockChart('main-chart-container', o);
-	chart.rangeSelector.buttons[2].setState(2);
+	chart.rangeSelector.buttons[3].setState(2);
 
 	return;
 }

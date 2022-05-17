@@ -22,7 +22,12 @@ FROM
 				t.value
 			)
 		) AS s
-	FROM sentiment_analysis_subreddit_roberta_values t
+	FROM 
+		(
+		SELECT subreddit, emotion, date, value
+		FROM sentiment_analysis_subreddit_roberta_values 
+		ORDER BY subreddit, emotion, date
+		) t
 	WHERE emotion <> 'neutral'
 	GROUP BY subreddit, emotion
 ) a
