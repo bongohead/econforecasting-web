@@ -898,7 +898,7 @@ function drawChart(index_data, benchmark_data) {
 				{color: '#D8D8D8', from: Date.UTC(2001, 3, 1), to: Date.UTC(2001, 11, 30)}
 			],
 			ordinal: false,
-			min: moment().add(-1, 'Y').toDate().getTime(), 
+			min: moment().startOf('Year').toDate().getTime(), //moment().add(-1, 'Y').toDate().getTime(), 
 			max: moment().toDate().getTime(),
 			labels: {
 				style: {
@@ -940,6 +940,7 @@ function drawChart(index_data, benchmark_data) {
         },
         series: chart_data
 	};
+	
 	const chart = Highcharts.stockChart('main-chart-container', o);
 	chart.rangeSelector.buttons[3].setState(2);
 
