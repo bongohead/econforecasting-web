@@ -3,6 +3,9 @@
 	--bs-font-family-serif: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; // Custom variable to be used for paragraphs, etc
 }
 
+.container-xxl {
+		max-width: 1400px;
+}
 
 /***** Base Styling *****/
 p {
@@ -45,61 +48,15 @@ header {
 */
 
 footer {
-	color: white !important;
-	-webkit-box-shadow: 0 -8px 6px -6px #999;
+	color: var(--bs-dark) !important;
+	/*-webkit-box-shadow: 0 -8px 6px -6px #999;
 	-moz-box-shadow: 0 -8px 6px -6px #999;
-	box-shadow: 0 -8px 6px -6px #999;
+	box-shadow: 0 -8px 6px -6px #999;*/
 	position: relative;
 	z-index: 96;
 }
 
 /****** Homepage *****/
-
-#homepage-banner{
-	background-image:
-		linear-gradient(165deg, rgba(247, 245, 206, .8) 50%, rgba(255, 255, 255, .3) 50%),
-		url(/static/d.svg),
-		url(/static/e.svg),
-		url(/static/c.svg),
-		url(/static/f.svg);
-	background-position:
-		bottom left,
-		top 90% left 45%,
-		top calc(90% - 5rem) left calc(45% + 5rem),
-		top calc(90% - 5rem) left calc(45% - 5rem),
-		top 90% left calc(45% - 15rem);
-	background-repeat: no-repeat;
-	background-size:
-		100%,
-		14rem,
-		10rem,
-		12rem,
-		10rem;
-}
-
-#homepage-banner {
-	min-height: 30rem;
-}
-#homepage-banner .list-group {
-	border: 2px solid var(--bs-econblue);
-}
-
-#homepage-banner .list-group-item {
-	background-color: var(--bs-white);
-	color: black;
-}
-
-#homepage-banner .list-group-item:hover {
-	background-color: var(--bs-econpale);
-}
-#homepage-banner .list-group-item span.btn {
-	background-color: var(--bs-econgreen);
-	color: white;
-}
-#homepage-banner .list-group-item span.btn:hover {
-	background-color: var(--bs-econlgreen);
-}
-
 
 .homepage-cards {
 	cursor:pointer;
@@ -114,6 +71,95 @@ footer {
 	transform: matrix(1, 0, 0, 1, 0, 4);
 	transition-duration: .15s;
 }
+
+
+.autoComplete_wrapper{
+	display: inline-block;
+	position: relative
+}
+.autoComplete_wrapper > input{
+	height: 2.5rem;
+	width: 35rem;
+	margin: 0;
+	padding: 0 2rem 0 2.5rem;
+	box-sizing: border-box;
+	cursor: pointer;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	font-size: 1rem;
+	text-overflow: ellipsis;
+	color: rgba(122,122,255,.3);
+	outline: 0;
+	border-radius: .5rem;
+	border:.05rem solid rgba(122,122,255,.5);
+	background-image:url(/static/search.svg);
+	background-size:1.0rem;
+	background-position:left 1.0rem top .75rem;
+	background-repeat:no-repeat;
+	background-origin:border-box;
+	background-color:#fff;
+	transition:all .4s ease;
+	-webkit-transition:all -webkit-transform .4s ease;
+}
+.autoComplete_wrapper > input::placeholder{
+	color: rgba(122, 122, 255, 0.5);
+	transition:all .3s ease;
+	-webkit-transition:all -webkit-transform .3s ease
+}
+.autoComplete_wrapper > input:hover::placeholder{
+	color: rgba(122, 122, 255, 0.6);
+	transition:all .3s ease;
+	-webkit-transition:all -webkit-transform .3s ease
+}
+.autoComplete_wrapper > input:focus::placeholder{
+	padding:.1rem .6rem;
+	font-size:.95rem;
+	color:rgba(122,122,255,.4)
+}
+.autoComplete_wrapper > input:focus::selection{
+	background-color:rgba(122,122,255,.15)
+}
+.autoComplete_wrapper > input::selection{
+	background-color:rgba(122,122,255,.15)
+}
+.autoComplete_wrapper > input:hover{
+	color:rgba(122,122,255,.8);
+	transition:all .3s ease;
+	-webkit-transition:all -webkit-transform .3s ease
+}
+.autoComplete_wrapper > input:focus{
+	color: var(--bs-cmefi-dark);
+	border: .06rem solid rgba(122,122,255,.8)
+}
+.autoComplete_wrapper > ul{
+	position:absolute;max-height:226px;overflow-y:scroll;box-sizing:border-box;left:0;right:0;margin:.5rem 0 0 0;
+	padding:0;z-index:1;list-style:none;border-radius:.6rem;background-color:#fff;
+	border:1px solid rgba(33,33,33,.07);box-shadow:0 3px 6px rgba(149,157,165,.15);outline:0;
+	transition:opacity .15s ease-in-out;-moz-transition:opacity .15s ease-in-out;-webkit-transition:opacity .15s ease-in-out
+}
+.autoComplete_wrapper > ul:empty,.autoComplete_wrapper > ul[hidden]{
+	display:block;opacity:0;transform:scale(0)
+}
+.autoComplete_wrapper>ul>li{
+	margin:.3rem;padding:.3rem .5rem;text-align:left;font-size:1rem;color:#212121;border-radius:.35rem;
+	background-color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:all .2s ease
+}
+.autoComplete_wrapper>ul>li mark{
+	background-color:transparent;
+	color:var(--bs-cmefi-blue);
+	font-weight:700;
+	padding: 0 !important;
+}
+.autoComplete_wrapper>ul>li:hover{
+	cursor:pointer;background-color:rgba(122,122,255,.15)
+	}
+.autoComplete_wrapper>ul>li[aria-selected=true]{
+	background-color:rgba(122,122,255,.15)
+}
+@media only screen and (max-width:640px){
+	.autoComplete_wrapper>input{width:20rem}
+}
+
 
 /****** Forecast Data Table *****/
 
@@ -189,7 +235,7 @@ nav.navbar a.dropdown-item.activepage {
 
 /* Top-level nav link when dropdown subitem is active */
 nav.navbar a.nav-link.activepage {
-	background-color: var(--bs-cmefi-dark-green);
+	background-color: /*var(--bs-gray);*/ var(--bs-cmefi-dark-green);
 }
 
 

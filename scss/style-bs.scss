@@ -56,6 +56,15 @@ $custom-colors: (
 );
 $theme-colors: map-merge($theme-colors, $custom-colors);
 
+// https://stackoverflow.com/questions/38480156/how-to-increase-width-of-bootstrap-container-on-max-width
+$my-container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1400px
+);
+$container-max-widths: map-merge($container-max-widths, $my-container-max-widths);
 
 $font-size-root: 15px;
 $font-family-sans-serif: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";

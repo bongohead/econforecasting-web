@@ -15,6 +15,9 @@ window.addEventListener('DOMContentLoaded', () => {
 		{group: 'Forecast', fullname: '15-Year Mortgage Rate', url: 'forecast-mort15y'},
 		{group: 'Forecast', fullname: 'BSBY Rate', url: 'forecast-bsby'},
 		{group: 'Forecast', fullname: 'AMERIBOR', url: 'forecast-ameribor'},
+		{group: 'Forecast', fullname: 'Sterling Overnight Rate (SONIA)', url: 'forecast-sonia'},
+		{group: 'Forecast', fullname: 'Euro Short-Term Rate (ESTR)', url: 'forecast-estr'},
+
 		{group: 'US Economy', fullname: 'Gross Domestic Product (GDP)', url: 'forecast-gdp'},
 		{group: 'US Economy', fullname: 'Personal Consumption (PCE)', url: 'forecast-pce'},
 		
@@ -27,7 +30,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	
 	// API Basic Configuration Object
 	const autocomplete_config = {
-		placeHolder: 'Type an variable name (e.g. "Treasury Yield")',
+		placeHolder: 'Type an economic variable name (e.g. "Treasury Yield")',
 		data: {
 			cache: false,
 			// Weird bug - can't be empty 
