@@ -1,0 +1,322 @@
+{% extends "base.html" %}
+
+{% block meta %}
+{% endblock %}
+
+{% block staticlinks %}
+<!--<script src="//code.highcharts.com/stock/highstock.js"></script>
+<script src="//code.highcharts.com/modules/heatmap.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.6/proj4.js"></script>
+<script src="//code.highcharts.com/maps/modules/map.js"></script>
+<script src="//code.highcharts.com/mapdata/custom/world-robinson.js"></script>
+<script src="//code.highcharts.com/mapdata/custom/europe.js"></script>
+
+<script src="//code.highcharts.com/stock/indicators/indicators.js"></script>
+<script src="//code.highcharts.com/stock/indicators/ema.js"></script>
+<script src="//code.highcharts.com/stock/indicators/bollinger-bands.js"></script>
+
+<script src="static/script-fincontagion.js"></script>
+<script src="static/mapGenerator.js"></script>
+<script src="static/tsGenerator.js"></script>
+-->
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.1/dist/autoComplete.min.js"></script>
+<style>
+.autoComplete_wrapper{
+	display: inline-block;
+	position: relative
+}
+.autoComplete_wrapper > input{
+	height: 3rem;
+	width: 40rem;
+	margin: 0;
+	padding: 0 2rem 0 3.2rem;
+	box-sizing: border-box;
+	cursor: pointer;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	font-size: 1rem;
+	text-overflow: ellipsis;
+	color: rgba(122,122,255,.3);
+	outline: 0;
+	border-radius: 1rem;
+	border:.05rem solid rgba(122,122,255,.5);
+	background-image:url(https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.6/dist/css/images/search.svg);
+	background-size:1.4rem;
+	background-position:left 1.05rem top .8rem;
+	background-repeat:no-repeat;
+	background-origin:border-box;
+	background-color:#fff;
+	transition:all .4s ease;
+	-webkit-transition:all -webkit-transform .4s ease
+}
+.autoComplete_wrapper > input::placeholder{
+	color: rgba(122, 122, 255, 0.5);
+	transition:all .3s ease;
+	-webkit-transition:all -webkit-transform .3s ease
+}
+.autoComplete_wrapper > input:hover::placeholder{
+	color: rgba(122, 122, 255, 0.6);
+	transition:all .3s ease;
+	-webkit-transition:all -webkit-transform .3s ease
+}
+.autoComplete_wrapper > input:focus::placeholder{
+	padding:.1rem .6rem;
+	font-size:.95rem;
+	color:rgba(122,122,255,.4)
+}
+.autoComplete_wrapper > input:focus::selection{
+	background-color:rgba(122,122,255,.15)
+}
+.autoComplete_wrapper > input::selection{
+	background-color:rgba(122,122,255,.15)
+}
+.autoComplete_wrapper > input:hover{
+	color:rgba(122,122,255,.8);
+	transition:all .3s ease;
+	-webkit-transition:all -webkit-transform .3s ease
+}
+.autoComplete_wrapper > input:focus{
+	color: var(--bs-cmefi-dark);
+	border: .06rem solid rgba(122,122,255,.8)
+}
+.autoComplete_wrapper > ul{
+	position:absolute;max-height:226px;overflow-y:scroll;box-sizing:border-box;left:0;right:0;margin:.5rem 0 0 0;
+	padding:0;z-index:1;list-style:none;border-radius:.6rem;background-color:#fff;
+	border:1px solid rgba(33,33,33,.07);box-shadow:0 3px 6px rgba(149,157,165,.15);outline:0;
+	transition:opacity .15s ease-in-out;-moz-transition:opacity .15s ease-in-out;-webkit-transition:opacity .15s ease-in-out
+}
+.autoComplete_wrapper > ul:empty,.autoComplete_wrapper > ul[hidden]{
+	display:block;opacity:0;transform:scale(0)
+}
+.autoComplete_wrapper>ul>li{
+	margin:.3rem;padding:.3rem .5rem;text-align:left;font-size:1rem;color:#212121;border-radius:.35rem;
+	background-color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:all .2s ease
+}
+.autoComplete_wrapper>ul>li mark{background-color:transparent;color:var(--bs-cmefi-blue);font-weight:700;padding: 0 !important;}
+.autoComplete_wrapper>ul>li:hover{cursor:pointer;background-color:rgba(122,122,255,.15)}
+.autoComplete_wrapper>ul>li[aria-selected=true]{background-color:rgba(122,122,255,.15)}
+@media only screen and (max-width:600px){.autoComplete_wrapper>input{width:18rem}}
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<!--
+<section class="position-relative"  style="background: linear-gradient(165deg, rgba(230, 255, 255, .8) 50%, rgba(255, 255, 255, .3) 50%)">
+	<div class="position-absolute w-100" style="height: 450px; background: url(https://png2.cleanpng.com/sh/4bdb24c0918e07cfdbbb06575c00d3db/L0KzQYm3UcMyN5N8j5H0aYP2gLBuTfFje6V3edV9LXH1hH7ogwN1epJojJ9sb3zygsS0lQJidqR1eeRuboSwcrLqiBdzd6ZzfJ8AYUe0dLfrWfU2PpM6SJC8Mka0QIa6UsE2OWg5SaQ8MUO8Q4qATwBvbz==/kisspng-abstract-art-abstract-colors-transparent-background-5a71dfd9e56b50.3261053215174123139397.png) no-repeat right/contain"></div>
+	<div class="container-xxl position-relative pt-5 pb-5">
+		<div class="row">
+			<div class="col-12 col-md-12 col-lg-7">
+				<h1 style="max-width: 680px;color:var(--bs-cmefi-blue)">Macroeconomic Forecasts </br>& Insights</h1>
+				<a href="/docs/latest/quick-start.html" class="btn btn-cta">Get Started</a>
+			</div>
+		</div>
+		<div class="row mt-5">
+			<div class="col-12 col-lg-6">
+				<h2>What is Apache Spark<span class="tm" style="bottom: 14px;">™</span>?</h2>
+				<div class="what-is-spark">Apache Spark<span class="tm" style="bottom: 7px;">™</span> is a multi-language engine for executing data engineering,
+				data science, and machine learning on single-node machines or clusters. 
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+-->
+<section style="background:linear-gradient(165deg, rgba(230, 255, 255, .8) 50%, rgba(255, 255, 255, .3) 50%)">
+	<div class="container-xxl pt-5 pb-5" style="background:url(/static/test.png) no-repeat right/cover">
+		<div class="row mt-2">
+			<div class="col-12 col-md-12 col-lg-7">
+				<h1 style="max-width: 680px;color:var(--bs-cmefi-blue)">Free compendium of economic<br> forecasts and models</h1>
+				<!--<a href="/docs/latest/quick-start.html" class="btn btn-cta">Get Started</a>-->
+			</div>
+		</div>
+		<div class="row mt-5">
+			<div class="col-12 col-lg-6">
+				<h2>What is econforecasting.com<span class="tm" style="bottom: 14px;">™</span>?</h2>
+				<div class="">econforecasting.com<span class="tm" style="bottom: 7px;">™</span> is a project by the 
+				Center of Macroeconomic Forecasting & Insights to make accessible a public repository of economic forecasts and analysis.
+				<!-- Autocomplete -->
+				<div role="combobox" aria-owns="autoComplete_list" aria-haspopup="true" aria-expanded="false" class="autoComplete_wrapper mt-4">
+					<input id="autoComplete" class="form-control">
+				</div>
+				<div class="m-2 rounded card" style="background-color: rgba(255, 255, 255, .7)">
+					<div class="card-body">
+						Please note: our website is undergoing a major overhaul from March 2022 through September. During this time, 
+						new forecasts and indices will be added regularly.
+					</div>
+				</div>
+				
+
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<!--
+
+<div class="container-fluid" id="homepage-banner" >
+	<div class="container px-4">
+	<div class="row align-items-lg-center pt-2">
+      <div class="col-md-4 order-md-1 col-lg-6 text-center text-md-start">
+        <h1 class="mb-3" style="font-family:Molengo">The Center for Macroeconomic Forecasting & Insights</h1>
+        <p class="lead mb-4">
+        </p>
+
+      </div>
+
+      <div class="col-10 mx-auto col-md-8 order-md-2 col-lg-6 ">
+		<div class="p-1 mb-1 bg-econgreen d-inline-block text-white"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 16">
+		  <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/>
+		</svg></div>
+		<div class="d-inline"><span style="vertical-align:middle;font-size:1.4rem; color: var(--bs-econgreen)">New Data Releases</span></div>
+		<div class="list-group">
+			<a href="/fc-rates-ffr" class="list-group-item list-group-item-action" aria-current="true">
+				<div class="d-flex w-100 justify-content-between">
+					<h5 class="mb-1">Federal Funds Rate & SOFR Forecasts Updated</h5>
+					<small>Today</small>
+				</div>
+				<p class="mb-1">FFR & SOFR forecasts have been updated using our futures model</p>
+				<span class="btn btn-sm">Click to go</span>
+			</a>
+
+			<a href="/fc-rates-tcurve" class="list-group-item list-group-item-action" aria-current="true">
+				<div class="d-flex w-100 justify-content-between">
+					<h5 class="mb-1">Treasury Yield Forecasts Updated</h5>
+					<small>Today</small>
+				</div>
+				<p class="mb-1">3-month, 1-year, 5-year, 10-year, 20-year, 30-year Treasury yield forecasts have been updated</p>
+				<span class="btn btn-sm">Click to go</span>
+			</a>
+
+			<a href="/ac-assets" class="list-group-item list-group-item-action" aria-current="true">
+				<div class="d-flex w-100 justify-content-between">
+					<h5 class="mb-1">Asset Correlation Index Updated</h5>
+					<small>Yesterday</small>
+				</div>
+				<p class="mb-1">Historical data for the Asset Correlation Index has been updated</p>
+				<span class="btn btn-sm">Click to go</span>
+			</a>
+			
+			<a href="/ac-regions" class="list-group-item list-group-item-action" aria-current="true">
+				<div class="d-flex w-100 justify-content-between">
+					<h5 class="mb-1">Regional Correlation Index Updated</h5>
+					<small>Yesterday</small>
+				</div>
+				<p class="mb-1">Historical data for the Asset Correlation Index has been updated</p>
+				<span class="btn btn-sm">Click to go</span>
+			</a>
+
+		</div>
+
+      </div>
+	  
+
+    </div>
+	</div>  
+</div>
+-->
+
+
+
+
+<div class="container px-0 pb-5">
+	<div class="row flex-center mt-5">
+		<div class="col-xl-4 col-md-6 mt-4">
+			<div class="w-100 rounded p-5" style="background-image: linear-gradient(to right bottom, rgb(249, 250, 251), rgb(255, 255, 255))">
+					<!--<i class="text-danger bi bi-lightbulb me-2"></i><br>-->
+					<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 60 60" style="width:1.0rem" xml:space="preserve">
+						<g>
+							<path d="M56.965,13.743c-0.006-0.022-0.018-0.042-0.025-0.064c-0.021-0.062-0.044-0.122-0.077-0.178
+								c-0.016-0.028-0.038-0.052-0.057-0.079c-0.032-0.045-0.065-0.089-0.104-0.128c-0.026-0.026-0.055-0.047-0.083-0.07
+								c-0.027-0.022-0.05-0.047-0.079-0.066c-0.016-0.01-0.035-0.015-0.051-0.024c-0.015-0.008-0.026-0.021-0.041-0.028l-26-13
+								c-0.009-0.004-0.019-0.002-0.028-0.007C30.291,0.039,30.151,0,30,0s-0.291,0.039-0.419,0.099c-0.009,0.004-0.019,0.002-0.028,0.007
+								l-26,13c-0.015,0.008-0.026,0.02-0.041,0.028c-0.017,0.009-0.035,0.014-0.051,0.024c-0.03,0.019-0.052,0.045-0.079,0.066
+								c-0.029,0.023-0.057,0.044-0.083,0.069c-0.039,0.039-0.072,0.083-0.104,0.128c-0.019,0.027-0.041,0.051-0.057,0.079
+								c-0.033,0.056-0.056,0.117-0.077,0.179c-0.007,0.022-0.019,0.041-0.025,0.064C3.013,13.826,3,13.912,3,14v32
+								c0,0.006,0.003,0.012,0.003,0.018c0,0.02,0.007,0.039,0.008,0.058c0.008,0.102,0.032,0.2,0.069,0.292
+								c0.007,0.016,0.004,0.034,0.012,0.05c0.008,0.018,0.022,0.031,0.032,0.048c0.025,0.046,0.053,0.088,0.085,0.13
+								c0.026,0.035,0.052,0.069,0.082,0.099c0.034,0.034,0.071,0.064,0.11,0.093c0.036,0.028,0.072,0.055,0.111,0.077
+								c0.015,0.008,0.026,0.021,0.041,0.028l26,13c0.015,0.007,0.031,0.004,0.046,0.011C29.727,59.962,29.862,60,30,60
+								s0.273-0.038,0.401-0.095c0.015-0.007,0.032-0.004,0.046-0.011l26-13C56.786,46.725,57,46.379,57,46V14
+								C57,13.912,56.988,13.826,56.965,13.743z M6.724,44.743c-0.231-0.501-0.825-0.72-1.327-0.489L5,44.437V15.563L29,26.64v30.742
+								L6.293,46.028C6.747,45.777,6.945,45.222,6.724,44.743z M30,3c0.353,0,0.648-0.193,0.826-0.469l22.866,11.433L31,24.437V24
+								c0-0.552-0.448-1-1-1s-1,0.448-1,1v0.437L6.308,13.964L29.174,2.531C29.352,2.807,29.647,3,30,3z M31,35.563l1.636,0.755
+								c0.136,0.063,0.278,0.092,0.418,0.092c0.378,0,0.74-0.216,0.909-0.582c0.231-0.501,0.012-1.096-0.489-1.327l-1.816-0.838
+								c-0.215-0.099-0.444-0.101-0.658-0.047V26.64l24-11.077v28.874l-1.551-0.716c-0.501-0.231-1.096-0.013-1.327,0.489
+								c-0.232,0.501-0.013,1.095,0.489,1.327l1.081,0.499L31,57.382V35.563z"/>
+							<path d="M20.344,39.457c0.141,0,0.283-0.029,0.418-0.092l1.816-0.838c0.501-0.231,0.721-0.826,0.489-1.327
+								c-0.231-0.501-0.826-0.72-1.327-0.489l-1.816,0.838c-0.501,0.231-0.721,0.826-0.489,1.327
+								C19.604,39.242,19.966,39.457,20.344,39.457z"/>
+							<path d="M14.896,41.971c0.14,0,0.283-0.029,0.418-0.092l1.816-0.838c0.501-0.231,0.72-0.826,0.489-1.327
+								c-0.231-0.501-0.825-0.721-1.327-0.489l-1.816,0.838c-0.501,0.231-0.72,0.826-0.489,1.327
+								C14.156,41.756,14.518,41.971,14.896,41.971z"/>
+							<path d="M9.448,44.486c0.141,0,0.283-0.03,0.418-0.093l1.816-0.838c0.501-0.231,0.721-0.826,0.489-1.327
+								c-0.231-0.501-0.828-0.72-1.327-0.489l-1.816,0.838c-0.501,0.231-0.721,0.826-0.489,1.327C8.708,44.271,9.07,44.486,9.448,44.486z"
+								/>
+							<path d="M44.369,39.53l-1.816-0.838c-0.501-0.231-1.096-0.012-1.327,0.489c-0.231,0.501-0.012,1.096,0.489,1.327l1.816,0.838
+								c0.136,0.063,0.278,0.092,0.418,0.092c0.378,0,0.74-0.215,0.909-0.581C45.089,40.356,44.871,39.762,44.369,39.53z"/>
+							<path d="M49.817,42.045l-1.816-0.838c-0.5-0.232-1.096-0.013-1.327,0.489c-0.232,0.501-0.013,1.095,0.489,1.327l1.816,0.838
+								c0.136,0.063,0.278,0.092,0.418,0.092c0.378,0,0.74-0.215,0.908-0.581C50.538,42.871,50.318,42.277,49.817,42.045z"/>
+							<path d="M38.921,37.017l-1.816-0.838c-0.501-0.233-1.096-0.013-1.327,0.489c-0.232,0.501-0.013,1.095,0.489,1.327l1.816,0.838
+								c0.136,0.063,0.278,0.092,0.418,0.092c0.378,0,0.74-0.215,0.908-0.581C39.642,37.842,39.423,37.248,38.921,37.017z"/>
+							<path d="M25.792,36.942c0.14,0,0.283-0.029,0.418-0.092l1.816-0.838c0.501-0.231,0.72-0.826,0.489-1.327
+								c-0.232-0.501-0.825-0.721-1.327-0.489l-1.816,0.838c-0.501,0.231-0.72,0.826-0.489,1.327
+								C25.052,36.727,25.414,36.942,25.792,36.942z"/>
+							<path d="M30,9c0.552,0,1-0.448,1-1V6c0-0.552-0.448-1-1-1s-1,0.448-1,1v2C29,8.552,29.448,9,30,9z"/>
+							<path d="M30,15c0.552,0,1-0.448,1-1v-2c0-0.552-0.448-1-1-1s-1,0.448-1,1v2C29,14.552,29.448,15,30,15z"/>
+							<path d="M30,21c0.552,0,1-0.448,1-1v-2c0-0.552-0.448-1-1-1s-1,0.448-1,1v2C29,20.552,29.448,21,30,21z"/>
+						</g>
+					</svg>
+
+					<span class="text-muted">News</span>
+					<h5>New Updates</h5>
+					<h2 class="text-black-50">...</h2>
+			</div>
+		</div>
+		<div class="col-xl-4 col-md-6 mt-4">
+			<div class="w-100 rounded-3 text-center" style="background-image:linear-gradient(to right, rgb(253, 242, 248), rgb(255, 255, 255)); box-shadow:rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset">
+				<h1 class="p-5">
+				<?xml version="1.0" encoding="iso-8859-1"?>
+					<svg version="1.1"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 470 470" style="width:5rem" xml:space="preserve" fill="var(--bs-cmefi-orange)">
+					<g>
+						<path d="M235,181.153c49.943,0,90.576-40.632,90.576-90.576S284.943,0,235,0s-90.576,40.632-90.576,90.576
+							S185.057,181.153,235,181.153z M235,15c41.673,0,75.576,33.903,75.576,75.576S276.673,166.153,235,166.153
+							s-75.576-33.903-75.576-75.576S193.327,15,235,15z"/>
+						<path d="M202.389,211.906c-4.069,0.773-6.741,4.699-5.968,8.769c0.684,3.596,3.829,6.101,7.359,6.101
+							c0.465,0,0.937-0.043,1.409-0.133c19.458-3.698,39.992-3.709,59.452-0.032c4.064,0.768,7.993-1.906,8.762-5.977
+							c0.77-4.07-1.906-7.993-5.977-8.762C246.129,207.847,223.683,207.859,202.389,211.906z"/>
+						<path d="M235,138.268c15.97,0,30.862-7.924,39.838-21.197c2.32-3.431,1.42-8.094-2.012-10.414s-8.094-1.419-10.414,2.012
+							c-6.182,9.142-16.429,14.599-27.412,14.599c-10.982,0-21.23-5.458-27.412-14.6c-2.319-3.431-6.981-4.332-10.414-2.012
+							c-3.432,2.32-4.332,6.983-2.012,10.414C204.138,130.344,219.03,138.268,235,138.268z"/>
+						<path d="M279.875,257.375c0,36.324,29.552,65.875,65.875,65.875s65.875-29.551,65.875-65.875S382.073,191.5,345.75,191.5
+							S279.875,221.051,279.875,257.375z M345.75,206.5c28.053,0,50.875,22.822,50.875,50.875s-22.822,50.875-50.875,50.875
+							s-50.875-22.822-50.875-50.875S317.697,206.5,345.75,206.5z"/>
+						<path d="M345.75,293.117c11.963,0,23.118-5.935,29.84-15.875c2.32-3.432,1.42-8.094-2.012-10.414
+							c-3.432-2.321-8.094-1.419-10.414,2.012c-3.928,5.81-10.438,9.278-17.414,9.278s-13.485-3.468-17.414-9.278
+							c-2.319-3.431-6.981-4.332-10.414-2.012c-3.432,2.32-4.332,6.982-2.012,10.414C322.632,287.182,333.787,293.117,345.75,293.117z"/>
+						<path d="M124.25,323.25c36.323,0,65.875-29.551,65.875-65.875S160.573,191.5,124.25,191.5s-65.875,29.551-65.875,65.875
+							S87.927,323.25,124.25,323.25z M124.25,206.5c28.053,0,50.875,22.822,50.875,50.875s-22.822,50.875-50.875,50.875
+							s-50.875-22.822-50.875-50.875S96.197,206.5,124.25,206.5z"/>
+						<path d="M124.25,293.117c11.963,0,23.118-5.935,29.84-15.875c2.32-3.432,1.42-8.094-2.012-10.414
+							c-3.432-2.321-8.094-1.419-10.414,2.012c-3.928,5.81-10.438,9.278-17.414,9.278s-13.485-3.468-17.414-9.278
+							c-2.319-3.431-6.981-4.332-10.414-2.012c-3.432,2.32-4.332,6.982-2.012,10.414C101.132,287.182,112.287,293.117,124.25,293.117z"/>
+						<path d="M124.25,338.25C55.738,338.25,0,393.988,0,462.5c0,4.142,3.357,7.5,7.5,7.5s7.5-3.358,7.5-7.5
+							c0-60.241,49.01-109.25,109.25-109.25S233.5,402.259,233.5,462.5c0,4.142,3.357,7.5,7.5,7.5s7.5-3.358,7.5-7.5
+							C248.5,393.988,192.762,338.25,124.25,338.25z"/>
+						<path d="M345.75,338.25c-39.118,0-75.165,17.869-98.898,49.025c-2.511,3.295-1.874,8.001,1.421,10.511
+							c3.297,2.51,8,1.873,10.511-1.421c20.872-27.4,52.57-43.115,86.967-43.115c60.24,0,109.25,49.009,109.25,109.25
+							c0,4.142,3.357,7.5,7.5,7.5s7.5-3.358,7.5-7.5C470,393.988,414.262,338.25,345.75,338.25z"/>
+
+					</svg>
+
+				</h1>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
