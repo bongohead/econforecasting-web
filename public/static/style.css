@@ -1,19 +1,35 @@
-/** Bootstrap Style Changes **/
-/* Moved to link
-@import url(//fonts.googleapis.com/css?family=Poppins);
-@import url(//fonts.googleapis.com/css?family=Merriweather);
-@import url(//cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css);
-@import url(//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.6.3/css/all.min.css);
-*/
+/***** Bootstrap Style Changes *****/
 :root {
-	--bs-font-family-serif: "Merriweather" Lucida, verdana, arial, sans-serif; // Custom variable to be used for paragraphs, etc
+	--bs-font-family-serif: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; // Custom variable to be used for paragraphs, etc
 }
 
+
+/***** Base Styling *****/
 p {
 	font-family: var(--bs-font-family-serif);
 	font-size: 0.92rem;
 }
 
+.cmefi-light {
+	color: rgb(107, 114, 128);
+}
+
+.cursor-pointer{
+  cursor: pointer;
+}
+
+
+/* Logo */
+.cmefi-logo {
+    background: url('/static/cmefi-short.svg');
+    background-repeat: no-repeat;
+    background-size: cover; 
+    display: inline-block;
+	height: 1em;
+	width: 1em;
+}
+
+/***** Head & Foot *****/
 header {
     top: 0;
     z-index: 100;
@@ -36,6 +52,8 @@ footer {
 	position: relative;
 	z-index: 96;
 }
+
+/****** Homepage *****/
 
 #homepage-banner{
 	background-image:
@@ -82,7 +100,22 @@ footer {
 	background-color: var(--bs-econlgreen);
 }
 
-/* Forecast table */
+
+.homepage-cards {
+	cursor:pointer;
+	width:15rem;
+	box-shadow:0 0px 18px 0 rgb(68 195 255 / 8%);
+	border: 1px solid rgb(243, 244, 246);
+	border-radius: 1rem;
+}
+
+.homepage-cards:hover {
+	shadow: inset 0 2px 4px 0 rgba(0,0,0,0.06);
+	transform: matrix(1, 0, 0, 1, 0, 4);
+	transition-duration: .15s;
+}
+
+/****** Forecast Data Table *****/
 
 #li-container {
 	margin: 1.5rem 2rem 1.5rem 2rem;
@@ -104,7 +137,7 @@ footer {
 }
 
 
-/* Buttons */
+/****** DT Buttons *****/
 button.dt-button {
 	color: rgb(64, 74, 87);
 	box-shadow: 0 0 0 1px rgba(43, 45, 80, 0.1), 0 2px 5px 0 rgba(43, 45, 80, 0.08), 0 1px 1.5px 0 rgba(0, 0, 0, 0.07), 0 1px 2px 0 rgba(0, 0, 0, 0.08);
@@ -115,38 +148,7 @@ button.dt-button:hover {
 }
 
 
-/* Homepage links */
-div.homepage-links > a {
-	border: 2px solid var(--bs-econblue);
-	border-radius: .5rem;
-}
-div.homepage-links > a:hover {
-	background-color:  var(--bs-econdblue);
-}
-
-div.homepage-links > a > div:after{
-	content: "";
-	display: block;
-	padding-top: 100%; 	/* initial ratio of 1:1*/
-}
-
-div.homepage-links > a > div {
-	font-weight: bolder;
-	padding-top: .1rem;
-	padding-left:.05rem;
-	padding-right: .05rem;
-}
-div.homepage-links > a > div:first-child:hover {
-	background: var(econgreen)
-}	
-
-div.homepage-links > a > div > span {
-	position: absolute;
-	transform: translate(-50%, 0%);
-}
-
-
-/* Top Navbar */
+/****** Navbar *****/
 nav.navbar {
 	background-color: var(--bs-cmefi-green);
 }
@@ -164,7 +166,6 @@ nav.navbar li.nav-item > a.nav-link.show {
 	background-color: var(--bs-cmefi-blue);
 	color: white;
 }
-
 
 /* Dropdown items */
 nav.navbar ul.dropdown-menu, nav.navbar div.dropdown-menu {
@@ -194,7 +195,7 @@ nav.navbar a.nav-link.activepage {
 
 
 
-/* Sidebar */
+/****** Sidebar *****/
 nav.sidebar {
 	position: sticky;
 	top: 3.4rem;
@@ -258,24 +259,7 @@ nav.sidebar div.sidebar-submenu > a:hover {
 
 
 
-/* Datatable */
-
-/*
-table.dataTable th {
-	background-color: var(--bs-efblue);
-	color: white;
-	font-size: .90rem;
-}
-
-table.dataTable th:first-child {
-	border-radius:.5rem 0 0 .5rem;
-}
-
-table.dataTable th:last-child {
-	border-radius:0 .5rem .5rem 0;
-}
-
-*/
+/****** DT Table *****/
 
 table.dataTable.data-table th {
 	background-color: transparent;
@@ -332,7 +316,7 @@ table.dataTable tr:hover td {
 	color: white !important;
 }
 
-/** DT Paginate BUttons **/
+/****** DT Paginage *****/
 .page-item.active .page-link {
     background-color: rgba(200, 230, 245, .35) !important; /*var(--bs-efpale) !important;*/
     border: 1px solid  rgba(220, 220, 220) !important;
@@ -343,7 +327,9 @@ table.dataTable tr:hover td {
 .page-link:focus {
 	box-shadow: none !important;
 }
-/** Loading Spinner **/
+
+
+/****** Loading Spinner *****/
 .overlay {
     background: #D3D3D3;
     position: fixed;
@@ -357,43 +343,3 @@ table.dataTable tr:hover td {
 
 
 
-/** Multicol button hover **/
-a.multicol {
-	font-size: .9rem;
-	padding: .3rem 1rem;
-	/*background-color: rgba(245, 255, 255, 1);*/
-}
-
-
-a.multicol:hover {
-	cursor: pointer;
-	color: #262626;
-	background-color: #999;
-	color: 'white';
-}
-
-.cursor-pointer{
-  cursor: pointer;
-}
-
-
-/* Dashboard */
-.flex-between-center {
-	-webkit-box-pack: justify;
-	-ms-flex-pack: justify;
-	justify-content: space-between;
-	-webkit-box-align: center;
-	-ms-flex-align: center;
-	align-items: center;
-}
-
-
-/* Logo */
-.cmefi-logo {
-    background: url('/static/cmefi-short.svg');
-    background-repeat: no-repeat;
-    background-size: cover; 
-    display: inline-block;
-	height: 1em;
-	width: 1em;
-}
