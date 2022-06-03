@@ -31,8 +31,6 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 		*/	
 			['template' => 'home', 'request' => ['', 'home'], 'canonical' => 'https://econforecasting.com', 'title' => 'The Center for Macroeconomic Forecasting & Insights | econforecasting.com', 'description' => 'Get aggregated macroeconomic data, forecasts, models, and insights including GDP forecasts, interest rate forecasts, and Treasury yield forecasts.', 'models' => [], 'js' => ['init', 'home']],
 			
-			['template' => 'home-2', 'request' => ['home-2'], 'canonical' => 'https://econforecasting.com', 'title' => 'The Center for Macroeconomic Forecasting & Insights | econforecasting.com', 'description' => 'Get aggregated macroeconomic data, forecasts, models, and insights including GDP forecasts, interest rate forecasts, and Treasury yield forecasts.', 'models' => [], 'js' => ['init', 'home']],
-
 			['template' => 'forecast-rates', 'request' => ['forecast-sofr', 'fc-rates-sofr'], 'canonical' => 'https://econforecasting.com/forecast-sofr', 'title' => 'SOFR Forecasts | Economic Forecasts | econforecasting.com', 'description' => 'Our model provides monthly forecasts of the SOFR rate using a futures market driven forecast model.', 'models' => [], 'js' => ['init', 'forecast-varname']],
 			['template' => 'forecast-rates', 'request' => ['forecast-ffr', 'fc-rates-ffr'], 'canonical' => 'https://econforecasting.com/forecast-ffr', 'title' => 'FFR Forecasts | Economic Forecasts | econforecasting.com', 'description' => 'Our model provides monthly forecasts of the federal funds rate using a futures market driven forecast model.', 'models' => [], 'js' => ['init', 'forecast-varname']],
 			['template' => 'forecast-rates', 'request' => ['forecast-bsby'], 'title' => 'BSBY Forecasts | Economic Forecasts | econforecasting.com', 'description' => 'Our model provides monthly forecasts of the Bloomberg short-term rate rate using a futures market driven forecast model.', 'models' => [],  'js' => ['init', 'forecast-varname']],
@@ -65,7 +63,7 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 		],
 		errorRoute: ['template' => 'error', 'request' => 'error', 'title' => 'Error', 'js' => []],
 		baseJsFiles: ['functions', 'moment.min', 'moment-timezone-with-data-1970-2030.min', 'gradient-min'],
-		devMode: true, //($_SERVER['REMOTE_ADDR'] === '50.4.37.141') ? true : false,
+		devMode: false, //($_SERVER['REMOTE_ADDR'] === '') ? true : false,
 		db: 'cmefi'
 	);
 }

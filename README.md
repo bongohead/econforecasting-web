@@ -6,7 +6,8 @@ Description TBA
 # CHANGELOG
 
 ## 2022-05-?? [v1.02] (Cleanup & Homepage)
-- Added homepage improvements
+- Added homepage new sections & cleanup
+- Improved footer
 
 ## 2022-05-16 [v1.01] (Minor Optimizations & Additions, Sentiment Analysis Releases)
 - Added server-side meta descriptions

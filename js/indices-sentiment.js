@@ -405,7 +405,7 @@ function drawCards(index_data, benchmark_data) {
 						events: {
 							click: function(e) {
 								const state = $('#chart-emotions-' + i).highcharts().rangeSelector.buttons[0].state;
-								chart.xAxis[0].setExtremes(moment().add(-3, 'M').toDate().getTime(), moment().toDate().getTime());
+								chart.xAxis[0].setExtremes(moment().add(-3, 'M').toDate().getTime(), moment(index.last_updated).toDate().getTime());
 								$('#chart-emotions-' + i).highcharts().rangeSelector.buttons[0].setState(state === 0 ? 2 : 0);
 								return false;
 							}
@@ -415,7 +415,7 @@ function drawCards(index_data, benchmark_data) {
 						events: {
 							click: function(e) {
 								const state = $('#chart-emotions-' + i).highcharts().rangeSelector.buttons[1].state;
-								chart.xAxis[0].setExtremes(moment().add(-1, 'Y').toDate().getTime(), moment().toDate().getTime());
+								chart.xAxis[0].setExtremes(moment().add(-1, 'Y').toDate().getTime(), moment(index.last_updated).toDate().getTime());
 								$('#chart-emotions-' + i).highcharts().rangeSelector.buttons[1].setState(state === 0 ? 2 : 0);
 								return false;
 							}
@@ -425,7 +425,7 @@ function drawCards(index_data, benchmark_data) {
 						events: {
 							click: function(e) {
 								const state = $('#chart-emotions-' + i).highcharts().rangeSelector.buttons[2].state;
-								chart.xAxis[0].setExtremes(moment().startOf('Year').toDate().getTime(), moment().toDate().getTime());
+								chart.xAxis[0].setExtremes(moment().startOf('Year').toDate().getTime(), moment(index.last_updated).toDate().getTime());
 								$('#chart-emotions-' + i).highcharts().rangeSelector.buttons[2].setState(state === 0 ? 2 : 0);
 								return false;
 							}
@@ -435,7 +435,7 @@ function drawCards(index_data, benchmark_data) {
 						events: {
 							click: function(e) {
 								const state = $('#chart-emotions-' + i).highcharts().rangeSelector.buttons[3].state;
-								chart.xAxis[0].setExtremes(moment(index.first_date).toDate().getTime(), moment().toDate().getTime());
+								chart.xAxis[0].setExtremes(moment(index.first_date).toDate().getTime(), moment(index.last_updated).toDate().getTime());
 								$('#chart-emotions-' + i).highcharts().rangeSelector.buttons[3].setState(state === 0 ? 2 : 0);
 								return false;
 							}
@@ -459,7 +459,7 @@ function drawCards(index_data, benchmark_data) {
 					week: "%m-%d-%Y"
 				},
 				min: moment().add(-3, 'M').toDate().getTime(),
-				max: moment().toDate().getTime(),
+				max: moment(index.last_updated).toDate().getTime(),
 				ordinal: false,
 				labels: {
 					style: {
@@ -499,12 +499,13 @@ function drawCards(index_data, benchmark_data) {
 					y.emotion === 'surprise' ? "#8085e9" :
 					y.emotion === 'anger' ? "#f15c80" :
 					"#e4d354",//, "#2b908f", "#f45b5b", "#91e8e1"][j],
-				data: y.data
+				data: y.data.sort((a, b) => a[0] > b[0] ? 1 : -1)
 			})).sort((a, b) => a.name > b.name ? 1 : -1).map((y, j) => ({
 				...y,
 				legendIndex: j
 			}))
 		};
+		
 		const chart = Highcharts.stockChart('chart-emotions-' + i, o);
 		$('#chart-emotions-' + i).highcharts().rangeSelector.buttons[0].setState(2);
 
