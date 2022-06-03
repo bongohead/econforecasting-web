@@ -564,7 +564,7 @@ function addVdate(forecast_vdate) {
 /*** Draw chart ***/
 function drawChartAlt(treasury_data) {
 	
-	//console.log('treasury_data', treasury_data);
+	console.log('treasury_data', treasury_data);
 	
 	const grMap = gradient.create(
 	  [0, 1, 24, 48, 72], //array of color stops
@@ -575,6 +575,7 @@ function drawChartAlt(treasury_data) {
 	const chartData =
 		treasury_data.filter(x => x.type === 'history').slice(-1) // Get last historical forecast
 		.concat(treasury_data.filter(x => x.type === 'forecast').slice(0, 71)) // Get first 24 forecasts
+		.sort((a, b) => (moment(a.date) > moment(b.date) ? 1 : -1))
 		.map((x, i) => (
 			{
 				name: moment(x.date).format('MMM YYYY') + ' ' + (x.type === 'history' ? '*' : ''),
@@ -582,11 +583,12 @@ function drawChartAlt(treasury_data) {
 				type: 'spline',
 				color: gradient.valToColor(i, grMap, 'hex'),
 				dashStyle: (x.type === 'history' ? 'solid' : 'shortdot'),
-				visible: i === 0 || i % 6 === 1
+				visible: i === 0 || i % 6 === 1,
+				legendIndex: i
 				//(x.type === 'history' || moment(x.date).month() === moment(treasury_data.filter(x => x.type === 'history').slice(-1)[0].date).month() + 1)
 			}
 		));
-	//console.log('chartData', chartData);
+	console.log('chartData', chartData);
 	
 	const o = {
         chart: {
