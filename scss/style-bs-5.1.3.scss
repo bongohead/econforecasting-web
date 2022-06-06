@@ -4,12 +4,14 @@
  * Rename css files as scss to import
  */
  
- 
-// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
-@import "bootstrap/bootstrap-5.2.0/_functions";
+// Required imports
 
-// 2. Include any default variable overrides here
-// Variable Overrides
+@import "bootstrap/bootstrap-5.1.3/_functions";
+@import "bootstrap/bootstrap-5.1.3/_variables";
+@import "bootstrap/bootstrap-5.1.3/_mixins";
+
+
+// Create your own map
 $custom-colors: (
 	
 	cmefi-green: #2D8C26,
@@ -52,6 +54,7 @@ $custom-colors: (
 	econdred: #7A0103,
 	econdblue: #1A5DA5
 );
+$theme-colors: map-merge($theme-colors, $custom-colors);
 
 // https://stackoverflow.com/questions/38480156/how-to-increase-width-of-bootstrap-container-on-max-width
 $my-container-max-widths: (
@@ -61,34 +64,10 @@ $my-container-max-widths: (
   xl: 1140px,
   xxl: 1400px
 );
+$container-max-widths: map-merge($container-max-widths, $my-container-max-widths);
 
 $font-size-root: 15px;
 $font-family-sans-serif: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 
-// 3. Include remainder of required Bootstrap stylesheets
-@import "bootstrap/bootstrap-5.2.0/_variables";
-
-
-// 4. Include any default map overrides here
-// Optional Sass map overrides here
-$theme-colors: map-merge($theme-colors, $custom-colors);
-$container-max-widths: map-merge($container-max-widths, $my-container-max-widths);
-
-// 5. Include remainder of required parts
-@import "bootstrap/bootstrap-5.2.0/_maps";
-@import "bootstrap/bootstrap-5.2.0/_mixins";
-@import "bootstrap/bootstrap-5.2.0/_root";
-
-// 6. Optionally include any other parts as needed
-@import "bootstrap/bootstrap-5.2.0/_utilities";
-@import "bootstrap/bootstrap-5.2.0/_reboot";
-@import "bootstrap/bootstrap-5.2.0/_type";
-@import "bootstrap/bootstrap-5.2.0/_images";
-@import "bootstrap/bootstrap-5.2.0/_containers";
-@import "bootstrap/bootstrap-5.2.0/_grid";
-@import "bootstrap/bootstrap-5.2.0/_helpers";
-
-// 7. Optionally include utilities API last to generate classes based on the Sass map in `_utilities.scss`
-@import "bootstrap/bootstrap-5.2.0/utilities/_api";
-
-// 8. Add additional custom code here
+// Now re-import again with variable overrides - Must be at end
+@import "bootstrap/bootstrap-5.1.3/bootstrap";

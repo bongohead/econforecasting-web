@@ -280,6 +280,11 @@ nav.sidebar a.nav-link:hover {
 	cursor: pointer;
 }
 
+nav.sidebar a.nav-link {
+	padding-top: 0.5rem;
+	padding-bottom: .5rem;
+}
+
 
 /* Submenu */
 nav.sidebar div.sidebar-submenu > a {
