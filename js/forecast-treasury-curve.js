@@ -152,7 +152,7 @@ function drawChart(treasury_data, play_index, forecast_vdate) {
 				'<button class="btn btn-cmefi-dark text-light btn-sm" style="font-size:.8rem" type="button" >Hit "play" to show changes over time!&nbsp;</button>'+
 				'<button class="btn btn-primary btn-sm chart-subtitle" style="font-size:.8rem" type="button" data-dir="start" style="letter-spacing:-2px"><i class="bi bi-skip-backward"></i></button>' +
 				'<button class="btn btn-primary btn-sm chart-subtitle" style="font-size:.8rem" type="button" data-dir="back"><i class="bi bi-caret-left"></i></button>' +
-				'<button class="btn btn-primary btn-sm chart-subtitle" style="font-size:.8rem" type="button" data-dir="pause" ><i class="bi bi-pause"></i></button>' +
+				'<button class="btn btn-primary btn-sm chart-subtitle active" style="font-size:.8rem" type="button" data-dir="pause" ><i class="bi bi-pause"></i></button>' +
 				'<button class="btn btn-primary btn-sm chart-subtitle" style="font-size:.8rem" type="button" data-dir="forward" ><i class="bi bi-caret-right"></i></button>' +
 				'<button class="btn btn-primary btn-sm chart-subtitle" style="font-size:.8rem" type="button" data-dir="end" style="letter-spacing:-2px" ><i class="bi bi-skip-forward"></i></button>' +
 			'</div></div>'
