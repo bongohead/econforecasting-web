@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			date: x.date,
 			value: parseFloat(x.value),
 			ttm: parseInt(x.varname.substring(1, 3)) * (x.varname.substring(3, 4) === 'm' ? 1 : 12)
-			}));
+			})).sort((a, b) => parseInt(moment(a.date).format('x')) > parseInt(moment(b.date).format('x'))) ;
 		//console.log('hist_values_raw', hist_values_raw);
 		
 		const hist_values =
@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			date: x.date,
 			value: parseFloat(x.value),
 			ttm: parseInt(x.varname.substring(1, 3)) * (x.varname.substring(3, 4) === 'm' ? 1 : 12)
-		}));
+		})).sort((a, b) => parseInt(moment(a.date).format('x')) > parseInt(moment(b.date).format('x')));
 
 		const forecast_vdate = forecast_values_raw[0].vdate;		
 		const forecast_values =
@@ -47,9 +47,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				type: 'forecast',
 				data: forecast_values_raw.filter(x => x.date == d).map(x => [x.ttm, x.value]).sort((a, b) => a[0] - b[0]) // Sort according to largest value
 			}));
-		//console.log('forecast_values', forecast_values);
+		// console.log('forecast_values', forecast_values);
 		
-		const treasury_data = hist_values.concat(forecast_values).map((x, i) => ({...x, ...{date_index: i}}));
+		const treasury_data = 
+			hist_values.concat(forecast_values)
+			.map((x, i) => ({...x, ...{date_index: i}}))
+			// Ordered Treasury data
+			//.sort((a, b) => parseInt(moment(a.date).format('x')) > parseInt(moment(b.date).format('x'))) ;
+			
+			
 		const res = {
 			treasury_data: treasury_data,
 			forecast_vdate: forecast_vdate,
@@ -105,7 +111,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 /*** Draw chart ***/
 function drawChart(treasury_data, play_index, forecast_vdate) {
+	
 	Highcharts.AST.allowedAttributes.push('data-dir');
+	
 	const o = {
         chart: {
 			spacingTop: 10,
@@ -249,7 +257,8 @@ function drawChart(treasury_data, play_index, forecast_vdate) {
 					const startHistory = Math.min(...this.series[0].points.filter(x => x.type === 'history').map(x => x.plotX));
 					const endHistory = Math.max(...this.series[0].points.filter(x => x.type === 'history').map(x => x.plotX));
 					const startForecast = Math.min(...this.series[0].points.filter(x => x.type === 'forecast').map(x => x.plotX));
-					const endForecast = Math.max(...this.series[0].points.filter(x => x.type === 'forecast').map(x => x.plotX));
+					// Add 10 pixels for padding space (6/9/22)
+					const endForecast = Math.max(...this.series[0].points.filter(x => x.type === 'forecast').map(x => x.plotX + 10));
 					this.renderer
 						.path(['M', startHistory, axisDistFromTop, 'L', (endHistory + startForecast)/2, axisDistFromTop])
 						.attr({'stroke-width': 2, stroke: 'firebrick'})
@@ -259,7 +268,7 @@ function drawChart(treasury_data, play_index, forecast_vdate) {
 						.attr({'stroke-width': 2, stroke: 'forestgreen'})
 						.add();
 					this.renderer
-						.text('Historical Data', (endHistory + startForecast)/2 - 100, axisDistFromTop - 5)
+						.text('Historical Data', (endHistory + startForecast)/2 - 300, axisDistFromTop - 5)
 						.css({color: 'firebrick', fontSize: '.8rem'})
 						.add();
 					this.renderer
@@ -293,8 +302,8 @@ function drawChart(treasury_data, play_index, forecast_vdate) {
             },
 			//startOnTick: true,
 			//endOnTick: true,
-			min: new Date(treasury_data[0].date).getTime(),
-			max: new Date(treasury_data[treasury_data.length - 1].date).getTime(),
+			min: parseInt(moment(treasury_data[0].date).add(-12, 'M').format('x')),   //new Date(treasury_data[0].date).getTime(),
+			max: parseInt(moment(treasury_data[treasury_data.length - 1].date).add(12, 'M').format('x')),//new Date(treasury_data[treasury_data.length - 1].date).getTime(),
 			lineWidth: 0,
 			offset: -45,
 			tickInterval: 12 * 3 * 30 * 24 * 3600 * 1000,
@@ -305,10 +314,11 @@ function drawChart(treasury_data, play_index, forecast_vdate) {
 				id: 'plot-line',
 				zIndex: 3,
 				label: {
-					text: '<span class="text-danger">SELECT<br>A DATE</span>',
-					align: 'left',
+					text: '<span class="text-danger">SELECT DATE ON TIMELINE</span>',
+					align: 'center',
 					verticalAlign: 'top',
-					rotation: 90,
+					rotation: 0,
+					y: -5,
 					useHTML: true
 				}
 			}]
@@ -523,11 +533,12 @@ function updateChart2() {
         id: 'plot-line',
         zIndex: 3,
         label: {
-            text: '<span class="text-danger">SELECT<br> A DATE</span>',
-            align: 'left',
-            verticalAlign: 'top',
-            rotation: 90,
-            useHTML: true
+			text: '<span class="text-danger">SELECT DATE ON TIMELINE</span>',
+			align: 'center',
+			verticalAlign: 'top',
+			rotation: 0,
+			y: -5,
+			useHTML: true
         }
     });
 }
@@ -564,7 +575,7 @@ function addVdate(forecast_vdate) {
 /*** Draw chart ***/
 function drawChartAlt(treasury_data) {
 	
-	console.log('treasury_data', treasury_data);
+	//console.log('treasury_data', treasury_data);
 	
 	const grMap = gradient.create(
 	  [0, 1, 24, 48, 72], //array of color stops
@@ -588,7 +599,7 @@ function drawChartAlt(treasury_data) {
 				//(x.type === 'history' || moment(x.date).month() === moment(treasury_data.filter(x => x.type === 'history').slice(-1)[0].date).month() + 1)
 			}
 		));
-	console.log('chartData', chartData);
+	//console.log('chartData', chartData);
 	
 	const o = {
         chart: {

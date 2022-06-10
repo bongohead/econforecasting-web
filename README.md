@@ -5,9 +5,11 @@ Description TBA
 
 # CHANGELOG
 
-## 2022-05-?? [v1.02] (Cleanup & Homepage)
+## 2022-06-?? [v1.02] (Cleanup & Homepage)
 - Added homepage new sections & cleanup
+- Fixed Treasury yield curve summary chart bug w/date ordering, cleaned up padding & styling on chart
 - Improved footer
+- Updated Bootstrap to 5.2.0 and cleaned up SCSS
 
 ## 2022-05-16 [v1.01] (Minor Optimizations & Additions, Sentiment Analysis Releases)
 - Added server-side meta descriptions
