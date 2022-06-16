@@ -5,7 +5,11 @@ Description TBA
 
 # CHANGELOG
 
-## 2022-06-?? [v1.02] (Cleanup & Homepage)
+## 2022-07-?? [v1.03] (Logo Update)
+- TBD: Improved build system for SCSS files
+- Updated all logos to new Inkscape SVGs
+
+## 2022-06-12 [v1.02] (Cleanup & Homepage Revamp)
 - Added homepage new sections & cleanup
 - Fixed Treasury yield curve summary chart bug w/date ordering, cleaned up padding & styling on chart
 - Improved footer

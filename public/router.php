@@ -27,7 +27,7 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 		*/		
 //			['template' => 'blog', 'request' => 'blog', 'title' => 'The Center for Macroeconomic Forecasts & Insights', 'models' => [], 'js' => []],
 			
-			['template' => 'home', 'request' => ['', 'home'], 'canonical' => 'https://econforecasting.com', 'title' => 'econforecasting.com | The Center for Macroeconomic Forecasting & Insights', 'description' => 'Get aggregated macroeconomic data, forecasts, models, and insights including GDP forecasts, interest rate forecasts, and Treasury yield forecasts.', 'models' => [], 'js' => ['init', 'home']],
+			['template' => 'home', 'request' => ['', 'home'], 'canonical' => 'https://econforecasting.com', 'title' => 'econforecasting.com | Macroeconomic Forecasts & Insights', 'description' => 'Get aggregated macroeconomic data, forecasts, models, and insights including GDP forecasts, interest rate forecasts, and Treasury yield forecasts.', 'models' => [], 'js' => ['init', 'home']],
 			
 			['template' => 'forecast-rates', 'request' => ['forecast-sofr', 'fc-rates-sofr'], 'canonical' => 'https://econforecasting.com/forecast-sofr', 'title' => 'SOFR Forecasts | Economic Forecasts | econforecasting.com', 'description' => 'Our model provides monthly forecasts of the SOFR rate using a futures market driven forecast model.', 'models' => [], 'js' => ['init', 'forecast-varname']],
 			['template' => 'forecast-rates', 'request' => ['forecast-ffr', 'fc-rates-ffr'], 'canonical' => 'https://econforecasting.com/forecast-ffr', 'title' => 'FFR Forecasts | Economic Forecasts | econforecasting.com', 'description' => 'Our model provides monthly forecasts of the federal funds rate using a futures market driven forecast model.', 'models' => [], 'js' => ['init', 'forecast-varname']],
