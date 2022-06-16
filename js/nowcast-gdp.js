@@ -297,7 +297,7 @@ function drawChart(gdp_values_grouped, releases, display_quarter, display_quarte
         },
         title: {
 			useHTML: true,
-			text: '<img class="me-2" width="20" height="20" src="/static/cmefi_short.png"><div style="vertical-align:middle;display:inline"><span>Nowcasted ' + display_quarter + ' GDP Over Time</h5></span>',
+			text: '<img class="me-2" width="20" height="20" src="/static/cmefi-short.svg"><div style="vertical-align:middle;display:inline"><span>Nowcasted ' + display_quarter + ' GDP Over Time</h5></span>',
 			style: {
 				fontSize: '1.3rem',
 				color: 'var(--bs-cmefi-dark)'

@@ -175,7 +175,7 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
         title: {
 			useHTML: true,
 			text: 
-				'<img class="me-1" width="18" height="18" src="/static/cmefi-short.svg">' +
+				'<img class="me-2 mb-1" width="22" height="22" src="/static/cmefi-short.svg">' +
 				'<div style="vertical-align:middle;display:inline"><span>' + fullname + ' Forecast</span></div>',
 			style: {
 				fontSize: '1.3rem',

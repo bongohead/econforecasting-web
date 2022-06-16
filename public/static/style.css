@@ -28,8 +28,9 @@ p {
     background-repeat: no-repeat;
     background-size: cover; 
     display: inline-block;
-	height: 1em;
-	width: 1em;
+	height: 1.2em;
+	width: 1.2em;
+	margin-bottom: -.15em;
 }
 
 /***** Head & Foot *****/

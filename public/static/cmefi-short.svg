@@ -1,1 +1,9 @@
-<svg width="292" height="294" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" overflow="hidden"><defs><clipPath id="clip0"><rect x="785" y="911" width="292" height="294"/></clipPath></defs><g clip-path="url(#clip0)" transform="translate(-785 -911)"><path d="M799 1059C799 986.099 858.098 927 931 927 1003.9 927 1063 986.099 1063 1059 1063 1131.9 1003.9 1191 931 1191 858.098 1191 799 1131.9 799 1059Z" stroke="#2D8C26" stroke-width="27.5" stroke-miterlimit="8" fill="#2D8C26" fill-rule="evenodd"/><path d="M806.507 1133.53C805.554 1146.89 902.17 1136.2 945.999 1117.49 989.828 1098.78 1070.82 1055.24 1069.48 1021.26 1068.15 987.27 957.623 910.895 937.995 913.568 918.367 916.241 973.44 1000.64 951.716 1037.3 929.992 1073.96 807.46 1120.16 806.507 1133.53Z" stroke="#FFFFFF" stroke-width="4.58333" stroke-miterlimit="8" fill="#FFFFFF" fill-rule="evenodd"/></g></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg width="16.974mm" height="16.974mm" version="1.1" viewBox="0 0 16.974 16.974" xmlns="http://www.w3.org/2000/svg">
+ <g transform="translate(-107.49 -108.67)">
+  <circle cx="115.98" cy="117.15" r="7.4869" fill="#f5f5f5" stroke="#00a053" stroke-width="2" style="paint-order:stroke fill markers"/>
+  <path d="m109.46 121.52c8.461-10.362 6.2915 0.12594 13.473 0.0736z" fill="none" stroke="#0ca000" stroke-miterlimit="2" style="paint-order:stroke fill markers"/>
+  <path d="m113.02 121.59c4.1617-0.0295 4.7454-8.6953 6.9514-8.3877 1.8789-0.0441 2.4281 4.5571 3.5274 4.387" fill="none" stroke="#0098a0" stroke-miterlimit="2" stroke-width=".9" style="paint-order:stroke fill markers"/>
+ </g>
+</svg>
