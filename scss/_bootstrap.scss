@@ -6,7 +6,7 @@
  
  
 // 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
-@import "bootstrap/bootstrap-5.2.0/_functions";
+@import "libs/bootstrap/_functions";
 
 // 2. Include any default variable overrides here
 // Variable Overrides
@@ -66,7 +66,7 @@ $font-size-root: 15px;
 $font-family-sans-serif: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 
 // 3. Include remainder of required Bootstrap stylesheets
-@import "bootstrap/bootstrap-5.2.0/_variables";
+@import "libs/bootstrap/_variables";
 
 
 // 4. Include any default map overrides here
@@ -75,52 +75,52 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 $container-max-widths: map-merge($container-max-widths, $my-container-max-widths);
 
 // 5. Include remainder of required parts
-@import "bootstrap/bootstrap-5.2.0/_maps";
-@import "bootstrap/bootstrap-5.2.0/_mixins";
-@import "bootstrap/bootstrap-5.2.0/_root";
+@import "libs/bootstrap/_maps";
+@import "libs/bootstrap/_mixins";
+@import "libs/bootstrap/_root";
 
 // 6. Optionally include any other parts as needed
-@import "bootstrap/bootstrap-5.2.0/_utilities";
-@import "bootstrap/bootstrap-5.2.0/_reboot";
-@import "bootstrap/bootstrap-5.2.0/_type";
+@import "libs/bootstrap/_utilities";
+@import "libs/bootstrap/_reboot";
+@import "libs/bootstrap/_type";
 
 // Layout & components
-@import "bootstrap/bootstrap-5.2.0/_reboot";
-@import "bootstrap/bootstrap-5.2.0/_type";
-@import "bootstrap/bootstrap-5.2.0/_images";
-@import "bootstrap/bootstrap-5.2.0/_containers";
-@import "bootstrap/bootstrap-5.2.0/_grid";
-@import "bootstrap/bootstrap-5.2.0/_tables";
-@import "bootstrap/bootstrap-5.2.0/_forms";
-@import "bootstrap/bootstrap-5.2.0/_buttons";
-@import "bootstrap/bootstrap-5.2.0/_transitions";
-@import "bootstrap/bootstrap-5.2.0/_dropdown";
-@import "bootstrap/bootstrap-5.2.0/_button-group";
-@import "bootstrap/bootstrap-5.2.0/_nav";
-@import "bootstrap/bootstrap-5.2.0/_navbar";
-@import "bootstrap/bootstrap-5.2.0/_card";
-@import "bootstrap/bootstrap-5.2.0/_accordion";
-@import "bootstrap/bootstrap-5.2.0/_breadcrumb";
-@import "bootstrap/bootstrap-5.2.0/_pagination";
-@import "bootstrap/bootstrap-5.2.0/_badge";
-@import "bootstrap/bootstrap-5.2.0/_alert";
-@import "bootstrap/bootstrap-5.2.0/_progress";
-@import "bootstrap/bootstrap-5.2.0/_list-group";
-@import "bootstrap/bootstrap-5.2.0/_close";
-@import "bootstrap/bootstrap-5.2.0/_toasts";
-@import "bootstrap/bootstrap-5.2.0/_modal";
-@import "bootstrap/bootstrap-5.2.0/_tooltip";
-@import "bootstrap/bootstrap-5.2.0/_popover";
-@import "bootstrap/bootstrap-5.2.0/_carousel";
-@import "bootstrap/bootstrap-5.2.0/_spinners";
-@import "bootstrap/bootstrap-5.2.0/_offcanvas";
-@import "bootstrap/bootstrap-5.2.0/_placeholders";
+@import "libs/bootstrap/_reboot";
+@import "libs/bootstrap/_type";
+@import "libs/bootstrap/_images";
+@import "libs/bootstrap/_containers";
+@import "libs/bootstrap/_grid";
+@import "libs/bootstrap/_tables";
+@import "libs/bootstrap/_forms";
+@import "libs/bootstrap/_buttons";
+@import "libs/bootstrap/_transitions";
+@import "libs/bootstrap/_dropdown";
+@import "libs/bootstrap/_button-group";
+@import "libs/bootstrap/_nav";
+@import "libs/bootstrap/_navbar";
+@import "libs/bootstrap/_card";
+@import "libs/bootstrap/_accordion";
+@import "libs/bootstrap/_breadcrumb";
+@import "libs/bootstrap/_pagination";
+@import "libs/bootstrap/_badge";
+@import "libs/bootstrap/_alert";
+@import "libs/bootstrap/_progress";
+@import "libs/bootstrap/_list-group";
+@import "libs/bootstrap/_close";
+@import "libs/bootstrap/_toasts";
+@import "libs/bootstrap/_modal";
+@import "libs/bootstrap/_tooltip";
+@import "libs/bootstrap/_popover";
+@import "libs/bootstrap/_carousel";
+@import "libs/bootstrap/_spinners";
+@import "libs/bootstrap/_offcanvas";
+@import "libs/bootstrap/_placeholders";
 
 // Helpers
-@import "bootstrap/bootstrap-5.2.0/_helpers";
+@import "libs/bootstrap/_helpers";
 
 
 // 7. Optionally include utilities API last to generate classes based on the Sass map in `_utilities.scss`
-@import "bootstrap/bootstrap-5.2.0/utilities/_api";
+@import "libs/bootstrap/utilities/_api";
 
 // 8. Add additional custom code here

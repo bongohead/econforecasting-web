@@ -1,1 +1,1 @@
-sass style-bs.scss ../public/static/style-bs.css
+sass main.scss ../public/static/style.css
