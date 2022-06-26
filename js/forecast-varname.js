@@ -168,7 +168,7 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 			style: {
 				fontColor: 'var(--bs-cmefi-green)'
 			},
-			height: 500,
+			height: 550,
 			plotBorderColor: 'black',
 			plotBorderWidth: 2
         },
