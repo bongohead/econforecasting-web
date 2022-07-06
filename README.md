@@ -8,6 +8,7 @@ Description TBA
 ## 2022-07-?? [v1.03] (Logo Update)
 - Cleaned up old images
 - Improved build system for SCSS files
+- Removed nowcast from rate forecasts
 - Updated all logos to new Inkscape SVGs
 
 ## 2022-06-12 [v1.02] (Cleanup & Homepage Revamp)

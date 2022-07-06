@@ -67,6 +67,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					}))
 				.concat(
 					response[2].forecast_values
+						// Don't return nowcasts for interest rate models
+						.filter(x => ud.primary_forecast === 'int' ? x.forecast !== 'now' : true)
 						// Filter only monthly forecasts if they are too old
 						.filter(x => variable.hist_freq === 'm' ? moment(x.vdate) <= moment(x.date).add(30, 'days') : true)
 						.map(x => ({
