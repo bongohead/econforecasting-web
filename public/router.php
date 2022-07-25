@@ -61,7 +61,7 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 		],
 		errorRoute: ['template' => 'error', 'request' => 'error', 'title' => 'Error', 'js' => []],
 		baseJsFiles: ['functions', 'moment.min', 'moment-timezone-with-data-1970-2030.min', 'gradient-min'],
-		devMode: false, //true, //($_SERVER['REMOTE_ADDR'] === '') ? true : false,
+		devMode: true, //($_SERVER['REMOTE_ADDR'] === '') ? true : false,
 		db: 'cmefi'
 	);
 }

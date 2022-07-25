@@ -121,6 +121,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			drawChart(ts_data_parsed, variable.fullname, variable.units, variable.hist_freq);
 			drawTable(ts_data_parsed, variable.units);
 			drawDescription(ts_data_parsed, variable.varname, ud.primary_forecast);
+			drawVintageChart(ts_data_parsed, variable.fullname, variable.units, variable.hist_freq);
 			$('div.overlay').hide();
 		});
 });
@@ -372,6 +373,252 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 	return;
 }
 
+
+function drawVintageChart(ts_data_parsed, fullname, units, hist_freq) {
+	
+	//console.log('fcDataParsed', fcDataParsed);
+	/*
+	const grMap = gradient.create(
+	  [0, 1, 24, 48, 72], //array of color stops
+	  ['#17202a', '#2874a6', '#148f77', '#d4ac0d', '#cb4335'], //array of colors corresponding to color stops
+	  'hex' //format of colors in previous parameter - 'hex', 'htmlcolor', 'rgb', or 'rgba'
+	);
+	*/
+	
+	const chart_data =
+		ts_data_parsed
+		.map((x, i) => (
+			{
+				id: x.tskey,
+				name:
+					x.shortname +
+					' <span style="font-size:.8rem;font-weight:normal">(' +
+						'Updated ' + moment(x.vdate).format('MM/DD/YY') +
+						(x.freq === 'q' ? '; Quarterly Data' : '; Monthly Data')  + 
+					')</span>',
+				data: x.data.map(x => [parseInt(moment(x[0]).format('x')), x[1]]),
+				type: 'line',
+				dashStyle: (x.tskey === 'hist' ? 'Solid' : 'ShortDash'),
+				lineWidth: (x.ts_type === 'hist' ? 5 : 3),
+				zIndex: (x.ts_type === 'hist' ? 3 : x.ts_type == 'primary' ? 3 : 1),
+				legendIndex: (x.ts_type === 'hist' ? 0 : x.ts_type == 'primary' ? 1 : 2),
+				color: (x.tskey === 'hist' ? 'black' : getColorArray()[i]),
+				opacity: 2,
+				visible: (x.ts_type === 'primary' || x.ts_type === 'hist'),
+				index: i
+			}
+		));
+	// console.log('chart_data', chart_data);
+	
+	const o = {
+        chart: {
+			spacingTop: 15,
+            backgroundColor: 'rgba(255, 255, 255, 0)',
+			plotBackgroundColor: '#FFFFFF',
+			style: {
+				fontColor: 'var(--bs-cmefi-green)'
+			},
+			height: 550,
+			plotBorderColor: 'black',
+			plotBorderWidth: 2
+        },
+        title: {
+			useHTML: true,
+			text: 
+				'<img class="me-2 mb-1" width="22" height="22" src="/static/cmefi-short.svg">' +
+				'<div style="vertical-align:middle;display:inline"><span>' + fullname + ' Forecast</span></div>',
+			style: {
+				fontSize: '1.3rem',
+				color: 'var(--bs-dark)'
+			}
+        },
+		caption: {
+			useHTML: true,
+			text: 'Shaded area indicate recessions' + (hist_freq === 'm' ? '; Data represents monthly-averaged values when applicable' : ''),
+			style: {
+				fontSize: '0.75rem'
+			}
+		},
+        plotOptions: {
+			series: {
+				//shadow: true,
+				dataGrouping: {
+					enabled: true,
+					units: [['day', [1]]]
+				},
+				marker : {
+					enabled: true,
+					radius: 2,
+					symbol: 'triangle'
+				}
+			}
+        },
+		rangeSelector: {
+			buttons: [
+				{
+					text: '1Y Forecast',
+					events: {
+						click: function(e) {
+							const state = $('#chart-container').highcharts().rangeSelector.buttons[0].state;
+							chart.xAxis[0].setExtremes(
+								Math.max(
+									moment.min(...ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => moment(x[0]))).toDate().getTime(),
+									moment().add(-36, 'M').toDate().getTime()
+									),
+								moment().add(12, 'M').toDate().getTime()
+								);
+							$('#chart-container').highcharts().rangeSelector.buttons[0].setState(state === 0 ? 2 : 0);
+							return false;
+						}
+					}
+				}, {
+					text: '2Y Forecast',
+					events: {
+						click: function(e) {
+							const state = $('#chart-container').highcharts().rangeSelector.buttons[1].state;
+							chart.xAxis[0].setExtremes(
+								Math.max(
+									moment.min(...ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => moment(x[0]))).toDate().getTime(),
+									moment().add(-36, 'M').toDate().getTime()
+									),
+								moment().add(24, 'M').toDate().getTime()
+								);
+							$('#chart-container').highcharts().rangeSelector.buttons[1].setState(state === 0 ? 2 : 0);
+							return false;
+						}
+					}
+				}, {
+					text: '5Y Forecast',
+					events: {
+						click: function(e) {
+							const state = $('#chart-container').highcharts().rangeSelector.buttons[2].state;
+							chart.xAxis[0].setExtremes(
+								Math.max(
+									moment.min(...ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => moment(x[0]))).toDate().getTime(),
+									moment().add(-36, 'M').toDate().getTime()
+									),
+								moment().add(60, 'M').toDate().getTime()
+								);
+							$('#chart-container').highcharts().rangeSelector.buttons[2].setState(state === 0 ? 2 : 0);
+							return false;
+						}
+					}
+				}, {
+					type: 'all',
+					text: 'Full Historical Data & Forecast'
+				}
+			],
+			buttonTheme: { // styles for the buttons
+				width: '6rem',
+				padding: 5
+			}
+		},
+		xAxis: {
+			type: 'datetime',
+            dateTimeLabelFormats: {
+                day: "%m-%d-%Y",
+                week: "%m-%d-%Y"
+            },
+			plotBands: [{color: '#D8D8D8', from: Date.UTC(2020, 2, 1), to: Date.UTC(2021, 2, 28)},
+			{color: '#D8D8D8', from: Date.UTC(2007, 12, 1), to: Date.UTC(2009, 6, 30)},
+			{color: '#D8D8D8', from: Date.UTC(2001, 3, 1), to: Date.UTC(2001, 11, 30)}],
+			ordinal: false,
+			min:
+				Math.max(
+					// Show max of either 3 years ago or first historical date. This handles situations where the first historical date is very recent.
+					moment.min(...ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => moment(x[0]))).toDate().getTime(),
+					moment().add(-36, 'M').toDate().getTime()
+				),
+			max: 
+				Math.min(
+					// Show min of either 5 years ahead or last end date of any forecast ( + 1 month).
+					moment.max(
+						getData('forecast-varname').ts_data_parsed.filter(x => x.tskey !== 'hist').map(x => moment(x.data[x.data.length - 1][0]))
+						).add(1, 'month').toDate().getTime(),
+					moment().add(61, 'M').toDate().getTime(),
+				),
+			labels: {
+				style: {
+					color: 'black'
+				}
+			}
+		},
+		yAxis: {
+            labels: {
+				reserveSpace: true,
+				style: {
+					color: 'black'
+				},
+                formatter: function () {
+                    return this.value.toFixed(1) + '%';
+                }
+            },
+			title: {
+				text: units,
+				style: {
+					color: 'black',
+				}
+			},
+			opposite: false
+		},
+        navigator: {
+            enabled: true,
+			height: 30,
+			maskFill: 'rgba(48, 79, 11, .3)'
+        },
+		legend: {
+			enabled: true,
+			backgroundColor: 'var(--bs-efpale)',
+			borderColor: 'var(--bs-cmefi-dark)',
+			borderWidth: 1,
+			//useHTML: true,
+			align: 'center',
+			verticalAlign: 'bottom',
+			layout: 'horizontal',
+			title: {
+				text: 'Available Forecasts <span style="font-size: .8rem; color: #666; font-weight: normal; font-style: italic">(click below to hide/show)</span>',
+			}
+		},
+        tooltip: {
+            useHTML: true,
+			shared: true,
+			backgroundColor: 'rgba(255, 255, 255, .8)',
+			formatter: function () {
+				const points = this.points;
+				const ud = getData('forecast-varname');
+				const text =
+					'<table>' +
+					'<tr style="border-bottom:1px solid black"><td>DATE</td><td style="font-weight:600">' +
+						'DATA' +
+					'</td></tr>' +
+					points.map(function(point) {
+						const freq = ud.ts_data_parsed.filter(x => x.tskey === point.series.options.id)[0].freq;
+						const str =
+							'<tr>' +
+								'<td style="padding-right:1rem; color:'+point.series.color+'">' +
+									(freq === 'm' ? moment(point.x).format('MMM YYYY') : moment(point.x).format('YYYY[Q]Q')) +
+									// If historical data is monthly and is for same month, add asterisk!
+									(hist_freq === 'm' & moment().isSame(moment(point.x), 'month') & point.series.userOptions.id === 'hist' ? '*' : '') +
+								'</td>' + 
+								'<td style="color:' + point.color + '">' +
+									// Remove lal text in parantheses
+									point.series.name.replace(/ *\([^)]*\) */g, "") + ': ' + point.y.toFixed(2) +
+								'%</td>' + 
+							'</tr>' +
+							// If historical data is monthly and is for same month, add asterisk!
+							(hist_freq === 'm' & moment().isSame(moment(point.x), 'month') & point.series.userOptions.id === 'hist' ? '<tr><td colspan="2" style="color:rgb(102, 102, 102);font-weight:normal;font-style:italic;font-size:.75rem;text-align:right">*Current average of existing data for this month</tr>' : '');
+						return str;
+					}).join('') +
+					'</table>';
+				return text;
+			}
+        },
+        series: chart_data
+	};
+	const chart = Highcharts.stockChart('vintage-chart-container', o);
+	
+	return;
+}
 
 
 
