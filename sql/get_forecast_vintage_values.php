@@ -8,6 +8,7 @@ $vars_to_bind = array(
 	'form' => isset($fromAjax['form']) ? $fromAjax['form'] : '', // If null, set as ''
 	);
 
+// Get first vdates of each month that have at least 5 data counts
 $forecast_vintage_values = $sql -> select(
 "
 SELECT date, vdate, value FROM (
@@ -21,7 +22,8 @@ SELECT date, vdate, value FROM (
 			AND forecast = :forecast
 			AND form = :form
 			AND vdate < date
-			AND date >= NOW() - INTERVAL '5 YEARS'
+			AND vdate >= NOW() - INTERVAL '3 YEARS'
+			AND date < vdate + INTERVAL '3 YEARS'
 		ORDER BY date, vdate
 		) a
 	WHERE vdate_count >= 5

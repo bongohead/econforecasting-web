@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 							value: parseFloat(x.value)
 						}))
 				);
-			//console.log('ts_data_raw', ts_data_raw);
+			//console.log('raw_raw', ts_data_raw);
 			
 			// Now group data under tskeys
 			const ts_data_parsed = 
@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			drawChart(ts_data_parsed, variable.fullname, variable.units, variable.hist_freq);
 			drawTable(ts_data_parsed, variable.units);
 			drawDescription(ts_data_parsed, variable.varname, ud.primary_forecast);
-			drawVintageChart(vintage_values_parsed, variable.fullname, variable.units, variable.hist_freq);
+			drawVintageChart(vintage_values_parsed, ts_data_parsed, variable.fullname, variable.units, variable.hist_freq);
 			$('div.overlay').hide();
 		});
 });
@@ -378,19 +378,20 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 }
 
 
-function drawVintageChart(vintage_values_parsed, fullname, units, hist_freq) {
+function drawVintageChart(vintage_values_parsed, ts_data_parsed, fullname, units, hist_freq) {
 	
 	//console.log('fcDataParsed', fcDataParsed);
-	/*
-	const grMap = gradient.create(
-	  [0, 1, 24, 48, 72], //array of color stops
-	  ['#17202a', '#2874a6', '#148f77', '#d4ac0d', '#cb4335'], //array of colors corresponding to color stops
+	const vdates = [...new Set(vintage_values_parsed.map(x => x.vdate))]
+	
+	const gradient_map = gradient.create(
+	  [0, vdates.length * .25, vdates.length * .3, vdates.length * .35, vdates.length * .6, vdates.length * .8, vdates.length], //array of color stops
+	  ['#0094ff', '#00ffa8', '#8aff00', '#FFd200', '#FF8c00', '#FF5a00', '#FF1e00'], //array of colors corresponding to color stops
 	  'hex' //format of colors in previous parameter - 'hex', 'htmlcolor', 'rgb', or 'rgba'
 	);
-	*/
+
 	
-	const chart_data =
-		[...new Set(vintage_values_parsed.map(x => x.vdate))]
+	const chart_data_0 =
+		vdates
 		.map(vdate => ({
 			vdate: vdate,
 			data: vintage_values_parsed.filter(y => y.vdate === vdate).map(y => [y.date, y.value])
@@ -398,9 +399,17 @@ function drawVintageChart(vintage_values_parsed, fullname, units, hist_freq) {
 		.sort((a, b) => moment(a.vdate) > moment(b.vdate) ? 1 : -1)
 		.map((x, i) => ({
 			index: i,
-			name: x.vdate,
+			color: gradient.valToColor(i, gradient_map, 'hex'),
+			name: moment(x.vdate).format('MMM YY'),
+			custom: {
+				label: x.vdate + ' Forecast'
+			},
 			data: x.data.map(y => [parseInt(moment(y[0]).format('x')), y[1]]),
-			visible: (hist_freq === 'm' ? (moment(x.vdate).month() === 0) : true)
+			visible: (hist_freq === 'm' ? moment(x.vdate).month() == moment().month() : true),
+			lineWidth: 3,
+			opacity: .7,
+			dashStyle: 'ShortDash',
+			zIndex: 4
 			/*
 			id: x.tskey,
 			name:
@@ -420,7 +429,31 @@ function drawVintageChart(vintage_values_parsed, fullname, units, hist_freq) {
 			visible: (x.ts_type === 'primary' || x.ts_type === 'hist'),
 			index: i
 			*/
-		}));
+		}))
+		
+		
+	const hist_chart_data = {
+		data: ts_data_parsed.filter(x => x.tskey === 'hist')[0]['data']
+			.map(y => [parseInt(moment(y[0]).format('x')), y[1]])
+			.filter(y => moment(y[0]) >= moment(chart_data_0[0].data[0][0])),
+		color: 'black',
+		name: 'Historical Data',
+		visible: true,
+		lineWidth: 5,
+		opacity: .7,
+		custom: {
+			label: 'Realized History'
+		},
+		marker : {
+			enabled: true,
+			radius: 2,
+			symbol: 'triangle'
+		},
+		zIndex: 3
+	};
+	
+	console.log(hist_chart_data);
+	const chart_data = chart_data_0.concat(hist_chart_data)
 		
 	console.log('chart_data', chart_data);
 	
@@ -432,23 +465,23 @@ function drawVintageChart(vintage_values_parsed, fullname, units, hist_freq) {
 			style: {
 				fontColor: 'var(--bs-cmefi-green)'
 			},
-			height: 550,
+			height: 500,
 			plotBorderColor: 'black',
 			plotBorderWidth: 2
         },
         title: {
 			useHTML: true,
 			text: 
-				'<img class="me-2 mb-1" width="22" height="22" src="/static/cmefi-short.svg">' +
-				'<div style="vertical-align:middle;display:inline"><span>' + fullname + ' Forecast</span></div>',
+				'<img class="me-2 mb-1" width="18" height="18" src="/static/cmefi-short.svg">' +
+				'<div style="vertical-align:middle;display:inline"><span>Prior Forecast Performance</span></div>',
 			style: {
-				fontSize: '1.3rem',
+				fontSize: '1.1rem',
 				color: 'var(--bs-dark)'
 			}
         },
 		caption: {
 			useHTML: true,
-			text: 'Shaded area indicate recessions' + (hist_freq === 'm' ? '; Data represents monthly-averaged values when applicable' : ''),
+			text: 'Shaded area indicate recessions',
 			style: {
 				fontSize: '0.75rem'
 			}
@@ -460,72 +493,24 @@ function drawVintageChart(vintage_values_parsed, fullname, units, hist_freq) {
 					enabled: true,
 					units: [['day', [1]]]
 				},
-				marker : {
+				dataLabels: {
 					enabled: true,
-					radius: 2,
-					symbol: 'triangle'
+					crop: false,
+					overflow: 'none',
+					align: 'left',
+					verticalAlign: 'middle',
+					formatter: function() {
+						console.log(this.series);
+						if (this.point === this.series.points[Math.ceil((this.series.points.length - 1)/3)]) {
+							return '<span style="color:'+this.series.color+'">'+this.series.options.custom.label+'</span>';
+						}
+					}
 				}
 			}
         },
+		
 		rangeSelector: {
-			buttons: [
-				{
-					text: '1Y Forecast',
-					events: {
-						click: function(e) {
-							const state = $('#chart-container').highcharts().rangeSelector.buttons[0].state;
-							chart.xAxis[0].setExtremes(
-								Math.max(
-									moment.min(...ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => moment(x[0]))).toDate().getTime(),
-									moment().add(-36, 'M').toDate().getTime()
-									),
-								moment().add(12, 'M').toDate().getTime()
-								);
-							$('#chart-container').highcharts().rangeSelector.buttons[0].setState(state === 0 ? 2 : 0);
-							return false;
-						}
-					}
-				}, {
-					text: '2Y Forecast',
-					events: {
-						click: function(e) {
-							const state = $('#chart-container').highcharts().rangeSelector.buttons[1].state;
-							chart.xAxis[0].setExtremes(
-								Math.max(
-									moment.min(...ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => moment(x[0]))).toDate().getTime(),
-									moment().add(-36, 'M').toDate().getTime()
-									),
-								moment().add(24, 'M').toDate().getTime()
-								);
-							$('#chart-container').highcharts().rangeSelector.buttons[1].setState(state === 0 ? 2 : 0);
-							return false;
-						}
-					}
-				}, {
-					text: '5Y Forecast',
-					events: {
-						click: function(e) {
-							const state = $('#chart-container').highcharts().rangeSelector.buttons[2].state;
-							chart.xAxis[0].setExtremes(
-								Math.max(
-									moment.min(...ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => moment(x[0]))).toDate().getTime(),
-									moment().add(-36, 'M').toDate().getTime()
-									),
-								moment().add(60, 'M').toDate().getTime()
-								);
-							$('#chart-container').highcharts().rangeSelector.buttons[2].setState(state === 0 ? 2 : 0);
-							return false;
-						}
-					}
-				}, {
-					type: 'all',
-					text: 'Full Historical Data & Forecast'
-				}
-			],
-			buttonTheme: { // styles for the buttons
-				width: '6rem',
-				padding: 5
-			}
+			enabled: false
 		},
 		xAxis: {
 			type: 'datetime',
@@ -577,21 +562,21 @@ function drawVintageChart(vintage_values_parsed, fullname, units, hist_freq) {
 			opposite: false
 		},
         navigator: {
-            enabled: true,
+            enabled: false,
 			height: 30,
 			maskFill: 'rgba(48, 79, 11, .3)'
         },
 		legend: {
 			enabled: true,
-			backgroundColor: 'var(--bs-efpale)',
+			backgroundColor: 'var(--bs-efpaleblue)',
 			borderColor: 'var(--bs-cmefi-dark)',
 			borderWidth: 1,
 			//useHTML: true,
-			align: 'center',
-			verticalAlign: 'bottom',
-			layout: 'horizontal',
+			align: 'right',
+			verticalAlign: 'top',
+			layout: 'vertical',
 			title: {
-				text: 'Available Forecasts <span style="font-size: .8rem; color: #666; font-weight: normal; font-style: italic">(click below to hide/show)</span>',
+				text: 'Prior Forecasts<br><span style="font-size: .7rem; color: #666; font-weight: normal; font-style: italic">(click below to hide/show)</span>',
 			}
 		},
         tooltip: {
@@ -599,29 +584,20 @@ function drawVintageChart(vintage_values_parsed, fullname, units, hist_freq) {
 			shared: true,
 			backgroundColor: 'rgba(255, 255, 255, .8)',
 			formatter: function () {
+				console.log(this.points);
 				const points = this.points;
-				const ud = getData('forecast-varname');
 				const text =
+					'Historical Forecasts for ' + moment(this.x).format('MMM YYYY') + ' Value'
 					'<table>' +
 					'<tr style="border-bottom:1px solid black"><td>DATE</td><td style="font-weight:600">' +
 						'DATA' +
 					'</td></tr>' +
 					points.map(function(point) {
-						const freq = ud.ts_data_parsed.filter(x => x.tskey === point.series.options.id)[0].freq;
 						const str =
-							'<tr>' +
-								'<td style="padding-right:1rem; color:'+point.series.color+'">' +
-									(freq === 'm' ? moment(point.x).format('MMM YYYY') : moment(point.x).format('YYYY[Q]Q')) +
-									// If historical data is monthly and is for same month, add asterisk!
-									(hist_freq === 'm' & moment().isSame(moment(point.x), 'month') & point.series.userOptions.id === 'hist' ? '*' : '') +
-								'</td>' + 
-								'<td style="color:' + point.color + '">' +
-									// Remove lal text in parantheses
-									point.series.name.replace(/ *\([^)]*\) */g, "") + ': ' + point.y.toFixed(2) +
-								'%</td>' + 
-							'</tr>' +
-							// If historical data is monthly and is for same month, add asterisk!
-							(hist_freq === 'm' & moment().isSame(moment(point.x), 'month') & point.series.userOptions.id === 'hist' ? '<tr><td colspan="2" style="color:rgb(102, 102, 102);font-weight:normal;font-style:italic;font-size:.75rem;text-align:right">*Current average of existing data for this month</tr>' : '');
+							`<tr>
+								<td class="px-1" style="color:${point.color}">${point.series.options.custom.label}</td>
+								<td class="px-2">${point.y}</td>
+							</tr>`;
 						return str;
 					}).join('') +
 					'</table>';
@@ -908,7 +884,8 @@ function drawDescription(ts_data_parsed, varname, primary_forecast) {
 		
 	document.querySelector('#primary-forecast').innerHTML =
 		primary_forecast_html +
-		'<p>This model is updated daily. New releases will be made available between 16:00 and 20:00 ET.</p>';
+		'<p>This model is updated daily. New releases will be made available between 16:00 and 20:00 ET.</p>' +
+		document.querySelector('#primary-forecast').innerHTML;
 
 
 	const external_forecasts = ts_data_parsed.filter(x => x.tskey != primary_forecast & x.tskey != 'hist');
