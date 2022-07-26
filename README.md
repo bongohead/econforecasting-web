@@ -5,7 +5,8 @@ Description TBA
 
 # CHANGELOG
 
-## 2022-07-?? [v1.03] (Logo Update)
+## 2022-08-?? [v1.03] (Logo Update & Vintages)
+= Added code for displaying forecast vintages (primary forecast)
 - Cleaned up old images
 - Improved build system for SCSS files
 - Removed nowcast from rate forecasts
