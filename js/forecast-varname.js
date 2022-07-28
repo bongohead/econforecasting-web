@@ -14,11 +14,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			: ['cpi'].includes(varname) ? 'einf'
 			: null;
 			
+		const show_vintage_chart = 
+			['gdp', 'pce'].includes(varname) ? false
+			: true;
+			
 		//document.querySelectorAll('span.t-varname').forEach(x => x.textContent = tFullname);
 		const ud_prev = getAllData()['forecast-varname'] || {};
 		const ud = {... ud_prev, ... {
 				varname: varname,
-				primary_forecast: primary_forecast
+				primary_forecast: primary_forecast,
+				show_vintage_chart: show_vintage_chart
 			}};
 		setData('forecast-varname', ud);
 	})();
@@ -46,13 +51,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			const get_forecast_hist_values_last_vintage = getFetch('get_forecast_hist_values_last_vintage', ['forecast_hist_values'], {varname: variable.varname, freq: variable.hist_freq, form: 'd1'}, 10000, false);	
 			const get_forecast_values = getFetch('get_forecast_values_last_vintage', ['forecast_values'], {varname: variable.varname, freq: ['m', 'q'], form: 'd1'}, 10000, false);
 			//console.log({varname: variable.varname, forecast: ud.primary_forecast, freq: variable.hist_freq, form: 'd1'});
-			const get_forecast_vintage_values = getFetch('get_forecast_vintage_values', ['forecast_vintage_values'], {varname: variable.varname, forecast: ud.primary_forecast, freq: variable.hist_freq, form: 'd1'}, 10000, true);
+			const get_forecast_vintage_values = getFetch('get_forecast_vintage_values', ['forecast_vintage_values'], {varname: variable.varname, forecast: ud.primary_forecast, freq: variable.hist_freq, form: 'd1'}, 10000, false);
 			return Promise.all([variable, get_forecast_hist_values_last_vintage, get_forecast_values, get_forecast_vintage_values]);
 		})
 		// Pull response data & forecasts
 		.then(function(response) {
 			const variable = response[0];
-			console.log(response);
+			// console.log(response);
 			const ts_data_raw =
 				response[1].forecast_hist_values
 					// Filter monthly historical data if same month as current month
@@ -125,7 +130,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			drawChart(ts_data_parsed, variable.fullname, variable.units, variable.hist_freq);
 			drawTable(ts_data_parsed, variable.units);
 			drawDescription(ts_data_parsed, variable.varname, ud.primary_forecast);
-			drawVintageChart(vintage_values_parsed, ts_data_parsed, variable.fullname, variable.units, variable.hist_freq);
+			drawVintageChart(vintage_values_parsed, ts_data_parsed, variable.fullname, variable.units, variable.hist_freq, ud.show_vintage_chart);
 			$('div.overlay').hide();
 		});
 });
@@ -378,9 +383,40 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 }
 
 
-function drawVintageChart(vintage_values_parsed, ts_data_parsed, fullname, units, hist_freq) {
+function drawVintageChart(vintage_values_parsed, ts_data_parsed, fullname, units, hist_freq, show) {
 	
 	//console.log('fcDataParsed', fcDataParsed);
+	if (show === false) {
+		console.log('Exiting');
+		return;
+	}
+	
+	document.querySelector('#primary-forecast-vintage-div').innerHTML = `
+		<button type="button" class="btn btn-sm text-dark mx-auto px-2 py-2" style="background: linear-gradient(rgb(255, 247, 237), rgb(255, 247, 237));
+color: rgb(154, 52, 18) !important; border: 0px !important" data-bs-toggle="modal" data-bs-target="#primary-forecast-vintage-modal">
+			Prior Forecast Values
+		</button>
+
+		<div class="modal fade" id="primary-forecast-vintage-modal" tabindex="-1">
+		  <div class="modal-dialog modal-xl">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<h5 class="modal-title"></h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			  </div>
+			  <div class="modal-body">
+				<div id="vintage-chart-container" ></div>
+			  </div>
+			  <div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			  </div>
+			</div>
+		  </div>
+		</div>
+		`
+		
+	
+	
 	const vdates = [...new Set(vintage_values_parsed.map(x => x.vdate))]
 	
 	const gradient_map = gradient.create(
@@ -405,36 +441,20 @@ function drawVintageChart(vintage_values_parsed, ts_data_parsed, fullname, units
 				label: x.vdate + ' Forecast'
 			},
 			data: x.data.map(y => [parseInt(moment(y[0]).format('x')), y[1]]),
-			visible: (hist_freq === 'm' ? moment(x.vdate).month() == moment().month() : true),
+			visible: (hist_freq === 'm' ? moment(x.vdate).month() == moment().month() : moment(x.vdate).quarter() == moment().quarter() ),
 			lineWidth: 3,
 			opacity: .7,
 			dashStyle: 'ShortDash',
 			zIndex: 4
-			/*
-			id: x.tskey,
-			name:
-				x.shortname +
-				' <span style="font-size:.8rem;font-weight:normal">(' +
-					'Updated ' + moment(x.vdate).format('MM/DD/YY') +
-					(x.freq === 'q' ? '; Quarterly Data' : '; Monthly Data')  + 
-				')</span>',
-			data: x.data.map(x => [parseInt(moment(x[0]).format('x')), x[1]]),
-			type: 'line',
-			dashStyle: (x.tskey === 'hist' ? 'Solid' : 'ShortDash'),
-			lineWidth: (x.ts_type === 'hist' ? 5 : 3),
-			zIndex: (x.ts_type === 'hist' ? 3 : x.ts_type == 'primary' ? 3 : 1),
-			legendIndex: (x.ts_type === 'hist' ? 0 : x.ts_type == 'primary' ? 1 : 2),
-			color: (x.tskey === 'hist' ? 'black' : getColorArray()[i]),
-			opacity: 2,
-			visible: (x.ts_type === 'primary' || x.ts_type === 'hist'),
-			index: i
-			*/
 		}))
 		
-		
+	
+	//console.log(ts_data_parsed);
+	
 	const hist_chart_data = {
 		data: ts_data_parsed.filter(x => x.tskey === 'hist')[0]['data']
 			.map(y => [parseInt(moment(y[0]).format('x')), y[1]])
+			//.filter(y => moment(y[0]) >= moment().add(-3, 'years')),
 			.filter(y => moment(y[0]) >= moment(chart_data_0[0].data[0][0])),
 		color: 'black',
 		name: 'Historical Data',
@@ -452,10 +472,10 @@ function drawVintageChart(vintage_values_parsed, ts_data_parsed, fullname, units
 		zIndex: 3
 	};
 	
-	console.log(hist_chart_data);
+	// console.log(hist_chart_data);
 	const chart_data = chart_data_0.concat(hist_chart_data)
-		
-	console.log('chart_data', chart_data);
+	
+	//console.log('chart_data', chart_data);
 	
 	const o = {
         chart: {
@@ -473,7 +493,7 @@ function drawVintageChart(vintage_values_parsed, ts_data_parsed, fullname, units
 			useHTML: true,
 			text: 
 				'<img class="me-2 mb-1" width="18" height="18" src="/static/cmefi-short.svg">' +
-				'<div style="vertical-align:middle;display:inline"><span>Prior Forecast Performance</span></div>',
+				'<div style="vertical-align:middle;display:inline"><span>Prior Forecasts</span></div>',
 			style: {
 				fontSize: '1.1rem',
 				color: 'var(--bs-dark)'
@@ -500,7 +520,6 @@ function drawVintageChart(vintage_values_parsed, ts_data_parsed, fullname, units
 					align: 'left',
 					verticalAlign: 'middle',
 					formatter: function() {
-						console.log(this.series);
 						if (this.point === this.series.points[Math.ceil((this.series.points.length - 1)/3)]) {
 							return '<span style="color:'+this.series.color+'">'+this.series.options.custom.label+'</span>';
 						}
@@ -522,21 +541,6 @@ function drawVintageChart(vintage_values_parsed, ts_data_parsed, fullname, units
 			{color: '#D8D8D8', from: Date.UTC(2007, 12, 1), to: Date.UTC(2009, 6, 30)},
 			{color: '#D8D8D8', from: Date.UTC(2001, 3, 1), to: Date.UTC(2001, 11, 30)}],
 			ordinal: false,
-			/*min:
-				Math.max(
-					// Show max of either 3 years ago or first historical date. This handles situations where the first historical date is very recent.
-					moment.min(...ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => moment(x[0]))).toDate().getTime(),
-					moment().add(-36, 'M').toDate().getTime()
-				),
-			max: 
-				Math.min(
-					// Show min of either 5 years ahead or last end date of any forecast ( + 1 month).
-					moment.max(
-						getData('forecast-varname').ts_data_parsed.filter(x => x.tskey !== 'hist').map(x => moment(x.data[x.data.length - 1][0]))
-						).add(1, 'month').toDate().getTime(),
-					moment().add(61, 'M').toDate().getTime(),
-				),
-				*/
 			labels: {
 				style: {
 					color: 'black'
@@ -563,15 +567,12 @@ function drawVintageChart(vintage_values_parsed, ts_data_parsed, fullname, units
 		},
         navigator: {
             enabled: false,
-			height: 30,
-			maskFill: 'rgba(48, 79, 11, .3)'
         },
 		legend: {
 			enabled: true,
 			backgroundColor: 'var(--bs-efpaleblue)',
 			borderColor: 'var(--bs-cmefi-dark)',
 			borderWidth: 1,
-			//useHTML: true,
 			align: 'right',
 			verticalAlign: 'top',
 			layout: 'vertical',
@@ -584,19 +585,18 @@ function drawVintageChart(vintage_values_parsed, ts_data_parsed, fullname, units
 			shared: true,
 			backgroundColor: 'rgba(255, 255, 255, .8)',
 			formatter: function () {
-				console.log(this.points);
 				const points = this.points;
 				const text =
-					'Historical Forecasts for ' + moment(this.x).format('MMM YYYY') + ' Value'
+					'Historical Forecasts for ' + moment(this.x).format('MMM YYYY') + ' Value' +
 					'<table>' +
-					'<tr style="border-bottom:1px solid black"><td>DATE</td><td style="font-weight:600">' +
-						'DATA' +
+					'<tr class="px-1" style="border-bottom:1px solid black"><td>DATE</td><td class="px-2" style="font-weight:600">' +
+						'FORECAST' +
 					'</td></tr>' +
 					points.map(function(point) {
 						const str =
 							`<tr>
 								<td class="px-1" style="color:${point.color}">${point.series.options.custom.label}</td>
-								<td class="px-2">${point.y}</td>
+								<td class="px-2">${point.y.toFixed(2)}</td>
 							</tr>`;
 						return str;
 					}).join('') +
