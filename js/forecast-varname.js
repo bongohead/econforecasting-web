@@ -161,7 +161,7 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 				data: x.data.map(x => [parseInt(moment(x[0]).format('x')), x[1]]),
 				type: 'line',
 				dashStyle: (x.tskey === 'hist' ? 'Solid' : 'ShortDash'),
-				lineWidth: (x.ts_type === 'hist' ? 5 : 3),
+				lineWidth: (x.ts_type === 'hist' ? 3 : 2),
 				zIndex: (x.ts_type === 'hist' ? 3 : x.ts_type == 'primary' ? 3 : 1),
 				legendIndex: (x.ts_type === 'hist' ? 0 : x.ts_type == 'primary' ? 1 : 2),
 				color: (x.tskey === 'hist' ? 'black' : getColorArray()[i]),
@@ -210,8 +210,8 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 				},
 				marker : {
 					enabled: true,
-					radius: 2,
-					symbol: 'triangle'
+					radius: 3,
+					symbol: 'square'
 				}
 			}
         },
@@ -225,7 +225,7 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 							chart.xAxis[0].setExtremes(
 								Math.max(
 									moment.min(...ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => moment(x[0]))).toDate().getTime(),
-									moment().add(-36, 'M').toDate().getTime()
+									moment().add(-12, 'M').toDate().getTime()
 									),
 								moment().add(12, 'M').toDate().getTime()
 								);
@@ -241,7 +241,7 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 							chart.xAxis[0].setExtremes(
 								Math.max(
 									moment.min(...ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => moment(x[0]))).toDate().getTime(),
-									moment().add(-36, 'M').toDate().getTime()
+									moment().add(-24, 'M').toDate().getTime()
 									),
 								moment().add(24, 'M').toDate().getTime()
 								);
@@ -257,7 +257,7 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 							chart.xAxis[0].setExtremes(
 								Math.max(
 									moment.min(...ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => moment(x[0]))).toDate().getTime(),
-									moment().add(-36, 'M').toDate().getTime()
+									moment().add(-60, 'M').toDate().getTime()
 									),
 								moment().add(60, 'M').toDate().getTime()
 								);
@@ -287,9 +287,9 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 			ordinal: false,
 			min:
 				Math.max(
-					// Show max of either 3 years ago or first historical date. This handles situations where the first historical date is very recent.
+					// Show max of either 4 years ago or first historical date. This handles situations where the first historical date is very recent.
 					moment.min(...ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => moment(x[0]))).toDate().getTime(),
-					moment().add(-36, 'M').toDate().getTime()
+					moment().add(-48, 'M').toDate().getTime()
 				),
 			max: 
 				Math.min(
@@ -297,7 +297,7 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 					moment.max(
 						getData('forecast-varname').ts_data_parsed.filter(x => x.tskey !== 'hist').map(x => moment(x.data[x.data.length - 1][0]))
 						).add(1, 'month').toDate().getTime(),
-					moment().add(61, 'M').toDate().getTime(),
+					moment().add(48, 'M').toDate().getTime(),
 				),
 			labels: {
 				style: {

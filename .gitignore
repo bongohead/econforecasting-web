@@ -1,2 +1,3 @@
-cache
+public/cache/**
 scss/libs/**
+public/static/data/**
