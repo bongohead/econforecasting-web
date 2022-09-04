@@ -124,7 +124,7 @@ function getAJAX(model, toScript, fromAjax, timeout = 10000) {
 
 
 function getFetch(model, toScript, fromAjax, timeout = 10, verbose = false) {
-	
+		
 	const timerStart = Date.now();	
 	return new Promise ((resolve, reject) => 
 		$.ajax({

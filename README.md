@@ -5,7 +5,11 @@ Description TBA
 
 # CHANGELOG
 
-## 2022-08-?? [v1.03] (Logo Update & Vintages)
+## 2022-09-?? [v1.04] (VPS Migration & Misc)
+- Added some better SCSS compilation documentation
+- Added some minor fix for VPS migration
+
+## 2022-08-30 [v1.03] (Logo Update & Vintages)
 - Added code for displaying forecast vintages (primary forecast)
 - Cleaned up old images
 - Improved build system for SCSS files
