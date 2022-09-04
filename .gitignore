@@ -2,3 +2,4 @@ public/cache/**
 scss/libs/**
 public/static/data/**
 public/static/style.css
+public/static/style.css.map
