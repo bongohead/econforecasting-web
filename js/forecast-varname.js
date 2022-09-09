@@ -31,6 +31,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	/********** GET DATA **********/
 	const ud = getData('forecast-varname') || {};
 	const get_varname_desc = getFetch('get_forecast_variable', ['forecast_variable'], {varname: ud.varname}, 10000, false);
+	
+	
 	Promise.all([get_varname_desc])
 		.then(function(response) {
 			const variable_raw = response[0].forecast_variable[0];
