@@ -9,6 +9,7 @@ Description TBA
 - Added some better SCSS compilation documentation
 - Added some minor fix for VPS migration
 - Moved vintage chart load to an event trigger to reduce initial page load time
+- Removed ads code
 
 ## 2022-08-30 [v1.03] (Logo Update & Vintages)
 - Added code for displaying forecast vintages (primary forecast)

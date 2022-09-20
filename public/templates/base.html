@@ -146,6 +146,10 @@
 	<main>
 		{% block content %}
 		{% endblock %}
+		
+
+		<div class="row g-0 justify-content-center">
+		</div>
 	</main>
 
 	<footer class="container-fluid text-dark px-0 pt-5 bg-white border-top">
@@ -203,18 +207,8 @@
 	
 	<!-- Static Links -->
     {% block staticlinks %}{% endblock %}
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-5JBMJCQQD7"></script>
-	<script>
-	  window.dataLayer = window.dataLayer || [];
-	  function gtag(){dataLayer.push(arguments);}
-	  gtag('js', new Date());
-
-	  gtag('config', 'G-5JBMJCQQD7');
-	</script>
 	
-	<!--<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9558447444041339"></script>-->
-
+	{% include 'g-tags.html' ignore missing  %}
 
 	<script>
 	  {{ bodyScript |raw }}

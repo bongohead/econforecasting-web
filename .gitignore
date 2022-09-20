@@ -1,5 +1,12 @@
 public/cache/**
-scss/libs/**
 public/static/data/**
+
+# Styling
+scss/libs/**
 public/static/style.css
 public/static/style.css.map
+
+# Adsense
+public/ads.txt
+public/templates/g-tags.html
+public/templates/g-ads.html
