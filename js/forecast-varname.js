@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			['sofr', 'ffr', 'ameribor', 'bsby', 'mort30y', 'mort15y',
 			't03m', 't06m', 't01y', 't02y', 't05y', 't10y', 't20y', 't30y',
 			'sonia', 'estr'].includes(varname) ? 'int'
-			: ['gdp', 'pce'].includes(varname) ? 'comp'
+			: ['gdp', 'pce', 'pdi'].includes(varname) ? 'comp'
 			: ['cpi'].includes(varname) ? 'einf'
 			: null;
 			

@@ -5,7 +5,10 @@ Description TBA
 
 # CHANGELOG
 
-## 2022-08-?? [v1.03] (Logo Update & Vintages)
+## 2022-09-?? [v1.04]
+- Fixed bug caused by lack of ordering in get_forecast_values_last_vintage causing charts to not render max date correctly
+
+## 2022-08-24 [v1.03] (Logo Update & Vintages)
 - Added code for displaying forecast vintages (primary forecast)
 - Cleaned up old images
 - Improved build system for SCSS files
