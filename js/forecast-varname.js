@@ -31,6 +31,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	/********** GET DATA **********/
 	const ud = getData('forecast-varname') || {};
 	const get_varname_desc = getFetch('get_forecast_variable', ['forecast_variable'], {varname: ud.varname}, 10000, false);
+	
+	
 	Promise.all([get_varname_desc])
 		.then(function(response) {
 			const variable_raw = response[0].forecast_variable[0];
@@ -123,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			const vintage_values_parsed = response[3].forecast_vintage_values.map(x => ({date: x.date, vdate: x.vdate, value: parseFloat(x.value)}))
 			
 			setData('forecast-varname', {...getData('forecast-varname'), ts_data_parsed: ts_data_parsed, vintage_values_parsed: vintage_values_parsed, ...variable});
-			
+
 			return({variable, ts_data_parsed, vintage_values_parsed});	
 		})
 		.then(function({variable, ts_data_parsed, vintage_values_parsed}) {
@@ -132,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			drawDescription(ts_data_parsed, variable.varname, ud.primary_forecast);
 			drawVintageChart(vintage_values_parsed, ts_data_parsed, variable.fullname, variable.units, variable.hist_freq, ud.show_vintage_chart);
 			$('div.overlay').hide();
-		});
+		})
 });
 
 /*** Draw chart ***/
@@ -405,7 +407,7 @@ color: rgb(154, 52, 18) !important; border: 0px !important" data-bs-toggle="moda
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			  </div>
 			  <div class="modal-body">
-				<div id="vintage-chart-container" ></div>
+				<div id="vintage-chart-container" >Loading...</div>
 			  </div>
 			  <div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -414,199 +416,212 @@ color: rgb(154, 52, 18) !important; border: 0px !important" data-bs-toggle="moda
 		  </div>
 		</div>
 		`
-		
-	
-	
-	const vdates = [...new Set(vintage_values_parsed.map(x => x.vdate))]
-	
-	const gradient_map = gradient.create(
-	  [0, vdates.length * .25, vdates.length * .3, vdates.length * .35, vdates.length * .6, vdates.length * .8, vdates.length], //array of color stops
-	  ['#0094ff', '#00ffa8', '#8aff00', '#FFd200', '#FF8c00', '#FF5a00', '#FF1e00'], //array of colors corresponding to color stops
-	  'hex' //format of colors in previous parameter - 'hex', 'htmlcolor', 'rgb', or 'rgba'
-	);
 
-	
-	const chart_data_0 =
-		vdates
-		.map(vdate => ({
-			vdate: vdate,
-			data: vintage_values_parsed.filter(y => y.vdate === vdate).map(y => [y.date, y.value])
-		}))
-		.sort((a, b) => moment(a.vdate) > moment(b.vdate) ? 1 : -1)
-		.map((x, i) => ({
-			index: i,
-			color: gradient.valToColor(i, gradient_map, 'hex'),
-			name: moment(x.vdate).format('MMM YY'),
-			custom: {
-				label: x.vdate + ' Forecast'
-			},
-			data: x.data.map(y => [parseInt(moment(y[0]).format('x')), y[1]]),
-			visible: (hist_freq === 'm' ? moment(x.vdate).month() == moment().month() : moment(x.vdate).quarter() == moment().quarter() ),
-			lineWidth: 3,
-			opacity: .7,
-			dashStyle: 'ShortDash',
-			zIndex: 4
-		}))
+	const modal = document.querySelector('#primary-forecast-vintage-modal')
 		
-	
-	//console.log(ts_data_parsed);
-	
-	const hist_chart_data = {
-		data: ts_data_parsed.filter(x => x.tskey === 'hist')[0]['data']
-			.map(y => [parseInt(moment(y[0]).format('x')), y[1]])
-			//.filter(y => moment(y[0]) >= moment().add(-3, 'years')),
-			.filter(y => moment(y[0]) >= moment(chart_data_0[0].data[0][0])),
-		color: 'black',
-		name: 'Historical Data',
-		visible: true,
-		lineWidth: 5,
-		opacity: .7,
-		custom: {
-			label: 'Realized History'
-		},
-		marker : {
-			enabled: true,
-			radius: 2,
-			symbol: 'triangle'
-		},
-		zIndex: 3
-	};
-	
-	// console.log(hist_chart_data);
-	const chart_data = chart_data_0.concat(hist_chart_data)
-	
-	//console.log('chart_data', chart_data);
-	
-	const o = {
-        chart: {
-			spacingTop: 15,
-            backgroundColor: 'rgba(255, 255, 255, 0)',
-			plotBackgroundColor: '#FFFFFF',
-			style: {
-				fontColor: 'var(--bs-cmefi-green)'
-			},
-			height: 500,
-			plotBorderColor: 'black',
-			plotBorderWidth: 2
-        },
-        title: {
-			useHTML: true,
-			text: 
-				'<img class="me-2 mb-1" width="18" height="18" src="/static/cmefi-short.svg">' +
-				'<div style="vertical-align:middle;display:inline"><span>Prior Forecasts</span></div>',
-			style: {
-				fontSize: '1.1rem',
-				color: 'var(--bs-dark)'
-			}
-        },
-		caption: {
-			useHTML: true,
-			text: 'Shaded area indicate recessions',
-			style: {
-				fontSize: '0.75rem'
-			}
-		},
-        plotOptions: {
-			series: {
-				//shadow: true,
-				dataGrouping: {
-					enabled: true,
-					units: [['day', [1]]]
+	modal.addEventListener('shown.bs.modal', function(e) {
+		
+		// Only build on first modal load
+		if ($('#vintage-chart-container').highcharts() != undefined) return;
+
+		const vdates = [...new Set(vintage_values_parsed.map(x => x.vdate))]
+		
+		const gradient_map = gradient.create(
+		  [0, vdates.length * .25, vdates.length * .3, vdates.length * .35, vdates.length * .6, vdates.length * .8, vdates.length], //array of color stops
+		  ['#0094ff', '#00ffa8', '#8aff00', '#FFd200', '#FF8c00', '#FF5a00', '#FF1e00'], //array of colors corresponding to color stops
+		  'hex' //format of colors in previous parameter - 'hex', 'htmlcolor', 'rgb', or 'rgba'
+		);
+
+		
+		const chart_data_0 =
+			vdates
+			.map(vdate => ({
+				vdate: vdate,
+				data: vintage_values_parsed.filter(y => y.vdate === vdate).map(y => [y.date, y.value])
+			}))
+			.sort((a, b) => moment(a.vdate) > moment(b.vdate) ? 1 : -1)
+			.map((x, i) => ({
+				index: i,
+				color: gradient.valToColor(i, gradient_map, 'hex'),
+				name: moment(x.vdate).format('MMM YY'),
+				custom: {
+					label: x.vdate + ' Forecast'
 				},
-				dataLabels: {
-					enabled: true,
-					crop: false,
-					overflow: 'none',
-					align: 'left',
-					verticalAlign: 'middle',
-					formatter: function() {
-						if (this.point === this.series.points[Math.ceil((this.series.points.length - 1)/3)]) {
-							return '<span style="color:'+this.series.color+'">'+this.series.options.custom.label+'</span>';
+				data: x.data.map(y => [parseInt(moment(y[0]).format('x')), y[1]]),
+				visible: (hist_freq === 'm' ? moment(x.vdate).month() == moment().month() : moment(x.vdate).quarter() == moment().quarter() ),
+				lineWidth: 3,
+				opacity: .7,
+				dashStyle: 'ShortDash',
+				zIndex: 4
+			}))
+			
+		
+		//console.log(ts_data_parsed);
+		
+		const hist_chart_data = {
+			data: ts_data_parsed.filter(x => x.tskey === 'hist')[0]['data']
+				.map(y => [parseInt(moment(y[0]).format('x')), y[1]])
+				//.filter(y => moment(y[0]) >= moment().add(-3, 'years')),
+				.filter(y => moment(y[0]) >= moment(chart_data_0[0].data[0][0])),
+			color: 'black',
+			name: 'Historical Data',
+			visible: true,
+			lineWidth: 5,
+			opacity: .7,
+			custom: {
+				label: 'Realized History'
+			},
+			marker : {
+				enabled: true,
+				radius: 2,
+				symbol: 'triangle'
+			},
+			zIndex: 3
+		};
+		
+		// console.log(hist_chart_data);
+		const chart_data = chart_data_0.concat(hist_chart_data)
+		
+		//console.log('chart_data', chart_data);
+		
+		const o = {
+			chart: {
+				spacingTop: 15,
+				backgroundColor: 'rgba(255, 255, 255, 0)',
+				plotBackgroundColor: '#FFFFFF',
+				style: {
+					fontColor: 'var(--bs-cmefi-green)'
+				},
+				height: 500,
+				plotBorderColor: 'black',
+				plotBorderWidth: 2
+			},
+			title: {
+				useHTML: true,
+				text: 
+					'<img class="me-2 mb-1" width="18" height="18" src="/static/cmefi-short.svg">' +
+					'<div style="vertical-align:middle;display:inline"><span>Prior Forecasts</span></div>',
+				style: {
+					fontSize: '1.1rem',
+					color: 'var(--bs-dark)'
+				}
+			},
+			caption: {
+				useHTML: true,
+				text: 'Shaded area indicate recessions',
+				style: {
+					fontSize: '0.75rem'
+				}
+			},
+			plotOptions: {
+				series: {
+					//shadow: true,
+					dataGrouping: {
+						enabled: true,
+						units: [['day', [1]]]
+					},
+					dataLabels: {
+						enabled: true,
+						crop: false,
+						overflow: 'none',
+						align: 'left',
+						verticalAlign: 'middle',
+						formatter: function() {
+							if (this.point === this.series.points[Math.ceil((this.series.points.length - 1)/3)]) {
+								return '<span style="color:'+this.series.color+'">'+this.series.options.custom.label+'</span>';
+							}
 						}
 					}
 				}
-			}
-        },
-		
-		rangeSelector: {
-			enabled: false
-		},
-		xAxis: {
-			type: 'datetime',
-            dateTimeLabelFormats: {
-                day: "%m-%d-%Y",
-                week: "%m-%d-%Y"
-            },
-			plotBands: [{color: '#D8D8D8', from: Date.UTC(2020, 2, 1), to: Date.UTC(2021, 2, 28)},
-			{color: '#D8D8D8', from: Date.UTC(2007, 12, 1), to: Date.UTC(2009, 6, 30)},
-			{color: '#D8D8D8', from: Date.UTC(2001, 3, 1), to: Date.UTC(2001, 11, 30)}],
-			ordinal: false,
-			labels: {
-				style: {
-					color: 'black'
-				}
-			}
-		},
-		yAxis: {
-            labels: {
-				reserveSpace: true,
-				style: {
-					color: 'black'
+			},
+			
+			rangeSelector: {
+				enabled: false
+			},
+			xAxis: {
+				type: 'datetime',
+				dateTimeLabelFormats: {
+					day: "%m-%d-%Y",
+					week: "%m-%d-%Y"
 				},
-                formatter: function () {
-                    return this.value.toFixed(1) + '%';
-                }
-            },
-			title: {
-				text: units,
-				style: {
-					color: 'black',
+				plotBands: [{color: '#D8D8D8', from: Date.UTC(2020, 2, 1), to: Date.UTC(2021, 2, 28)},
+				{color: '#D8D8D8', from: Date.UTC(2007, 12, 1), to: Date.UTC(2009, 6, 30)},
+				{color: '#D8D8D8', from: Date.UTC(2001, 3, 1), to: Date.UTC(2001, 11, 30)}],
+				ordinal: false,
+				labels: {
+					style: {
+						color: 'black'
+					}
 				}
 			},
-			opposite: false
-		},
-        navigator: {
-            enabled: false,
-        },
-		legend: {
-			enabled: true,
-			backgroundColor: 'var(--bs-efpaleblue)',
-			borderColor: 'var(--bs-cmefi-dark)',
-			borderWidth: 1,
-			align: 'right',
-			verticalAlign: 'top',
-			layout: 'vertical',
-			title: {
-				text: 'Prior Forecasts<br><span style="font-size: .7rem; color: #666; font-weight: normal; font-style: italic">(click below to hide/show)</span>',
-			}
-		},
-        tooltip: {
-            useHTML: true,
-			shared: true,
-			backgroundColor: 'rgba(255, 255, 255, .8)',
-			formatter: function () {
-				const points = this.points;
-				const text =
-					'Historical Forecasts for ' + moment(this.x).format('MMM YYYY') + ' Value' +
-					'<table>' +
-					'<tr class="px-1" style="border-bottom:1px solid black"><td>DATE</td><td class="px-2" style="font-weight:600">' +
-						'FORECAST' +
-					'</td></tr>' +
-					points.map(function(point) {
-						const str =
-							`<tr>
-								<td class="px-1" style="color:${point.color}">${point.series.options.custom.label}</td>
-								<td class="px-2">${point.y.toFixed(2)}</td>
-							</tr>`;
-						return str;
-					}).join('') +
-					'</table>';
-				return text;
-			}
-        },
-        series: chart_data
-	};
-	const chart = Highcharts.stockChart('vintage-chart-container', o);
+			yAxis: {
+				labels: {
+					reserveSpace: true,
+					style: {
+						color: 'black'
+					},
+					formatter: function () {
+						return this.value.toFixed(1) + '%';
+					}
+				},
+				title: {
+					text: units,
+					style: {
+						color: 'black',
+					}
+				},
+				opposite: false
+			},
+			navigator: {
+				enabled: false,
+			},
+			legend: {
+				enabled: true,
+				backgroundColor: 'var(--bs-efpaleblue)',
+				borderColor: 'var(--bs-cmefi-dark)',
+				borderWidth: 1,
+				align: 'right',
+				verticalAlign: 'top',
+				layout: 'vertical',
+				title: {
+					text: 'Prior Forecasts<br><span style="font-size: .7rem; color: #666; font-weight: normal; font-style: italic">(click below to hide/show)</span>',
+				}
+			},
+			tooltip: {
+				useHTML: true,
+				shared: true,
+				backgroundColor: 'rgba(255, 255, 255, .8)',
+				formatter: function () {
+					const points = this.points;
+					const text =
+						'Historical Forecasts for ' + moment(this.x).format('MMM YYYY') + ' Value' +
+						'<table>' +
+						'<tr class="px-1" style="border-bottom:1px solid black"><td>DATE</td><td class="px-2" style="font-weight:600">' +
+							'FORECAST' +
+						'</td></tr>' +
+						points.map(function(point) {
+							const str =
+								`<tr>
+									<td class="px-1" style="color:${point.color}">${point.series.options.custom.label}</td>
+									<td class="px-2">${point.y.toFixed(2)}</td>
+								</tr>`;
+							return str;
+						}).join('') +
+						'</table>';
+					return text;
+				}
+			},
+			series: chart_data
+		};
+		
+		const chart = Highcharts.stockChart('vintage-chart-container', o);
+		
+	});
+
+		
+
+		
+	
 	
 	return;
 }

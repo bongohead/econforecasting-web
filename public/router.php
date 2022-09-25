@@ -10,6 +10,13 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 		$modelsDir = __DIR__.'/../sql',
 		$db = 'cmefi'
 	);
+} else if (isset($_POST) && isset($_POST['isFetch'])) {
+	routeFetch(
+		$postVars = $_POST,
+		$modelsDir = __DIR__.'/../sql',
+		$db = 'cmefi'
+	);
+	
 } else {
 	routePage(
 		templatesDir: __DIR__.'/templates',

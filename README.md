@@ -5,10 +5,14 @@ Description TBA
 
 # CHANGELOG
 
-## 2022-09-?? [v1.04]
+## 2022-09-?? [v1.04] (VPS Migration & Misc)
+- Added some better SCSS compilation documentation
+- Added some minor fix for VPS migration
 - Fixed bug caused by lack of ordering in get_forecast_values_last_vintage causing charts to not render max date correctly
+- Moved vintage chart load to an event trigger to reduce initial page load time
+- Removed ads code
 
-## 2022-08-24 [v1.03] (Logo Update & Vintages)
+## 2022-08-30 [v1.03] (Logo Update & Vintages)
 - Added code for displaying forecast vintages (primary forecast)
 - Cleaned up old images
 - Improved build system for SCSS files
