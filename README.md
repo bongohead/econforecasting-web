@@ -9,6 +9,7 @@ Description TBA
 - Added some better SCSS compilation documentation
 - Added some minor fix for VPS migration
 - Fixed bug caused by lack of ordering in get_forecast_values_last_vintage causing charts to not render max date correctly
+- Fixed bug with Treasury forecasts not exporting table data correctly
 - Moved vintage chart load to an event trigger to reduce initial page load time
 - Removed ads code
 
