@@ -8,6 +8,7 @@ Description TBA
 ## 2022-09-?? [v1.04] (VPS Migration & Misc)
 - Added some better SCSS compilation documentation
 - Added some minor fix for VPS migration
+- Fixed bug with Treasury forecasts not exporting table data correctly
 - Moved vintage chart load to an event trigger to reduce initial page load time
 - Removed ads code
 

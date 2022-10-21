@@ -48,4 +48,5 @@ FROM
 ) b
 LEFT JOIN forecasts f ON b.forecast = f.id
 WHERE max_vdate = vdate
+ORDER BY vdate, date
 ", $vars_to_bind);

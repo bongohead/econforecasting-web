@@ -437,8 +437,8 @@ function drawTable(treasury_data) {
 			"<'row justify-content-center'<'col-12'tr>>" +
 			"<'row justify-content-end'<'col-auto'p>>",
 		buttons: [
-			{extend: 'copyHtml5', text: 'Copy', exportOptions: {columns: [0, 1]}, className: 'btn btn-sm btn-light'},
-			{extend: 'csvHtml5', text: 'Download', exportOptions: {columns: [0, 1]}, className: 'btn btn-sm btn-light'}
+			{extend: 'copyHtml5', text: 'Copy', exportOptions: {columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]}, className: 'btn btn-sm btn-light'},
+			{extend: 'csvHtml5', text: 'Download', exportOptions: {columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]}, className: 'btn btn-sm btn-light'}
 		],
 		order: [[0, 'desc']],
 		paging: true,
