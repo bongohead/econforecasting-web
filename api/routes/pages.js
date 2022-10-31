@@ -104,37 +104,122 @@ router.post('/get_token', function(req, res) {
 
 });
 
-
 /*** Get obs ****/
 /***
 Note that anything that passes through authenticateToken will have access to the req.user key 
 ***/
-router.post('/get_obs', authenticateToken, function(req, res) {
+router.post('/get_obs_all_vintages', authenticateToken, function(req, res) {
 		
 	const varname = req.query.varname;
-	
-	if (varname == null || varname === '') {
+	const freq = req.query.freq;
+	const min_vdate = req.query.min_vdate || '2000-01-01';
+
+	if (varname == null || varname === '' || freq == null || !['m', 'q'].includes(freq) || min_vdate.match(/^\d{4}-\d{2}-\d{2}$/) === null) {
 		res.statusMessage = 'invalid parameters';
 		res.status(400).end();
 		return;
 	}
 	
 	query_text =
-		`SELECT *
-		FROM forecast_values
-		WHERE varname = $1::text
-		LIMIT 10000`
+		`SELECT
+			f.shortname,
+			TO_CHAR(vdate, 'yyyy-mm-dd') AS vdate,
+			TO_CHAR(date, 'yyyy-mm-dd') AS date,
+			value
+		FROM forecast_values v
+		LEFT JOIN forecasts f ON v.forecast = f.id
+		WHERE 
+			varname = $1::text
+			AND form = 'd1'
+			AND freq = $2::text
+			AND f.external = FALSE 
+			AND forecast != 'now'
+			AND vdate >= $3::date
+		ORDER BY forecast, vdate, date
+		LIMIT 20000`
 		
 	pool
 		.query({
 			text: query_text,
-			values: [varname]
+			values: [varname, freq, min_vdate]
 			})
 		.then(db_result => {
-			res.status(200).json({success: 1, user: req.user, result: db_result.rows});
+			const data = db_result.rows.map(function(x) {
+				return {
+					forecast: x.shortname,
+					vdate: x.vdate,
+					date: x.date,
+					value: Number(x.value)
+				}
+			});
+			
+			res.status(200).json({success: 1, user: req.user, freq: freq, varname: varname, count: data.length, result: data});
+
 		})
 		.catch(err => {
-			res.status(200).json({success: 0, user: req.user, result: err});
+			res.status(200).json({success: 0, user: req.user, freq: freq, varname: varname, result: err});
+		});
+});
+
+
+/*** Get obs for a varname for last vintage ***/
+router.post('/get_obs_last_vintage', authenticateToken, function(req, res) {
+		
+	const varname = req.query.varname;
+	const freq = req.query.freq;
+	
+	if (varname == null || varname === '' || freq == null || !['m', 'q'].includes(freq)) {
+		res.statusMessage = 'invalid parameters';
+		res.status(400).end();
+		return;
+	}
+	query_text =
+		`SELECT
+			f.shortname,
+			TO_CHAR(vdate, 'yyyy-mm-dd') AS vdate,
+			TO_CHAR(date, 'yyyy-mm-dd') AS date,
+			value
+		FROM 
+		(
+			SELECT forecast, freq, varname, vdate, date, value, MAX(vdate) OVER (partition by forecast, freq, varname) AS max_vdate
+			FROM
+			(
+				SELECT 
+					forecast, freq, date, varname, MAX(vdate) as vdate, last(value, vdate) as VALUE
+				FROM forecast_values
+				WHERE 
+					varname = $1::text
+					AND form = 'd1'
+					AND freq = $2::text
+					AND forecast != 'now'
+				GROUP BY forecast, varname, freq, date
+				ORDER BY forecast, varname, freq, date
+			) a
+		) b
+		LEFT JOIN forecasts f ON b.forecast = f.id
+		WHERE max_vdate = vdate AND f.external = FALSE 
+		ORDER BY vdate, date`;
+		
+	pool
+		.query({
+			text: query_text,
+			values: [varname, freq]
+			})
+		.then(db_result => {
+			
+			const data = db_result.rows.map(function(x) {
+				return {
+					forecast: x.shortname,
+					vdate: x.vdate,
+					date: x.date,
+					value: Number(x.value)
+				}
+			});
+			
+			res.status(200).json({success: 1, user: req.user, freq: freq, varname: varname, count: data.length, result: data});
+		})
+		.catch(err => {
+			res.status(200).json({success: 0, user: req.user, freq: freq, varname: varname, result: err});
 		});
 });
 
