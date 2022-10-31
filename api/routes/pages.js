@@ -113,8 +113,12 @@ router.post('/get_obs_all_vintages', authenticateToken, function(req, res) {
 	const varname = req.query.varname;
 	const freq = req.query.freq;
 	const min_vdate = req.query.min_vdate || '2000-01-01';
+	const max_vdate = req.query.max_vdate || '9999-12-31';
 
-	if (varname == null || varname === '' || freq == null || !['m', 'q'].includes(freq) || min_vdate.match(/^\d{4}-\d{2}-\d{2}$/) === null) {
+	if (
+		varname == null || varname === '' || freq == null || !['m', 'q'].includes(freq) || 
+		min_vdate.match(/^\d{4}-\d{2}-\d{2}$/) === null || max_vdate.match(/^\d{4}-\d{2}-\d{2}$/) === null
+		) {
 		res.statusMessage = 'invalid parameters';
 		res.status(400).end();
 		return;
@@ -135,13 +139,14 @@ router.post('/get_obs_all_vintages', authenticateToken, function(req, res) {
 			AND f.external = FALSE 
 			AND forecast != 'now'
 			AND vdate >= $3::date
+			AND vdate <= $4::date
 		ORDER BY forecast, vdate, date
-		LIMIT 20000`
+		LIMIT 10000`
 		
 	pool
 		.query({
 			text: query_text,
-			values: [varname, freq, min_vdate]
+			values: [varname, freq, min_vdate, max_vdate]
 			})
 		.then(db_result => {
 			const data = db_result.rows.map(function(x) {
@@ -198,7 +203,8 @@ router.post('/get_obs_last_vintage', authenticateToken, function(req, res) {
 		) b
 		LEFT JOIN forecasts f ON b.forecast = f.id
 		WHERE max_vdate = vdate AND f.external = FALSE 
-		ORDER BY vdate, date`;
+		ORDER BY vdate, date
+		LIMIT 10000`;
 		
 	pool
 		.query({

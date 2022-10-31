@@ -4,6 +4,7 @@ const express = require("express");
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const helmet = require('helmet');
 const rateLimiter = require('./middleware').rateLimiter;
 const pageRouter = require('./routes/pages');
 
@@ -14,6 +15,9 @@ const path = require('path');
 
 const app = express();
 app.listen(port, 300);
+
+// Use Helmet to define headers for sec
+app.use(helmet());
 
 // Enable CORS for all routes
 app.use(cors());
