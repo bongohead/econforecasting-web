@@ -25,6 +25,10 @@ router.post('/', function(req, res) {
 	res.json({success: 0, error: "invalid request (empty)"});
 });
 
+router.get('/get_token', function(req, res) {
+	res.json({success: 0, error: "invalid request (wrong request type!)"});
+});
+
 
 /*** Add a new user (from superadmin only) ***/
 router.post('/add_user', function(req, res) {

@@ -18,9 +18,9 @@ module.exports = {
 	
 	
 	rateLimiter: rateLimit({
-		windowMs: 1 * 60 * 60 * 1000, // 1 hrs in milliseconds
-		max: 10,
-		message: 'You have exceeded the 100 requests in 24 hrs limit!', 
+		windowMs: 1 * 15 * 60 * 1000, // 1 hrs in milliseconds
+		max: 100,
+		message: 'max 100 requests per 15 minutes!', 
 		standardHeaders: true,
 		legacyHeaders: false,
 	})
