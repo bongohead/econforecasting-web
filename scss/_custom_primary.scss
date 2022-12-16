@@ -12,7 +12,11 @@ p {
 	font-size: 0.92rem;
 }
 
-.cmefi-light {
+.text-light {
+	color: rgb(51, 65, 85);
+}
+
+.text-lighter {
 	color: rgb(107, 114, 128);
 }
 
@@ -195,17 +199,29 @@ button.dt-button:hover {
 
 
 /****** Navbar *****/
-nav.navbar {
-	background-color: var(--bs-cmefi-green);
+nav.navbar.navbar-home {
+	background-color: transparent;
+	max-width: 1960px;
+}
+nav.navbar:not(.navbar-home) {
+	background-color: var(--bs-forestgreen);
 }
 
+
 /* Top-level dropdown links */
-nav.navbar li.nav-item > a.nav-link {
+nav.navbar.navbar-home li.nav-item > a.nav-link {
+	color: var(--bs-dgray);
+	font-size: 1.0rem;
+	padding: .4rem .6rem;
+}
+nav.navbar:not(.navbar-home) li.nav-item > a.nav-link {
 	color: rgba(255, 255, 255, .9);
 	font-size: .98rem;
 	border-radius: .25rem;
 	padding: .4rem .6rem;
 }
+
+
 
 /* When dropdown is opened */
 nav.navbar li.nav-item > a.nav-link.show {
