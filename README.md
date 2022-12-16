@@ -5,7 +5,9 @@ Description TBA
 
 # CHANGELOG
 
-## 2022-11-?? [v1.04] (VPS Migration, API Integration & Misc)
+## [v2.00]
+
+## 2022-12-13 [v1.04] (VPS Migration, API Integration & Misc)
 - Added API v0 with JWT auth
 - Added some better SCSS compilation documentation
 - Added some minor fix for VPS migration
