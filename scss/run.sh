@@ -5,6 +5,7 @@
 #    main.scss just combines these.
 # 3. Note that the below process also creates a timestamp file, then places it in a variable in _custom.scss;
 #    this is for debugging purposes - see https://stackoverflow.com/questions/13022461/add-timestamps-to-compiled-sass-scss
+
 echo "\$BuildTimeStamp: \"$(date '+%Y-%m-%d %H:%M:%S')\"" > _timestamp.scss
 sass main.scss ../public/static/style.css
 rm _timestamp.scss

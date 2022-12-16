@@ -1,15 +1,12 @@
 /***** ! Automatic build at #{$BuildTimeStamp} *****/
 
-/***** Bootstrap Style Changes *****/
-:root {
-	--bs-font-family-serif: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; // Custom variable to be used for paragraphs, etc
-}
-
-.container-xxl {
-		max-width: 1400px;
-}
-
 /***** Base Styling *****/
+:root {
+	//sans-serif is defined in SASS
+	--font-family-logo: "Quicksand", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+}
+
+
 p {
 	font-family: var(--bs-font-family-serif);
 	font-size: 0.92rem;
