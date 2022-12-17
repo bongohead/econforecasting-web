@@ -1,0 +1,13 @@
+<?xml version="1.0" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="225" height="225" viewBox="0 0 225 225"><style class="base-styles">
+		 .path-1, .path-4 {
+			stroke-width: 6px;
+			stroke: rgba(50, 50, 50, .8); 
+		 }
+		 .path-2, .path-3 {
+			stroke-width: 8px;
+			stroke: #2D8C26; 
+		 }
+         </style><g id="icon-group"><line x1="30" y1="60" x2="30" y2="135" class="path path-1" stroke="black"></line><line x1="30" y1="135" x2="90" y2="105" class="path path-1" stroke="black"></line><line x1="90" y1="105" x2="90" y2="30" class="path path-1" stroke="black"></line><line x1="90" y1="30" x2="30" y2="60" class="path path-1" stroke="black"></line><line x1="60" y1="75" x2="60" y2="150" class="path path-2" stroke="black"></line><line x1="60" y1="150" x2="120" y2="120" class="path path-2" stroke="black"></line><line x1="120" y1="120" x2="120" y2="45" class="path path-2" stroke="black"></line><line x1="120" y1="45" x2="60" y2="75" class="path path-2" stroke="black"></line><line x1="90" y1="105" x2="90" y2="180" class="path path-3" stroke="black"></line><line x1="90" y1="180" x2="150" y2="150" class="path path-3" stroke="black"></line><line x1="150" y1="150" x2="150" y2="75" class="path path-3" stroke="black"></line><line x1="150" y1="75" x2="90" y2="105" class="path path-3" stroke="black"></line><line x1="120" y1="120" x2="120" y2="195" class="path path-4" stroke="black"></line><line x1="120" y1="195" x2="180" y2="165" class="path path-4" stroke="black"></line><line x1="180" y1="165" x2="180" y2="90" class="path path-4" stroke="black"></line><line x1="180" y1="90" x2="120" y2="120" class="path path-4" stroke="black"></line></g>
+		 <!-- <path d="M 30 115 C 60 75, 85 35, 115 115 S 170 185, 180 145" stroke-width="5px" stroke="rgba(45,140,38, .5)" fill="transparent" class="wave"></path> -->
+		 </svg>

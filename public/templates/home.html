@@ -4,98 +4,21 @@
 {% endblock %}
 
 {% block staticlinks %}
-<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/autoComplete.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/autoComplete.min.js"></script>
+{% endblock %}
+
+{% block navbar %}
+	{% include 'navbar-home.html' %}
 {% endblock %}
 
 
 {% block content %}
 
 
-<section style="background:linear-gradient(to left bottom, rgb(245, 243, 255), rgb(255, 255, 255), rgba(219, 234, 254, 0.4)))">
-	<div class="container-xxl pt-5 pb-5" style="background:url(/static/test.png) no-repeat right/cover">
-		<div class="row mt-4">
-			<div class="col-12 col-md-10 col-lg-8 col-xxl-7 rounded border p-5 ms-xxl-5 ms-lg-3 ms-md-2 ms-0" style="background-color:rgba(255, 255, 255, .9)">
-				<h2>What is econforecasting.com<span class="tm">™</span>?</h2>
-				<p class="fs-6 mt-3">We're on a journey to make economic data and knowledge available to everyone. Our models are built ground-up combining traditional structural modeling with ML-based signal extraction, allowing us to shift from reactive to proactive insights.</p>
-				<!-- Autocomplete -->
-				<div role="combobox" aria-owns="autoComplete_list" aria-haspopup="true" aria-expanded="false" class="autoComplete_wrapper my-2">
-					<input id="autoComplete" class="form-control">
-				</div>
-				
-				<hr>
-				<p>Please note: our website is undergoing improvements starting in May of 2022. During this time, you may experience brief periods of instability.</p>
-
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
 
 
 
 
-<div class="container-fluid px-0 pb-0" style="background:linear-gradient(to right bottom, rgb(255, 255, 255), rgba(229, 231, 235, 0.2), rgba(199, 210, 254, 0.2))">
-	<div class="container">
-		<!-- d-flex on rows and cols needed for fixing 100% height -->
-		<div class="row flex-center d-flex">
-			<div class="col-md-4 col-xs-12 mt-4 d-flex">
-				<div class="w-100 px-4 py-5 mt-5">
-					<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 60 60" style="width:1.2rem" xml:space="preserve">
-						<g>
-							<path d="M56.965,13.743c-0.006-0.022-0.018-0.042-0.025-0.064c-0.021-0.062-0.044-0.122-0.077-0.178
-								c-0.016-0.028-0.038-0.052-0.057-0.079c-0.032-0.045-0.065-0.089-0.104-0.128c-0.026-0.026-0.055-0.047-0.083-0.07
-								c-0.027-0.022-0.05-0.047-0.079-0.066c-0.016-0.01-0.035-0.015-0.051-0.024c-0.015-0.008-0.026-0.021-0.041-0.028l-26-13
-								c-0.009-0.004-0.019-0.002-0.028-0.007C30.291,0.039,30.151,0,30,0s-0.291,0.039-0.419,0.099c-0.009,0.004-0.019,0.002-0.028,0.007
-								l-26,13c-0.015,0.008-0.026,0.02-0.041,0.028c-0.017,0.009-0.035,0.014-0.051,0.024c-0.03,0.019-0.052,0.045-0.079,0.066
-								c-0.029,0.023-0.057,0.044-0.083,0.069c-0.039,0.039-0.072,0.083-0.104,0.128c-0.019,0.027-0.041,0.051-0.057,0.079
-								c-0.033,0.056-0.056,0.117-0.077,0.179c-0.007,0.022-0.019,0.041-0.025,0.064C3.013,13.826,3,13.912,3,14v32
-								c0,0.006,0.003,0.012,0.003,0.018c0,0.02,0.007,0.039,0.008,0.058c0.008,0.102,0.032,0.2,0.069,0.292
-								c0.007,0.016,0.004,0.034,0.012,0.05c0.008,0.018,0.022,0.031,0.032,0.048c0.025,0.046,0.053,0.088,0.085,0.13
-								c0.026,0.035,0.052,0.069,0.082,0.099c0.034,0.034,0.071,0.064,0.11,0.093c0.036,0.028,0.072,0.055,0.111,0.077
-								c0.015,0.008,0.026,0.021,0.041,0.028l26,13c0.015,0.007,0.031,0.004,0.046,0.011C29.727,59.962,29.862,60,30,60
-								s0.273-0.038,0.401-0.095c0.015-0.007,0.032-0.004,0.046-0.011l26-13C56.786,46.725,57,46.379,57,46V14
-								C57,13.912,56.988,13.826,56.965,13.743z M6.724,44.743c-0.231-0.501-0.825-0.72-1.327-0.489L5,44.437V15.563L29,26.64v30.742
-								L6.293,46.028C6.747,45.777,6.945,45.222,6.724,44.743z M30,3c0.353,0,0.648-0.193,0.826-0.469l22.866,11.433L31,24.437V24
-								c0-0.552-0.448-1-1-1s-1,0.448-1,1v0.437L6.308,13.964L29.174,2.531C29.352,2.807,29.647,3,30,3z M31,35.563l1.636,0.755
-								c0.136,0.063,0.278,0.092,0.418,0.092c0.378,0,0.74-0.216,0.909-0.582c0.231-0.501,0.012-1.096-0.489-1.327l-1.816-0.838
-								c-0.215-0.099-0.444-0.101-0.658-0.047V26.64l24-11.077v28.874l-1.551-0.716c-0.501-0.231-1.096-0.013-1.327,0.489
-								c-0.232,0.501-0.013,1.095,0.489,1.327l1.081,0.499L31,57.382V35.563z"/>
-							<path d="M20.344,39.457c0.141,0,0.283-0.029,0.418-0.092l1.816-0.838c0.501-0.231,0.721-0.826,0.489-1.327
-								c-0.231-0.501-0.826-0.72-1.327-0.489l-1.816,0.838c-0.501,0.231-0.721,0.826-0.489,1.327
-								C19.604,39.242,19.966,39.457,20.344,39.457z"/>
-							<path d="M14.896,41.971c0.14,0,0.283-0.029,0.418-0.092l1.816-0.838c0.501-0.231,0.72-0.826,0.489-1.327
-								c-0.231-0.501-0.825-0.721-1.327-0.489l-1.816,0.838c-0.501,0.231-0.72,0.826-0.489,1.327
-								C14.156,41.756,14.518,41.971,14.896,41.971z"/>
-							<path d="M9.448,44.486c0.141,0,0.283-0.03,0.418-0.093l1.816-0.838c0.501-0.231,0.721-0.826,0.489-1.327
-								c-0.231-0.501-0.828-0.72-1.327-0.489l-1.816,0.838c-0.501,0.231-0.721,0.826-0.489,1.327C8.708,44.271,9.07,44.486,9.448,44.486z"
-								/>
-							<path d="M44.369,39.53l-1.816-0.838c-0.501-0.231-1.096-0.012-1.327,0.489c-0.231,0.501-0.012,1.096,0.489,1.327l1.816,0.838
-								c0.136,0.063,0.278,0.092,0.418,0.092c0.378,0,0.74-0.215,0.909-0.581C45.089,40.356,44.871,39.762,44.369,39.53z"/>
-							<path d="M49.817,42.045l-1.816-0.838c-0.5-0.232-1.096-0.013-1.327,0.489c-0.232,0.501-0.013,1.095,0.489,1.327l1.816,0.838
-								c0.136,0.063,0.278,0.092,0.418,0.092c0.378,0,0.74-0.215,0.908-0.581C50.538,42.871,50.318,42.277,49.817,42.045z"/>
-							<path d="M38.921,37.017l-1.816-0.838c-0.501-0.233-1.096-0.013-1.327,0.489c-0.232,0.501-0.013,1.095,0.489,1.327l1.816,0.838
-								c0.136,0.063,0.278,0.092,0.418,0.092c0.378,0,0.74-0.215,0.908-0.581C39.642,37.842,39.423,37.248,38.921,37.017z"/>
-							<path d="M25.792,36.942c0.14,0,0.283-0.029,0.418-0.092l1.816-0.838c0.501-0.231,0.72-0.826,0.489-1.327
-								c-0.232-0.501-0.825-0.721-1.327-0.489l-1.816,0.838c-0.501,0.231-0.72,0.826-0.489,1.327
-								C25.052,36.727,25.414,36.942,25.792,36.942z"/>
-							<path d="M30,9c0.552,0,1-0.448,1-1V6c0-0.552-0.448-1-1-1s-1,0.448-1,1v2C29,8.552,29.448,9,30,9z"/>
-							<path d="M30,15c0.552,0,1-0.448,1-1v-2c0-0.552-0.448-1-1-1s-1,0.448-1,1v2C29,14.552,29.448,15,30,15z"/>
-							<path d="M30,21c0.552,0,1-0.448,1-1v-2c0-0.552-0.448-1-1-1s-1,0.448-1,1v2C29,20.552,29.448,21,30,21z"/>
-						</g>
-					</svg>
-
-					<span style="font-size:1.2rem" class="text-muted font-monospace">Hub</span>
-					<h5 class="mt-1">Home of Forecasting</h5>
-					<p class="text-black-50 mt-4" style="font-size:1.0rem">Your central source of key economic forecasts - all free of charge.</p>
-				</div>
-			</div>
-			<div class="col-md-8 col-xs-12 mt-4 px-4">
-				<img class="border rounded-3 rounded-top mw-100" style="box-shadow: 0 0px 16px 0 rgb(68 195 255 / 8%)" src="/static/screenshot-2.png" alt="Hugging Face Hub dashboard" style="box-shadow: 0 0px 16px 0 rgb(68 195 255 / 8%)">
-			</div>
-			
-		</div>
-	</div>
-</div>
 
 
 <div class="container-fluid px-0 pb-5" style="background:white">
