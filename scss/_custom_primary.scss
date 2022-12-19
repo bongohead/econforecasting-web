@@ -91,11 +91,14 @@ footer {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	font-size: 1rem;
+	font-weight: 600;
 	text-overflow: ellipsis;
-	color: rgba(122,122,255,.3);
+	/*color: rgba(122,122,255,.3);*/
+	color: var(--bs-sky);
 	outline: 0;
 	border-radius: .5rem;
-	border:.05rem solid rgba(122,122,255,.5);
+	/*border:.05rem solid rgba(122,122,255,.5);*/
+	border: 0.05rem solid rgba(158,219,246, .5);
 	background-image:url(/static/search.svg);
 	background-size:1.0rem;
 	background-position:left 1.0rem top .75rem;
@@ -106,34 +109,43 @@ footer {
 	-webkit-transition:all -webkit-transform .4s ease;
 }
 .autoComplete_wrapper > input::placeholder{
-	color: rgba(122, 122, 255, 0.5);
+	/*color: rgba(122, 122, 255, 0.5);*/
+	color: var(--bs-sky);
 	transition:all .3s ease;
 	-webkit-transition:all -webkit-transform .3s ease
 }
 .autoComplete_wrapper > input:hover::placeholder{
-	color: rgba(122, 122, 255, 0.6);
+	/*color: rgba(122, 122, 255, 0.6);*/
+	color:rgb(12,148,209) ;
+
 	transition:all .3s ease;
 	-webkit-transition:all -webkit-transform .3s ease
 }
 .autoComplete_wrapper > input:focus::placeholder{
 	padding:.1rem .6rem;
 	font-size:.95rem;
-	color:rgba(122,122,255,.4)
+	/*color:rgba(122,122,255,.4)*/
+	color:rgba(158,219,246, .4);
+
 }
 .autoComplete_wrapper > input:focus::selection{
-	background-color:rgba(122,122,255,.15)
+	/*background-color:rgba(122,122,255,.15)*/
+	background-color:rgba(158,219,246, .15);
 }
 .autoComplete_wrapper > input::selection{
-	background-color:rgba(122,122,255,.15)
+	/*background-color:rgba(122,122,255,.15)*/
+	background-color:rgba(158,219,246, .15);
 }
 .autoComplete_wrapper > input:hover{
-	color:rgba(122,122,255,.8);
+	/*color:rgba(122,122,255,.8);*/
+	color: rgba(158,219,246, .8);
 	transition:all .3s ease;
 	-webkit-transition:all -webkit-transform .3s ease
 }
 .autoComplete_wrapper > input:focus{
-	color: var(--bs-cmefi-dark);
-	border: .06rem solid rgba(122,122,255,.8)
+	color: var(--bs-dgrey);
+	/*border: .06rem solid rgba(122,122,255,.8)*/
+	border: rgba(158,219,246, .8);
 }
 .autoComplete_wrapper > ul{
 	position:absolute;max-height:226px;overflow-y:scroll;box-sizing:border-box;left:0;right:0;margin:.5rem 0 0 0;
@@ -146,16 +158,19 @@ footer {
 }
 .autoComplete_wrapper>ul>li{
 	margin:.3rem;padding:.3rem .5rem;text-align:left;font-size:1rem;color:#212121;border-radius:.35rem;
-	background-color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:all .2s ease
+	background-color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:all .2s ease;
+	font-family: var(--font-family-logo);font-weight: 500;
 }
 .autoComplete_wrapper>ul>li mark{
 	background-color:transparent;
-	color:var(--bs-cmefi-blue);
+	color:var(--bs-sky);
 	font-weight:700;
 	padding: 0 !important;
 }
 .autoComplete_wrapper>ul>li:hover{
-	cursor:pointer;background-color:rgba(122,122,255,.15)
+	cursor:pointer;
+	/*background-color:rgba(122,122,255,.15)*/
+	background-color:rgba(158,219,246, .15);
 	}
 .autoComplete_wrapper>ul>li[aria-selected=true]{
 	background-color:rgba(122,122,255,.15)
@@ -203,19 +218,17 @@ nav.navbar.navbar-home {
 	max-width: 1960px;
 }
 nav.navbar:not(.navbar-home) {
-	background-color: var(--bs-forestgreen);
+	background-color: var(--bs-forest);
 }
 
 
 /* Top-level dropdown links */
 nav.navbar.navbar-home li.nav-item > a.nav-link {
-	color: var(--bs-dgray);
+	color: var(--bs-gray-dark);
 	font-size: 1.0rem;
 	padding: .5rem .8rem;
-	border-radius: 8px;
-	background-color: rgba(255, 255, 255, .7);
 	font-family: var(--font-family-logo);
-	font-weight: 500;
+	font-weight: 600;
 	margin-top: .5rem;
 
 }
@@ -229,34 +242,62 @@ nav.navbar:not(.navbar-home) li.nav-item > a.nav-link {
 
 
 /* When dropdown is opened */
-nav.navbar li.nav-item > a.nav-link.show {
+nav.navbar.navbar-home li.nav-item > a.nav-link.show {
+	color: var(--bs-forest);
+
+}
+
+nav.navbar:not(.navbar-home) li.nav-item > a.nav-link.show {
 	background-color: var(--bs-cmefi-blue);
 	color: white;
 }
 
 /* Dropdown items */
-nav.navbar ul.dropdown-menu, nav.navbar div.dropdown-menu {
+nav.navbar.navbar-home ul.dropdown-menu, nav.navbar.navbar-home div.dropdown-menu {
 	background-color: var(--bs-light);
-	border-color: var(--bs-cmefi-blue);
+	border-color: rgba(15,23,42,.05);
+	border-radius: .25rem;
+	border-width: 1px;
+	font-size: .92rem;
+	font-family: var(--font-family-logo);
+}
+
+nav.navbar.navbar-home ul.dropdown-menu a , nav.navbar.navbar-home div.dropdown-menu a {
+	font-weight: 500;
+}
+
+nav.navbar.navbar-home ul.dropdown-menu a:hover, nav.navbar.navbar-home div.dropdown-menu a:hover {
+	color: var(--bs-forest);
+}
+
+
+nav.navbar:not(.navbar-home) ul.dropdown-menu, nav.navbar:not(.navbar-home) div.dropdown-menu {
+	background-color: var(--bs-white);
+	border-color: var(--bs-dark);
 	border-radius: .25rem;
 	border-width: 1px;
 	font-size: .9rem;
 }
 
-nav.navbar ul.dropdown-menu a:hover, nav.navbar div.dropdown-menu a:hover {
-	background-color: var(--bs-cmefi-blue);
+nav.navbar.navbar-home ul.dropdown-menu a:hover, nav.navbar.navbar-home div.dropdown-menu a:hover {
+	background-color: var(--bs-sky);
+	color: white;
+}
+
+nav.navbar:not(.navbar-home) ul.dropdown-menu a:hover, nav.navbar:not(.navbar-home) div.dropdown-menu a:hover {
+	background-color: var(--bs-sky);
 	color: white;
 }
 
 /* Dropdown items when active */
 nav.navbar a.dropdown-item.activepage {
-	background-color: var(--bs-cmefi-green);
+	background-color: var(--bs-forest);
 	color: white;
 }
 
 /* Top-level nav link when dropdown subitem is active */
-nav.navbar a.nav-link.activepage {
-	background-color: /*var(--bs-gray);*/ var(--bs-cmefi-dark-green);
+nav.navbar:not(.navbar-home) a.nav-link.activepage {
+	background-color: var(--bs-forest-dark);
 }
 
 
@@ -265,7 +306,7 @@ nav.navbar a.nav-link.activepage {
 /****** Sidebar *****/
 nav.sidebar {
 	position: sticky;
-	top: 3.4rem;
+	top: 0rem; /* top: 3.4rem */
 	height: calc(100vh - 4rem);
 	z-index: 95;
 	overflow-x: hidden;
@@ -319,12 +360,12 @@ nav.sidebar div.sidebar-submenu > a {
 }
 
 nav.sidebar div.sidebar-submenu > a.activepage {
-  background-color: var(--bs-cmefi-blue);
+  background-color: var(--bs-forest-dark);
   color: white;
 }
 
 nav.sidebar div.sidebar-submenu > a:hover {
-  background-color: var(--bs-cmefi-orange);
+  background-color: var(--bs-sky);
   color: white;
   cursor: pointer;
 }

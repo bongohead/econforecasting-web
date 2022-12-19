@@ -12,14 +12,25 @@
 // Variable Overrides
 $custom-colors: (
 	
-	sky: #0EA5E9,
+	/* Primary colors */
 	forest: #2D8C26,
-	ice: #BCEDF6,
-	forest-light: #DDFBD2,
-	pale: rgb(107, 114, 128),
+	sky: #0EA5E9,
 	
-	dgray: rgb(51, 65, 85),
-	lgray: rgb(107, 114, 128)
+	
+	/* Alternate colors */
+	forest-dark: #1C6F4A,
+	forest-light: #DDFBD2,
+	sky-dark: #3276B5,
+	sky-light: #63a7e6 ,
+	white-cool: #EDF2F9,
+	white-warm: #FAF5FF,
+	
+	
+	
+	/* Primarily for text */
+	gray-dark: rgb(51, 65, 85),
+	gray-light: rgb(107, 114, 128)
+	
 	
 	/*
 	cmefi-green: #2D8C26,
