@@ -5,7 +5,9 @@ Description TBA
 
 # CHANGELOG
 
-## [v2.00]
+## [v2.00] (CSS Overhaul)
+- Added rebuilt SASS styles
+- Added new logo integration
 
 ## 2022-12-13 [v1.04] (VPS Migration, API Integration & Misc)
 - Added API v0 with JWT auth

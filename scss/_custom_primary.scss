@@ -27,7 +27,7 @@ p {
 
 /* Logo */
 .cmefi-logo {
-    background: url('/static/cmefi-short.svg');
+    background: url('/static/brand/small.svg');
     background-repeat: no-repeat;
     background-size: cover; 
     display: inline-block;
@@ -181,10 +181,9 @@ footer {
 
 
 /****** Forecast Data Table *****/
-
 #li-container {
 	margin: 1.5rem 2rem 1.5rem 2rem;
-	border: 1px solid var(--bs-cmefi-blue);
+	border: 1px solid var(--bs-sky);
 }
 #li-container > li {
 	font-size: .85rem;
@@ -194,11 +193,11 @@ footer {
 }
 #li-container > li:hover {
 	cursor: pointer;
-	background-color: var(--bs-cmefi-dark-blue);
+	background-color: var(--bs-sky-dark);
 	color: white;
 }
 #li-container > li.active {
-	background-color: var(--bs-cmefi-blue);
+	background-color: var(--bs-sky);
 }
 
 
@@ -248,7 +247,6 @@ nav.navbar.navbar-home li.nav-item > a.nav-link.show {
 }
 
 nav.navbar:not(.navbar-home) li.nav-item > a.nav-link.show {
-	background-color: var(--bs-cmefi-blue);
 	color: white;
 }
 
@@ -307,7 +305,7 @@ nav.navbar:not(.navbar-home) a.nav-link.activepage {
 nav.sidebar {
 	position: sticky;
 	top: 0rem; /* top: 3.4rem */
-	height: calc(100vh - 4rem);
+	height: 100vh; /*calc(100vh - 4rem);*/
 	z-index: 95;
 	overflow-x: hidden;
 	overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
@@ -425,7 +423,7 @@ table.dataTable tr.odd  {
 }
 
 table.dataTable tr:hover td {
-	background-color: var(--bs-cmefi-orange) !important;
+	background-color: var(--bs-orange) !important;
 	color: white !important;
 }
 

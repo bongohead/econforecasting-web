@@ -3,8 +3,12 @@
 {% block staticlinks %}
 {% endblock %}
 
+{% block navbar %}
+	{% include 'navbar-other.html' %}
+{% endblock %}
+
 {% block content %}
-<div class="row gx-0" style="background-color:rgb(237, 242, 249)">
+<div class="d-flex" style="background-color:var(--bs-white-cool)">
 	{% include 'forecast-sidebar-rates.html' %}
 	<div class="col mx-2 pb-5">
 		<div class="container-xxl">

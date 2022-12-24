@@ -180,7 +180,7 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
             backgroundColor: 'rgba(255, 255, 255, 0)',
 			plotBackgroundColor: '#FFFFFF',
 			style: {
-				fontColor: 'var(--bs-cmefi-green)'
+				fontColor: 'var(--bs-forest)'
 			},
 			height: 550,
 			plotBorderColor: 'black',
@@ -189,7 +189,7 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
         title: {
 			useHTML: true,
 			text: 
-				'<img class="me-2 mb-1" width="22" height="22" src="/static/cmefi-short.svg">' +
+				'<img class="me-2 mb-1" width="22" height="22" src="/static/brand/small.svg">' +
 				'<div style="vertical-align:middle;display:inline"><span>' + fullname + ' Forecast</span></div>',
 			style: {
 				fontSize: '1.3rem',
@@ -332,8 +332,8 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
         },
 		legend: {
 			enabled: true,
-			backgroundColor: 'var(--bs-efpale)',
-			borderColor: 'var(--bs-cmefi-dark)',
+			backgroundColor: 'var(--bs-white-warmer)',
+			borderColor: 'var(--bs-white-warm)',
 			borderWidth: 1,
 			//useHTML: true,
 			align: 'center',
@@ -490,7 +490,7 @@ color: rgb(154, 52, 18) !important; border: 0px !important" data-bs-toggle="moda
 				backgroundColor: 'rgba(255, 255, 255, 0)',
 				plotBackgroundColor: '#FFFFFF',
 				style: {
-					fontColor: 'var(--bs-cmefi-green)'
+					fontColor: 'var(--bs-forest)'
 				},
 				height: 500,
 				plotBorderColor: 'black',
@@ -499,7 +499,7 @@ color: rgb(154, 52, 18) !important; border: 0px !important" data-bs-toggle="moda
 			title: {
 				useHTML: true,
 				text: 
-					'<img class="me-2 mb-1" width="18" height="18" src="/static/cmefi-short.svg">' +
+					'<img class="me-2 mb-1" width="18" height="18" src="/static/brand/small.svg">' +
 					'<div style="vertical-align:middle;display:inline"><span>Prior Forecasts</span></div>',
 				style: {
 					fontSize: '1.1rem',
@@ -577,8 +577,8 @@ color: rgb(154, 52, 18) !important; border: 0px !important" data-bs-toggle="moda
 			},
 			legend: {
 				enabled: true,
-				backgroundColor: 'var(--bs-efpaleblue)',
-				borderColor: 'var(--bs-cmefi-dark)',
+				backgroundColor: 'var(--bs-sky-light)',
+				borderColor: 'var(--bs-dark)',
 				borderWidth: 1,
 				align: 'right',
 				verticalAlign: 'top',
