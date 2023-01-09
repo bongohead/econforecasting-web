@@ -22,7 +22,7 @@ SELECT date, vdate, value FROM (
 			AND forecast = :forecast
 			AND form = :form
 			AND vdate < date
-			AND vdate >= NOW() - INTERVAL '3 YEARS'
+			AND vdate >= NOW() - INTERVAL '1 YEARS'
 			AND date < vdate + INTERVAL '3 YEARS'
 		ORDER BY date, vdate
 		) a
