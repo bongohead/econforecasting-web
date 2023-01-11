@@ -8,7 +8,7 @@
 	<meta name="description" content="{{description|e}}">
     {% block meta %}{% endblock %}
 
-	{% if canonical is defined %}
+	{% if canonical is defined and canonical is not null %}
 		<link rel="canonical" href="{{ canonical | raw }}" />
 	{% endif %}
 
@@ -94,7 +94,7 @@
 	<script src="https://code.highcharts.com/10.3/modules/boost.js"></script>
 	<script src="https://code.highcharts.com/10.3/modules/accessibility.js"></script>
 
-	{% if pagescript is defined %}
+	{% if pagescript is defined and pagescript is not null %}
 		<script src="/static/cache/{{ pagescript | raw }}"></script>
 	{% endif %}
 	

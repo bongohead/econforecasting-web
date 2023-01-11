@@ -6,15 +6,23 @@ const routes = [
   {
     name: 'home', endpoints: ['/'],
     js: ['init'], externaljs: [],
-    template: 'home', title: 'Home'
+    template: 'home', title: 'Econforecasting.com'
   }, {
     name: 'forecast-sofr', endpoints: ['/forecast-sofr'],
     js: ['init', 'helpers', 'forecast-varname'], externaljs: ['moment', 'moment-tz', 'gradient'],
-    template: 'forecast-rates', canonical: 'https://econforecasting.com/forecast-sofr'
+    template: 'forecast-rates', title: 'SOFR Forecasts', canonical: 'https://econforecasting.com/forecast-sofr'
   }, {
     name: 'forecast-ffr', endpoints: ['/forecast-ffr'],
     js: ['init', 'helpers', 'forecast-varname'], externaljs: ['moment', 'moment-tz', 'gradient'],
-    template: 'forecast-rates', canonical: 'https://econforecasting.com/forecast-ffr'
+    template: 'forecast-rates', title: 'Federal Funds Forecast', canonical: 'https://econforecasting.com/forecast-ffr'
+  }, {
+    name: 'forecast-ameribor', endpoints: ['/forecast-ameribor'],
+    js: ['init', 'helpers', 'forecast-varname'], externaljs: ['moment', 'moment-tz', 'gradient'],
+    template: 'forecast-rates', title: 'AMERIBOR Forecast', canonical: 'https://econforecasting.com/forecast-ffr'
+  }, {
+    name: 'forecast-bsby', endpoints: ['/forecast-bsby'],
+    js: ['init', 'helpers', 'forecast-varname'], externaljs: ['moment', 'moment-tz', 'gradient'],
+    template: 'forecast-rates', title: 'BSBY Forecast', canonical: 'https://econforecasting.com/forecast-ffr'
   }
 ];
 
@@ -23,7 +31,7 @@ routes.forEach(r => {
   router.get(r.endpoints, concatJs(`${r.name}.js`, r.js.concat(r.externaljs.map(f => `libs/${f}`))), (req, res) => {
     res.render(
       `./${r.template}.html.twig`,
-      {title: r.title + ' | Economic Forecasts | econforecasting.com', canonical: r.canonical, pagescript: `${r.name}.js`}
+      {title: r.title + ' | econforecasting.com', canonical: r.canonical, pagescript: `${r.name}.js`}
     );
   });
 
