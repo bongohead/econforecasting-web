@@ -153,7 +153,7 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 			useHTML: true,
 			text: 
 				'<img class="me-2 mb-1" width="22" height="22" src="/static/brand/small.svg">' +
-				'<div style="vertical-align:middle;display:inline"><span class="font-logo" style="vertical-align:middle;font-size:1.3rem;color:rgb(77, 81, 90)">' + fullname + ' Forecast</span></div>',
+				'<div style="vertical-align:middle;display:inline"><span class="font-logo" style="vertical-align:middle;font-size:1.3rem;color:rgb(15, 17, 23)">' + fullname + ' Forecast</span></div>',
         },
 		caption: {
 			useHTML: true,

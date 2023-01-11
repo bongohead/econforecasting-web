@@ -2,34 +2,32 @@ const router = require('express').Router();
 const concatJs = require('./middleware').concatJs;
 
 /* GET home page. */
-router.get('/', concatJs('home.js', 'init'), (req, res) => {
-  res.render('./home.html.twig', {title: 'Home'});
-});
+const routes = [
+  {
+    name: 'home', endpoints: ['/'],
+    js: ['init'], externaljs: [],
+    template: 'home', title: 'Home'
+  }, {
+    name: 'forecast-sofr', endpoints: ['/forecast-sofr'],
+    js: ['init', 'helpers', 'forecast-varname'], externaljs: ['moment', 'moment-tz', 'gradient'],
+    template: 'forecast-rates', canonical: 'https://econforecasting.com/forecast-sofr'
+  }, {
+    name: 'forecast-ffr', endpoints: ['/forecast-ffr'],
+    js: ['init', 'helpers', 'forecast-varname'], externaljs: ['moment', 'moment-tz', 'gradient'],
+    template: 'forecast-rates', canonical: 'https://econforecasting.com/forecast-ffr'
+  }
+];
 
-router.get(
-  ['/forecast-treasury-curve'],
-  concatJs('forecast-treasury-curve.js', ['helpers', 'init', 'forecast-varname', 'libs/moment', 'libs/moment-tz', 'libs/gradient']),
-  (req, res) => res.render('./forecast-treasury-curve.html.twig', {
-    title: 'Treasury Curve Forecasts | Economic Forecasts | econforecasting.com', canonical: 'https://econforecasting.com/forecast-treasury-curve', pagescript: 'forecast-treasury-curve.js'
-  })
-);
+routes.forEach(r => {
 
-router.get(
-  ['/forecast-sofr'],
-  concatJs('forecast-sofr.js', ['helpers', 'init', 'forecast-varname', 'libs/moment', 'libs/moment-tz', 'libs/gradient']),
-  (req, res) => res.render('./forecast-rates.html.twig', {
-    title: 'SOFR Forecasts | Economic Forecasts | econforecasting.com', canonical: 'https://econforecasting.com/forecast-sofr', pagescript: 'forecast-sofr.js'
-  })
-);
+  router.get(r.endpoints, concatJs(`${r.name}.js`, r.js.concat(r.externaljs.map(f => `libs/${f}`))), (req, res) => {
+    res.render(
+      `./${r.template}.html.twig`,
+      {title: r.title + ' | Economic Forecasts | econforecasting.com', canonical: r.canonical, pagescript: `${r.name}.js`}
+    );
+  });
 
-router.get(
-  ['/forecast-ffr'],
-  concatJs('forecast-ffr.js', ['helpers', 'init', 'forecast-varname', 'libs/moment', 'libs/moment-tz', 'libs/gradient']),
-  (req, res) => res.render('./forecast-rates.html.twig', {
-    title: 'Federal Funds Rate Forecasts | Economic Forecasts | econforecasting.com', canonical: 'https://econforecasting.com/forecast-ffr', pagescript: 'forecast-ffr.js'
-  })
-);
-
+})
 
 // ['template' => 'forecast-rates', 'request' => ['forecast-sofr', 'fc-rates-sofr'], 'canonical' => 'https://econforecasting.com/forecast-sofr', 'title' => 'SOFR Forecasts | Economic Forecasts | econforecasting.com', 'description' => 'Our model provides monthly forecasts of the SOFR rate using a futures market driven forecast model.', 'models' => [], 'js' => ['init', 'forecast-varname']],
 // ['template' => 'forecast-rates', 'request' => ['forecast-ffr', 'fc-rates-ffr'], 'canonical' => 'https://econforecasting.com/forecast-ffr', 'title' => 'FFR Forecasts | Economic Forecasts | econforecasting.com', 'description' => 'Our model provides monthly forecasts of the federal funds rate using a futures market driven forecast model.', 'models' => [], 'js' => ['init', 'forecast-varname']],

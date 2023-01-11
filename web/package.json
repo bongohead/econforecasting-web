@@ -19,6 +19,7 @@
     "express-rate-limit": "^6.6.0",
     "helmet": "^6.0.0",
     "jsonwebtoken": "^8.5.1",
-    "twig": "^1.15.4"
+    "twig": "^1.15.4",
+    "yaml": "^2.2.1"
   }
 }

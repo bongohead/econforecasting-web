@@ -6,27 +6,13 @@
 	--font-family-logo: "Quicksand", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
 }
 
-
 p {
 	font-family: var(--bs-font-family-serif);
 	font-size: 0.92rem;
 }
 
-.text-light {
-	color: rgb(51, 65, 85);
-}
-
-.text-lighter {
-	color: rgb(107, 114, 128);
-}
-
 .cursor-pointer{
   cursor: pointer;
-}
-
-.font-logo {
-	font-family: var(--font-family-logo);
-	font-weight: 500;
 }
 
 /* Logo */
@@ -215,7 +201,7 @@ footer {
 }
 #li-container > li:hover {
 	cursor: pointer;
-	color: rgb(54, 70, 90);
+	@extend .text-slate-600;
 }
 
 #tables-container button.dt-button {
@@ -246,81 +232,78 @@ button.dt-button:hover {
 
 /****** Navbar *****/
 nav.navbar.navbar-home {
+
 	max-width: 1960px;
+	
+	/* Top-level dropdown links */
+	li.nav-item > a.nav-link {
+		color: var(--bs-gray-dark);
+		font-size: 1.0rem;
+		padding: .5rem .8rem;
+		font-family: var(--font-family-logo);
+		font-weight: 600;
+		margin-top: .5rem;
+	
+	}
+	/* When dropdown is opened */
+	li.nav-item > a.nav-link.show {
+		color: var(--bs-forest);
+	}
+	/* Dropdown items */
+	ul.dropdown-menu, div.dropdown-menu {
+		background-color: var(--bs-light);
+		border-color: rgba(15,23,42,.05);
+		border-radius: .25rem;
+		border-width: 1px;
+		font-size: .92rem;
+		font-family: var(--font-family-logo);
+	}
+	ul.dropdown-menu a, div.dropdown-menu a {
+		font-weight: 500;
+	}
+	ul.dropdown-menu a:hover, div.dropdown-menu a:hover {
+		color: var(--bs-forest);
+		transition: .1s;
+	}
+	ul.dropdown-menu a:hover, div.dropdown-menu a:hover {
+		background-color: var(--bs-sky);
+		transition: .2s;
+		color: white;
+	}
 }
+
 nav.navbar:not(.navbar-home) {
 	background-color: var(--bs-forest);
-}
-
-/* Top-level dropdown links */
-nav.navbar.navbar-home li.nav-item > a.nav-link {
-	color: var(--bs-gray-dark);
-	font-size: 1.0rem;
-	padding: .5rem .8rem;
-	font-family: var(--font-family-logo);
-	font-weight: 600;
-	margin-top: .5rem;
-
-}
-nav.navbar:not(.navbar-home) li.nav-item > a.nav-link {
-	color: rgba(255, 255, 255, .9);
-	font-size: 1.0rem;
-	border-radius: .25rem;
-	padding: .5rem .8rem;
-	font-family: var(--font-family-logo);
-	font-weight: 500;
-}
-
-
-
-/* When dropdown is opened */
-nav.navbar.navbar-home li.nav-item > a.nav-link.show {
-	color: var(--bs-forest);
-}
-
-nav.navbar:not(.navbar-home) li.nav-item > a.nav-link.show {
-	color: white;
-}
-
-/* Dropdown items */
-nav.navbar.navbar-home ul.dropdown-menu, nav.navbar.navbar-home div.dropdown-menu {
-	background-color: var(--bs-light);
-	border-color: rgba(15,23,42,.05);
-	border-radius: .25rem;
-	border-width: 1px;
-	font-size: .92rem;
-	font-family: var(--font-family-logo);
-}
-
-nav.navbar.navbar-home ul.dropdown-menu a, nav.navbar.navbar-home div.dropdown-menu a {
-	font-weight: 500;
-}
-
-nav.navbar.navbar-home ul.dropdown-menu a:hover, nav.navbar.navbar-home div.dropdown-menu a:hover {
-	color: var(--bs-forest);
+	/* Top-level dropdown links */
+	li.nav-item > a.nav-link {
+		color: rgba(255, 255, 255, .9);
+		font-size: 1.0rem;
+		border-radius: .25rem;
+		padding: .5rem .8rem;
+		font-family: var(--font-family-logo);
+		font-weight: 500;
+	}
+	/* When dropdown is opened */
+	li.nav-item > a.nav-link.show {
+		color: white;
+	}
+	/* Dropdown items */
+	ul.dropdown-menu, div.dropdown-menu {
+		background-color: var(--bs-white);
+		border-color: var(--bs-dark);
+		border-radius: .25rem;
+		border-width: 1px;
+		font-size: .92rem;
+		font-family: var(--font-family-logo);
+	}
+	ul.dropdown-menu a:hover, div.dropdown-menu a:hover {
+		background-color: var(--bs-sky);
+		transition: .2s;
+		color: white;
+	}
 }
 
 
-nav.navbar:not(.navbar-home) ul.dropdown-menu, nav.navbar:not(.navbar-home) div.dropdown-menu {
-	background-color: var(--bs-white);
-	border-color: var(--bs-dark);
-	border-radius: .25rem;
-	border-width: 1px;
-	font-size: .92rem;
-	font-family: var(--font-family-logo);
-}
-
-nav.navbar.navbar-home ul.dropdown-menu a:hover, nav.navbar.navbar-home div.dropdown-menu a:hover {
-	background-color: var(--bs-sky);
-	transition: .2s;
-	color: white;
-}
-
-nav.navbar:not(.navbar-home) ul.dropdown-menu a:hover, nav.navbar:not(.navbar-home) div.dropdown-menu a:hover {
-	background-color: var(--bs-sky);
-	transition: .1s;
-	color: white;
-}
 
 /* Dropdown items when active */
 nav.navbar a.dropdown-item.activepage {

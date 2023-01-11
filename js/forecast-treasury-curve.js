@@ -149,7 +149,7 @@ function drawChart(treasury_data, play_index, forecast_vdate) {
 				'<span class="my-0 py-1" style="font-size: 1.3rem;"><i class="cmefi-logo me-1"></i>Treasury Curve Forecasts (Updated ' + moment(forecast_vdate).format('MMM Do') + ')</span>'+
 			'</div>'+
 			'<div class="row text-center"><div class="col-12 btn-group d-inline-block" role="group" id="chart-subtitle-group">' +
-				'<button class="btn btn-cmefi-dark text-light btn-sm" style="font-size:.8rem" type="button" >Hit "play" to show changes over time!&nbsp;</button>'+
+				'<button class="btn btn-cmefi-dark text-slate-700 btn-sm" style="font-size:.8rem" type="button" >Hit "play" to show changes over time!&nbsp;</button>'+
 				'<button class="btn btn-primary btn-sm chart-subtitle" style="font-size:.8rem" type="button" data-dir="start" style="letter-spacing:-2px"><i class="bi bi-skip-backward"></i></button>' +
 				'<button class="btn btn-primary btn-sm chart-subtitle" style="font-size:.8rem" type="button" data-dir="back"><i class="bi bi-caret-left"></i></button>' +
 				'<button class="btn btn-primary btn-sm chart-subtitle active" style="font-size:.8rem" type="button" data-dir="pause" ><i class="bi bi-pause"></i></button>' +
