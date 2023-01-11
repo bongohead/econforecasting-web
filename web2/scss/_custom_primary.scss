@@ -24,10 +24,6 @@ p {
   cursor: pointer;
 }
 
-.font-logo {
-	font-family: var(--font-family-logo);
-	font-weight: 500;
-}
 
 /* Logo */
 .cmefi-logo {
@@ -185,55 +181,27 @@ footer {
 
 
 /****** Forecast Data Table *****/
-
-
 #li-container {
 	margin: 1.5rem 2rem 1.5rem 2rem;
-	border: none;
+	border: 1px solid var(--bs-sky);
 }
 #li-container > li {
 	font-size: .85rem;
 	line-height: 1.0rem;
 	padding: .5rem;
-	border-left: 1px solid rgb(229, 231, 235);
-	border-top: 0px;
-	border-bottom: 0px;
-	border-right: 0px;
-	border-radius: 0px;
-	color:rgb(94, 110, 130);
-	margin-top: 0;
-
-}
-#li-container > li.active {
-	border-left: 1px solid var(--bs-sky);
-	background-color: white;
-	color: var(--bs-sky);
-	border-top: 0px;
-	border-bottom: 0px;
-	border-right: 0px;
-	margin-top: 0;
+	border: none !important;
 }
 #li-container > li:hover {
 	cursor: pointer;
-	color: rgb(54, 70, 90);
-}
-
-#tables-container button.dt-button {
-	box-shadow: none !important;
-	background-color: var(--bs-sky-light);
+	background-color: var(--bs-sky-dark);
 	color: white;
-	font-size: .85rem;
-	padding: .2rem .4rem;
 }
-
-#tables-container button.dt-button:hover {
+#li-container > li.active {
 	background-color: var(--bs-sky);
-	transition: '.2s';
 }
 
 
 /****** DT Buttons *****/
-/*
 button.dt-button {
 	color: rgb(64, 74, 87);
 	box-shadow: 0 0 0 1px rgba(43, 45, 80, 0.1), 0 2px 5px 0 rgba(43, 45, 80, 0.08), 0 1px 1.5px 0 rgba(0, 0, 0, 0.07), 0 1px 2px 0 rgba(0, 0, 0, 0.08);
@@ -242,7 +210,7 @@ button.dt-button:hover {
 	color: rgb(44, 54, 67);
 	box-shadow: 0 0 0 1px rgba(43, 45, 80, 0.1), 0 2px 5px 0 rgba(43, 45, 80, 0.1), 0 3px 9px 0 rgba(43, 45, 80, 0.08), 0 1px 1.5px 0 rgba(0, 0, 0, 0.08), 0 1px 2px 0 rgba(0, 0, 0, 0.08)
 }
-*/
+
 
 /****** Navbar *****/
 nav.navbar.navbar-home {
@@ -251,6 +219,7 @@ nav.navbar.navbar-home {
 nav.navbar:not(.navbar-home) {
 	background-color: var(--bs-forest);
 }
+
 
 /* Top-level dropdown links */
 nav.navbar.navbar-home li.nav-item > a.nav-link {
@@ -264,11 +233,9 @@ nav.navbar.navbar-home li.nav-item > a.nav-link {
 }
 nav.navbar:not(.navbar-home) li.nav-item > a.nav-link {
 	color: rgba(255, 255, 255, .9);
-	font-size: 1.0rem;
+	font-size: .98rem;
 	border-radius: .25rem;
-	padding: .5rem .8rem;
-	font-family: var(--font-family-logo);
-	font-weight: 500;
+	padding: .4rem .6rem;
 }
 
 
@@ -276,6 +243,7 @@ nav.navbar:not(.navbar-home) li.nav-item > a.nav-link {
 /* When dropdown is opened */
 nav.navbar.navbar-home li.nav-item > a.nav-link.show {
 	color: var(--bs-forest);
+
 }
 
 nav.navbar:not(.navbar-home) li.nav-item > a.nav-link.show {
@@ -292,7 +260,7 @@ nav.navbar.navbar-home ul.dropdown-menu, nav.navbar.navbar-home div.dropdown-men
 	font-family: var(--font-family-logo);
 }
 
-nav.navbar.navbar-home ul.dropdown-menu a, nav.navbar.navbar-home div.dropdown-menu a {
+nav.navbar.navbar-home ul.dropdown-menu a , nav.navbar.navbar-home div.dropdown-menu a {
 	font-weight: 500;
 }
 
@@ -306,19 +274,16 @@ nav.navbar:not(.navbar-home) ul.dropdown-menu, nav.navbar:not(.navbar-home) div.
 	border-color: var(--bs-dark);
 	border-radius: .25rem;
 	border-width: 1px;
-	font-size: .92rem;
-	font-family: var(--font-family-logo);
+	font-size: .9rem;
 }
 
 nav.navbar.navbar-home ul.dropdown-menu a:hover, nav.navbar.navbar-home div.dropdown-menu a:hover {
 	background-color: var(--bs-sky);
-	transition: .2s;
 	color: white;
 }
 
 nav.navbar:not(.navbar-home) ul.dropdown-menu a:hover, nav.navbar:not(.navbar-home) div.dropdown-menu a:hover {
 	background-color: var(--bs-sky);
-	transition: .1s;
 	color: white;
 }
 
@@ -329,21 +294,10 @@ nav.navbar a.dropdown-item.activepage {
 }
 
 /* Top-level nav link when dropdown subitem is active */
-/*
 nav.navbar:not(.navbar-home) a.nav-link.activepage {
 	background-color: var(--bs-forest-dark);
 }
-*/
-nav.navbar:not(.navbar-home) a.nav-link:hover {
-	background-color: var(--bs-forest-dark);
-	color: rgb(100 116 139);
-	transition: .2s;
-}
-nav.navbar:not(.navbar-home) a.nav-link.show {
-	background-color: var(--bs-forest-dark);
-	color: rgb(100 116 139);
-	transition: .2s;
-}
+
 
 
 
@@ -361,10 +315,8 @@ nav.sidebar {
 }
 
 nav.sidebar a {
-  color: rgb(51, 65, 85);
-  font-family: var(--bs-font-family-serif);
+  color: rgb(50, 50, 50);
   text-decoration: none;
-  border-left: 1px solid rgb(241, 245, 249);
 }
 
 nav.sidebar span.navbar-header {
@@ -378,9 +330,9 @@ nav.sidebar span.navbar-header {
 nav.sidebar a.nav-link {
 	background-color: transparent;
 	font-weight: 500;
-	font-size: 0.88rem;
-	padding-left: 1.5rem;
-	margin-top: 1.2rem;
+	font-size: 0.95rem;
+	padding-left: 1.6rem;
+	margin-top: .8rem;
 	color: rgb(54, 70, 90);
 
 }
@@ -396,31 +348,24 @@ nav.sidebar a.nav-link {
 
 /* Submenu */
 nav.sidebar div.sidebar-submenu > a {
-	margin-left: 1.5rem;
-	padding-left: 0.50remrem;
+	padding-left: 2.0rem;
 	padding-top: .25rem;
 	padding-bottom: .25rem;
 	padding-right: 2.5rem;
 	display: block;
 	font-size: .88rem;
 	color: rgb(94, 110, 130);
-	border-left: 1px solid rgb(241, 245, 249);
 }
 
 nav.sidebar div.sidebar-submenu > a.activepage {
-  /*background-color: var(--bs-forest-dark);
-  color: white;*/
-  border-left: 1px solid var(--bs-forest);
-  font-weight: 500;
-  color: var(--bs-forest);
+  background-color: var(--bs-forest-dark);
+  color: white;
 }
 
 nav.sidebar div.sidebar-submenu > a:hover {
-  /*background-color: var(--bs-sky);
-  color: white;*/
-  color:rgb(51, 65, 85);
+  background-color: var(--bs-sky);
+  color: white;
   cursor: pointer;
-  transition: .2s;
 }
 
 

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block meta %}
+<meta name="description" content="The region cross-correlation index measures the degree to which different asset prices in one country affect asset prices in other countries. In general, it is a measure of the level of systemic risk in the global economy."/>
+<link rel="canonical" href="https://econforecasting.com/ac-regions">
+{% endblock %}
+
+{% block staticlinks %}
+{% endblock %}
+
+{% block content %}
+<div class="row gx-0">
+	{% include 'ac-sidebar.html' %}
+	<div class="col-12 col-lg-8 col-xl-9 col-xxl-9 m-auto pt-0 px-2 pb-5">
+	
+		<div class="row justify-content-center py-2">
+			<div class="card px-0" style="max-width: 1200px">
+				<h5 class="card-header">Model Overview</h5>
+				<div class="card-body">
+					<h5 class="card-title">Cross-Region Correlation Index</h5>
+					<p class="card-text">
+					<strong>What does this index measure?</strong><br>
+					This index tracks the level of correlation between stock prices in different international economies; e.g. the correlation between the U.S. stock market and the Chinese stck market, and so on. The full list of tracked regions is available <a href='ac-regions-hm'>here</a>. When the index level is high, it means that different regional financial markets are moving closely with one another.
+					</p>
+					<p class="card-text">
+					<strong>Why is this useful?</strong><br>
+					In economic downturns, a sell-off in one country's stock market can trigger broader sell-offs in other countries, causing a contagion effect triggering a larger financial crisis. For example, during the global financial crisis, the crash in the U.S. stock market spread to infect countries globally. This index measures the degree of "danger" that a crisis in one country may infect the broader international financial market.
+					</p>
+					<p class="card-text">
+					<strong>How do I interpret this index?</strong><br>
+					This index tracks the strength of cross-regional stock market correlations between the world's major economies. The index is normalized to a level between zero and one hundred. High index values indicate that cross-regional return correlations are unusually high and the risk of a global financial crash is elevated.
+					</p>
+					<a href="#chart-container" class="btn btn-primary">Historical index data</a>
+					<a href="ac-regions-hm" class="btn btn-danger">Component heatmap</a>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row justify-content-center bg-light">
+			<div class="container" style="max-width:1200px">
+				<div id="chart-container"></div>
+			</div>
+		</div>
+		<div class="row justify-content-center pt-2">
+			<div class="col-auto" style="">
+				<h2 class="display-8">Historical Data</h2>
+				<table id="table-container" class="table data-table" style="min-width:25rem"></table>
+			</div>
+		</div>
+
+		
+	</div>
+</div>
+{% endblock %}

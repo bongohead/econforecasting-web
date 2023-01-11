@@ -1,0 +1,18 @@
+<?xml version="1.0" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="175" height="175" viewBox="0 0 175 175"><style class="base-styles">
+		 .path-1, .path-4 {
+			stroke-width: 5px;
+			stroke: rgba(50, 50, 50, .5); 
+		 }
+		 .path-2, .path-3 {
+			stroke-width: 20px;
+			stroke: #2D8C26; 
+		 }
+         </style><g id="icon-group">
+		 <path class="path-1" d="M 15 37.5 L 15 112.5 L 75 82.5 L 75 7.5 z" fill="transparent"  />
+		 
+		 <path class="path-2" d="M 45 52.5 L 45 127.5 L 105 97.5 L 105 22.5 z" fill="transparent"/>
+		 <path class="path-3" d="M 75 82.5 L 75 157.5 L 135 127.5 L 135 52.5 z" fill="transparent"  />
+		 <path class="path-4" d="M 105 97.5 L 105 172.5 L 165 142.5 L 165 67.5 z" fill="transparent"/>
+		 </g>
+		 </svg>

@@ -1,0 +1,94 @@
+<nav class="sidebar col-lg-auto d-none d-lg-block px-0 py-2 bg-white" id="sidebar"> <!-- Hide Sidebar for XS to M Devices -->
+	<div class="d-flex flex-column">
+		<span class="navbar-header font-logo mt-3" style="color:rgb(67, 71, 81)">Interest Rate Forecasts</span>
+		<a href="#t" data-bs-toggle="collapse" class="nav-link">
+			<div>
+				<span>Treasury Yields</span>
+				<span class="fas fa-caret-down ms-1"></span>
+			</div>
+		</a>
+		<div id='t' class="collapse show sidebar-submenu">
+			<a class="text-truncate" href="/forecast-treasury-curve">
+				<span class="ps-2">Full Treasury Yield Curve</span>
+			</a>
+			<a class="text-truncate" href="/forecast-t03m">
+				<span class="ps-2">3-Month Treasury Bill</span>
+			</a>
+			<a class="text-truncate" href="/forecast-t06m">
+				<span class="ps-2">6-Month Treasury Bill</span>
+			</a>
+			<a class="text-truncate" href="/forecast-t01y">
+				<span class="ps-2">1-Year Treasury Note</span>
+			</a>
+			<a class="text-truncate" href="/forecast-t02y">
+				<span class="ps-2">2-Year Treasury Note</span>
+			</a>
+			<a class="text-truncate" href="/forecast-t05y">
+				<span class="ps-2">5-Year Treasury Note</span>
+			</a>
+			<a class="text-truncate" href="/forecast-t10y">
+				<span class="ps-2">10-Year Treasury Note</span>
+			</a>
+			<a class="text-truncate" href="/forecast-t20y">
+				<span class="ps-2">20-Year Treasury Bond</span>
+			</a>
+			<a class="text-truncate" href="/forecast-t30y">
+				</span><span class="ps-2">30-Year Treasury Bond</span>
+			</a>
+
+		</div>				
+		
+		<a href="#benchmark-rates" data-bs-toggle="collapse" class="nav-link">
+			<div>
+				<span>Benchmark Rates</span>
+				<span class="fas fa-caret-down ms-1"></span>
+			</div>
+		</a>
+		<div id='benchmark-rates' class="collapse show sidebar-submenu">
+			<a class="text-truncate" href="/forecast-ffr">
+				<span class="ps-2">Fed Funds Rate Forecast</span>
+			</a>
+			<a class="text-truncate" href="/forecast-sofr">
+				<span class="ps-2">SOFR Forecast</span>
+			</a>
+			<a class="text-truncate" href="/forecast-ameribor">
+				<span class="ps-2">AMERIBOR Forecast</span>
+			</a>
+			<a class="text-truncate" href="/forecast-bsby">
+				<span class="ps-2">BSBY Forecast</span>
+			</a>
+			<a class="text-truncate" href="/forecast-sonia">
+				<span class="ps-2">SONIA Forecast</span>
+			</a>
+			<a class="text-truncate" href="/forecast-estr">
+				<span class="ps-2">&euro;STR Forecast</span>
+			</a>
+
+		</div>
+		
+		<a href="#mor" data-bs-toggle="collapse" class="nav-link">
+			<div>
+				<span>Mortgage Rates</span>
+				<span class="fas fa-caret-down ms-1"></span>
+			</div>
+		</a>
+		<div id='mor' class="collapse show sidebar-submenu">
+			<a class="text-truncate" href="/forecast-mort15y">
+				<span class="ps-2">15-Year US Mortgage Rate</span>
+			</a>
+			<a class="text-truncate" href="/forecast-mort30y">
+				<span class="ps-2">30-Year US Mortgage Rate</span>
+			</a>
+		</div>
+		<!--
+		<div id='mrt' class="collapse show sidebar-submenu">
+			<a class="text-truncate" href="/fc-rates-mort15y">
+				<span class="fas fa-chart-line"></span><span class="ps-2">15-Year Mortgage Forecast</span>
+			</a>
+			<a class="text-truncate" href="/fc-rates-mort30y">
+				<span class="fas fa-chart-line"></span><span class="ps-2">30-Year Mortgage Forecast</span>
+			</a>
+		</div>
+		-->
+	</div>
+</nav>

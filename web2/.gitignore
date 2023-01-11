@@ -1,0 +1,36 @@
+public/cache/**
+public/static/data/**
+
+# Styling
+scss/libs/**
+public/static/style.css
+public/static/style.css.map
+
+# Adsense
+public/ads.txt
+public/templates/g-tags.html
+public/templates/g-ads.html
+
+
+
+
+## New
+# Node stuff
+node_modules/
+build/
+npm-debug.log
+
+# Tailwind stuff
+tailwindcss/
+tailwindcss
+output.css
+output.css.map
+
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+# Key test
+tests.r

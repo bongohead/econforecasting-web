@@ -1,0 +1,215 @@
+{% extends "indices.html" %}
+
+{% block page %}
+
+<div class="row g-0 my-3">
+	<div class="col-12">
+		<div class="card shadow-sm"><div class="card-body">
+			<div class="row" id="top-holder">
+				<div class="col-lg-4 border-lg-end border-bottom border-lg-0 pb-3 pb-lg-0">
+					<div class="d-flex">
+                          <p class="font-sans-serif lh-1 mb-1 fs-4 pe-2">15%</p>
+                          <div class="d-flex flex-column"> 
+							<p class="fs--2 mb-0 text-nowrap">2500 vs 2683 </p>
+                          </div>
+					</div>
+				</div>
+			</div>
+		</div></div>
+	</div>
+</div>
+
+<div class="row g-0 my-3">
+
+	<!--
+	<div class="col-xxl-4 col-lg-6 pe-lg-2">
+		<div id="data-card" class="card shadow-sm">
+			<div class="card-body" id="tables-container">
+				<div class="mb-2"><span style="vertical-align:middle;font-size:1.3rem;">DATA</span></div>
+				<ul class="list-group list-group-vertical m-3" id="li-container">
+				</ul>
+			</div>
+		</div>
+	</div>
+	-->
+
+	<div class="col-12" id="text-container">
+		<div class="card shadow-sm">
+			<div class="card-body" style="font-size:.92rem">
+				<div class="mb-2"><span style="vertical-align:middle;font-size:1.3rem;">DESCRIPTION</span></div>
+				
+				<p>Our sentiment indices are a high-frequency measure of consumer/market emotion based off text scraped from different web sources. These texts are scored at a high volume through several NLP models, primarily utilizing <a href="https://en.wikipedia.org/wiki/BERT_(language_model)" target="_blank">BERT</a> based scoring models.</p>
+				<p><strong>The indices measure the overall sentiment of the market, ranging from a score of 0 (most negative) to 100 (most positive)</strong>. Scores are normalized such that 50 is a baseline level of sentiment.</p>
+				<ul>
+					<li>The <strong><i class="cmefi-logo mx-1"></i>Social Media Financial Sentiment Index</strong> measures social media sentiment regarding <b class="text-success">financial markets</b> (primarily U.S. stock markets). Text data is sourced primarily from <a href="https://en.wikipedia.org/wiki/Reddit" target="_blank">Reddit</a>.
+					<li>The <strong><i class="cmefi-logo mx-1"></i>Social Media News Sentiment Index</strong> measures social media sentiment regarding <b class="text-success">general news and current events</b>. Text data is sourced primarily from Reddit.
+					<li>The <strong><i class="cmefi-logo mx-1"></i>Social Media Labor Market Index</strong> measures social media sentiment regarding <b class="text-success">job searching, career advancement, and other labor market details</b>. Text data is sourced primarily from Reddit.
+					<li>The <strong><i class="cmefi-logo mx-1"></i>Traditional Media Financial Sentiment Index</strong> measures traditional news sentiment regarding <b class="text-success">financial markets</b>. Text data is sourced primarily from Reuters, the Financial Times, and CNBC.
+				</ul>
+				<p>Indices are updated daily twice, at roughly 2PM and 8PM Eastern time (UTC 18:00/19:00 and UTC 00:00/01:00). Due to data lags, index values for dates less than 3 days old are preliminary and may be subject to minor revisions over the next few days.</p>
+				
+				<hr class="mt-5">
+				<div id="citation" style="line-height:1rem;font-size:.75rem"></div>
+				<div class="accordion accordion-flush" id="accordion">
+				  <div class="accordion-item">
+					<h2 class="accordion-header">
+					  <button class="accordion-button collapsed px-1" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-1"><span style="vertical-align:middle;font-size:1.2rem;">METHODOLOGY</span></button>
+					</h2>
+					<div id="accordion-1" class="accordion-collapse collapse" data-bs-parent="#accordion">
+						<div class="accordion-body">
+							<h5 style="font-size:1.1rem" class="text-decoration-underline">Scraping</h5>
+							<p>Our scripts run daily to collect thousands of news article and Reddit posts. The below table shows which sources are scraped, which posts/articles are retained for scoring, and what sentiment indices they are components of.</p>
+							
+							<table class="table text-center table-striped table-hover table-sm my-4 mx-5" style="width:auto !important">
+								<thead>
+									<tr><th>Source</th><th>Retention Condition</th><th>Sentiment Index</th></tr>
+								</thead>
+								<tbody>
+									<tr><td>CNBC (All Articles)</td><td>Retain All</td><td>Traditional Media - Financial</td></tr>
+									<tr><td>FT (Articles tagged "Economy")</td><td>Retain All</td><td>Traditional Media - Financial</td></tr>
+									<tr><td>Reuters (Business Articles)</td><td>Retain All</td><td>Traditional Media - Financial</td></tr>
+									<tr><td>StockMarket</td><td>Votes > 10</td><td>Social Media - Financial</td></tr>
+									<tr><td>reddit.com/r/StockMarket</td><td>Votes > 10</td><td>Social Media - Financial</td></tr>
+									<tr><td>reddit.com/r/Economics</td><td>Votes > 10</td><td>Social Media - Financial</td></tr>
+									<tr><td>reddit.com/r/wallstreetbets</td><td>Votes > 100</td><td>Social Media - Financial</td></tr>
+									<tr><td>reddit.com/r/CryptoCurrency</td><td>Votes > 100</td><td>Social Media - Financial</td></tr>
+									<tr><td>reddit.com/r/StockMarket</td><td>Votes > 10</td><td>Social Media - Financial</td></tr>
+									<tr><td>reddit.com/r/stocks</td><td>Votes > 10</td><td>Social Media - Financial</td></tr>
+									<tr><td>reddit.com/r/investing</td><td>Votes > 5</td><td>Social Media - Financial</td></tr>
+									<tr><td>reddit.com/r/news</td><td>Votes > 1000</td><td>Social Media - News</td></tr>
+									<tr><td>reddit.com/r/worldnews</td><td>Votes > 1000</td><td>Social Media - News</td></tr>
+									<tr><td>reddit.com/r/politics</td><td>Votes > 1000</td><td>Social Media - News</td></tr>
+									<tr><td>reddit.com/r/jobs</td><td>Votes > 5</td><td>Social Media - Labor Market</td></tr>
+									<tr><td>reddit.com/r/careerguidance</td><td>Votes > 5</td><td>Social Media - Labor Market</td></tr>
+									<tr><td>reddit.com/r/personalfinance</td><td>Votes > 10</td><td>Social Media - Labor Market</td></tr>
+								</tbody>
+							</table>
+							<p>
+
+							<p>News articles are collected from Reuters, the Financial Times, and CNBC. Articles are scraped from the business sections of each respective website; the full text content of the title and articles are retained and stored in our database.</p>
+							
+							<p>Reddit posts are collected using the following algorithmn:</p>
+							<ul>
+								<li>All posts made in the following boards are scraped, using <a href="https://github.com/pushshift/api" target="_blank">Pushshift</a> as well as the <a href="https://www.reddit.com/dev/api/" target="_blank">official REST API</a>.
+								</li>
+								<li>For each board, only posts with more votes than the <em>Retention Condition</em> threshold stated above are retained. For these posts, the title as well as any textual post content (if it exists) are retained and stored in our database.</li>
+							</ul>
+							<p>Scrape jobs run daily and will attempt to collect today's new articles/posts, as well as identify any old articles/posts if they were missed.</p>
+							
+							<h5 style="font-size:1.1rem" class="text-decoration-underline">Scoring</h5>
+							<p>Each retained article/post is then cleaned, tokenized and fed through 3 NLP scoring models:</p>
+							<ol>
+								<li>A <a href="https://arxiv.org/abs/1907.11692" target="_blank">RoBERTa</a> model trained on the <a href="https://github.com/dair-ai/emotion_dataset" target="_blank">CARER (Contextualized Affect Representations for Emotion Recognition)</a> Twitter emotions dataset. This yields a dominant emotion (joy, sadness, neutral, anger, fear, surprise) for the article/post.</li>
+								<li>A <a href="https://arxiv.org/abs/1910.01108" target="_blank">DistilBERT</a> model trained on the <a href="https://paperswithcode.com/sota/sentiment-analysis-on-sst-2-binary">SST-2</a> dataset, which outputs a dominant emotion (positive or sadness) for the article/post.</li>
+								<li>A simple lexical-based dictionary score, which splits the article/post into its component words, detects whether each word is positive or negative (based off the <a href="http://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm" target="_blank">NRC lexicon</a>), then finds the more common emotion.</li>
+							</ol>
+							<h5 style="font-size:1.1rem" class="text-decoration-underline">Index Creation</h5>
+							<p>For each article/post, we then take the output of all 3 models and convert them to a numerical score: positive and negative scores from the DistilBERT and dictionary models are assigned 1 and -1 respectively. From the RoBERTa model, joy/surprise are assigned 1, neutral 0, and sadness/anger/fear -1.</p>
+							<p>For each model type and index type (see table above), we sum up the scores for all posts/article from each component board, then take the seven-day moving average of the score. Minor cleaning and deseasonalization steps are also conducted at this point.</p>
+							<p>Lastly, for each index type, we stack all 3 models using an equal-weighting scheme to generate a single score for each index.</p>
+							<img src="/static/sentiment-analysis.png" class="mb-2 img-thumbnail mx-auto d-block" alt="Sentiment Analysis">
+							<p style="font-size:.9rem" class="text-muted fst-italic">For more details please contact <a href="mailto:charles@cmefi.com">charles (at) cmefi (dot) com</a>.</p>
+						</div>
+					</div>
+				  </div>
+				  
+				  <div class="accordion-item">
+					<h2 class="accordion-header" >
+					  <button class="accordion-button collapsed px-1" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-2"><span style="vertical-align:middle;font-size:1.2rem;">SOURCE-LEVEL EMOTION BREAKDOWN</span></button>
+					</h2>
+					<div id="accordion-2" class="accordion-collapse collapse" data-bs-parent="#accordion">
+					  <div class="accordion-body">
+						<p>The below charts show the emotion-level scores (see Methodology section for details) for each social media index and subreddit.</p>
+						<div class="row" id="emotions-container">
+							
+						</div>
+					  </div>
+					</div>
+				  </div>
+				  
+				  <div class="accordion-item">
+					<h2 class="accordion-header" >
+					  <button class="accordion-button collapsed px-1" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-3"><span style="vertical-align:middle;font-size:1.2rem;">DATA TABLES</span></button>
+					</h2>
+					<div id="accordion-3" class="accordion-collapse collapse" data-bs-parent="#accordion">
+					  <div class="accordion-body">
+						<table class="table data-table w-100" id="sentiment-table"></table>
+
+						</div>
+					  </div>
+					</div>
+					
+				 </div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row g-0 my-3">
+  	<div class="col-12">
+  		<div class="card shadow-sm"><div class="card-body">
+			<div class="mb-2"><span style="vertical-align:middle;font-size:1.3rem;">DETAILED CHART</span></div>
+			<div id="main-chart-container"></div>
+			<div id="main-chart-legend-container">
+				<div class="row justify-content-center">
+					<div class="col-auto" style="background-color:var(--bs-cmefi-light-warm)"><b class="ps-3">Sentiment Indices</b><span class="ps-1 fst-italic" style="font-size:.8rem;">(Click below to hide/show)</span><hr class="my-0"><ul class="list-group fw-bolder" id="main-chart-legend-indices" style="font-size:.8rem"></ul></div>
+					<div class="col-auto" style="background-color:var(--bs-cmefi-light-warm)"><b class="ps-3">Benchmarks</b><hr class="my-0"><ul class="list-group fw-bolder" id="main-chart-legend-benchmarks" style="font-size:.8rem"></ul></div>
+				</div>
+			</div>
+		</div></div>
+	</div>
+</div>
+
+<!--
+  <div class="row g-0">
+
+  	<div class="col-xxl-4 col-lg-6 pe-lg-2 mb-3">
+  		<div id="data-card" class="card shadow-sm">
+  			<div class="card-body">
+  				<div class="mb-2"><span style="vertical-align:middle;font-size:1.3rem;">Merchant Volumes</span></div>
+  				<table id="table-1" class="table data-table w-100"></table>
+  				<hr>
+        <div style="line-height:1rem;font-size:.75rem;text-align:right">
+          <span class="text-muted">Data represents summed values starting from 2016</span>
+          </div>
+        </div>
+  		</div>
+  	</div>
+
+    <div class="col-xxl-8 col-lg-6 ps-lg-2 mb-3" id="text-container">
+    	<div class="card shadow-sm">
+    		<div class="card-body" style="font-size:.92rem">
+
+    			<div class="mb-3"><span style="vertical-align:middle;font-size:1.3rem;">TOP GAINERS/LOSERS</span></div>
+
+          <p>Change in transaction volume, by time and merchant:</p>
+    			<div class="row">
+    				<div class="col-4">
+    				  <h5 class="text-center text-decoration-underline" style="color:var(--tsys-green)">Since Last Month</h5>
+    					<table id="table-1m" class="w-100 px-2"></table>
+    				</div>
+    				<div class="col-4">
+    				  <h5 class="text-center text-decoration-underline" style="color:var(--tsys-green)">From 12 Months Ago</h5>
+
+    					<table id="table-1y" class="w-100 px-2"></table>
+    				</div>
+    				<div class="col-4">
+    				  <h5 class="text-center text-decoration-underline" style="color:var(--tsys-green)">From 3 Years Ago</h5>
+    					<table id="table-3y" class="w-100 px-2"></table>
+    				</div>
+    			</div>
+
+
+
+    			<div class="mb-2"><span style="vertical-align:middle;font-size:1.3rem;">FORECAST MODELS</span></div>
+    			<div id="primary-forecast"></div>
+    			<div id="external-forecasts"></div>
+    			<hr class="mt-5">
+    			<div id="citation" style="line-height:1rem;font-size:.75rem"></div>
+    		</div>
+    	</div>
+    </div>
+  </div>
+  -->
+{% endblock %}

@@ -1,6 +1,0 @@
-# Node stuff
-node_modules
-build
-npm-debug.log
-.nyc
-.env

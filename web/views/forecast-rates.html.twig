@@ -1,0 +1,76 @@
+{% extends "base.html.twig" %}
+
+{% block staticlinks %}
+{% endblock %}
+
+{% block navbar %}
+	{% include 'navbar-other.html.twig' %}
+{% endblock %}
+
+{% block content %}
+<div class="d-flex" style="background-color:var(--bs-white-cool)">
+	{% include 'forecast-sidebar-rates.html.twig' %}
+	<div class="col mx-2 pb-5">
+		<div class="container-xxl">
+
+			<div class="row g-0">
+				<div class="col-12 px-0">
+						<div class="card my-3 mx-0 rounded shadow-sm">
+							<div class="card-body py-0">
+								<div id="chart-container" ></div>
+							</div>
+						</div>
+				</div>
+			</div>
+			
+			<div class="row g-0">
+			
+				<div class="col-xxl-4 col-lg-6 pe-lg-2 mb-3">
+					<div id="data-card" class="card shadow-sm">
+						<div class="card-body" id="tables-container">
+							<div class="mb-2"><span class="font-logo" style="vertical-align:middle;font-size:1.4rem;color:rgb(77, 81, 90)">Data</span></div>
+							<span style="font-size:.90rem">Select a series:</span>
+							<ul class="list-group list-group-vertical m-3" id="li-container">
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-xxl-8 col-lg-6 ps-lg-2 mb-3" id="text-container">
+					<div class="card shadow-sm">
+						<div class="card-body" style="font-size:.92rem">
+						
+							<div class="mb-2"><span class="font-logo" style="vertical-align:middle;font-size:1.4rem;color:rgb(77, 81, 90)">Description</span></div>
+
+						
+							<div id="variable-description"></div>
+							<div class="mb-2"><span class="font-logo" style="vertical-align:middle;font-size:1.4rem;color:rgb(77, 81, 90)">Forecast Models</span></div>
+							<div id="primary-forecast"></div>
+							<div id="primary-forecast-vintage-div" class="d-flex"></div>
+							<div id="external-forecasts"></div>
+							<hr class="mt-4">
+							<div id="citation" style="line-height:1rem;font-size:.75rem"></div>
+						</div>
+					</div>
+				</div>
+				
+				
+			</div>
+			
+			
+			<div class="row g-0">
+				<div class="col-12 px-0">
+						<div class="card my-3 mx-0 rounded shadow-sm">
+							<div class="card-body py-0">
+							</div>
+						</div>
+				</div>
+			</div>
+			
+			{% include 'g-ads.html.twig' ignore missing  %}
+
+		</div>
+	</div>
+	
+</div>
+{% endblock %}

@@ -1,12 +1,23 @@
-public/cache/**
-public/static/data/**
+# Node stuff
+node_modules/
+build/
+npm-debug.log
 
-# Styling
-scss/libs/**
-public/static/style.css
-public/static/style.css.map
+# External libs
+scss/libs/
+js/libs/
+web/cache/
 
-# Adsense
-public/ads.txt
-public/templates/g-tags.html
-public/templates/g-ads.html
+# Compiled files
+style.css
+style.css.map
+
+# Env files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+# Key test
+tests.r

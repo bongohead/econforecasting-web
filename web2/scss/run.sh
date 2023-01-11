@@ -7,5 +7,5 @@
 #    this is for debugging purposes - see https://stackoverflow.com/questions/13022461/add-timestamps-to-compiled-sass-scss
 
 echo "\$BuildTimeStamp: \"$(date '+%Y-%m-%d %H:%M:%S')\"" > _timestamp.scss
-sass main.scss ../web/static/css/style.css
+sass main.scss ../public/static/style.css
 rm _timestamp.scss

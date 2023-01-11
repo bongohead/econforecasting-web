@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="robots" content="index, follow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="{{description|e}}">
+    {% block meta %}{% endblock %}
+
+	{% if canonical is defined %}
+		<link rel="canonical" href="{{ canonical | raw }}" />
+	{% endif %}
+
+    <title>{{ title | e }}</title>
+	
+	<link rel='dns-prefetch' href='//cdnjs.cloudflare.com' />
+	<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+	<link href='https://fonts.gstatic.com' crossorigin rel='preconnect' />
+
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,700">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merriweather:300,400,500,700">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700">
+ 
+    <link rel="icon" type=image/ico href="/static/brand/icon-clear-bg-static-for-png.png"/> <!--Can't use SVG due to Safari-->
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.2/css/dataTables.bootstrap5.min.css"/>
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"/>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.6.3/css/all.min.css"/>
+
+</head>
+
+<body>
+	{% block navbar %}
+	{% endblock %}
+	<main>
+		{% block content %}
+		{% endblock %}
+	</main>
+
+	<footer class="container-fluid text-dark px-0 pt-5 bg-white">
+		<hr class="mx-5">
+		<div class="container py-3">
+			<div class="row">
+				<div class="col-6 mb-2 mb-md-0">
+					<!--<h5 class="text-uppercase">Links</h5>
+					<ul class="list-unstyled mb-0">
+						<li><a href="https://econforecasting.com" class="text-dark"></a></li>
+					</ul>
+					-->
+				</div>
+				<div class="col-6 mb-2 mb-md-0 text-end">
+					<h5 class="text-uppercase mb-0">CONTACT</h5>
+					<ul class="list-unstyled">
+					  <li>Questions or concerns? Contact <a href="mailto:charles@econforecasting.com" class="text-dark">charles(at)econforecasting(dot)com</a>.</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid">
+			<div class="container text-end p-2">
+				<span>© 2022 <img class="mx-1" width="16" height="16" src="/static/brand/icon-clear-bg-static-for-png.svg">econforecasting.com</span>
+			</div>
+		</div>
+	</footer>
+
+        
+	<div class="overlay h-100" id="overlay" style="display:none;color:var(--bs-cmefi-green)">
+		<div class="row h-25">
+			<div class=""></div>
+		</div>
+		<div class="row justify-content-center">
+			<div class="col-auto"><h4>Loading</h4></div>
+		</div>		
+		<div class="row justify-content-center">
+			<div class="spinner-border" style="width: 6rem; height: 6rem;" role="status">
+			  <span class="visually-hidden">Loading</span>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+
+	<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+	
+	<script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script> <!-- HTML export buttons -->
+
+	<!-- Version 9.0+ requires AST filtration bypass -->
+	<script src="https://code.highcharts.com/stock/10.3/highstock.js"></script>
+	<script src="https://code.highcharts.com/10.3/modules/boost.js"></script>
+	<script src="https://code.highcharts.com/10.3/modules/accessibility.js"></script>
+
+	{% if pagescript is defined %}
+		<script src="/static/cache/{{ pagescript | raw }}"></script>
+	{% endif %}
+	
+	<!-- Static Links -->
+    {% block staticlinks %}
+	{% endblock %}
+	
+	{% include 'g-tags.html' ignore missing  %}
+
+</body>
+</html>

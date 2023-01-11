@@ -154,23 +154,19 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		},
 		rangeSelector: {
 			buttonTheme: { // styles for the buttons
-				fill: 'var(--bs-sky-light)',
+				fill: 'var(--bs-sky)',
 				style: {
 					color: 'white'
 				},
 				states: {
 					hover: {
-						fill: 'var(--bs-sky-dark)',
-						style: {
-							transition: '.2s'
-						}
+						fill: 'var(--bs-sky-dark)'
 					},
 					select: {
-						fill: 'var(--bs-sky)',
+						fill: 'var(--bs-sky-light)',
 						style: {
 							color: 'white',
-							fontWeight: 'normal',
-							transition: '.5s'
+							fontWeight: 'normal'
 						}
 					}
 				}
@@ -187,5 +183,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	// Apply the theme
 	Highcharts.setOptions(hc_theme);
 });
+
+
+
+
 
 
