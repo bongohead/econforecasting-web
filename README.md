@@ -15,6 +15,9 @@ Description TBA
 ## [v2.00] (CSS Overhaul & Express Migration)
 - Added rebuilt SASS styles
 - Added new logo integration
+- Added Express migration
+- Added new REST API Oauth integration
+- Added speed optimizations to load pages and better error handling
 
 ## 2022-12-13 [v1.04] (VPS Migration, API Integration & Misc)
 - Added API v0 with JWT auth

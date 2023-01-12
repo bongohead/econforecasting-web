@@ -106,7 +106,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		if (ud.show_vintage_chart === true) addVintageChartListener()
 
 		if (ud.debug) console.log('Draw time', Date.now() - start);
-	});
+	})
+	.catch(e => ajaxError(e));
 });
 
 /*** Draw chart ***/

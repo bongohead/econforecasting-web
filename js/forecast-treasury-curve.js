@@ -6,27 +6,35 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	/*** Set Default Data ***/
 	(function() {
 		const ud_prev = getAllData()['forecast-treasury-curve'] || {};
-		const ud = {... ud_prev, ... {}};
+		const ud = {... ud_prev, ... {
+			debug: true
+		}};
 		setData('forecast-treasury-curve', ud);
 	})();
 
 	/********** GET DATA **********/
 	const ud = getData('forecast-treasury-curve') || {};
 
-	
-	const get_hist_obs = getApi(`get_hist_obs?varname=${ud.varname}`, 10, ud.debug);
+	const get_hist_obs = getApi(`get_hist_obs?varname=t01m,t02m,t03m,t06m,t01y,t05y,t07y,t10y,t20y,t30y`, 10, ud.debug);
+	const get_forecast_values = getApi(`get_latest_forecast_obs?varname=t01m,t02m,t03m,t06m,t01y,t05y,t07y,t10y,t20y,t30y&forecast=int`, 10, ud.debug);
+	const start = Date.now();
 
-	const get_forecast_hist_values_last_vintage = getFetch('get_forecast_hist_values_last_vintage', ['forecast_hist_values'], {forecast: 'int', varname: ['t01m', 't03m', 't06m', 't01y', 't05y', 't07y', 't10y', 't20y', 't30y'], freq: 'm', form: 'd1'}, 10000, false);	
-	// Don't bother with t07y
-	const get_forecast_values_dfd = getFetch('get_forecast_values_last_vintage', ['forecast_values'], {varname: ['t01m', 't03m', 't06m', 't01y', 't05y', 't07y', 't10y', 't20y', 't30y'], freq: 'm', form: 'd1'}, 10000, false);
-	Promise.all([get_forecast_hist_values_last_vintage, get_forecast_values_dfd]).then(function(response) {
-		const hist_values_raw = response[0].forecast_hist_values.map(x => ({
-			date: x.date,
-			value: parseFloat(x.value),
-			ttm: parseInt(x.varname.substring(1, 3)) * (x.varname.substring(3, 4) === 'm' ? 1 : 12)
-			})).sort((a, b) => parseInt(moment(a.date).format('x')) > parseInt(moment(b.date).format('x'))) ;
-		//console.log('hist_values_raw', hist_values_raw);
-		
+	const get_cleaned_hist = get_hist_obs.then(function(r) {
+
+		if (ud.debug) console.log('Fetch get_hist_obs', Date.now() - start, r);
+
+		const hist_values_raw = r.map(x => {
+			const ttm = parseInt(x.varname.substring(1, 3)) * (x.varname.substring(3, 4) === 'm' ? 1 : 12);
+			return x.data.map(y => ({
+				unixdate: moment(y.date),
+				date: y.date,
+				value: parseFloat(y.value),
+				ttm: ttm
+			}));
+		}).flat().sort((a, b) => a.unixdate > b.unixdate);
+
+		if (ud.debug) console.log('hist_values_raw', Date.now() - start, hist_values_raw);
+
 		const hist_values =
 			[... new Set(hist_values_raw.map(x => x.date))] // Get list of obs_dates
 			.map(d => ({
@@ -34,14 +42,28 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				type: 'history',
 				data: hist_values_raw.filter(x => x.date == d).map(x => [x.ttm, x.value]).sort((a, b) => a[0] - b[0]) // Sort according to largest value
 			}));
-		//console.log('hist_values', hist_values);
 		
-		const forecast_values_raw = response[1].forecast_values.map(x => ({
-			vdate : x.vdate,
-			date: x.date,
-			value: parseFloat(x.value),
-			ttm: parseInt(x.varname.substring(1, 3)) * (x.varname.substring(3, 4) === 'm' ? 1 : 12)
-		})).sort((a, b) => parseInt(moment(a.date).format('x')) > parseInt(moment(b.date).format('x')));
+		if (ud.debug) console.log('hist_values', Date.now() - start, hist_values);
+		return {hist_values: hist_values};
+	}).catch(e => ajaxError(e));
+
+
+	const get_cleaned_forecast = get_forecast_values.then(function(r) {
+
+		if (ud.debug) console.log('Fetch get_forecast_values', Date.now() - start, r);
+
+		const forecast_values_raw = r.map(x => {
+			const ttm = parseInt(x.varname.substring(1, 3)) * (x.varname.substring(3, 4) === 'm' ? 1 : 12);
+			return x.data.map(y => ({
+				vdate : x.vdate,
+				date: y.date,
+				unixdate: moment(y.date),
+				value: parseFloat(y.value),
+				ttm: ttm
+			}));
+		}).flat().sort((a, b) => a.unixdate > b.unixdate);
+
+		if (ud.debug) console.log('forecast_values_raw', Date.now() - start, forecast_values_raw);
 
 		const forecast_vdate = forecast_values_raw[0].vdate;		
 		const forecast_values =
@@ -51,14 +73,19 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				type: 'forecast',
 				data: forecast_values_raw.filter(x => x.date == d).map(x => [x.ttm, x.value]).sort((a, b) => a[0] - b[0]) // Sort according to largest value
 			}));
-		// console.log('forecast_values', forecast_values);
-		
+
+		if (ud.debug) console.log('forecast_values', Date.now() - start, forecast_values);
+		return {forecast_values: forecast_values, forecast_vdate: forecast_vdate};
+	}).catch(e => ajaxError(e));
+
+
+	Promise.all([get_cleaned_hist, get_cleaned_forecast]).then(function([{hist_values}, {forecast_values, forecast_vdate}]) {
+
 		const treasury_data = 
 			hist_values.concat(forecast_values)
 			.map((x, i) => ({...x, ...{date_index: i}}))
 			// Ordered Treasury data
 			//.sort((a, b) => parseInt(moment(a.date).format('x')) > parseInt(moment(b.date).format('x'))) ;
-			
 			
 		const res = {
 			treasury_data: treasury_data,
@@ -66,7 +93,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			play_state: 'pause',
 			play_index: treasury_data.filter(x => x.type === 'forecast')[0].date_index
 		};
-		// console.log('res', res);
+		if (ud.debug) console.log('Finished data clean', Date.now() - start);
+
 		setData('forecast-treasury-curve', {...getData('forecast-treasury-curve'), ...res});
 		return(res);
 	})
@@ -79,8 +107,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		addCitation();
 		addVdate(res.forecast_vdate);
 		$('div.overlay').hide();
-	});
-	
+	})
+	.catch(e => ajaxError(e));
+
+
 	/********** EVENT LISTENERS FOR PLAYING **********/
 	$('#chart-container').on('click', '#chart-subtitle-group > button.chart-subtitle', function() {
 		const ud = getData('forecast-treasury-curve');

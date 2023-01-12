@@ -73,3 +73,9 @@ function getColorArray() {
     return ['#4572A7', '#AA4643', '#0ba828', '#80699B', '#3D96AE','#DB843D', '#92A8CD', '#A47D7C', '#B5CA92',"#7cb5ec", "#434348", "#90ed7d", "#f7a35c", "#8085e9", "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1"];
 }
 
+function ajaxError(e) {
+	console.log('Error: ', e);
+	document.querySelector('#overlay .spinner-border').style.display = 'none';
+	document.querySelector('#overlay h4').textContent = 'Sorry, it seems like there was an error loading the data! Please refresh or try back later.';
+	return;
+}
