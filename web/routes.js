@@ -23,6 +23,10 @@ const routes = [
     name: 'forecast-bsby', endpoints: ['/forecast-bsby'],
     js: ['init', 'helpers', 'forecast-varname'], externaljs: ['moment', 'moment-tz', 'gradient'],
     template: 'forecast-rates', title: 'BSBY Forecast', canonical: 'https://econforecasting.com/forecast-ffr'
+  }, {
+    name: 'forecast-treasury-curve', endpoints: ['/forecast-treasury-curve'],
+    js: ['init', 'helpers', 'forecast-varname'], externaljs: ['moment', 'moment-tz', 'gradient'],
+    template: 'forecast-treasury-curve', title: 'Treasury Curve Forecast', canonical: 'https://dev1.econscale.com/forecast-treasury-curve'
   }
 ];
 
