@@ -5,39 +5,62 @@ const concatJs = require('./middleware').concatJs;
 const routes = [
   {
     name: 'home', endpoints: ['/'],
-    js: ['init'], externaljs: [],
+    js: ['home'], externaljs: [],
     template: 'home', title: 'Econforecasting.com'
   }, {
     name: 'forecast-sofr', endpoints: ['/forecast-sofr'],
-    js: ['init', 'helpers', 'forecast-varname'], externaljs: ['moment', 'moment-tz', 'gradient'],
+    js: ['helpers', 'forecast-varname'], externaljs: ['hc/highstock', 'hc/highcharts-more', 'dt/jquery.dataTables', 'dt/dataTables.bootstrap5', 'dt/dataTables.buttons', 'dt/buttons.html5'],
     template: 'forecast-rates', title: 'SOFR Forecasts', canonical: 'https://econforecasting.com/forecast-sofr'
   }, {
     name: 'forecast-ffr', endpoints: ['/forecast-ffr'],
-    js: ['init', 'helpers', 'forecast-varname'], externaljs: ['moment', 'moment-tz', 'gradient'],
+    js: ['forecast-varname'], externaljs: ['hc/highstock', 'hc/highcharts-more', 'dt/jquery.dataTables', 'dt/dataTables.bootstrap5', 'dt/dataTables.buttons', 'dt/buttons.html5'],
     template: 'forecast-rates', title: 'Federal Funds Forecast', canonical: 'https://econforecasting.com/forecast-ffr'
   }, {
     name: 'forecast-ameribor', endpoints: ['/forecast-ameribor'],
-    js: ['init', 'helpers', 'forecast-varname'], externaljs: ['moment', 'moment-tz', 'gradient'],
+    js: ['helpers', 'forecast-varname'], externaljs: ['hc/highstock', 'hc/highcharts-more', 'dt/jquery.dataTables', 'dt/dataTables.bootstrap5', 'dt/dataTables.buttons', 'dt/buttons.html5'],
     template: 'forecast-rates', title: 'AMERIBOR Forecast', canonical: 'https://econforecasting.com/forecast-ffr'
   }, {
     name: 'forecast-bsby', endpoints: ['/forecast-bsby'],
-    js: ['init', 'helpers', 'forecast-varname'], externaljs: ['moment', 'moment-tz', 'gradient'],
+    js: ['helpers', 'forecast-varname'], externaljs: ['hc/highstock', 'hc/highcharts-more', 'dt/jquery.dataTables', 'dt/dataTables.bootstrap5', 'dt/dataTables.buttons', 'dt/buttons.html5'],
     template: 'forecast-rates', title: 'BSBY Forecast', canonical: 'https://econforecasting.com/forecast-ffr'
   }, {
     name: 'forecast-treasury-curve', endpoints: ['/forecast-treasury-curve'],
-    js: ['init', 'helpers', 'forecast-treasury-curve'], externaljs: ['moment', 'moment-tz', 'gradient'],
+    js: ['helpers', 'forecast-treasury-curve'], externaljs: ['hc/highstock', 'hc/highcharts-more', 'dt/jquery.dataTables', 'dt/dataTables.bootstrap5', 'dt/dataTables.buttons', 'dt/buttons.html5'],
     template: 'forecast-treasury-curve', title: 'Treasury Curve Forecast', canonical: 'https://dev1.econscale.com/forecast-treasury-curve'
   }
 ];
 
 routes.forEach(r => {
 
-  router.get(r.endpoints, concatJs(`${r.name}.js`, r.js.concat(r.externaljs.map(f => `libs/${f}`))), (req, res) => {
+  const libs =
+    ['jquery', 'bootstrap', 'gradient', 'dayjs/dayjs', 'dayjs/timezone', 'dayjs/utc', 'dayjs/minmax'].concat(r.externaljs).map(f => `libs/${f}`)
+    .concat(['helpers']).concat(r.js);
+
+  router.get(r.endpoints, concatJs(`${r.name}.js`, libs), (req, res) => {
     res.render(
       `./${r.template}.html.twig`,
       {title: r.title + ' | econforecasting.com', canonical: r.canonical, pagescript: `${r.name}.js`}
     );
   });
+  
+  /*
+  router.get(r.endpoints, (req, res) => {
+    if (process.env.NODE_ENV === 'development') {
+      const path = require('path');
+
+      require('esbuild').buildSync({
+        entryPoints: [path.join(__dirname, '/../js/' + r.name + '.js')],
+        bundle: true,
+        minify: false,
+        outfile: path.join(__dirname, '/cache/' + r.name + '.js')
+      })
+    }
+    res.render(
+      `./${r.template}.html.twig`,
+      {title: r.title + ' | econforecasting.com', canonical: r.canonical, pagescript: `${r.name}.js`}
+    );
+  */
+
 
 })
 

@@ -3,6 +3,7 @@ const port = 3005;
 const path = require('path');
 
 const express = require('express');
+const compression = require('compression');
 
 // Middlewares
 const bodyParser = require('body-parser');
@@ -44,6 +45,10 @@ app.use(cookieSetter);
 // Serve static files
 app.use('/static', express.static(path.join(__dirname, 'static')));
 app.use('/static/cache', express.static(path.join(__dirname, 'cache')));
+
+// Compress files
+app.use(compression());
+
 
 // Set templating engine for page views
 app.set('views', path.join(__dirname, '..', 'views'));

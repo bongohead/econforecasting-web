@@ -11,7 +11,7 @@ module.exports = {
 		max: 1000,
 		message: 'max 1000 requests per 10 minutes!',
 		standardHeaders: true,
-		legacyHeaders: false,
+		legacyHeaders: false
 	}),
 
 	cookieSetter: function(req, res, next) {
@@ -41,7 +41,23 @@ module.exports = {
 					return fs.readFileSync(path.join(__dirname, '/../js/' + f + '.js')).toString();
 				}).join(';');
 
-				fs.writeFileSync(path.join(__dirname, '/cache/' + filename), output);
+				/*/
+				const uglify = require("uglify-js");
+
+				const output_dict = files.reduce((accum, f) => {
+					accum[f] = fs.readFileSync(path.join(__dirname, '/../js/' + f + '.js'), 'utf8');
+					return accum;
+				}, {})
+				
+				const output = uglify.minify(
+					output_dict,
+					options = {
+						compress: false
+					}
+				).code;
+				*/
+
+				fs.writeFileSync(path.join(__dirname, '/cache/' + filename), output, 'utf8');
 				next()
 			}
 		}

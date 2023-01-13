@@ -2,7 +2,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 	/********** INITIALIZE **********/
 	$('div.overlay').show();
-	
+	init();
+
 	/*** Set Default Data ***/
 	(function() {
 		const ud_prev = getAllData()['forecast-treasury-curve'] || {};
@@ -26,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		const hist_values_raw = r.map(x => {
 			const ttm = parseInt(x.varname.substring(1, 3)) * (x.varname.substring(3, 4) === 'm' ? 1 : 12);
 			return x.data.map(y => ({
-				unixdate: moment(y.date),
+				unixdate: dayjs(y.date),
 				date: y.date,
 				value: parseFloat(y.value),
 				ttm: ttm
@@ -57,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			return x.data.map(y => ({
 				vdate : x.vdate,
 				date: y.date,
-				unixdate: moment(y.date),
+				unixdate: dayjs(y.date),
 				value: parseFloat(y.value),
 				ttm: ttm
 			}));
@@ -85,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			hist_values.concat(forecast_values)
 			.map((x, i) => ({...x, ...{date_index: i}}))
 			// Ordered Treasury data
-			//.sort((a, b) => parseInt(moment(a.date).format('x')) > parseInt(moment(b.date).format('x'))) ;
+			//.sort((a, b) => parseInt(dayjs(a.date).format('x')) > parseInt(dayjs(b.date).format('x'))) ;
 			
 		const res = {
 			treasury_data: treasury_data,
@@ -162,12 +163,12 @@ function drawChart(treasury_data, play_index, forecast_vdate) {
 					const distFromLeft = 50;
 					//console.log(distFromTop, distFromLeft);
 					this.renderer
-						.text('Forecast for ' + moment(treasury_data[play_index].date).format('MMM YYYY'), distFromLeft, distFromTop)
+						.text('Forecast for ' + dayjs(treasury_data[play_index].date).format('MMM YYYY'), distFromLeft, distFromTop)
 						.attr({'id': 'date-text', fill: 'forestgreen', 'font-size': '1.5rem'})
 						.add();
 					/* Now render non-changing historical data on RHS */
 					this.renderer
-						.text('Current Yield Curve: ' + moment(treasury_data[play_index - 1].date).format('MMM YYYY'), distFromLeft, distFromTop + 40)
+						.text('Current Yield Curve: ' + dayjs(treasury_data[play_index - 1].date).format('MMM YYYY'), distFromLeft, distFromTop + 40)
 						.attr({'id': 'date-text', fill: 'black', 'font-size': '1.5rem'})
 						.add();
 				}
@@ -180,15 +181,15 @@ function drawChart(treasury_data, play_index, forecast_vdate) {
 			useHTML: true,
 			text: 
 			'<div class="row text-center justify-content-center">'+
-				'<span class="my-0 py-1" style="font-size: 1.3rem;"><i class="cmefi-logo me-1"></i>Treasury Curve Forecasts (Updated ' + moment(forecast_vdate).format('MMM Do') + ')</span>'+
+				'<span class="my-0 py-1" style="font-size: 1.3rem;"><i class="cmefi-logo me-1"></i>Treasury Curve Forecasts (Updated ' + dayjs(forecast_vdate).format('MMM DD') + ')</span>'+
 			'</div>'+
 			'<div class="row text-center"><div class="col-12 btn-group d-inline-block" role="group" id="chart-subtitle-group">' +
-				'<button class="btn btn-cmefi-dark text-slate-700 btn-sm" style="font-size:.8rem" type="button" >Hit "play" to show changes over time!&nbsp;</button>'+
-				'<button class="btn btn-primary btn-sm chart-subtitle" style="font-size:.8rem" type="button" data-dir="start" style="letter-spacing:-2px"><i class="bi bi-skip-backward"></i></button>' +
-				'<button class="btn btn-primary btn-sm chart-subtitle" style="font-size:.8rem" type="button" data-dir="back"><i class="bi bi-caret-left"></i></button>' +
-				'<button class="btn btn-primary btn-sm chart-subtitle active" style="font-size:.8rem" type="button" data-dir="pause" ><i class="bi bi-pause"></i></button>' +
-				'<button class="btn btn-primary btn-sm chart-subtitle" style="font-size:.8rem" type="button" data-dir="forward" ><i class="bi bi-caret-right"></i></button>' +
-				'<button class="btn btn-primary btn-sm chart-subtitle" style="font-size:.8rem" type="button" data-dir="end" style="letter-spacing:-2px" ><i class="bi bi-skip-forward"></i></button>' +
+				'<button class="btn text-white btn-sm" style="font-size:.8rem;background-color:rgb(113, 133, 122)" type="button" >Hit "play" to show changes over time!&nbsp;</button>'+
+				'<button class="btn btn-sm chart-subtitle" style="font-size:.8rem" type="button" data-dir="start" style="letter-spacing:-2px"><i class="bi bi-skip-backward"></i></button>' +
+				'<button class="btn btn-sm chart-subtitle" style="font-size:.8rem" type="button" data-dir="back"><i class="bi bi-caret-left"></i></button>' +
+				'<button class="btn btn-sm chart-subtitle active" style="font-size:.8rem" type="button" data-dir="pause" ><i class="bi bi-pause"></i></button>' +
+				'<button class="btn btn-sm chart-subtitle" style="font-size:.8rem" type="button" data-dir="forward" ><i class="bi bi-caret-right"></i></button>' +
+				'<button class="btn btn-sm chart-subtitle" style="font-size:.8rem" type="button" data-dir="end" style="letter-spacing:-2px" ><i class="bi bi-skip-forward"></i></button>' +
 			'</div></div>'
         },
 		xAxis: {
@@ -198,7 +199,24 @@ function drawChart(treasury_data, play_index, forecast_vdate) {
 					fontSize: '1.2rem'
 				}
 			},
-			min: 0,
+			tickPositions: [1, 2, 3, 6, 12, 60, 84, 120, 240, 360],
+			breaks: [{
+				from: 12,
+				to: 12 + (60 - 12) * .5
+			}, {
+				from: 60,
+				to: 60 + (84 - 60) * .6
+			}, {
+				from: 84,
+				to: 84 + (120 - 84) * .6
+			}, {
+				from: 120,
+				to: 120 + (240 - 120) * .8
+			}, {
+				from: 240,
+				to: 240 + (360 - 240) * .8
+			}],
+			min: 1,
 			max: 360
 		},
 		yAxis: {
@@ -243,30 +261,29 @@ function drawChart(treasury_data, play_index, forecast_vdate) {
             data: treasury_data[play_index].data,
 			name: 'Yield',
             type: 'areaspline',
-            color: 'forestgreen',
-			/*
 			fillColor: {
                 linearGradient: [0, 0, 0, 300],
                 stops: [
                     [0, Highcharts.getOptions().colors[0]],
                     [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
                 ]
-            },*/
+            },
 			marker: {
 				enabled: true
 			},
 			zIndex: 2,
-			fillOpacity: 0.5
+			fillColor: 'rgba(45, 140, 38, .5)',
+			color: 'rgba(45, 140, 38, 1)'
         }, {
             data: treasury_data[play_index - 1].data,
 			name: 'Current Yield',
             type: 'spline',
-            color: 'black',
+            color: 'rgba(35, 45, 35, 1)',
+			fillColor: 'rgba(35, 45, 35, .5)',
 			marker: {
 				enabled: true
 			},
-			zIndex: 1,
-			fillOpacity: 0.5
+			zIndex: 1
 		}]
 	};
 	const chart = Highcharts.chart('chart-container', o);
@@ -315,7 +332,6 @@ function drawChart(treasury_data, play_index, forecast_vdate) {
 		title: {
 			text: null,
 		},
-		exporting: false,
 		subtitle: {
 			text: 'CLICK ON THE TIMELINE BELOW TO NAVIGATE'
 		},
@@ -324,7 +340,7 @@ function drawChart(treasury_data, play_index, forecast_vdate) {
             formatter: function () {
 				//console.log(this);
                 return '<h6 class="text-center;" style="font-weight:bold; color:black">' +
-					moment(this.point.x).format('MMM YYYY') +
+					dayjs(this.point.x).format('MMM YYYY') +
 				'</h6>Click to set!';
             }
 		},
@@ -336,13 +352,13 @@ function drawChart(treasury_data, play_index, forecast_vdate) {
             },
 			//startOnTick: true,
 			//endOnTick: true,
-			min: parseInt(moment(treasury_data[0].date).add(-12, 'M').format('x')),   //new Date(treasury_data[0].date).getTime(),
-			max: parseInt(moment(treasury_data[treasury_data.length - 1].date).add(12, 'M').format('x')),//new Date(treasury_data[treasury_data.length - 1].date).getTime(),
+			min: dayjs(treasury_data[0].date).add(-12, 'M').unix() * 1000,   //new Date(treasury_data[0].date).getTime(),
+			max: dayjs(treasury_data[treasury_data.length - 1].date).add(12, 'M').unix() * 1000,//new Date(treasury_data[treasury_data.length - 1].date).getTime(),
 			lineWidth: 0,
 			offset: -45,
 			tickInterval: 12 * 3 * 30 * 24 * 3600 * 1000,
 			plotLines: [{
-				value: parseInt(moment(treasury_data[play_index].date).format('x')),
+				value: dayjs(treasury_data[play_index].date).unix() * 1000,
 				color: 'rgba(255,0,0,.5)',
 				width: 5,
 				id: 'plot-line',
@@ -401,7 +417,7 @@ function drawChart(treasury_data, play_index, forecast_vdate) {
 			href: 'https://econforecasting.com'
         },
         series: [{
-            data: treasury_data.map(x => ({x: parseInt(moment(x.date).format('x')), low: -1, high: 1, y: x.data.filter(y => y[0] === 120)[0][1], date_index: x.date_index, type: x.type})),
+            data: treasury_data.map(x => ({x: dayjs(x.date).unix() * 1000, low: -1, high: 1, y: x.data.filter(y => y[0] === 120)[0][1], date_index: x.date_index, type: x.type})),
             type: 'arearange',
             color: 'rgba(255, 255, 255, 0)',
             fillColor: 'rgba(255, 255, 255, 0)',
@@ -434,7 +450,7 @@ function drawTable(treasury_data) {
 	const fcDataTable =
 		treasury_data.map(function(x) {
 			let res = {
-				date: moment(x.date).format('YYYY-MM'),
+				date: dayjs(x.date).format('YYYY-MM'),
 				type: x.type
 			};
 			ttmsList.forEach(function(ttm) {
@@ -509,22 +525,23 @@ function updateChart() {
   
 	/* Get the new active date */
     const newData = ud.treasury_data[ud.play_index].data;
-    const newDate = ud.treasury_data[ud.play_index].date;
 
 	/* Update data */
 	//console.log('Updating data...', newData);
-	
 	/* Update chart data and colors */
 	chart.series[0].setData(newData, redraw = true, animation = {duration: 250}, updatePoints = true);
-	chart.series[0].update({color: (ud.treasury_data[ud.play_index].type === 'forecast' ? 'forestgreen' : 'firebrick')})
+	chart.series[0].update({
+		color: (ud.treasury_data[ud.play_index].type === 'forecast' ? 'rgba(78, 162, 78, 1)' : 'rgba(178, 34, 34, 1)'),
+		fillColor: (ud.treasury_data[ud.play_index].type === 'forecast' ? 'rgba(78, 162, 78, .5)' : 'rgba(178, 34, 34, .5)')
+	})
 	
 	/* Update chart title*/
 	if (ud.treasury_data[ud.play_index].type === 'history') {
 		document.querySelector('#date-text').style.fill = 'firebrick';
-		document.querySelector('#date-text').textContent = 'Historical curve for ' + moment(ud.treasury_data[ud.play_index].date).format('MMM YYYY');
+		document.querySelector('#date-text').textContent = 'Historical curve for ' + dayjs(ud.treasury_data[ud.play_index].date).format('MMM YYYY');
 	} else {
 		document.querySelector('#date-text').style.fill = 'forestgreen';
-		document.querySelector('#date-text').textContent = 'Forecasted curve for ' + moment(ud.treasury_data[ud.play_index].date).format('MMM YYYY');
+		document.querySelector('#date-text').textContent = 'Forecasted curve for ' + dayjs(ud.treasury_data[ud.play_index].date).format('MMM YYYY');
 	}
 	
 	/* Handle pause/unpause */
@@ -561,7 +578,7 @@ function updateChart2() {
 	const chart = $('#chart-container-2').highcharts();
     chart.xAxis[0].removePlotLine('plot-line');
     chart.xAxis[0].addPlotLine({
-        value: parseInt(moment(ud.treasury_data[ud.play_index].date).format('x')),
+        value: dayjs(ud.treasury_data[ud.play_index].date).unix() * 1000,
         color: 'rgba(255,0,0,.5)',
         width: 5,
         id: 'plot-line',
@@ -602,7 +619,7 @@ function addCitation() {
 }
 
 function addVdate(forecast_vdate) {
-	document.querySelector('#last-updated').innerHTML = moment(forecast_vdate).format('MMM Do, YYYY');
+	document.querySelector('#last-updated').innerHTML = dayjs(forecast_vdate).format('MMM DD, YYYY');
 }
 
 
@@ -620,17 +637,17 @@ function drawChartAlt(treasury_data) {
 	const chartData =
 		treasury_data.filter(x => x.type === 'history').slice(-1) // Get last historical forecast
 		.concat(treasury_data.filter(x => x.type === 'forecast').slice(0, 71)) // Get first 24 forecasts
-		.sort((a, b) => (moment(a.date) > moment(b.date) ? 1 : -1))
+		.sort((a, b) => (dayjs(a.date) > dayjs(b.date) ? 1 : -1))
 		.map((x, i) => (
 			{
-				name: moment(x.date).format('MMM YYYY') + ' ' + (x.type === 'history' ? '*' : ''),
+				name: dayjs(x.date).format('MMM YYYY') + ' ' + (x.type === 'history' ? '*' : ''),
 				data: x.data,
 				type: 'spline',
 				color: gradient.valToColor(i, grMap, 'hex'),
 				dashStyle: (x.type === 'history' ? 'solid' : 'shortdot'),
 				visible: i === 0 || i % 6 === 1,
 				legendIndex: i
-				//(x.type === 'history' || moment(x.date).month() === moment(treasury_data.filter(x => x.type === 'history').slice(-1)[0].date).month() + 1)
+				//(x.type === 'history' || dayjs(x.date).month() === dayjs(treasury_data.filter(x => x.type === 'history').slice(-1)[0].date).month() + 1)
 			}
 		));
 	//console.log('chartData', chartData);

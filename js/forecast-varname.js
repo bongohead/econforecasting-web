@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", function(event) {
-	
+
 	/********** INITIALIZE **********/
 	$('div.overlay').show();
+	init();
 
 	(function() {
 		const varname = window.location.pathname.split('-').pop().padStart(3, '0');
@@ -35,14 +36,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	const get_forecast_variable = getApi(`get_forecast_variable?varname=${ud.varname}`, 10, ud.debug);
 	const get_hist_obs = getApi(`get_hist_obs?varname=${ud.varname}`, 10, ud.debug);
 	const get_forecast_values = getApi(`get_latest_forecast_obs?varname=${ud.varname}`, 10, ud.debug);
-	const start = Date.now();
+	const start = performance.now();
 
 	Promise.all([get_forecast_variable, get_hist_obs, get_forecast_values]).then(function(r) {
 
 		const forecast_variable = r[0][0];
 		const hist_obs = r[1][0];
 		const forecast_values = r[2];
-		if (ud.debug) console.log('Data load time', Date.now() - start, forecast_values);
+		if (ud.debug) console.log('Data load time', performance.now() - start, forecast_values);
 		
 		const variable = {
 			varname: forecast_variable.varname,
@@ -61,9 +62,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			shortname: 'Historical Data',
 			description: 'Historical Data',
 			external: false,
-			vdate: moment().format('YYYY-MM-DD'),
+			vdate: dayjs().format('YYYY-MM-DD'),
 			data: hist_obs.data
-				.filter(x => moment(x.date) <= moment().add(10, 'years'))
+				.filter(x => dayjs(x.date) <= dayjs().add(10, 'years'))
 				.map(x => [x.date, parseFloat(x.value)]).sort((a, b) => a[0] - b[0])
 		};
 
@@ -76,8 +77,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			external: f.external,
 			vdate: f.vdate || null,
 			data: f.data
-				.filter(x => moment(x.date) <= moment().add(10, 'years'))
-				.map(x => [x.date, parseFloat(x.value)]).sort((a, b) => moment(a[0]) - moment(b[0]))
+				.filter(x => dayjs(x.date) <= dayjs().add(10, 'years'))
+				.filter(x => f.vdate == null || dayjs(x.date) >= dayjs(f.vdate).add(-4, 'months'))
+				.map(x => [x.date, parseFloat(x.value)]).sort((a, b) => dayjs(a[0]) - dayjs(b[0]))
 		}));
 		
 		const ts_data_parsed =
@@ -93,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 				
 		setData('forecast-varname', {...getData('forecast-varname'), ts_data_parsed: ts_data_parsed, ...variable});
-		if (ud.debug) console.log('Data parse time', Date.now() - start, forecast_values);
+		if (ud.debug) console.log('Data parse time', performance.now() - start, forecast_values);
 
 		return({variable, ts_data_parsed});	
 	}).then(function({variable, ts_data_parsed}) {
@@ -118,13 +120,16 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 		.map((x, i) => (
 			{
 				id: x.tskey,
-				name:
-					x.shortname +
-					' <span style="font-size:.8rem;font-weight:normal">(' +
-						'Updated ' + moment(x.vdate).format('MM/DD/YY') +
-						(x.freq === 'q' ? '; Quarterly Data' : '; Monthly Data')  + 
-					')</span>',
-				data: x.data.map(x => [parseInt(moment(x[0]).format('x')), x[1]]),
+				name: x.shortname,
+				custom: {
+					legend_el: 
+						x.shortname +
+						' <span style="font-size:.8rem;font-weight:normal">(' +
+							'Updated ' + dayjs(x.vdate).format('MM/DD/YY') +
+							(x.freq === 'q' ? '; Quarterly Data' : '; Monthly Data')  + 
+						')</span>'
+				},
+				data: x.data.map(x => [dayjs(x[0]).unix() * 1000, x[1]]),
 				type: 'line',
 				dashStyle: (x.tskey === 'hist' ? 'Solid' : 'ShortDash'),
 				lineWidth: (x.ts_type === 'hist' ? 3 : 2),
@@ -186,10 +191,10 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 							const state = $('#chart-container').highcharts().rangeSelector.buttons[0].state;
 							chart.xAxis[0].setExtremes(
 								Math.max(
-									moment.min(...ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => moment(x[0]))).toDate().getTime(),
-									moment().add(-12, 'M').toDate().getTime()
+									dayjs.min(ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => dayjs(x[0]))).unix() * 1000,
+									dayjs().add(-12, 'M').unix() * 1000
 									),
-								moment().add(12, 'M').toDate().getTime()
+								dayjs().add(12, 'M').unix() * 1000
 								);
 							$('#chart-container').highcharts().rangeSelector.buttons[0].setState(state === 0 ? 2 : 0);
 							return false;
@@ -202,10 +207,10 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 							const state = $('#chart-container').highcharts().rangeSelector.buttons[1].state;
 							chart.xAxis[0].setExtremes(
 								Math.max(
-									moment.min(...ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => moment(x[0]))).toDate().getTime(),
-									moment().add(-24, 'M').toDate().getTime()
+									dayjs.min(ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => dayjs(x[0]))).unix() * 1000,
+									dayjs().add(-24, 'M').unix() * 1000
 									),
-								moment().add(24, 'M').toDate().getTime()
+								dayjs().add(24, 'M').unix() * 1000
 								);
 							$('#chart-container').highcharts().rangeSelector.buttons[1].setState(state === 0 ? 2 : 0);
 							return false;
@@ -218,10 +223,10 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 							const state = $('#chart-container').highcharts().rangeSelector.buttons[2].state;
 							chart.xAxis[0].setExtremes(
 								Math.max(
-									moment.min(...ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => moment(x[0]))).toDate().getTime(),
-									moment().add(-60, 'M').toDate().getTime()
+									dayjs.min(ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => dayjs(x[0]))).unix() * 1000,
+									dayjs().add(-60, 'M').unix() * 1000
 									),
-								moment().add(60, 'M').toDate().getTime()
+								dayjs().add(60, 'M').unix() * 1000
 								);
 							$('#chart-container').highcharts().rangeSelector.buttons[2].setState(state === 0 ? 2 : 0);
 							return false;
@@ -252,16 +257,16 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 			min:
 				Math.max(
 					// Show max of either 2 years ago or first historical date. This handles situations where the first historical date is very recent.
-					moment.min(...ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => moment(x[0]))).toDate().getTime(),
-					moment().add(-24, 'M').toDate().getTime()
+					dayjs.min(ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => dayjs(x[0]))).unix() * 1000,
+					dayjs().add(-24, 'M').unix() * 1000
 				),
 			max: 
 				Math.min(
 					// Show min of either 2 years ahead or last end date of any forecast ( + 1 month).
-					moment.max(
-						getData('forecast-varname').ts_data_parsed.filter(x => x.tskey !== 'hist').map(x => moment(x.data[x.data.length - 1][0]))
-						).add(1, 'month').toDate().getTime(),
-					moment().add(24, 'M').toDate().getTime(),
+					dayjs.max(
+						getData('forecast-varname').ts_data_parsed.filter(x => x.tskey !== 'hist').map(x => dayjs(x.data[x.data.length - 1][0]))
+						).add(1, 'month').unix() * 1000,
+					dayjs().add(24, 'M').unix() * 1000,
 				),
 			labels: {
 				style: {
@@ -297,10 +302,13 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 			backgroundColor: 'var(--bs-white-warmer)',
 			borderColor: 'var(--bs-white-warm)',
 			borderWidth: 1,
-			//useHTML: true,
+			useHTML: true,
 			align: 'center',
 			verticalAlign: 'bottom',
 			layout: 'horizontal',
+			labelFormatter: function() {
+				return this.options.custom.legend_el;
+			},
 			title: {
 				text:
 					'<span style="font-weight: 400">Available Forecasts </span>' +
@@ -324,9 +332,9 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 						const str =
 							'<tr>' +
 								'<td style="padding-right:1rem; font-weight: 500; color:'+point.series.color+'">' +
-									(freq === 'm' ? moment(point.x).format('MMM YYYY') : moment(point.x).format('YYYY[Q]Q')) +
+									(freq === 'm' ? dayjs(point.x).format('MMM YYYY') : dayjs(point.x).format('YYYY[Q]Q')) +
 									// If historical data is monthly and is for same month, add asterisk!
-									(hist_freq === 'm' & moment().isSame(moment(point.x), 'month') & point.series.userOptions.id === 'hist' ? '*' : '') +
+									(hist_freq === 'm' & dayjs().isSame(dayjs(point.x), 'month') & point.series.userOptions.id === 'hist' ? '*' : '') +
 								'</td>' + 
 								'<td style="font-weight: 500;color:' + point.color + '">' +
 									// Remove lal text in parantheses
@@ -334,7 +342,7 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 								'%</td>' + 
 							'</tr>' +
 							// If historical data is monthly and is for same month, add asterisk!
-							(hist_freq === 'm' & moment().isSame(moment(point.x), 'month') & point.series.userOptions.id === 'hist' ? '<tr><td colspan="2" style="color:rgb(102, 102, 102);font-weight:normal;font-style:italic;font-size:.75rem;text-align:right">*Current average of existing data for this month</tr>' : '');
+							(hist_freq === 'm' & dayjs().isSame(dayjs(point.x), 'month') & point.series.userOptions.id === 'hist' ? '<tr><td colspan="2" style="color:rgb(102, 102, 102);font-weight:normal;font-style:italic;font-size:.75rem;text-align:right">*Current average of existing data for this month</tr>' : '');
 						return str;
 					}).join('') +
 					'</table>';
@@ -414,16 +422,16 @@ function addVintageChartListener() {
 					vdate: vdate,
 					data: vintage_values_parsed.filter(y => y.vdate === vdate).map(y => [y.date, y.value])
 				}))
-				.sort((a, b) => moment(a.vdate) > moment(b.vdate) ? 1 : -1)
+				.sort((a, b) => dayjs(a.vdate) > dayjs(b.vdate) ? 1 : -1)
 				.map((x, i) => ({
 					index: i,
 					color: gradient.valToColor(i, gradient_map, 'hex'),
-					name: moment(x.vdate).format('MMM YY'),
+					name: dayjs(x.vdate).format('MMM YY'),
 					custom: {
 						label: x.vdate + ' Forecast'
 					},
-					data: x.data.map(y => [parseInt(moment(y[0]).format('x')), y[1]]),
-					visible: (ud.hist_freq === 'm' ? moment(x.vdate).month() == moment().month() : moment(x.vdate).quarter() == moment().quarter() ),
+					data: x.data.map(y => [dayjs(y[0]).unix() * 1000, y[1]]),
+					visible: (ud.hist_freq === 'm' ? dayjs(x.vdate).month() == dayjs().month() : dayjs(x.vdate).quarter() == dayjs().quarter() ),
 					lineWidth: 3,
 					opacity: .7,
 					dashStyle: 'ShortDash',
@@ -431,8 +439,8 @@ function addVintageChartListener() {
 				}));
 				const hist_chart_data = {
 					data: ud.ts_data_parsed.filter(x => x.tskey === 'hist')[0]['data']
-						.map(y => [parseInt(moment(y[0]).format('x')), y[1]])
-						.filter(y => moment(y[0]) >= moment(chart_data_0[0].data[0][0])),
+						.map(y => [dayjs(y[0]).unix() * 1000, y[1]])
+						.filter(y => dayjs(y[0]) >= dayjs(chart_data_0[0].data[0][0])),
 					color: 'black',
 					name: 'Historical Data',
 					visible: true,
@@ -555,7 +563,7 @@ function addVintageChartListener() {
 						formatter: function () {
 							const points = this.points;
 							const text =
-								'Historical Forecasts for ' + moment(this.x).format('MMM YYYY') + ' Value' +
+								'Historical Forecasts for ' + dayjs(this.x).format('MMM YYYY') + ' Value' +
 								'<table>' +
 								'<tr class="px-1" style="border-bottom:1px solid black;font-weight:400;"><td>DATE</td><td class="px-2" style="font-weight:400">' +
 									'FORECAST' +
@@ -600,8 +608,8 @@ function drawTable(ts_data_parsed, units) {
 		//console.log(x.fcname);
 		const seriesData =
 			(x.tskey === 'hist') ?
-			x.data.map(y => ({date: (x.freq === 'q' ? moment(y[0]).format('YYYY[Q]Q') : moment(y[0]).format('YYYY-MM')), type: 'Historical Data', value: y[1].toFixed(4)})) :
-			x.data.map(y => ({date: (x.freq === 'q' ? moment(y[0]).format('YYYY[Q]Q') : moment(y[0]).format('YYYY-MM')), type: 'Forecast', value: y[1].toFixed(4)}));
+			x.data.map(y => ({date: (x.freq === 'q' ? dayjs(y[0]).format('YYYY[Q]Q') : dayjs(y[0]).format('YYYY-MM')), type: 'Historical Data', value: y[1].toFixed(4)})) :
+			x.data.map(y => ({date: (x.freq === 'q' ? dayjs(y[0]).format('YYYY[Q]Q') : dayjs(y[0]).format('YYYY-MM')), type: 'Forecast', value: y[1].toFixed(4)}));
 		const dtCols = [
 			{title: 'Date', data: 'date'},
 			{title: 'Type', data: 'type'},
@@ -667,7 +675,7 @@ function drawTable(ts_data_parsed, units) {
 				(x.ts_type === 'primary' ? '<i class="cmefi-logo me-1"></i>' : '') + x.shortname +
 			'</span>' + 
 			'<span style="font-size:0.7rem;color: rgb(180, 180, 180)" >' +
-				('Updated ' + moment(x.vdate).format('MM/DD/YYYY')) +
+				('Updated ' + dayjs(x.vdate).format('MM/DD/YYYY')) +
 			 '</span>';
 		li.setAttribute('data-ref-table', x.tskey); 
 		if (x.ts_type === 'primary') li.classList.add('active');

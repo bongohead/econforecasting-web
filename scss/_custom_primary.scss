@@ -477,6 +477,34 @@ table.dataTable tr:hover td {
 	box-shadow: none !important;
 }
 
+/***** Forecast Play *****/
+#chart-subtitle-group {
+	
+	button.chart-subtitle {
+		background-color: var(--bs-sky);
+		color: white;
+		border-top: 1px solid var(--bs-sky);
+		border-bottom: 1px solid var(--bs-sky);
+		border-left: 0px solid transparent;
+		border-right: 0px solid transparent;
+		transition: .5s;
+	}
+
+	button.chart-subtitle.active {
+		background-color: var(--bs-sky-dark);
+		border-top: 1px solid var(--bs-sky-dark);
+		border-bottom: 1px solid var(--bs-sky-dark);
+	}
+
+	button.chart-subtitle:disabled {
+		background-color: var(--bs-sky-light);
+		border-top: 1px solid var(--bs-sky-light);
+		border-bottom: 1px solid var(--bs-sky-light);
+		opacity: 1;
+	}
+
+}
+
 
 /****** Loading Spinner *****/
 .overlay {
