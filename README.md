@@ -18,6 +18,7 @@ Description TBA
 - Added Express migration
 - Added new REST API Oauth integration
 - Added speed optimizations to load pages and better error handling
+- Added reduction of JS load weight and moved variable description loads to server side
 
 ## 2022-12-13 [v1.04] (VPS Migration, API Integration & Misc)
 - Added API v0 with JWT auth

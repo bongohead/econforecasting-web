@@ -10,7 +10,7 @@ const routes = [
   }, {
     name: 'forecast-sofr', endpoints: ['/forecast-sofr'],
     js: ['helpers', 'forecast-varname'], externaljs: ['hc/highstock', 'hc/highcharts-more', 'dt/jquery.dataTables', 'dt/dataTables.bootstrap5', 'dt/dataTables.buttons', 'dt/buttons.html5'],
-    template: 'forecast-rates', title: 'SOFR Forecasts', canonical: 'https://econforecasting.com/forecast-sofr'
+    template: 'forecast-rates', title: 'SOFR Forecasts', canonical: 'https://econforecasting.com/forecast-sofr',
   }, {
     name: 'forecast-ffr', endpoints: ['/forecast-ffr'],
     js: ['forecast-varname'], externaljs: ['hc/highstock', 'hc/highcharts-more', 'dt/jquery.dataTables', 'dt/dataTables.bootstrap5', 'dt/dataTables.buttons', 'dt/buttons.html5'],
@@ -39,7 +39,7 @@ routes.forEach(r => {
   router.get(r.endpoints, concatJs(`${r.name}.js`, libs), (req, res) => {
     res.render(
       `./${r.template}.html.twig`,
-      {title: r.title + ' | econforecasting.com', canonical: r.canonical, pagescript: `${r.name}.js`}
+      {name: r.name, title: r.title + ' | econforecasting.com', canonical: r.canonical, pagescript: `${r.name}.js`}
     );
   });
   
