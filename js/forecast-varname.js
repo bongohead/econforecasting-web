@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function(event) {
 
 	/********** INITIALIZE **********/
-	$('div.overlay').show();
+	//$('div.overlay').show();
 	init();
 
 	(function() {
@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			}};
 		setData('forecast-varname', ud);
 	})();
+
 
 	/********** GET DATA **********/
 	const ud = getData('forecast-varname') || {};
@@ -101,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	}).then(function({variable, ts_data_parsed}) {
 		
 		drawDescription(ts_data_parsed, variable.varname, ud.primary_forecast);
-		$('div.overlay').hide();
+		//$('div.overlay').hide();
 		drawChart(ts_data_parsed, variable.fullname, variable.units, variable.hist_freq);
 		drawTable(ts_data_parsed, variable.units);
 
@@ -354,6 +355,8 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 	const chart = Highcharts.stockChart('chart-container', o);
 	$('#chart-container').highcharts().rangeSelector.buttons[1].setState(2);
 
+	document.querySelector('#chart-container-loader').style.opacity = 0;
+	document.querySelector('#chart-container').style.opacity = 1;
 	return;
 }
 

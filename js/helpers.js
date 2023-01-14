@@ -124,7 +124,7 @@ function init() {
 		chart: {
 			style: {
 				fontFamily: 'var(--bs-font-sans-serif)',
-				color: '#000000'
+				color: '#000000',
 			}
 		},
 		title: {

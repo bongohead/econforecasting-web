@@ -519,4 +519,38 @@ table.dataTable tr:hover td {
 }
 
 
+div.loader-container {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	opacity: 1;
+	transition: opacity 1s;
+}
 
+div.loader-container > div {
+	@extend .spinner-border;
+	width: min(8%, 6rem);
+	aspect-ratio: 1 / 1;
+	height: unset;
+	animation-duration: 1.2s;
+	color: rgb(148 163 184);
+	border-width: 0.25rem;
+}
+
+div.loader-container > span {
+	font-family: var(--font-family-logo);
+	font-weight: 500;
+	color: rgb(148 163 184);
+	margin-bottom: 1rem;
+	font-size: 1.2rem;
+}
+
+div.loadee-container {
+	opacity: 0;
+	transition: opacity .5s;
+	background-color: transparent;
+}
