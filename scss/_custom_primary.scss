@@ -204,7 +204,7 @@ footer {
 	@extend .text-slate-600;
 }
 
-#tables-container button.dt-button {
+button.dt-button {
 	box-shadow: none !important;
 	background-color: var(--bs-sky-light);
 	color: white;
@@ -212,9 +212,10 @@ footer {
 	padding: .2rem .4rem;
 }
 
-#tables-container button.dt-button:hover {
+button.dt-button:hover {
 	background-color: var(--bs-sky);
 	transition: '.2s';
+	color: white;
 }
 
 
@@ -388,6 +389,7 @@ nav.sidebar div.sidebar-submenu > a {
 	font-size: .88rem;
 	color: rgb(94, 110, 130);
 	border-left: 1px solid rgb(241, 245, 249);
+	transition: 1s;
 }
 
 nav.sidebar div.sidebar-submenu > a.activepage {
@@ -458,11 +460,6 @@ table.dataTable tr {
 
 table.dataTable tr.odd  {
     background-color: rgba(200, 230, 245, .35); /*var(--bs-cmefi-light-warm);*/
-}
-
-table.dataTable tr:hover td {
-	background-color: var(--bs-orange) !important;
-	color: white !important;
 }
 
 /****** DT Paginage *****/
@@ -536,9 +533,32 @@ div.loader-container > div {
 	width: min(8%, 6rem);
 	aspect-ratio: 1 / 1;
 	height: unset;
-	animation-duration: 1.2s;
 	color: rgb(148 163 184);
 	border-width: 0.25rem;
+	animation: 2.4s linear infinite loader-spin;
+}
+
+@keyframes loader-spin {
+	0% {
+		rotate: 0deg;
+		color: rgb(148 163 184);
+	}
+	25% {
+		rotate: 180deg;
+		color: var(--bs-forest);
+	}
+	50% {
+		rotate: 360deg;
+		color: rgb(148 163 184);
+	}
+	75% {
+		rotate: 540deg;
+		color: var(--bs-sky);
+	}
+	100% {
+		rotate: 720deg;
+		color: rgb(148 163 184);
+	}
 }
 
 div.loader-container > span {
@@ -547,8 +567,27 @@ div.loader-container > span {
 	color: rgb(148 163 184);
 	margin-bottom: 1rem;
 	font-size: 1.2rem;
+	animation: 2.4s linear infinite loader-text;
 }
 
+@keyframes loader-text {
+	0% {
+		color: rgb(148 163 184);
+	}
+	25% {
+		color: var(--bs-forest);
+	}
+	50% {
+		color: rgb(148 163 184);
+	}
+	75% {
+		color: var(--bs-sky);
+	}
+	100% {
+		color: rgb(148 163 184);
+	}
+  }
+  
 div.loadee-container {
 	opacity: 0;
 	transition: opacity .5s;

@@ -36,12 +36,15 @@ module.exports = {
 			if (process.env.NODE_ENV !== 'development' || Array.isArray(files) == false || files.length === 0) {
 				next()
 			} else {
+
 				// Note: this will cause pm2 watch to crash
+		
 				const output = files.map((f) => {
 					return fs.readFileSync(path.join(__dirname, '/../js/' + f + '.js')).toString();
 				}).join(';');
-
-				/*/
+				fs.writeFileSync(path.join(__dirname, '/cache/' + filename), output, 'utf8');
+				
+				/*/ UGLIFY
 				const uglify = require("uglify-js");
 
 				const output_dict = files.reduce((accum, f) => {
@@ -55,9 +58,10 @@ module.exports = {
 						compress: false
 					}
 				).code;
+				fs.writeFileSync(path.join(__dirname, '/cache/' + filename), output, 'utf8');
+
 				*/
 
-				fs.writeFileSync(path.join(__dirname, '/cache/' + filename), output, 'utf8');
 				next()
 			}
 		}

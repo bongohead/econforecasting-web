@@ -1,11 +1,12 @@
 /*
 import dayjs from './libs/dayjs/dayjs'
-import timezone from './libs/dayjs/timezone'
 import utc from './libs/dayjs/utc'
-import Highcharts from './libs/highcharts/highstock';
+import timezone from './libs/dayjs/timezone'
+import Highcharts from './libs/hc/highstock';
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
+
 */
 
 async function getApi(endpoint, timeout = 10, verbose = false) {
@@ -96,6 +97,7 @@ function init() {
 	dayjs.extend(window.dayjs_plugin_utc);
 	dayjs.extend(window.dayjs_plugin_timezone);
 	dayjs.extend(window.dayjs_plugin_minMax);
+	dayjs.extend(window.dayjs_plugin_advancedFormat);
 
 	const pathname = window.location.pathname;
 	const navbar = document.querySelector('nav.navbar');

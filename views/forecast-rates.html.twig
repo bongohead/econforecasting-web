@@ -11,7 +11,7 @@
 <div class="d-flex" style="background-color:var(--bs-white-cool)">
 	{% include 'forecast-sidebar-rates.html.twig' %}
 	<div class="col mx-2 pb-5">
-		<div class="container-xxl">
+		<div class="container-xxl" id="forecast-container" data-varname="{{varname}}" data-primary-forecast="{{primary_forecast}}" data-secondary-forecasts="{{secondary_forecasts}}">
 
 			<div class="row g-0">
 				<div class="col-12 px-0">
@@ -28,11 +28,14 @@
 			
 				<div class="col-xxl-4 col-lg-6 pe-lg-2 mb-3">
 					<div id="data-card" class="card shadow-sm">
-						<div class="card-body" id="tables-container">
+						<div class="card-body">
 							<div class="mb-2"><span class="font-logo" style="vertical-align:middle;font-size:1.4rem;color:rgb(15, 17, 23)">Data</span></div>
-							<span style="font-size:.90rem">Select a series:</span>
-							<ul class="list-group list-group-vertical m-3" id="li-container">
-							</ul>
+							<div id="tables-container-loader" class="loader-container"><span>Pulling data...</span><div></div></div>
+							<div id="tables-container" class="loadee-container" style="min-height: 300px">
+								<span style="font-size:.90rem">Select a series:</span>
+								<ul class="list-group list-group-vertical m-3" id="li-container">
+								</ul>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -41,139 +44,187 @@
 					<div class="card shadow-sm">
 						<div class="card-body" style="font-size:.92rem">
 						
-							<div class="mb-2"><span class="font-logo" style="vertical-align:middle;font-size:1.4rem;color:rgb(15, 17, 23)">Description</span></div>
-
-						
 							<div id="variable-description">
-{% if name == 'forecast-sofr' %}
-	<p>This page provides monthly forecasts of the secured overnight financing rate (SOFR), a major <a href="https://www.investopedia.com/terms/r/referencerate.asp">benchmark interest rate</a> in the world economy. 
-	The rate measures the cost of overnight inter-bank borrowing rates for loans collaterized by Treasury securities. 
-	SOFR was created in 2019 as a replacement for the London interbank offered rate (Libor) following the 
-	<a href="https://en.wikipedia.org/wiki/Libor_scandal">2012 Libor rate manipulation scandal</a>.</p>
-{% elseif name == 'forecast-ffr' %}
-	<p>This page provides monthly forecasts of the <a href="https://fred.stlouisfed.org/series/FEDFUNDS">federal funds rate</a>, the short-term 
-	lending rate between different banks of cash held at the Federal Reserve. The federal funds rate is a critical benchmark rate in the global economy, 
-	and is the primary rate considered by the Federal Reserve when deciding monetary policy.</p>
-	<p>Both historical data and forecasted values on this page reflect period average values.</p>
-{% elseif name == 'forecast-ameribor' %}
-	<p>This page provides monthly forecasts of the overnight <a href="https://ameribor.net/">American Interbank Offered Rate</a>, a benchmark of the short-term 
-	lending rate between small and medium sized U.S. banks. The AMERIBOR rate was introduced in 2021 as an alternative to the now-defunct 
-	London interbank offer rate (Libor).</p>
-	<p>Both historical data and forecasted values on this page reflect period average values.</p>
-{% elseif name == 'forecast-bsby' %}
-	<p>This page provides monthly forecasts of the <a href="https://www.bloomberg.com/professional/product/indices/bsby/">Bloomberg Short-Term Bank Yield Index</a>, a benchmark of the short-term 
-	lending rate between large global banks. The BSBY rate was introduced in 2021 as an alternative to the now-defunct 
-	London interbank offer rate (Libor).</p>
-	<p>Both historical data and forecasted values on this page reflect period average values.</p>
-{% elseif name == 'forecast-sonia' %}
-	<p>This page provides monthly forecasts of the Sterling Overnight Interbank Average Rate (SONIA), a measure of overnight lending rates between banks using British 
-	sterling. SONIA is administered by the Bank of England and is frequently used as a standardized measure of risk-free interest rates by U.K. authorities.<p>
-	<p>Both historical data and forecasted values on this page reflect period average values.</p>
-{% elseif name == 'forecast-estr' %}
-	<p>This page provides monthly forecasts of the Euro short-term rate (&euro;STR), a benchmark of the short-term 
-	unsecured lending rate in the euro area. The &euro;STR is used as a standard measure of the risk-free rate in the euro area. 
-	Unlike most risk-free rate benchmarkes, the &euro;STR reflects not just interbank lending, 
-	but lending between banks, insurers, and money market funds.<p>
-	<p>Both historical data and forecasted values on this page reflect period average values.</p>
-{% elseif name in ['forecast-mort15y', 'forecast-mort30y'] %}
-	<p>This page provides monthly forecasts of 15 and 30-year fixed rate mortgage rates in the United States. 
-	Historical data is sourced from <a href="https://www.freddiemac.com/pmms">Freddie Mac</a>.</p>
-	<p>Both historical data and forecasted values on this page reflect period average values.</p>
-{% elseif name in ['t03m', 't06m', 't01y', 't02y', 't05y', 't10y', 't20y', 't30y'] %}
-	<p>This page provides monthly forecasts of U.S. Treasury bond yields. With over $20 trillion outstanding, Treasury bonds constitute nearly 15% of the global bond market and are the premier safe assets in many 
-	financial markets across the world. Because of this, they are also often utilized as a benchmark measure of the riskless interest rate in the world economy.</p>
-	<p>Both historical data and forecasted values on this page reflect period average values.</p>
-{% elseif name in ['gdp'] %}
-	<p>This page provides quarterly forecasts of U.S. real GDP. All historical and forecasted values represent seasonally adjusted annualized rates.</p>
-{% elseif name in ['pce'] %}
-	<p>This page provides quarterly forecasts of U.S. real personal consumption. All historical and forecasted values represent seasonally adjusted annualized rates.</p>
-{% elseif name in ['cpi'] %}
-	<p>This page provides forecasts of monthly inflation rates, as measured by the year over year percent change in standard headline CPI, 
-	i.e. the <a href="https://www.bls.gov/news.release/cpi.t01.htm">consumer price index for all urban consumers (CPI-U)</a>.</p>
-{% endif %}
+								<div class="mb-2"><span class="font-logo" style="vertical-align:middle;font-size:1.4rem;color:rgb(15, 17, 23)">Description</span></div>
+								{% if varname == 'sofr' %}
+									<p>This page provides monthly forecasts of the secured overnight financing rate (SOFR), a major <a href="https://www.investopedia.com/terms/r/referencerate.asp">benchmark interest rate</a> in the world economy. 
+									The rate measures the cost of overnight inter-bank borrowing rates for loans collaterized by Treasury securities. 
+									SOFR was created in 2019 as a replacement for the London interbank offered rate (Libor) following the 
+									<a href="https://en.wikipedia.org/wiki/Libor_scandal">2012 Libor rate manipulation scandal</a>.</p>
+								{% elseif varname == 'ffr' %}
+									<p>This page provides monthly forecasts of the <a href="https://fred.stlouisfed.org/series/FEDFUNDS">federal funds rate</a>, the short-term 
+									lending rate between different banks of cash held at the Federal Reserve. The federal funds rate is a critical benchmark rate in the global economy, 
+									and is the primary rate considered by the Federal Reserve when deciding monetary policy.</p>
+									<p>Both historical data and forecasted values on this page reflect period average values.</p>
+								{% elseif varname == 'ameribor' %}
+									<p>This page provides monthly forecasts of the overnight <a href="https://ameribor.net/">American Interbank Offered Rate</a>, a benchmark of the short-term 
+									lending rate between small and medium sized U.S. banks. The AMERIBOR rate was introduced in 2021 as an alternative to the now-defunct 
+									London interbank offer rate (Libor).</p>
+									<p>Both historical data and forecasted values on this page reflect period average values.</p>
+								{% elseif varname == 'bsby' %}
+									<p>This page provides monthly forecasts of the <a href="https://www.bloomberg.com/professional/product/indices/bsby/">Bloomberg Short-Term Bank Yield Index</a>, a benchmark of the short-term 
+									lending rate between large global banks. The BSBY rate was introduced in 2021 as an alternative to the now-defunct 
+									London interbank offer rate (Libor).</p>
+									<p>Both historical data and forecasted values on this page reflect period average values.</p>
+								{% elseif varname == 'sonia' %}
+									<p>This page provides monthly forecasts of the Sterling Overnight Interbank Average Rate (SONIA), a measure of overnight lending rates between banks using British 
+									sterling. SONIA is administered by the Bank of England and is frequently used as a standardized measure of risk-free interest rates by U.K. authorities.<p>
+									<p>Both historical data and forecasted values on this page reflect period average values.</p>
+								{% elseif varname == 'estr' %}
+									<p>This page provides monthly forecasts of the Euro short-term rate (&euro;STR), a benchmark of the short-term 
+									unsecured lending rate in the euro area. The &euro;STR is used as a standard measure of the risk-free rate in the euro area. 
+									Unlike most risk-free rate benchmarkes, the &euro;STR reflects not just interbank lending, 
+									but lending between banks, insurers, and money market funds.<p>
+									<p>Both historical data and forecasted values on this page reflect period average values.</p>
+								{% elseif varname in ['mort15y', 'mort30y'] %}
+									<p>This page provides monthly forecasts of 15 and 30-year fixed rate mortgage rates in the United States. 
+									Historical data is sourced from <a href="https://www.freddiemac.com/pmms">Freddie Mac</a>.</p>
+									<p>Both historical data and forecasted values on this page reflect period average values.</p>
+								{% elseif varname in ['t03m', 't06m', 't01y', 't02y', 't05y', 't10y', 't20y', 't30y'] %}
+									<p>This page provides monthly forecasts of U.S. Treasury bond yields. With over $20 trillion outstanding, Treasury bonds constitute nearly 15% of the global bond market and are the premier safe assets in many 
+									financial markets across the world. Because of this, they are also often utilized as a benchmark measure of the riskless interest rate in the world economy.</p>
+									<p>Both historical data and forecasted values on this page reflect period average values.</p>
+								{% elseif varname in ['gdp'] %}
+									<p>This page provides quarterly forecasts of U.S. real GDP. All historical and forecasted values represent seasonally adjusted annualized rates.</p>
+								{% elseif varname in ['pce'] %}
+									<p>This page provides quarterly forecasts of U.S. real personal consumption. All historical and forecasted values represent seasonally adjusted annualized rates.</p>
+								{% elseif varname in ['cpi'] %}
+									<p>This page provides forecasts of monthly inflation rates, as measured by the year over year percent change in standard headline CPI, 
+									i.e. the <a href="https://www.bls.gov/news.release/cpi.t01.htm">consumer price index for all urban consumers (CPI-U)</a>.</p>
+								{% endif %}
+								<hr class="my-3">
 							</div>
 
-							<hr class="mt-4 mb-3">
-							<div class="mb-2"><span class="font-logo" style="vertical-align:middle;font-size:1.4rem;color:rgb(15, 17, 23)">Forecast Models</span></div>
-<div id="primary-forecast">
-{% if name == 'forecast-sofr' %}
-	<p>Our <span style="font-weight:500"><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</span> for the secured overnight financing rate (SOFR) is generated utilizing data on publicly-traded SOFR futures 
-	and other closely related benchmark interest rates. 
-	Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
-	parametrization model, generating the final forecast.</p>
-	<p>This forecast can be interpreted as the mean market-expected values of future SOFR values.</p>
-	<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days.</p>
-{% elseif name == 'forecast-ffr' %}
-	<p>Our <strong><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</strong> for the federal funds rate rate (FFR) is generated utilizing data on publicly-traded FFR futures 
-	and other closely related benchmark interest rates. 
-	Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
-	parametrization model, generating the final forecast.</p>
-	<p>This forecast can be interpreted as the mean market-expected values of future FFR values.</p>
-	<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days.</p>
-{% elseif name == 'forecast-ameribor' %}
-	<p>Our <strong><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</strong> for the Ameribor Unsecured Overnight Rate (AMERIBOR) is generated utilizing data on publicly-traded AMERIBOR futures 
-	and other closely related benchmark interest rates. 
-	Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
-	parametrization model, generating the final forecast.</p>
-	<p>This forecast can be interpreted as the mean market-expected values of future AMERIBOR values.</p>
-	<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days.</p>
-{% elseif name == 'forecast-bsby' %}
-	<p>Our <strong><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</strong> for the Bloomberg Short-Term Bank Yield Index (BSBY) is generated utilizing data on publicly-traded BSBY futures 
-	and other closely related benchmark interest rates. 
-	Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
-	parametrization model, generating the final forecast.</p>
-	<p>This forecast can be interpreted as the mean market-expected values of future BSBY values.</p>
-	<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days.</p>
-{% elseif name == 'forecast-sonia' %}
-	<p>Our <strong><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</strong> for the SONIA rate is generated utilizing data on publicly-traded SONIA futures 
-	and other closely related benchmark interest rates. 
-	Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
-	parametrization model, generating the final forecast.</p>
-	<p>This forecast can be interpreted as the mean market-expected values of future SONIA values.</p>
-	<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days.</p>
-{% elseif name == 'forecast-estr' %}
-	<p>Our <strong><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</strong> for the Euro short-term rate is generated utilizing data on publicly-traded ESTR futures 
-	and other closely related benchmark interest rates. 
-	Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
-	parametrization model, generating the final forecast.</p>
-	<p>This forecast can be interpreted as the mean market-expected values of future ESTR values.</p>
-	<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days.</p>
-{% elseif name in ['forecast-mort15y', 'forecast-mort30y'] %}
-	<p>Our <strong><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</strong> for the 15 and 30 year fixed rate mortgage rates are derived from combining our 
-	<a href="/forecast-t10y">Market Consensus Forecast for Treasury yields</a> with survey-based forecasts for housing prices.</p>
-	<p>First, using historical data, we calculate historical mortgage-Treasury yield spreads; a model is then used to calculate the relationship 
-	between these spreads and housing prices. 
-	We then use survey-based economist forecasts of housing prices to estimate future mortgage-Treasury yield spreads, and add these to our 
-	Market Consensus Forecasts for Treasury yields to arrive at our final estimate.</p>
-	<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days.</p>
-{% elseif name in ['t03m', 't06m', 't01y', 't02y', 't05y', 't10y', 't20y', 't30y'] %}
-	<p>Our <strong><i class="cmefi-logo mx-1"></i>Consensus Treasury Forecast</strong> is a model that calculates the average market expectated forecast of U.S. Treasury yield rates. 
-	It is derived using current <a href="https://www.treasury.gov/resource-center/data-chart-center/Pages/index.aspx">Treasury bond market data</a> 
-	as well as futures market data. For each point in the yield term structure, our model derives the mean market-expected yield rate. 
-	The term structure is then interpolated and smoothed using a three-factor parametrization model, generating the final forecast.</p>
-	<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days.</p>
-{% elseif name in ['gdp', 'pce'] %}
-	<p>Our <strong><i class="cmefi-logo mx-1"></i>Composite Forecast Model</strong> is a model of models, 
-	optimally finding weights between different qualitative and quantitative forecasts to generate a single composite forecast.<p>
-	<p>Assigned weights are time-varying and depend on the remaining time until the official data release. For example, high-frequency <a href="/forecast-gdp-nowcast">nowcast</a> models 
-	tend to perform better for short-term forecasts, while qualitative forecasts tend to be better predictors for long-term forecasts; 
-	our model combines these forecasts using a locally linear random forest method to optimize the strengths of each forecast.</p>
-	<p>This model is updated daily. New releases will be made available between 16:00 and 20:00 ET.</p>
-{% elseif name in ['cpi'] %}
-	<p>Our <strong><i class="cmefi-logo mx-1"></i>Consensus Inflation Forecast</strong> is a model that measures the average expected inflation rate. 
-	It is derived using bond market data (utilizing the spread between Treasury Inflation Protected Securities and Treasury yields) 
-	as well as from household survey data. For each point in the forward term structure, our model derives the mean market-expected inflation rate. 
-	The term structure is interpolated and smoothed using a three-factor parametrization model, generating the final forecast.</p>
-	<p>The model is updated monthly, generally on the next business day following the release of CPI inflation data. 
-	The CPI release schedule can be found <a href="https://www.bls.gov/schedule/news_release/cpi.htm">here</a>.</p>
-	<p>This model is updated daily. New releases will be made available between 16:00 and 20:00 ET.</p>
-{% endif %}
+							<div id="primary-forecast">
+								<div class="mb-2"><span class="font-logo" style="vertical-align:middle;font-size:1.4rem;color:rgb(15, 17, 23)">Forecast Models</span></div>
+								{% if varname == 'sofr' %}
+									<p>Our <span style="font-weight:500"><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</span> for the secured overnight financing rate (SOFR) is generated utilizing data on publicly-traded SOFR futures 
+									and other closely related benchmark interest rates. 
+									Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
+									parametrization model, generating the final forecast.</p>
+									<p>This forecast can be interpreted as the mean market-expected values of future SOFR values.</p>
+									<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days.</p>
+								{% elseif varname == 'ffr' %}
+									<p>Our <strong><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</strong> for the federal funds rate rate (FFR) is generated utilizing data on publicly-traded FFR futures 
+									and other closely related benchmark interest rates. 
+									Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
+									parametrization model, generating the final forecast.</p>
+									<p>This forecast can be interpreted as the mean market-expected values of future FFR values.</p>
+									<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days.</p>
+								{% elseif varname == 'ameribor' %}
+									<p>Our <strong><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</strong> for the Ameribor Unsecured Overnight Rate (AMERIBOR) is generated utilizing data on publicly-traded AMERIBOR futures 
+									and other closely related benchmark interest rates. 
+									Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
+									parametrization model, generating the final forecast.</p>
+									<p>This forecast can be interpreted as the mean market-expected values of future AMERIBOR values.</p>
+									<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days.</p>
+								{% elseif varname == 'bsby' %}
+									<p>Our <strong><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</strong> for the Bloomberg Short-Term Bank Yield Index (BSBY) is generated utilizing data on publicly-traded BSBY futures 
+									and other closely related benchmark interest rates. 
+									Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
+									parametrization model, generating the final forecast.</p>
+									<p>This forecast can be interpreted as the mean market-expected values of future BSBY values.</p>
+									<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days.</p>
+								{% elseif varname == 'sonia' %}
+									<p>Our <strong><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</strong> for the SONIA rate is generated utilizing data on publicly-traded SONIA futures 
+									and other closely related benchmark interest rates. 
+									Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
+									parametrization model, generating the final forecast.</p>
+									<p>This forecast can be interpreted as the mean market-expected values of future SONIA values.</p>
+									<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days.</p>
+								{% elseif varname == 'estr' %}
+									<p>Our <strong><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</strong> for the Euro short-term rate is generated utilizing data on publicly-traded ESTR futures 
+									and other closely related benchmark interest rates. 
+									Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
+									parametrization model, generating the final forecast.</p>
+									<p>This forecast can be interpreted as the mean market-expected values of future ESTR values.</p>
+									<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days.</p>
+								{% elseif varname in ['mort15y', 'mort30y'] %}
+									<p>Our <strong><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</strong> for the 15 and 30 year fixed rate mortgage rates are derived from combining our 
+									<a href="/forecast-t10y">Market Consensus Forecast for Treasury yields</a> with survey-based forecasts for housing prices.</p>
+									<p>First, using historical data, we calculate historical mortgage-Treasury yield spreads; a model is then used to calculate the relationship 
+									between these spreads and housing prices. 
+									We then use survey-based economist forecasts of housing prices to estimate future mortgage-Treasury yield spreads, and add these to our 
+									Market Consensus Forecasts for Treasury yields to arrive at our final estimate.</p>
+									<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days.</p>
+								{% elseif varname in ['t03m', 't06m', 't01y', 't02y', 't05y', 't10y', 't20y', 't30y'] %}
+									<p>Our <strong><i class="cmefi-logo mx-1"></i>Consensus Treasury Forecast</strong> is a model that calculates the average market expectated forecast of U.S. Treasury yield rates. 
+									It is derived using current <a href="https://www.treasury.gov/resource-center/data-chart-center/Pages/index.aspx">Treasury bond market data</a> 
+									as well as futures market data. For each point in the yield term structure, our model derives the mean market-expected yield rate. 
+									The term structure is then interpolated and smoothed using a three-factor parametrization model, generating the final forecast.</p>
+									<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days.</p>
+								{% elseif varname in ['gdp', 'pce'] %}
+									<p>Our <strong><i class="cmefi-logo mx-1"></i>Composite Forecast Model</strong> is a model of models, 
+									optimally finding weights between different qualitative and quantitative forecasts to generate a single composite forecast.<p>
+									<p>Assigned weights are time-varying and depend on the remaining time until the official data release. For example, high-frequency <a href="/forecast-gdp-nowcast">nowcast</a> models 
+									tend to perform better for short-term forecasts, while qualitative forecasts tend to be better predictors for long-term forecasts; 
+									our model combines these forecasts using a locally linear random forest method to optimize the strengths of each forecast.</p>
+									<p>This model is updated daily. New releases will be made available between 16:00 and 20:00 ET.</p>
+								{% elseif varname in ['cpi'] %}
+									<p>Our <strong><i class="cmefi-logo mx-1"></i>Consensus Inflation Forecast</strong> is a model that measures the average expected inflation rate. 
+									It is derived using bond market data (utilizing the spread between Treasury Inflation Protected Securities and Treasury yields) 
+									as well as from household survey data. For each point in the forward term structure, our model derives the mean market-expected inflation rate. 
+									The term structure is interpolated and smoothed using a three-factor parametrization model, generating the final forecast.</p>
+									<p>The model is updated monthly, generally on the next business day following the release of CPI inflation data. 
+									The CPI release schedule can be found <a href="https://www.bls.gov/schedule/news_release/cpi.htm">here</a>.</p>
+									<p>This model is updated daily. New releases will be made available between 16:00 and 20:00 ET.</p>
+								{% endif %}
+								<div id="primary-forecast-vintage-div" class="d-flex"></div>
+								<hr class="my-3">
+							</div>
 
-</div>
-							<div id="primary-forecast-vintage-div" class="d-flex"></div>
-							<div id="external-forecasts"></div>
-							<hr class="mt-4">
-							<div id="citation" style="line-height:1rem;font-size:.75rem"></div>
+
+							{% if secondary_forecasts is defined and secondary_forecasts is not null and secondary_forecasts|length > 0 %}
+							<div id="external-forecasts" class="pt-2">
+								<span>Other included forecasts on this page are from external sources:</span>
+								<ul>
+								{% if 'spf' in secondary_forecasts %}
+									<li>The Philadelphia Federal Reserve's <a href="https://www.philadelphiafed.org/surveys-and-data/real-time-data-research/survey-of-professional-forecasters">Survey of 
+									Professional Forecasters</a></li>
+								{% endif %}
+								{% if 'cbo' in secondary_forecasts %}
+									<li>The U.S. Congressional Budget Office's <a href="https://www.cbo.gov/data/budget-economic-data">10-Year Economic Projections</a></li>
+								{% endif %}
+								{% if 'wsj' in secondary_forecasts %}
+									<li>The Wall Street Journal Economic Survey</li>
+								{% endif %}
+								{% if 'fnma' in secondary_forecasts %}
+									<li>Fannie Mae's <a href="https://www.fanniemae.com/research-and-insights/forecast">Economic &amp; Housing Outlook</a></li>
+								{% endif %}
+								{% if 'cb' in secondary_forecasts %}
+									<li>The Conference Board's qualitative <a href="https://www.conference-board.org/research/us-forecast/us-forecast">forecast</a></li>
+								{% endif %}
+								{% if 'atlnow' in secondary_forecasts %}
+									<li>The Atlanta Fed's <a href="https://www.atlantafed.org/cqer/research/gdpnow">GDPNow</a> model</li>
+								{% endif %}
+								{% if 'stlnow' in secondary_forecasts %}
+									<li>The St. Louis Fed's <a href="https://fred.stlouisfed.org/series/STLENI">real GDP nowcast</a></li>
+								{% endif %}
+								{% if 'now' in secondary_forecasts %}
+									<li>Our <a href="/nowcast-gdp">GDP Nowcasting Model<a></li>
+								{% endif %}
+
+								</ul>
+								<hr class="my-3">
+							</div>
+							{% endif %}
+
+							<div id="citation" style="line-height:1rem;font-size:.75rem">
+								<span>Recommended citation for the
+								{% if primary_forecast == 'int' %} Consensus Interest Rate Forecast Model
+								{% elseif primary_forecast == 'einf' %} Consensus Inflation Model
+								{% elseif primary_forecast == 'comp' %} Composite Forecast Model 
+								{% endif %}
+								:</br>
+								<span class="fw-lighter text-muted">
+									<em>econforecasting.com</em> ({{'now' | date('Y')}}).
+									{% if primary_forecast == 'int' %} Consensus Interest Rate Forecast Model.
+									{% elseif primary_forecast == 'einf' %} Consensus Inflation Model.
+									{% elseif primary_forecast == 'comp' %} Composite Forecast Model .
+									{% endif %} Retrieved from https://econforecasting.com/{{name}}.
+								</span>
+
+							</div>
 						</div>
 					</div>
 				</div>

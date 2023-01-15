@@ -1,25 +1,33 @@
+/*
+import './add_jquery'
+import {getApi, getAllData, getData, setData, init, ajaxError, getColorArray} from './helpers'
+import DataTable from 'datatables.net-dt'
+
+import dayjs from './libs/dayjs/dayjs'
+import timezone from './libs/dayjs/timezone'
+import utc from './libs/dayjs/utc'
+import minMax from './libs/dayjs/minmax'
+import advancedFormat from './libs/dayjs/advancedformat'
+dayjs.extend(utc)
+dayjs.extend(timezone)
+dayjs.extend(minMax)
+dayjs.extend(advancedFormat)
+
+import Highcharts from 'highcharts/highstock';
+*/
 document.addEventListener("DOMContentLoaded", function(event) {
 
 	/********** INITIALIZE **********/
-	//$('div.overlay').show();
 	init();
 
 	(function() {
-		const varname = window.location.pathname.split('-').pop().padStart(3, '0');
-					
-		const primary_forecast =
-			['sofr', 'ffr', 'ameribor', 'bsby', 'mort30y', 'mort15y',
-			't03m', 't06m', 't01y', 't02y', 't05y', 't10y', 't20y', 't30y',
-			'sonia', 'estr'].includes(varname) ? 'int'
-			: ['gdp', 'pce', 'pdi'].includes(varname) ? 'comp'
-			: ['cpi'].includes(varname) ? 'einf'
-			: null;
+
+		const el = document.querySelector('#forecast-container');
+		const varname = el.dataset.varname;
+		const primary_forecast = el.dataset.primaryForecast;
+		const secondary_forecasts = el.dataset.secondaryForecasts.split(',');	
+		const show_vintage_chart =  ['gdp', 'pce'].includes(varname) ? false: true;
 			
-		const show_vintage_chart = 
-			['gdp', 'pce'].includes(varname) ? false
-			: true;
-			
-		//document.querySelectorAll('span.t-varname').forEach(x => x.textContent = tFullname);
 		const ud_prev = getAllData()['forecast-varname'] || {};
 		const ud = {... ud_prev, ... {
 				varname: varname,
@@ -100,14 +108,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 		return({variable, ts_data_parsed});	
 	}).then(function({variable, ts_data_parsed}) {
-		
-		drawDescription(ts_data_parsed, variable.varname, ud.primary_forecast);
-		//$('div.overlay').hide();
 		drawChart(ts_data_parsed, variable.fullname, variable.units, variable.hist_freq);
 		drawTable(ts_data_parsed, variable.units);
-
 		if (ud.show_vintage_chart === true) addVintageChartListener()
-
 		if (ud.debug) console.log('Draw time', Date.now() - start);
 	})
 	.catch(e => ajaxError(e));
@@ -149,9 +152,6 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 			spacingTop: 15,
             backgroundColor: 'rgba(255, 255, 255, 0)',
 			plotBackgroundColor: '#FFFFFF',
-			style: {
-				fontColor: 'var(--bs-forest)'
-			},
 			height: 550,
 			plotBorderColor: 'black',
 			plotBorderWidth: 2
@@ -177,8 +177,9 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 					units: [['day', [1]]]
 				},
 				marker : {
-					enabled: true,
-					radius: 3,
+					enabled: undefined,
+					radius: 2,
+					enabledThreshold: 5,
 					symbol: 'square'
 				}
 			}
@@ -590,9 +591,6 @@ function addVintageChartListener() {
 				return;
 		
 		});
-
-
-		
 		
 	});
 	
@@ -608,7 +606,7 @@ function drawTable(ts_data_parsed, units) {
 	// Turn into list of series
 	// Separate tab for each table
 	const table_data = ts_data_parsed.sort((a, b) => a.ts_type === 'hist' ? -1 : b.ts_type === 'hist' ? 1 : a.ts_type === 'primary' ? -1: 0).forEach(function(x, i) {
-		//console.log(x.fcname);
+		//console.log(x.data);
 		const seriesData =
 			(x.tskey === 'hist') ?
 			x.data.map(y => ({date: (x.freq === 'q' ? dayjs(y[0]).format('YYYY[Q]Q') : dayjs(y[0]).format('YYYY-MM')), type: 'Historical Data', value: y[1].toFixed(4)})) :
@@ -624,7 +622,8 @@ function drawTable(ts_data_parsed, units) {
 				ordering: true,
 				type: (x.title === 'Date' ? 'date' : 'num'),
 				className: 'dt-center',
-				css: 'font-size: .9rem'
+				css: 'font-size: .9rem',
+				width: '50%'
 			}}
 		});
 		//console.log(dtCols);
@@ -695,17 +694,20 @@ function drawTable(ts_data_parsed, units) {
 		
 
 		// Draw the table
-		const dTable = $(table).DataTable(o);
+		console.log('#table-' + x.tskey);
+		//const dTable = new DataTable(document.querySelector('#table-' + x.tskey), o); for ES6 imports
+		$(table).DataTable(o); //new DataTable(table, o) $(table).DataTable(o);
 		if (x.ts_type !== 'primary') $(table).parents('div.dataTables_wrapper').first().hide();
 		//console.log(dTable);
 
 		// Move the download buttons
 		//console.log(table.parentElement);
 		const downloadDiv = table.closest('.dataTables_wrapper').querySelector('.dt-buttons');
+		//console.log('downloadDiv', downloadDiv);
 		downloadDiv.classList.add('float-end');
 		downloadDiv.id = 'download-' + x.tskey;
 		if (i !== 0) downloadDiv.style.display = 'none'
-		$('#tables-container > div > span').after($(downloadDiv).detach());
+		$('#data-card > .card-body > div:first-child > span').after($(downloadDiv).detach());
 		
 		/* Now add event listener */
 		li.addEventListener('click', function() { 
@@ -725,39 +727,10 @@ function drawTable(ts_data_parsed, units) {
 						
 		}, false);
 	});
+
+	document.querySelector('#tables-container-loader').style.opacity = 0;
+	document.querySelector('#tables-container').style.opacity = 1;
 	
 	
 	return;
 }
-
-
-function drawDescription(ts_data_parsed, varname, primary_forecast) {
-		
-	const external_forecasts = ts_data_parsed.filter(x => x.tskey != primary_forecast & x.tskey != 'hist');
-	if (external_forecasts.length > 0) {
-		const external_forecast_html =
-			'<hr><div class="pt-2">Other included forecasts on this page are from external sources:' +
-				'<ul>' +
-					external_forecasts.map(x => '<li>' + x.description + '</li>').join('\n') +
-				'</ul>' +
-			'</div>';
-		document.querySelector('#external-forecasts').innerHTML = external_forecast_html;
-	}
-	
-	const primary_forecast_name =
-		primary_forecast === 'int' ? 'Consensus Interest Rate Forecast Model'
-		: primary_forecast === 'einf' ? 'Consensus Inflation Model'
-		: primary_forecast === 'comp' ? 'Composite Forecast Model'
-		: ''
-
-	const citation_html =
-		'Recommended citation for the ' + primary_forecast_name + ':</br>' + 
-		'<span class="fw-lighter text-muted">' + 
-			'<em>econforecasting.com</em>, The Center for Macroeconomic Forecasts and Insights (' + new Date().getFullYear() + '). ' +
-			primary_forecast_name + '. Retrieved from ' + window.location.href + '.' 
-		'</span>'
-	document.querySelector('#citation').innerHTML = citation_html;
-	
-	return;
-}
-
