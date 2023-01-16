@@ -356,8 +356,8 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 	const chart = Highcharts.stockChart('chart-container', o);
 	$('#chart-container').highcharts().rangeSelector.buttons[1].setState(2);
 
-	document.querySelector('#chart-container-loader').style.opacity = 0;
-	document.querySelector('#chart-container').style.opacity = 1;
+	document.querySelector('#chart-loader-container').style.opacity = 0;
+	document.querySelector('#chart-loadee-container').style.opacity = 1;
 	return;
 }
 

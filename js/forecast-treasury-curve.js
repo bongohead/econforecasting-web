@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", function(event) {
 
 	/********** INITIALIZE **********/
-	$('div.overlay').show();
 	init();
 
 	/*** Set Default Data ***/
@@ -107,7 +106,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		drawTable(res.treasury_data);
 		addCitation();
 		addVdate(res.forecast_vdate);
-		$('div.overlay').hide();
 	})
 	.catch(e => ajaxError(e));
 
@@ -202,7 +200,7 @@ function drawChart(treasury_data, play_index, forecast_vdate) {
 			tickPositions: [1, 2, 3, 6, 12, 60, 84, 120, 240, 360],
 			breaks: [{
 				from: 12,
-				to: 12 + (60 - 12) * .5
+				to: 12 + (60 - 12) * .6
 			}, {
 				from: 60,
 				to: 60 + (84 - 60) * .6
@@ -428,6 +426,9 @@ function drawChart(treasury_data, play_index, forecast_vdate) {
 	};
 
 	const chart2 = Highcharts.chart('chart-container-2', o2);
+
+	document.querySelector('#chart-loader-container').style.opacity = 0;
+	document.querySelector('#chart-loadee-container').style.opacity = 1;
 	return;
 }
 

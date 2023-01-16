@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 
 {% block staticlinks %}
-<script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+{# <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script> #}
 {% endblock %}
 
 {% block navbar %}
@@ -12,14 +12,17 @@
 <div class="d-flex" style="background-color:var(--bs-white-cool)">
 	{% include 'forecast-sidebar-rates.html.twig' %}
 	<div class="col mx-2 pb-5">
-		<div class="container-xxl">
+		<div class="container-xxl" id="forecast-container">
 
 			<div class="row g-0">
 				<div class="col-12 px-0">
 						<div class="card my-3 mx-0 rounded shadow-sm">
 							<div class="card-body py-0">
-								<div id="chart-container"></div>
-								<div id="chart-container-2"></div>
+								<div id="chart-loader-container" class="loader-container"><span>Pulling data...</span><div></div></div>
+								<div id="chart-loadee-container" class="loadee-container">
+									<div id="chart-container" style="height:400px"></div>
+									<div id="chart-container-2" style="height:150px"></div>
+								</div>
 							</div>
 						</div>
 				</div>

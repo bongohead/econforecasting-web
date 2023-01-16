@@ -214,7 +214,7 @@ button.dt-button {
 
 button.dt-button:hover {
 	background-color: var(--bs-sky);
-	transition: '.2s';
+	transition: .4s;
 	color: white;
 }
 
@@ -593,3 +593,5 @@ div.loadee-container {
 	transition: opacity .5s;
 	background-color: transparent;
 }
+
+
