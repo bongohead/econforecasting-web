@@ -102,14 +102,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				: 0
 			).map((x, i) => ({...x, order: i}));
 
-				
 		setData('forecast-varname', {...getData('forecast-varname'), ts_data_parsed: ts_data_parsed, ...variable});
 		if (ud.debug) console.log('Data parse time', performance.now() - start, forecast_values);
+		// throw new Error('error')
 
 		return({variable, ts_data_parsed});	
 	}).then(function({variable, ts_data_parsed}) {
 		drawChart(ts_data_parsed, variable.fullname, variable.units, variable.hist_freq);
 		drawTable(ts_data_parsed, variable.units);
+
 		if (ud.show_vintage_chart === true) addVintageChartListener()
 		if (ud.debug) console.log('Draw time', Date.now() - start);
 	})
@@ -301,8 +302,8 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
         },
 		legend: {
 			enabled: true,
-			backgroundColor: 'var(--bs-white-warmer)',
-			borderColor: 'var(--bs-white-warm)',
+			backgroundColor: 'var(--white-warmer)',
+			borderColor: 'var(--white-warm)',
 			borderWidth: 1,
 			useHTML: true,
 			align: 'center',
@@ -472,7 +473,7 @@ function addVintageChartListener() {
 						backgroundColor: 'rgba(255, 255, 255, 0)',
 						plotBackgroundColor: '#FFFFFF',
 						style: {
-							fontColor: 'var(--bs-forest)'
+							fontColor: 'var(--forest)'
 						},
 						height: 500,
 						plotBorderColor: 'black',
@@ -551,7 +552,7 @@ function addVintageChartListener() {
 					},
 					legend: {
 						enabled: true,
-						backgroundColor: 'var(--bs-white-warmer)',
+						backgroundColor: 'var(--white-warmer)',
 						borderWidth: 1,
 						align: 'right',
 						verticalAlign: 'top',

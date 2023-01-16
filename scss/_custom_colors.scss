@@ -1,0 +1,69 @@
+$custom-colors: (
+	slate-100: rgb(241 245 249),
+	slate-200: rgb(226 232 240),
+	slate-300: rgb(203 213 225),
+	slate-400: rgb(148 163 184),
+	slate-500: rgb(100 116 139),
+	slate-600: rgb(71 85 105),
+	slate-700: rgb(51 65 85),
+	slate-800: rgb(30 41 59),
+	slate-900: rgb(15 23 42),
+
+	forest: #2D8C26,
+	forest-dark: #1C6F4A,
+	forest-light: #DDFBD2,
+
+	sky: #0EA5E9,
+	sky-dark: #3276B5,
+	sky-light: #63a7e6,
+
+    "white": #FFFFFF,
+	white-cool: #EDF2F9,
+	white-warm: #FFFAF5,
+    white-warmer: #FCFBEF
+);
+
+
+:root{
+    @each $key, $value in $custom-colors {
+        --#{$key} : #{$value};
+    }
+}
+
+// https://frontstuff.io/generate-all-your-utility-classes-with-sass-maps
+/* Use BS5 mixins instead */
+@mixin color-modifiers($attribute: 'color', $modifier: '') {
+	@each $name, $hex in $custom-colors {
+		&-#{$name}#{$modifier} {
+			#{$attribute}: $hex !important;
+		}
+	}
+}
+
+@mixin color-modifiers-hover($attribute: 'color') {
+	@each $name, $hex in $custom-colors {
+		&-#{$name}:hover {
+			#{$attribute}: $hex !important;
+		}
+	}
+}
+
+.text {
+	@include color-modifiers('color');
+}
+.text-hover {
+    @include color-modifiers('color', ':hover');
+}
+.text-active {
+    @include color-modifiers('color', '.active');
+}
+.bg {
+	@include color-modifiers('background-color');
+}
+.bg-hover {
+    @include color-modifiers('background-color', ':hover');
+}
+.bg-active {
+    @include color-modifiers('background-color', '.active');
+}
+

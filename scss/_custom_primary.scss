@@ -1,8 +1,6 @@
 /***** ! Automatic build at #{$BuildTimeStamp} *****/
-
 /***** Base Styling *****/
 :root {
-	//sans-serif is defined in SASS
 	--font-family-logo: "Quicksand", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
 }
 
@@ -11,9 +9,10 @@ p {
 	font-size: 0.92rem;
 }
 
-.cursor-pointer{
+.cursor-pointer {
   cursor: pointer;
 }
+
 
 /* Logo */
 .cmefi-logo {
@@ -42,10 +41,6 @@ header {
 */
 
 footer {
-	color: var(--bs-dark) !important;
-	/*-webkit-box-shadow: 0 -8px 6px -6px #999;
-	-moz-box-shadow: 0 -8px 6px -6px #999;
-	box-shadow: 0 -8px 6px -6px #999;*/
 	position: relative;
 	z-index: 96;
 }
@@ -84,7 +79,7 @@ footer {
 	font-weight: 600;
 	text-overflow: ellipsis;
 	/*color: rgba(122,122,255,.3);*/
-	color: var(--bs-sky);
+	color: var(--sky);
 	outline: 0;
 	border-radius: .5rem;
 	/*border:.05rem solid rgba(122,122,255,.5);*/
@@ -100,7 +95,7 @@ footer {
 }
 .autoComplete_wrapper > input::placeholder{
 	/*color: rgba(122, 122, 255, 0.5);*/
-	color: var(--bs-sky);
+	color: var(--sky);
 	transition:all .3s ease;
 	-webkit-transition:all -webkit-transform .3s ease
 }
@@ -133,7 +128,7 @@ footer {
 	-webkit-transition:all -webkit-transform .3s ease
 }
 .autoComplete_wrapper > input:focus{
-	color: var(--bs-dgrey);
+	color: var(--slate-300);
 	/*border: .06rem solid rgba(122,122,255,.8)*/
 	border: rgba(158,219,246, .8);
 }
@@ -153,7 +148,7 @@ footer {
 }
 .autoComplete_wrapper>ul>li mark{
 	background-color:transparent;
-	color:var(--bs-sky);
+	color:var(--sky);
 	font-weight:700;
 	padding: 0 !important;
 }
@@ -191,29 +186,32 @@ footer {
 
 }
 #li-container > li.active {
-	border-left: 1px solid var(--bs-sky);
+	border-left: 1px solid var(--sky);
 	background-color: white;
-	color: var(--bs-sky);
+	color: var(--sky);
 	border-top: 0px;
 	border-bottom: 0px;
 	border-right: 0px;
 	margin-top: 0;
 }
-#li-container > li:hover {
+#li-container > li.active:hover {
 	cursor: pointer;
-	@extend .text-slate-600;
+	color: var(--sky);
+}
+#li-container > li:not(.active):hover {
+	cursor: pointer;
+	color: var(--slate-600);
 }
 
 button.dt-button {
 	box-shadow: none !important;
-	background-color: var(--bs-sky-light);
+	background-color: var(--sky-light);
 	color: white;
 	font-size: .85rem;
 	padding: .2rem .4rem;
 }
-
 button.dt-button:hover {
-	background-color: var(--bs-sky);
+	background-color: var(--sky);
 	transition: .4s;
 	color: white;
 }
@@ -238,7 +236,7 @@ nav.navbar.navbar-home {
 	
 	/* Top-level dropdown links */
 	li.nav-item > a.nav-link {
-		color: var(--bs-gray-dark);
+		color: var(--slate-900);
 		font-size: 1.0rem;
 		padding: .5rem .8rem;
 		font-family: var(--font-family-logo);
@@ -248,11 +246,11 @@ nav.navbar.navbar-home {
 	}
 	/* When dropdown is opened */
 	li.nav-item > a.nav-link.show {
-		color: var(--bs-forest);
+		color: var(--forest);
 	}
 	/* Dropdown items */
 	ul.dropdown-menu, div.dropdown-menu {
-		background-color: var(--bs-light);
+		background-color: var(--slate-100);
 		border-color: rgba(15,23,42,.05);
 		border-radius: .25rem;
 		border-width: 1px;
@@ -261,20 +259,17 @@ nav.navbar.navbar-home {
 	}
 	ul.dropdown-menu a, div.dropdown-menu a {
 		font-weight: 500;
+		color: var(--slate-800)
 	}
 	ul.dropdown-menu a:hover, div.dropdown-menu a:hover {
-		color: var(--bs-forest);
-		transition: .1s;
-	}
-	ul.dropdown-menu a:hover, div.dropdown-menu a:hover {
-		background-color: var(--bs-sky);
-		transition: .2s;
+		background-color: var(--sky);
+		transition: .4s;
 		color: white;
 	}
 }
 
 nav.navbar:not(.navbar-home) {
-	background-color: var(--bs-forest);
+	background-color: var(--forest);
 	/* Top-level dropdown links */
 	li.nav-item > a.nav-link {
 		color: rgba(255, 255, 255, .9);
@@ -290,43 +285,40 @@ nav.navbar:not(.navbar-home) {
 	}
 	/* Dropdown items */
 	ul.dropdown-menu, div.dropdown-menu {
-		background-color: var(--bs-white);
-		border-color: var(--bs-dark);
+		background-color: var(--slate-100);
+		border-color: var(--slate-500);
 		border-radius: .25rem;
 		border-width: 1px;
 		font-size: .92rem;
 		font-family: var(--font-family-logo);
 	}
+	ul.dropdown-menu a, div.dropdown-menu a {
+		font-weight: 500;
+		color: var(--slate-800)
+	}
 	ul.dropdown-menu a:hover, div.dropdown-menu a:hover {
-		background-color: var(--bs-sky);
-		transition: .2s;
+		background-color: var(--sky);
+		transition: .4s;
 		color: white;
 	}
-}
 
+	a.dropdown-item.activepage {
+		background-color: var(--forest);
+		color: white !important;
+	}
+	/* Top-level nav link when dropdown subitem is active */
+	a.nav-link:hover {
+		background-color: var(--forest-dark);
+		color: rgb(100 116 139);
+		transition: .2s;
+	}
 
+	a.nav-link.show {
+		background-color: var(--forest-dark);
+		color: rgb(100 116 139);
+		transition: .2s;
+	}
 
-/* Dropdown items when active */
-nav.navbar a.dropdown-item.activepage {
-	background-color: var(--bs-forest);
-	color: white;
-}
-
-/* Top-level nav link when dropdown subitem is active */
-/*
-nav.navbar:not(.navbar-home) a.nav-link.activepage {
-	background-color: var(--bs-forest-dark);
-}
-*/
-nav.navbar:not(.navbar-home) a.nav-link:hover {
-	background-color: var(--bs-forest-dark);
-	color: rgb(100 116 139);
-	transition: .2s;
-}
-nav.navbar:not(.navbar-home) a.nav-link.show {
-	background-color: var(--bs-forest-dark);
-	color: rgb(100 116 139);
-	transition: .2s;
 }
 
 
@@ -345,15 +337,15 @@ nav.sidebar {
 }
 
 nav.sidebar a {
-  color: rgb(51, 65, 85);
-  font-family: var(--bs-font-family-serif);
-  text-decoration: none;
-  border-left: 1px solid rgb(241, 245, 249);
+	color: var(--slate-600);
+	font-family: var(--bs-font-family-serif);
+	text-decoration: none;
+	border-left: 1px solid rgb(241, 245, 249);
 }
 
 nav.sidebar span.navbar-header {
 	font-size:1.1rem;
-	color:var(--bs-dark);
+	color: var(--slate-600);
 	padding-left:1.5rem;
 	padding-top:.8rem;
 }
@@ -365,7 +357,7 @@ nav.sidebar a.nav-link {
 	font-size: 0.88rem;
 	padding-left: 1.5rem;
 	margin-top: 1.2rem;
-	color: rgb(54, 70, 90);
+	color: var(--slate-600);
 
 }
 nav.sidebar a.nav-link:hover {
@@ -395,15 +387,15 @@ nav.sidebar div.sidebar-submenu > a {
 nav.sidebar div.sidebar-submenu > a.activepage {
   /*background-color: var(--bs-forest-dark);
   color: white;*/
-  border-left: 1px solid var(--bs-forest);
+  border-left: 1px solid var(--forest);
   font-weight: 500;
-  color: var(--bs-forest);
+  color: var(--forest);
 }
 
 nav.sidebar div.sidebar-submenu > a:hover {
   /*background-color: var(--bs-sky);
   color: white;*/
-  color:rgb(51, 65, 85);
+  color: var(--slate-900);
   cursor: pointer;
   transition: .2s;
 }
@@ -446,9 +438,6 @@ table.dataTable .dt-right {
 	text-align: right;
 }
 
-table.dataTable thead {
-	/*border-bottom: 1px solid black;*/
-}
 
 table.dataTable tbody {
 	border-bottom: 2px solid black;
@@ -478,25 +467,25 @@ table.dataTable tr.odd  {
 #chart-subtitle-group {
 	
 	button.chart-subtitle {
-		background-color: var(--bs-sky);
+		background-color: var(--sky);
 		color: white;
-		border-top: 1px solid var(--bs-sky);
-		border-bottom: 1px solid var(--bs-sky);
+		border-top: 1px solid var(--sky);
+		border-bottom: 1px solid var(--sky);
 		border-left: 0px solid transparent;
 		border-right: 0px solid transparent;
 		transition: .5s;
 	}
 
 	button.chart-subtitle.active {
-		background-color: var(--bs-sky-dark);
-		border-top: 1px solid var(--bs-sky-dark);
-		border-bottom: 1px solid var(--bs-sky-dark);
+		background-color: var(--sky-dark);
+		border-top: 1px solid var(--sky-dark);
+		border-bottom: 1px solid var(--sky-dark);
 	}
 
 	button.chart-subtitle:disabled {
-		background-color: var(--bs-sky-light);
-		border-top: 1px solid var(--bs-sky-light);
-		border-bottom: 1px solid var(--bs-sky-light);
+		background-color: var(--sky-light);
+		border-top: 1px solid var(--sky-light);
+		border-bottom: 1px solid var(--sky-light);
 		opacity: 1;
 	}
 
@@ -545,7 +534,7 @@ div.loader-container > div {
 	}
 	25% {
 		rotate: 180deg;
-		color: var(--bs-forest);
+		color: var(--forest);
 	}
 	50% {
 		rotate: 360deg;
@@ -553,7 +542,7 @@ div.loader-container > div {
 	}
 	75% {
 		rotate: 540deg;
-		color: var(--bs-sky);
+		color: var(--sky);
 	}
 	100% {
 		rotate: 720deg;
@@ -575,13 +564,13 @@ div.loader-container > span {
 		color: rgb(148 163 184);
 	}
 	25% {
-		color: var(--bs-forest);
+		color: var(--forest);
 	}
 	50% {
 		color: rgb(148 163 184);
 	}
 	75% {
-		color: var(--bs-sky);
+		color: var(--sky);
 	}
 	100% {
 		color: rgb(148 163 184);

@@ -3,6 +3,7 @@
  * Useful for overriding default bootstrap 5 variables
  * Rename css files as scss to import
  */
+@import 'custom_colors';
  
  
 // 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
@@ -10,70 +11,9 @@
 
 // 2. Include any default variable overrides here
 // Variable Overrides
-$custom-colors: (
-	
-	/* Primary colors */
-	forest: #2D8C26,
-	sky: #0EA5E9,
-	
-	
-	/* Alternate colors */
-	forest-dark: #1C6F4A,
-	forest-light: #DDFBD2,
-	sky-dark: #3276B5,
-	sky-light: #63a7e6 ,
-	white-cool: #EDF2F9,
-	white-warm: #FFFAF5,
-	white-warmer: #FCFBEF,
-	
-	
-	/* Primarily for text */
-	gray-dark: rgb(51, 65, 85),
-	gray-light: rgb(107, 114, 128)
-	
-	
-	/*
-	cmefi-green: #2D8C26,
-	cmefi-orange: #F2A65A,
-	cmefi-red: #AB3428, //Firebrick
-	cmefi-blue: #257CFD,//Iceberg
-	cmefi-cyan: #03FCBA,
-	cmefi-dark: #484A47,//Grey
-	cmefi-light-warm: #FCFBEF, // Ivory
-	cmefi-light-cool: #EDF2F9, // Ivory
+// $custom-colors: (
+// );
 
-	cmefi-dark-green: #1C6F4A,
-	cmefi-light-blue: #58B8E5,
-	cmefi-dark-blue: #0076A9,
-
-	efgreen: #3F9E2E,
-	efpale: #FFFFCC,
-
-	efblue: #00ABE7,
-	efsky: #2DC7FF,
-
-	efred: #A20104,
-	efpaleblue: #EDF2F9,
-
-	econgreen: #497901,
-	econpale: #F4F1BB,
-	econorange: #FC8A08,
-	econred: #A20104,
-	econblue: #237CDC,
-	
-	econlgreen: #83D902,
-	econlpale: #F7F5CE,
-	econlorange: #FDA745,
-	econlred: #F90105,
-	econlblue: #5A9DE5,
-	
-	econdgreen: #375B01,
-	econdpale: #E5DE60,
-	econdorange: #C16802,
-	econdred: #7A0103,
-	econdblue: #1A5DA5
-	*/
-);
 
 // https://stackoverflow.com/questions/38480156/how-to-increase-width-of-bootstrap-container-on-max-width
 $my-container-max-widths: (
@@ -104,16 +44,16 @@ $line-height-sm:              1.25;
 $line-height-lg:              2;
 
 // color
-$link-color:                 var(--bs-sky-light); //red
-$link-hover-color:           var(--bs-sky); //green
+$link-color:                 var(--sky-light); //red
+$link-hover-color:           var(--sky); //green
 
 // 3. Include remainder of required Bootstrap stylesheets
 @import "libs/bootstrap/_variables";
 
-
 // 4. Include any default map overrides here
 // Optional Sass map overrides here
-$theme-colors: map-merge($theme-colors, $custom-colors);
+$colors: map-remove($colors, 'blue', 'indigo', 'purple', 'pink', 'red', 'orange', 'yellow', 'green', 'teal', 'cyan', 'black', 'white');
+$theme-colors: $colors;//$custom-colors; //map-merge($theme-colors, $custom-colors);
 $container-max-widths: map-merge($container-max-widths, $my-container-max-widths);
 
 // 5. Include remainder of required parts
@@ -127,8 +67,6 @@ $container-max-widths: map-merge($container-max-widths, $my-container-max-widths
 @import "libs/bootstrap/_type";
 
 // Layout & components
-@import "libs/bootstrap/_reboot";
-@import "libs/bootstrap/_type";
 @import "libs/bootstrap/_images";
 @import "libs/bootstrap/_containers";
 @import "libs/bootstrap/_grid";
@@ -141,22 +79,22 @@ $container-max-widths: map-merge($container-max-widths, $my-container-max-widths
 @import "libs/bootstrap/_nav";
 @import "libs/bootstrap/_navbar";
 @import "libs/bootstrap/_card";
-@import "libs/bootstrap/_accordion";
-@import "libs/bootstrap/_breadcrumb";
+// @import "libs/bootstrap/_accordion";
+// @import "libs/bootstrap/_breadcrumb";
 @import "libs/bootstrap/_pagination";
 @import "libs/bootstrap/_badge";
 @import "libs/bootstrap/_alert";
-@import "libs/bootstrap/_progress";
+// @import "libs/bootstrap/_progress";
 @import "libs/bootstrap/_list-group";
 @import "libs/bootstrap/_close";
-@import "libs/bootstrap/_toasts";
+// @import "libs/bootstrap/_toasts";
 @import "libs/bootstrap/_modal";
-@import "libs/bootstrap/_tooltip";
-@import "libs/bootstrap/_popover";
-@import "libs/bootstrap/_carousel";
+// @import "libs/bootstrap/_tooltip";
+// @import "libs/bootstrap/_popover";
+// @import "libs/bootstrap/_carousel";
 @import "libs/bootstrap/_spinners";
-@import "libs/bootstrap/_offcanvas";
-@import "libs/bootstrap/_placeholders";
+// @import "libs/bootstrap/_offcanvas";
+// @import "libs/bootstrap/_placeholders";
 
 // Helpers
 @import "libs/bootstrap/_helpers";

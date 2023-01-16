@@ -86,10 +86,28 @@ function getColorArray() {
 
 function ajaxError(e) {
 	console.log('Error: ', e);
+	/*
 	document.querySelector('#overlay .spinner-border').style.display = 'none';
 	document.querySelector('#overlay h4').textContent = 'Sorry, it seems like there was an error loading the data! Please refresh or try back later.';
+	*/
+	document.querySelectorAll('.loader-container > span').forEach(x => {
+		x.textContent = 'Sorry, it seems like there was an error loading the data! Please refresh or try back later.'
+		return;
+	});
+	document.querySelectorAll('.loader-container > div').forEach(x => x.style.display = 'none');
+	
 	return;
 }
+
+
+/*
+function ajaxErrorEl(e, loader_container_id) {
+	console.log('Error: ', e);
+	document.querySelector('#overlay .spinner-border').style.display = 'none';
+	document.querySelector('#' + loader_container_id).textContent = 'Sorry, it seems like there was an error loading the data! Please refresh or try back later.';
+	return;
+}
+*/
 
 
 function init() {
@@ -133,7 +151,7 @@ function init() {
 			align: 'center',
 			style: {
 				fontFamily: 'var(--bs-font-sans-serif)',
-				color: 'var(--bs-dark)',
+				color: 'var(--slate-900)',
 				fontSize: '1.1rem'
 			}
 		},
@@ -255,19 +273,19 @@ function init() {
 		},
 		rangeSelector: {
 			buttonTheme: { // styles for the buttons
-				fill: 'var(--bs-sky-light)',
+				fill: 'var(--sky-light)',
 				style: {
 					color: 'white'
 				},
 				states: {
 					hover: {
-						fill: 'var(--bs-sky-dark)',
+						fill: 'var(--sky-dark)',
 						style: {
 							transition: '.2s'
 						}
 					},
 					select: {
-						fill: 'var(--bs-sky)',
+						fill: 'var(--sky)',
 						style: {
 							color: 'white',
 							fontWeight: 'normal',
