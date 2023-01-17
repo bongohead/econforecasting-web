@@ -17,6 +17,7 @@ window.addEventListener('DOMContentLoaded', () => {
 		{group: 'Forecast', fullname: 'AMERIBOR', url: 'forecast-ameribor'},
 		{group: 'Forecast', fullname: 'Sterling Overnight Rate (SONIA)', url: 'forecast-sonia'},
 		{group: 'Forecast', fullname: 'Euro Short-Term Rate (ESTR)', url: 'forecast-estr'},
+		{group: 'Forecast', fullname: 'Bank of England Base Rate', url: 'forecast-ukbankrate'},
 
 		{group: 'US Economy', fullname: 'Gross Domestic Product (GDP)', url: 'forecast-gdp'},
 		{group: 'US Economy', fullname: 'Personal Consumption (PCE)', url: 'forecast-pce'},
