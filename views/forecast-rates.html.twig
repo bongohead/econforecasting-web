@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="d-flex" style="background-color:var(--white-cool)">
+<div class="d-flex bg-white-cool">
 	{% include 'forecast-sidebar-rates.html.twig' %}
 	<div class="col mx-2 pb-5">
 		<div class="container-xxl" id="forecast-container" data-varname="{{varname}}" data-primary-forecast="{{primary_forecast}}" data-secondary-forecasts="{{secondary_forecasts}}">
@@ -86,13 +86,6 @@
 									<p>This page provides monthly forecasts of U.S. Treasury bond yields. With over $20 trillion outstanding, Treasury bonds constitute nearly 15% of the global bond market and are the premier safe assets in many 
 									financial markets across the world. Because of this, they are also often utilized as a benchmark measure of the riskless interest rate in the world economy.</p>
 									<p>Both historical data and forecasted values on this page reflect period average values.</p>
-								{% elseif varname in ['gdp'] %}
-									<p>This page provides quarterly forecasts of U.S. real GDP. All historical and forecasted values represent seasonally adjusted annualized rates.</p>
-								{% elseif varname in ['pce'] %}
-									<p>This page provides quarterly forecasts of U.S. real personal consumption. All historical and forecasted values represent seasonally adjusted annualized rates.</p>
-								{% elseif varname in ['cpi'] %}
-									<p>This page provides forecasts of monthly inflation rates, as measured by the year over year percent change in standard headline CPI, 
-									i.e. the <a href="https://www.bls.gov/news.release/cpi.t01.htm">consumer price index for all urban consumers (CPI-U)</a>.</p>
 								{% endif %}
 								<hr class="my-3">
 							</div>
@@ -149,27 +142,6 @@
 									We then use survey-based economist forecasts of housing prices to estimate future mortgage-Treasury yield spreads, and add these to our 
 									Market Consensus Forecasts for Treasury yields to arrive at our final estimate.</p>
 									<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days.</p>
-								{% elseif varname in ['t01m', 't02m', 't03m', 't06m', 't01y', 't02y', 't05y', 't10y', 't20y', 't30y'] %}
-									<p>Our <span class="font-bolder"><i class="cmefi-logo mx-1"></i>Consensus Treasury Forecast</span> is a model that calculates the average market expectated forecast of U.S. Treasury yield rates. 
-									It is derived using current <a href="https://www.treasury.gov/resource-center/data-chart-center/Pages/index.aspx">Treasury bond market data</a> 
-									as well as futures market data. For each point in the yield term structure, our model derives the mean market-expected yield rate. 
-									The term structure is then interpolated and smoothed using a three-factor parametrization model, generating the final forecast.</p>
-									<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days.</p>
-								{% elseif varname in ['gdp', 'pce'] %}
-									<p>Our <span class="font-bolder"><i class="cmefi-logo mx-1"></i>Composite Forecast Model</span> is a model of models, 
-									optimally finding weights between different qualitative and quantitative forecasts to generate a single composite forecast.<p>
-									<p>Assigned weights are time-varying and depend on the remaining time until the official data release. For example, high-frequency <a href="/forecast-gdp-nowcast">nowcast</a> models 
-									tend to perform better for short-term forecasts, while qualitative forecasts tend to be better predictors for long-term forecasts; 
-									our model combines these forecasts using a locally linear random forest method to optimize the strengths of each forecast.</p>
-									<p>This model is updated daily. New releases will be made available between 16:00 and 20:00 ET.</p>
-								{% elseif varname in ['cpi'] %}
-									<p>Our <span class="font-bolder"><i class="cmefi-logo mx-1"></i>Consensus Inflation Forecast</span> is a model that measures the average expected inflation rate. 
-									It is derived using bond market data (utilizing the spread between Treasury Inflation Protected Securities and Treasury yields) 
-									as well as from household survey data. For each point in the forward term structure, our model derives the mean market-expected inflation rate. 
-									The term structure is interpolated and smoothed using a three-factor parametrization model, generating the final forecast.</p>
-									<p>The model is updated monthly, generally on the next business day following the release of CPI inflation data. 
-									The CPI release schedule can be found <a href="https://www.bls.gov/schedule/news_release/cpi.htm">here</a>.</p>
-									<p>This model is updated daily. New releases will be made available between 16:00 and 20:00 ET.</p>
 								{% endif %}
 								<div id="primary-forecast-vintage-div" class="d-flex"></div>
 								<hr class="my-3">

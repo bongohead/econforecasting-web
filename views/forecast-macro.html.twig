@@ -1,19 +1,26 @@
-{% extends "base.html" %}
+{% extends "base.html.twig" %}
 
 {% block staticlinks %}
 {% endblock %}
 
+{% block navbar %}
+	{% include 'navbar-other.html.twig' %}
+{% endblock %}
+
 {% block content %}
-<div class="row gx-0" style="background-color:rgb(237, 242, 249)">
-	{% include 'forecast-sidebar-macro.html' %}
+<div class="d-flex bg-white-cool">
+	{% include 'forecast-sidebar-macro.html.twig' %}
 	<div class="col mx-2 pb-5">
-		<div class="container-xxl">
+		<div class="container-xxl" id="forecast-container" data-varname="{{varname}}" data-primary-forecast="{{primary_forecast}}" data-secondary-forecasts="{{secondary_forecasts}}">
 
 			<div class="row g-0">
 				<div class="col-12 px-0">
-						<div class="card my-3 mx-0 rounded shadow-sm">
-							<div class="card-body py-0">
-								<div id="chart-container" ></div>
+						<div class="card my-3 mx-0 rounded shadow-sm overlay-hidden">
+							<div class="card-body py-0" style="height:550px">
+								<div id="chart-loader-container" class="loader-container"><span>Pulling data...</span><div></div></div>
+								<div id="chart-loadee-container" class="loadee-container">
+									<div id="chart-container"></div>
+								</div>
 							</div>
 						</div>
 				</div>
@@ -23,10 +30,14 @@
 			
 				<div class="col-xxl-4 col-lg-6 pe-lg-2 mb-3">
 					<div id="data-card" class="card shadow-sm">
-						<div class="card-body" id="tables-container">
-							<div class="mb-2"><span style="vertical-align:middle;font-size:1.3rem;">DATA</span></div>
-							<ul class="list-group list-group-vertical m-3" id="li-container">
-							</ul>
+						<div class="card-body">
+							<div class="mb-2"><span class="font-logo" style="vertical-align:middle;font-size:1.4rem;color:rgb(15, 17, 23)">Data</span></div>
+							<div id="tables-container-loader" class="loader-container"><span>Pulling data...</span><div></div></div>
+							<div id="tables-container" class="loadee-container" style="min-height: 300px">
+								<span style="font-size:.90rem">Select a series:</span>
+								<ul class="list-group list-group-vertical m-3" id="li-container">
+								</ul>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -35,22 +46,113 @@
 					<div class="card shadow-sm">
 						<div class="card-body" style="font-size:.92rem">
 						
-							<div class="mb-2"><span style="vertical-align:middle;font-size:1.3rem;">DESCRIPTION</span></div>
-							<div id="variable-description"></div>
-							<div class="mb-2"><span style="vertical-align:middle;font-size:1.3rem;">FORECAST MODELS</span></div>
-							<div id="primary-forecast"></div>
-							<div id="primary-forecast-vintage-div" class="d-flex"></div>
-							<div id="external-forecasts"></div>
-							<hr class="mt-4">
-							<div id="citation" style="line-height:1rem;font-size:.75rem"></div>
+							<div id="variable-description">
+								<div class="mb-2"><span class="font-logo" style="vertical-align:middle;font-size:1.4rem;color:rgb(15, 17, 23)">Description</span></div>
+								{% if varname in ['gdp'] %}
+									<p>This page provides quarterly forecasts of U.S. real GDP. All historical and forecasted values represent seasonally adjusted annualized rates.</p>
+								{% elseif varname in ['pce'] %}
+									<p>This page provides quarterly forecasts of U.S. real personal consumption. All historical and forecasted values represent seasonally adjusted annualized rates.</p>
+								{% elseif varname in ['cpi'] %}
+									<p>This page provides forecasts of monthly inflation rates, as measured by the year over year percent change in standard headline CPI, 
+									i.e. the <a href="https://www.bls.gov/news.release/cpi.t01.htm">consumer price index for all urban consumers (CPI-U)</a>.</p>
+								{% endif %}
+								<hr class="my-3">
+							</div>
+
+							<div id="primary-forecast">
+								<div class="mb-2"><span class="font-logo" style="vertical-align:middle;font-size:1.4rem;color:rgb(15, 17, 23)">Forecast Models</span></div>
+								{% if varname in ['gdp', 'pce'] %}
+									<p>Our <span class="font-bolder"><i class="cmefi-logo mx-1"></i>Composite Forecast Model</span> is a model of models, 
+									optimally finding weights between different qualitative and quantitative forecasts to generate a single composite forecast.<p>
+									<p>Assigned weights are time-varying and depend on the remaining time until the official data release. For example, high-frequency <a href="/forecast-gdp-nowcast">nowcast</a> models 
+									tend to perform better for short-term forecasts, while qualitative forecasts tend to be better predictors for long-term forecasts; 
+									our model combines these forecasts using a locally linear random forest method to optimize the strengths of each forecast.</p>
+									<p>This model is updated daily. New releases will be made available between 16:00 and 20:00 ET.</p>
+								{% elseif varname in ['cpi'] %}
+									<p>Our <span class="font-bolder"><i class="cmefi-logo mx-1"></i>Consensus Inflation Forecast</span> is a model that measures the average expected inflation rate. 
+									It is derived using bond market data (utilizing the spread between Treasury Inflation Protected Securities and Treasury yields) 
+									as well as from household survey data. For each point in the forward term structure, our model derives the mean market-expected inflation rate. 
+									The term structure is interpolated and smoothed using a three-factor parametrization model, generating the final forecast.</p>
+									<p>The model is updated monthly, generally on the next business day following the release of CPI inflation data. 
+									The CPI release schedule can be found <a href="https://www.bls.gov/schedule/news_release/cpi.htm">here</a>.</p>
+								{% endif %}
+								<div id="primary-forecast-vintage-div" class="d-flex"></div>
+								<hr class="my-3">
+							</div>
+
+
+							{% if secondary_forecasts is defined and secondary_forecasts is not null and secondary_forecasts|length > 0 %}
+							<div id="external-forecasts" class="pt-2">
+								<span>Other included forecasts on this page are from external sources:</span>
+								<ul>
+								{% if 'spf' in secondary_forecasts %}
+									<li>The Philadelphia Federal Reserve's <a href="https://www.philadelphiafed.org/surveys-and-data/real-time-data-research/survey-of-professional-forecasters">Survey of 
+									Professional Forecasters</a></li>
+								{% endif %}
+								{% if 'cbo' in secondary_forecasts %}
+									<li>The U.S. Congressional Budget Office's <a href="https://www.cbo.gov/data/budget-economic-data">10-Year Economic Projections</a></li>
+								{% endif %}
+								{% if 'wsj' in secondary_forecasts %}
+									<li>The Wall Street Journal Economic Survey</li>
+								{% endif %}
+								{% if 'fnma' in secondary_forecasts %}
+									<li>Fannie Mae's <a href="https://www.fanniemae.com/research-and-insights/forecast">Economic &amp; Housing Outlook</a></li>
+								{% endif %}
+								{% if 'cb' in secondary_forecasts %}
+									<li>The Conference Board's qualitative <a href="https://www.conference-board.org/research/us-forecast/us-forecast">forecast</a></li>
+								{% endif %}
+								{% if 'atlnow' in secondary_forecasts %}
+									<li>The Atlanta Fed's <a href="https://www.atlantafed.org/cqer/research/gdpnow">GDPNow</a> model</li>
+								{% endif %}
+								{% if 'stlnow' in secondary_forecasts %}
+									<li>The St. Louis Fed's <a href="https://fred.stlouisfed.org/series/STLENI">real GDP nowcast</a></li>
+								{% endif %}
+								{% if 'now' in secondary_forecasts %}
+									<li>Our <a href="/nowcast-gdp">GDP Nowcasting Model<a></li>
+								{% endif %}
+
+								</ul>
+								<hr class="my-3">
+							</div>
+							{% endif %}
+
+							<div id="citation" style="line-height:1rem;font-size:.75rem">
+								<span>Recommended citation for the
+								{% if primary_forecast == 'int' %} Consensus Interest Rate Forecast Model
+								{% elseif primary_forecast == 'einf' %} Consensus Inflation Model
+								{% elseif primary_forecast == 'comp' %} Composite Forecast Model 
+								{% endif %}
+								:</br>
+								<span class="fw-lighter text-muted">
+									<em>econforecasting.com</em> ({{'now' | date('Y')}}).
+									{% if primary_forecast == 'int' %} Consensus Interest Rate Forecast Model.
+									{% elseif primary_forecast == 'einf' %} Consensus Inflation Model.
+									{% elseif primary_forecast == 'comp' %} Composite Forecast Model .
+									{% endif %} Retrieved from https://econforecasting.com/{{name}}.
+								</span>
+
+							</div>
 						</div>
 					</div>
 				</div>
 				
 				
 			</div>
-	
+			
+			
+			<div class="row g-0">
+				<div class="col-12 px-0">
+						<div class="card my-3 mx-0 rounded shadow-sm">
+							<div class="card-body py-0">
+							</div>
+						</div>
+				</div>
+			</div>
+			
+			{% include 'g-ads.html.twig' ignore missing  %}
+
 		</div>
 	</div>
+	
 </div>
 {% endblock %}

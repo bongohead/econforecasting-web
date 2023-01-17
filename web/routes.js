@@ -110,8 +110,23 @@ const routes = [
   }, {
     name: 'forecast-gdp', endpoints: ['/forecast-gdp'],
     js: ['helpers', 'forecast-varname'], externaljs: ['hc/highstock', 'hc/highcharts-more', 'dt/jquery.dataTables', 'dt/dataTables.bootstrap5', 'dt/dataTables.buttons', 'dt/buttons.html5'],
-    template: 'forecast-rates', title: '30-Year US Mortgage Rate Forecast', canonical: 'https://econforecasting.com/forecast-gdp',
-    varname: 'gdp', primary_forecast: 'int', secondary_forecasts: []
+    template: 'forecast-macro', title: 'US Real GDP Forecast', canonical: 'https://econforecasting.com/forecast-gdp',
+    varname: 'gdp', primary_forecast: 'comp', secondary_forecasts: []
+  }, {
+    name: 'forecast-pce', endpoints: ['/forecast-pce'],
+    js: ['helpers', 'forecast-varname'], externaljs: ['hc/highstock', 'hc/highcharts-more', 'dt/jquery.dataTables', 'dt/dataTables.bootstrap5', 'dt/dataTables.buttons', 'dt/buttons.html5'],
+    template: 'forecast-macro', title: 'US Real Consumption Forecast', canonical: 'https://econforecasting.com/forecast-pce',
+    varname: 'pce', primary_forecast: 'comp', secondary_forecasts: []
+  }, {
+    name: 'forecast-pdi', endpoints: ['/forecast-pdi'],
+    js: ['helpers', 'forecast-varname'], externaljs: ['hc/highstock', 'hc/highcharts-more', 'dt/jquery.dataTables', 'dt/dataTables.bootstrap5', 'dt/dataTables.buttons', 'dt/buttons.html5'],
+    template: 'forecast-macro', title: 'US Real Private Domestic Investment Forecast', canonical: 'https://econforecasting.com/forecast-pce',
+    varname: 'pdi', primary_forecast: 'comp', secondary_forecasts: []
+  }, {
+    name: 'forecast-cpi', endpoints: ['/forecast-cpi'],
+    js: ['helpers', 'forecast-varname'], externaljs: ['hc/highstock', 'hc/highcharts-more', 'dt/jquery.dataTables', 'dt/dataTables.bootstrap5', 'dt/dataTables.buttons', 'dt/buttons.html5'],
+    template: 'forecast-macro', title: 'US Inflatoin Forecast', canonical: 'https://econforecasting.com/forecast-cpi',
+    varname: 'cpi', primary_forecast: 'einf', secondary_forecasts: []
   }
 ];
 
