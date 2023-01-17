@@ -44,7 +44,7 @@ const routes = [
     varname: 'ukbankrate', primary_forecast: 'int', secondary_forecasts: []
   }, {
     name: 'forecast-treasury-curve', endpoints: ['/forecast-treasury-curve'],
-    js: ['helpers', 'forecast-treasury-curve'], externaljs: ['hc/highstock', 'hc/highcharts-more', 'dt/jquery.dataTables', 'dt/dataTables.bootstrap5', 'dt/dataTables.buttons', 'dt/buttons.html5'],
+    js: ['helpers', 'forecast-treasury-curve'], externaljs: ['hc/highstock', 'hc/highcharts-more', 'dt/jquery.dataTables', 'dt/dataTables.bootstrap5', 'dt/dataTables.buttons', 'dt/buttons.html5', 'dt/dataTables.responsive'],
     template: 'forecast-treasury-curve', title: 'Treasury Curve Forecast', canonical: 'https://dev1.econscale.com/forecast-treasury-curve',
   }
 ];

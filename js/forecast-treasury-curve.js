@@ -15,8 +15,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	/********** GET DATA **********/
 	const ud = getData('forecast-treasury-curve') || {};
 
-	const get_hist_obs = getApi(`get_hist_obs?varname=t01m,t02m,t03m,t06m,t01y,t05y,t07y,t10y,t20y,t30y`, 10, ud.debug);
-	const get_forecast_values = getApi(`get_latest_forecast_obs?varname=t01m,t02m,t03m,t06m,t01y,t05y,t07y,t10y,t20y,t30y&forecast=int`, 10, ud.debug);
+	const get_hist_obs = getApi(`get_hist_obs?varname=t01m,t02m,t03m,t06m,t01y,t02y,t05y,t07y,t10y,t20y,t30y`, 10, ud.debug);
+	const get_forecast_values = getApi(`get_latest_forecast_obs?varname=t01m,t02m,t03m,t06m,t01y,t02y,t05y,t07y,t10y,t20y,t30y&forecast=int`, 10, ud.debug);
 	const start = Date.now();
 
 	const get_cleaned_hist = get_hist_obs.then(function(r) {
@@ -146,7 +146,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 function drawChart(treasury_data, play_index, forecast_vdate) {
 	
 	Highcharts.AST.allowedAttributes.push('data-dir');
-	
 	const o = {
         chart: {
 			spacingTop: 10,
@@ -166,7 +165,7 @@ function drawChart(treasury_data, play_index, forecast_vdate) {
 						.add();
 					/* Now render non-changing historical data on RHS */
 					this.renderer
-						.text('Current Yield Curve: ' + dayjs(treasury_data[play_index - 1].date).format('MMM YYYY'), distFromLeft, distFromTop + 40)
+						.text('Current Yield Curve*: ' + dayjs(treasury_data[play_index - 1].date).format('MMM YYYY') + '', distFromLeft, distFromTop + 40)
 						.attr({'id': 'date-text', fill: 'black', 'font-size': '1.5rem'})
 						.add();
 				}
@@ -190,6 +189,9 @@ function drawChart(treasury_data, play_index, forecast_vdate) {
 				'<button class="btn btn-sm chart-subtitle" style="font-size:.8rem" type="button" data-dir="end" style="letter-spacing:-2px" ><i class="bi bi-skip-forward"></i></button>' +
 			'</div></div>'
         },
+		caption: {
+			text: '* <em>Average of existing data for this month</em>'
+		},
 		xAxis: {
 			title: {
 				text: 'Time to Maturity (Months)',
@@ -197,10 +199,13 @@ function drawChart(treasury_data, play_index, forecast_vdate) {
 					fontSize: '1.2rem'
 				}
 			},
-			tickPositions: [1, 2, 3, 6, 12, 60, 84, 120, 240, 360],
+			tickPositions: [1, 2, 3, 6, 12, 24, 60, 84, 120, 240, 360],
 			breaks: [{
 				from: 12,
-				to: 12 + (60 - 12) * .6
+				to: 12 + (24 - 12) * .2
+			}, {
+				from: 24,
+				to: 24 + (60 - 24) * .6
 			}, {
 				from: 60,
 				to: 60 + (84 - 60) * .6
@@ -427,8 +432,8 @@ function drawChart(treasury_data, play_index, forecast_vdate) {
 
 	const chart2 = Highcharts.chart('chart-container-2', o2);
 
-	document.querySelector('#chart-loader-container').style.opacity = 0;
-	document.querySelector('#chart-loadee-container').style.opacity = 1;
+	document.querySelector('#chart-container-loader').style.opacity = 0;
+	document.querySelector('#chart-container-loadee').style.opacity = 1;
 	return;
 }
 
@@ -441,6 +446,7 @@ function drawTable(treasury_data) {
 	// Get list of ttm's present in data as array of form [{num: 1, fmt: '1m'}, {num: 3, fmt: '3m'}, ...]
 	const ttmsList =
 		[...new Set(treasury_data.map(x => (x.data.map(y => y[0]))).flat(1))].sort((a, b) => a > b ? 1 : -1)
+		.filter(x => x !== 24 && x != 2)
 		.map(x => ({num: x, fmt: (x >= 12 ? x/12 + 'y' : x + 'm')}));
 	
 	// Get obj of form 1m: 1, 3m: 3, 6m: 6, etc..
@@ -511,6 +517,12 @@ function drawTable(treasury_data) {
 	
 	$('#table-container').DataTable(o).draw();
 	$('#table-container-2').DataTable(o2).draw();
+
+	document.querySelector('#table-container-2-loader').style.opacity = 0;
+	document.querySelector('#table-container-2-loadee').style.opacity = 1;
+	document.querySelector('#table-container-loader').style.opacity = 0;
+	document.querySelector('#table-container-loadee').style.opacity = 1;
+
 	return;
 }
 
@@ -646,7 +658,7 @@ function drawChartAlt(treasury_data) {
 				type: 'spline',
 				color: gradient.valToColor(i, grMap, 'hex'),
 				dashStyle: (x.type === 'history' ? 'solid' : 'shortdot'),
-				visible: i === 0 || i % 6 === 1,
+				visible: i === 0 || (i % 12 === 1 && dayjs(x.date).diff(dayjs(), 'month') <= 36),
 				legendIndex: i
 				//(x.type === 'history' || dayjs(x.date).month() === dayjs(treasury_data.filter(x => x.type === 'history').slice(-1)[0].date).month() + 1)
 			}

@@ -515,6 +515,7 @@ div.loader-container {
 	justify-content: center;
 	opacity: 1;
 	transition: opacity 1s;
+	z-index: 1;
 }
 
 div.loader-container > div {
@@ -581,6 +582,8 @@ div.loadee-container {
 	opacity: 0;
 	transition: opacity .5s;
 	background-color: transparent;
+	position: relative;
+	z-index: 2;
 }
 
 

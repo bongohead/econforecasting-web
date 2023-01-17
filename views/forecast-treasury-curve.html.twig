@@ -1,7 +1,6 @@
 {% extends "base.html.twig" %}
 
 {% block staticlinks %}
-{# <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script> #}
 {% endblock %}
 
 {% block navbar %}
@@ -18,8 +17,8 @@
 				<div class="col-12 px-0">
 						<div class="card my-3 mx-0 rounded shadow-sm">
 							<div class="card-body py-0">
-								<div id="chart-loader-container" class="loader-container"><span>Pulling data...</span><div></div></div>
-								<div id="chart-loadee-container" class="loadee-container">
+								<div id="chart-container-loader" class="loader-container"><span>Pulling data...</span><div></div></div>
+								<div id="chart-container-loadee" class="loadee-container">
 									<div id="chart-container" style="height:400px"></div>
 									<div id="chart-container-2" style="height:150px"></div>
 								</div>
@@ -35,14 +34,21 @@
 					<div class="card shadow-sm mb-2">
 						<div class="card-body">
 							<div class="mb-2"><span style="vertical-align:middle;font-size:1.3rem;">FORECAST DATA</span></div>
-							<table id="table-container-2" class="table data-table w-100"></table>
+
+							<div id="table-container-2-loader" class="loader-container"><span>Pulling data...</span><div></div></div>
+							<div id="table-container-2-loadee" class="loadee-container" style="min-height: 350px">
+								<table id="table-container-2" class="table data-table w-100"></table>
+							</div>
 						</div>
 					</div>
 					
 					<div class="card shadow-sm">
 						<div class="card-body">
 							<div class="mb-2"><span style="vertical-align:middle;font-size:1.3rem;">HISTORICAL DATA</span></div>
-							<table id="table-container" class="table data-table w-100"></table>
+							<div id="table-container-loader" class="loader-container"><span>Pulling data...</span><div></div></div>
+							<div id="table-container-loadee" class="loadee-container" style="min-height: 350px">
+								<table id="table-container" class="table data-table w-100"></table>
+							</div>
 						</div>
 					</div>
 
@@ -52,11 +58,11 @@
 					<div class="card shadow-sm">
 						<div class="card-body" style="font-size:.92rem">
 							<div class="mb-2"><span style="vertical-align:middle;font-size:1.3rem;">FORECAST DESCRIPTION</span></div>
-							<p>Our <strong><i class="cmefi-logo mx-1"></i>Market Consensus Treasury Forecast</strong> is a model that calculates the average market expectated forecast of U.S. Treasury yield rates.</p>
+							<p>Our <span class="font-bolder"><i class="cmefi-logo mx-1"></i>Market Consensus Treasury Forecast</span> is a model that calculates the average market expectated forecast of U.S. Treasury yield rates.</p>
 							<p>It is derived using current <a href="https://www.treasury.gov/resource-center/data-chart-center/Pages/index.aspx">Treasury bond market data</a> 
 							as well as futures market data. For each point in the yield term structure, our model derives the mean market-expected yield rate. 
 							The term structure is then interpolated and smoothed using a three-factor parametrization model, generating the final forecast.</p>
-							<p><strong>The model is updated daily between 16:00 and 20:00 ET.</strong> The last updated occured on <span id="last-updated"></span>.</p>
+							<p><span class="font-bolder">This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days.</span> The last update occured on <span id="last-updated"></span>.</p>
 							<p>The below graph shows the generated forecasts by month. Click any date in the legend to hide/show the Treasury yield curve at each respective date.</p>
 							<div id="chart-container-alt"></div>
 							<hr class="mt-5">
