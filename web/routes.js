@@ -107,7 +107,11 @@ const routes = [
     js: ['helpers', 'forecast-varname'], externaljs: ['hc/highstock', 'hc/highcharts-more', 'dt/jquery.dataTables', 'dt/dataTables.bootstrap5', 'dt/dataTables.buttons', 'dt/buttons.html5'],
     template: 'forecast-rates', title: '30-Year US Mortgage Rate Forecast', canonical: 'https://econforecasting.com/forecast-mort30y',
     varname: 'mort30y', primary_forecast: 'int', secondary_forecasts: []
-
+  }, {
+    name: 'forecast-gdp', endpoints: ['/forecast-gdp'],
+    js: ['helpers', 'forecast-varname'], externaljs: ['hc/highstock', 'hc/highcharts-more', 'dt/jquery.dataTables', 'dt/dataTables.bootstrap5', 'dt/dataTables.buttons', 'dt/buttons.html5'],
+    template: 'forecast-rates', title: '30-Year US Mortgage Rate Forecast', canonical: 'https://econforecasting.com/forecast-gdp',
+    varname: 'gdp', primary_forecast: 'int', secondary_forecasts: []
   }
 ];
 
