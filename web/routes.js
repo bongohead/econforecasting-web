@@ -125,7 +125,7 @@ const routes = [
   }, {
     name: 'forecast-cpi', endpoints: ['/forecast-cpi'],
     js: ['helpers', 'forecast-varname'], externaljs: ['hc/highstock', 'hc/highcharts-more', 'dt/jquery.dataTables', 'dt/dataTables.bootstrap5', 'dt/dataTables.buttons', 'dt/buttons.html5'],
-    template: 'forecast-macro', title: 'US Inflatoin Forecast', canonical: 'https://econforecasting.com/forecast-cpi',
+    template: 'forecast-macro', title: 'US Inflation Forecast', canonical: 'https://econforecasting.com/forecast-cpi',
     varname: 'cpi', primary_forecast: 'einf', secondary_forecasts: []
   }
 ];
