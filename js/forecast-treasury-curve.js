@@ -1,27 +1,26 @@
-document.addEventListener("DOMContentLoaded", function(event) {
-
+{
 	/********** INITIALIZE **********/
 	init();
 
 	/*** Set Default Data ***/
-	(function() {
+	{
 		const ud_prev = getAllData()['forecast-treasury-curve'] || {};
 		const ud = {... ud_prev, ... {
 			debug: true
 		}};
 		setData('forecast-treasury-curve', ud);
-	})();
+	}
 
 	/********** GET DATA **********/
 	const ud = getData('forecast-treasury-curve') || {};
 
 	const get_hist_obs = getApi(`get_hist_obs?varname=t01m,t02m,t03m,t06m,t01y,t02y,t05y,t07y,t10y,t20y,t30y`, 10, ud.debug);
 	const get_forecast_values = getApi(`get_latest_forecast_obs?varname=t01m,t02m,t03m,t06m,t01y,t02y,t05y,t07y,t10y,t20y,t30y&forecast=int`, 10, ud.debug);
-	const start = Date.now();
+	const start = performance.now();
 
 	const get_cleaned_hist = get_hist_obs.then(function(r) {
 
-		if (ud.debug) console.log('Fetch get_hist_obs', Date.now() - start, r);
+		if (ud.debug) console.log('Fetch get_hist_obs', performance.now() - start, r);
 
 		const hist_values_raw = r.map(x => {
 			const ttm = parseInt(x.varname.substring(1, 3)) * (x.varname.substring(3, 4) === 'm' ? 1 : 12);
@@ -33,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			}));
 		}).flat().sort((a, b) => a.unixdate > b.unixdate);
 
-		if (ud.debug) console.log('hist_values_raw', Date.now() - start, hist_values_raw);
+		if (ud.debug) console.log('hist_values_raw', performance.now() - start, hist_values_raw);
 
 		const hist_values =
 			[... new Set(hist_values_raw.map(x => x.date))] // Get list of obs_dates
@@ -43,14 +42,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				data: hist_values_raw.filter(x => x.date == d).map(x => [x.ttm, x.value]).sort((a, b) => a[0] - b[0]) // Sort according to largest value
 			}));
 		
-		if (ud.debug) console.log('hist_values', Date.now() - start, hist_values);
+		if (ud.debug) console.log('hist_values', performance.now() - start, hist_values);
 		return {hist_values: hist_values};
 	}).catch(e => ajaxError(e));
 
 
 	const get_cleaned_forecast = get_forecast_values.then(function(r) {
 
-		if (ud.debug) console.log('Fetch get_forecast_values', Date.now() - start, r);
+		if (ud.debug) console.log('Fetch get_forecast_values', performance.now() - start, r);
 
 		const forecast_values_raw = r.map(x => {
 			const ttm = parseInt(x.varname.substring(1, 3)) * (x.varname.substring(3, 4) === 'm' ? 1 : 12);
@@ -140,7 +139,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     });
 
 
-});
+}
 
 /*** Draw chart ***/
 function drawChart(treasury_data, play_index, forecast_vdate) {

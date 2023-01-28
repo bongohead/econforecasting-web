@@ -77,6 +77,8 @@
 		</div>
 	</div> #}
 
+	<!-- Static Links -->
+    {% block staticlinks %}{% endblock %}
 
 	<!-- Version 9.0+ requires AST filtration bypass -->
 	<!--
@@ -88,10 +90,6 @@
 		<script src="/static/cache/{{ pagescript | raw }}"></script>
 	{% endif %}
 	
-	<!-- Static Links -->
-    {% block staticlinks %}
-	{% endblock %}
-
 
 	{# {% include 'g-tags.html' ignore missing  %} #}
 

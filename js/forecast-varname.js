@@ -15,17 +15,16 @@ dayjs.extend(advancedFormat)
 
 import Highcharts from 'highcharts/highstock';
 */
-document.addEventListener("DOMContentLoaded", function(event) {
 
-	/********** INITIALIZE **********/
-	init();
+/********** INITIALIZE **********/
+init();
 
-	(function() {
+{
+	{
 
 		const el = document.querySelector('#forecast-container');
 		const varname = el.dataset.varname;
 		const primary_forecast = el.dataset.primaryForecast;
-		const secondary_forecasts = el.dataset.secondaryForecasts.split(',');	
 		const show_vintage_chart =  ['gdp', 'pce'].includes(varname) ? false: true;
 			
 		const ud_prev = getAllData()['forecast-varname'] || {};
@@ -34,9 +33,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				primary_forecast: primary_forecast,
 				show_vintage_chart: show_vintage_chart,
 				debug: true
-			}};
+		}};
 		setData('forecast-varname', ud);
-	})();
+	}
 
 
 	/********** GET DATA **********/
@@ -115,7 +114,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		if (ud.debug) console.log('Draw time', Date.now() - start);
 	})
 	.catch(e => ajaxError(e));
-});
+};
 
 /*** Draw chart ***/
 function drawChart(ts_data_parsed, fullname, units, hist_freq) {
