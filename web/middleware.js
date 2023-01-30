@@ -23,7 +23,7 @@ module.exports = {
 		);
 
 		res.cookie(process.env.COOKIE_NAME, token, {
-			domain: '.econscale.com', 
+			domain: '.econforecasting.com', 
 			secure: true,
 			sameSite: 'lax',
 			expires: new Date(Date.now() + 8 * 3600000) // cookie will be removed after 8 hours
@@ -34,6 +34,11 @@ module.exports = {
 	concatJs: function(filename, files) {
 		return function(req, res, next) {
 			if (process.env.NODE_ENV !== 'development' || Array.isArray(files) == false || files.length === 0) {
+				//next()
+				const output = files.map((f) => {
+					return fs.readFileSync(path.join(__dirname, '/../js/' + f + '.js')).toString();
+				}).join(';');
+				fs.writeFileSync(path.join(__dirname, '/cache/' + filename), output, 'utf8');
 				next()
 			} else {
 

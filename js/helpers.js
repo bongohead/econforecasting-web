@@ -15,7 +15,7 @@ async function getApi(endpoint, timeout = 10, verbose = false) {
 	const controller = new AbortController()
 	const timeoutId = setTimeout(() => controller.abort(), timeout * 1000)
 	
-	const jwt =  ('; '+document.cookie).split(`; 1ma023mb22d1ampz2yzamqldff2=`).pop().split(';')[0];
+	const jwt =  ('; '+document.cookie).split(`; 1ma023mb22d1ampz2yzamqldff3=`).pop().split(';')[0];
 
 	const fetchRequest = fetch('https://api.econscale.com/v0/' + endpoint, {
 			method: 'get',

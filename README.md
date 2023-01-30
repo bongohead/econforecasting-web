@@ -2,7 +2,7 @@ Description TBA
 
 # Using PM2:
 - Install pm2 globally: npm install pm2 -g
-- Start application: pm2 start app.js --name <app_name>
+- Start application: NODE_PORT=4000 NODE_ENV=production pm2 start app.js --name <app_name>
 - List: pm2 list
 - To automate startup: pm2 startup (copy-paste as needed)
 - Save app list to be rebooted at reboot: pm2 save

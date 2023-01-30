@@ -6,7 +6,7 @@
 	{
 		const ud_prev = getAllData()['forecast-treasury-curve'] || {};
 		const ud = {... ud_prev, ... {
-			debug: true
+			debug: false
 		}};
 		setData('forecast-treasury-curve', ud);
 	}

@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /static/
+Disallow: /templates/
+Disallow: /cache/
+
+Sitemap: https://econforecasting.com/sitemap.xml

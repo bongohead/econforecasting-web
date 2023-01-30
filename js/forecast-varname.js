@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
 				varname: varname,
 				primary_forecast: primary_forecast,
 				show_vintage_chart: show_vintage_chart,
-				debug: true
+				debug: false
 		}};
 		setData('forecast-varname', ud);
 	}
@@ -697,7 +697,7 @@ function drawTable(ts_data_parsed, units) {
 		// </ul>
 
 		// Draw the table
-		console.log('#table-' + x.tskey);
+		//console.log('#table-' + x.tskey);
 		//const dTable = new DataTable(document.querySelector('#table-' + x.tskey), o); for ES6 imports
 		$(table).DataTable(o); //new DataTable(table, o) $(table).DataTable(o);
 		if (x.ts_type !== 'primary') $(table).parents('div.dataTables_wrapper').first().hide();
