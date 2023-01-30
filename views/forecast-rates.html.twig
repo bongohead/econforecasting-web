@@ -16,11 +16,9 @@
 			<div class="row g-0">
 				<div class="col-12 px-0">
 						<div class="card my-3 mx-0 rounded shadow-sm overlay-hidden">
-							<div class="card-body py-0" style="height:550px">
-								<div id="chart-loader-container" class="loader-container"><span>Pulling data...</span><div></div></div>
-								<div id="chart-loadee-container" class="loadee-container">
-									<div id="chart-container"></div>
-								</div>
+							<div class="card-body py-0" style="height:550px" id="chart-container">
+								<div class="loader-container"><span>Pulling data...</span><div></div></div>
+								<div class="loadee-container"><div></div></div>
 							</div>
 						</div>
 				</div>
@@ -32,12 +30,15 @@
 					<div id="data-card" class="card shadow-sm">
 						<div class="card-body">
 							<div class="mb-2"><span class="font-logo" style="vertical-align:middle;font-size:1.4rem;color:rgb(15, 17, 23)">Data</span></div>
-							<div id="tables-container-loader" class="loader-container"><span>Pulling data...</span><div></div></div>
-							<div id="tables-container" class="loadee-container" style="min-height: 300px">
-								<span style="font-size:.90rem">Select a series:</span>
-								<ul class="list-group list-group-vertical m-3" id="li-container">
-								</ul>
+
+							<div id="table-container" style="min-height: 300px">
+								<div class="loader-container"><span>Pulling data...</span><div></div></div>
+								<div class="loadee-container"><div>
+									<span style="font-size:.90rem">Select a series:</span>
+									<ul class="list-group list-group-vertical m-3" id="li-container"></ul>
+								</div></div>
 							</div>
+
 						</div>
 					</div>
 				</div>
@@ -78,6 +79,10 @@
 									Unlike most risk-free rate benchmarkes, the &euro;STR reflects not just interbank lending, 
 									but lending between banks, insurers, and money market funds.<p>
 									<p>Both historical data and forecasted values on this page reflect period average values.</p>
+								{% elseif varname == 'ukbankrate' %}
+									<p>This page provides monthly forecasts of the Bank of England's base rate, the target rate set by the Bank of England's Monetary Policy Committee.<p>
+									<p>Both historical data and forecasted values on this page reflect period average values.</p>
+
 								{% elseif varname in ['mort15y', 'mort30y'] %}
 									<p>This page provides monthly forecasts of 15 and 30-year fixed rate mortgage rates in the United States. 
 									Historical data is sourced from <a href="https://www.freddiemac.com/pmms">Freddie Mac</a>.</p>
@@ -112,7 +117,7 @@
 									Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
 									parametrization model, generating the final forecast.</p>
 									<p>This forecast can be interpreted as the mean market-expected values of future AMERIBOR values.</p>
-									<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days.</p>
+									<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days. The data for this series is released with a one business-day lag due to a delay in futures market data.</p>
 								{% elseif varname == 'bsby' %}
 									<p>Our <span class="font-bolder"><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</span> for the Bloomberg Short-Term Bank Yield Index (BSBY) is generated utilizing data on publicly-traded BSBY futures 
 									and other closely related benchmark interest rates. 
@@ -133,6 +138,10 @@
 									Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
 									parametrization model, generating the final forecast.</p>
 									<p>This forecast can be interpreted as the mean market-expected values of future ESTR values.</p>
+									<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days.</p>
+								{% elseif varname == 'ukbankrate' %}
+									<p>Our <span class="font-bolder"><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</span> for the UK bank rate is generated utilizing data on publicly-traded SONIA futures 
+									and other closely related benchmark interest rates, and projecting the spread between SONIA and the base rate.</p>
 									<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days.</p>
 								{% elseif varname in ['mort15y', 'mort30y'] %}
 									<p>Our <span class="font-bolder"><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</span> for the 15 and 30 year fixed rate mortgage rates are derived from combining our 

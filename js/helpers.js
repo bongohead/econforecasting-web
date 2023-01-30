@@ -140,11 +140,10 @@ function init() {
 		})
 	}
 
-	const hc_theme = {
+	Highcharts.setOptions({
 		chart: {
 			style: {
 				fontFamily: 'var(--bs-font-sans-serif)',
-				color: '#000000',
 			}
 		},
 		title: {
@@ -198,13 +197,6 @@ function init() {
 				}
 			}
 		},
-		tooltip: {
-			backgroundColor: "#FFFFFF",
-			borderColor: "#76c0c1",
-			style: {
-				color: "#000000"
-			}
-		},
 		legend: {
 			layout: "horizontal",
 			align: "left",
@@ -236,15 +228,8 @@ function init() {
 		dataLabelsColor: "#B0B0B3",
 		textColor: "#C0C0C0",
 		contrastTextColor: "#F0F0F3",
-		maskColor: "rgba(255,255,255,0.3)"
-	};
-	
-	Highcharts.setOptions({
-		chart: {
-			style: {
-				fontFamily: 'var(--bs-font-sans-serif)'
-			}
-		},
+		maskColor: "rgba(255,255,255,0.3)",
+
 		time: {
 			//timezone: 'America/New_York'
 			getTimezoneOffset: function(timestamp) {
@@ -303,8 +288,17 @@ function init() {
 			},
 		}
 	});
-	// Apply the theme
-	Highcharts.setOptions(hc_theme);
 
 
 }
+
+
+// Decorator to add load el
+function withLoader(id, fn){
+	return function(){
+		fn_res = fn.apply(this, arguments);
+		document.querySelector(`#${id} > .loader-container`).style.opacity = 0;
+		document.querySelector(`#${id} > .loadee-container`).style.opacity = 1;
+		return fn_res;
+	};
+};

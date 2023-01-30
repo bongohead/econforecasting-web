@@ -19,9 +19,10 @@ import Highcharts from 'highcharts/highstock';
 /********** INITIALIZE **********/
 init();
 
-{
-	{
+document.addEventListener('DOMContentLoaded', function() {
 
+
+	{
 		const el = document.querySelector('#forecast-container');
 		const varname = el.dataset.varname;
 		const primary_forecast = el.dataset.primaryForecast;
@@ -107,14 +108,15 @@ init();
 
 		return({variable, ts_data_parsed});	
 	}).then(function({variable, ts_data_parsed}) {
-		drawChart(ts_data_parsed, variable.fullname, variable.units, variable.hist_freq);
-		drawTable(ts_data_parsed, variable.units);
+
+		withLoader('chart-container', drawChart)(ts_data_parsed, variable.fullname, variable.units, variable.hist_freq);
+		withLoader('table-container', drawTable)(ts_data_parsed, variable.units);
 
 		if (ud.show_vintage_chart === true) addVintageChartListener()
 		if (ud.debug) console.log('Draw time', Date.now() - start);
 	})
 	.catch(e => ajaxError(e));
-};
+});
 
 /*** Draw chart ***/
 function drawChart(ts_data_parsed, fullname, units, hist_freq) {
@@ -190,7 +192,7 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 					text: '1Y Forecast',
 					events: {
 						click: function(e) {
-							const state = $('#chart-container').highcharts().rangeSelector.buttons[0].state;
+							const state = $('#chart-container > div.loadee-container  > div').highcharts().rangeSelector.buttons[0].state;
 							chart.xAxis[0].setExtremes(
 								Math.max(
 									dayjs.min(ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => dayjs(x[0]))).unix() * 1000,
@@ -198,7 +200,7 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 									),
 								dayjs().add(12, 'M').unix() * 1000
 								);
-							$('#chart-container').highcharts().rangeSelector.buttons[0].setState(state === 0 ? 2 : 0);
+							$('#chart-container > div.loadee-container > div').highcharts().rangeSelector.buttons[0].setState(state === 0 ? 2 : 0);
 							return false;
 						}
 					}
@@ -206,7 +208,7 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 					text: '2Y Forecast',
 					events: {
 						click: function(e) {
-							const state = $('#chart-container').highcharts().rangeSelector.buttons[1].state;
+							const state = $('#chart-container > div.loadee-container  > div').highcharts().rangeSelector.buttons[1].state;
 							chart.xAxis[0].setExtremes(
 								Math.max(
 									dayjs.min(ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => dayjs(x[0]))).unix() * 1000,
@@ -214,7 +216,7 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 									),
 								dayjs().add(24, 'M').unix() * 1000
 								);
-							$('#chart-container').highcharts().rangeSelector.buttons[1].setState(state === 0 ? 2 : 0);
+							$('#chart-container > div.loadee-container  > div').highcharts().rangeSelector.buttons[1].setState(state === 0 ? 2 : 0);
 							return false;
 						}
 					}
@@ -222,7 +224,7 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 					text: '5Y Forecast',
 					events: {
 						click: function(e) {
-							const state = $('#chart-container').highcharts().rangeSelector.buttons[2].state;
+							const state = $('#chart-container > div.loadee-container  > div').highcharts().rangeSelector.buttons[2].state;
 							chart.xAxis[0].setExtremes(
 								Math.max(
 									dayjs.min(ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => dayjs(x[0]))).unix() * 1000,
@@ -230,7 +232,7 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 									),
 								dayjs().add(60, 'M').unix() * 1000
 								);
-							$('#chart-container').highcharts().rangeSelector.buttons[2].setState(state === 0 ? 2 : 0);
+							$('#chart-container > div.loadee-container  > div').highcharts().rangeSelector.buttons[2].setState(state === 0 ? 2 : 0);
 							return false;
 						}
 					}
@@ -353,11 +355,9 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
         },
         series: chart_data
 	};
-	const chart = Highcharts.stockChart('chart-container', o);
-	$('#chart-container').highcharts().rangeSelector.buttons[1].setState(2);
+	const chart = Highcharts.stockChart(document.querySelector('#chart-container > .loadee-container > div'), o);
+	chart.rangeSelector.buttons[1].setState(2);
 
-	document.querySelector('#chart-loader-container').style.opacity = 0;
-	document.querySelector('#chart-loadee-container').style.opacity = 1;
 	return;
 }
 
@@ -690,8 +690,11 @@ function drawTable(ts_data_parsed, units) {
 		table.classList.add('data-table');
 		table.classList.add('w-100');
 		table.id = 'table-' + x.tskey;
-		document.querySelector('#tables-container').appendChild(table);
+		document.querySelector('#table-container > .loadee-container > div').appendChild(table);
 		
+		// <span style="font-size:.90rem">Select a series:</span>
+		// <ul class="list-group list-group-vertical m-3" id="li-container">
+		// </ul>
 
 		// Draw the table
 		console.log('#table-' + x.tskey);
@@ -728,9 +731,5 @@ function drawTable(ts_data_parsed, units) {
 		}, false);
 	});
 
-	document.querySelector('#tables-container-loader').style.opacity = 0;
-	document.querySelector('#tables-container').style.opacity = 1;
-	
-	
 	return;
 }

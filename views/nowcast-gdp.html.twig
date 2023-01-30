@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base.html.twig" %}
 
 {% block meta %}
 <meta name="description" content="GDP nowcasts - a rolling estimate of current and future GDP growth based on the latest available economic data."/>
@@ -8,7 +8,30 @@
 {% endblock %}
 
 {% block content %}
-<div class="row gx-0" style="background-color:rgb(237, 242, 249)">
+<div class="d-flex bg-white-cool">
+	{% include 'forecast-sidebar-macro.html.twig' %}
+	<div class="col mx-2 pb-5">
+		<div class="container-xxl" id="forecast-container">
+
+
+			<div class="row g-0">
+				<div class="col-12 px-0">
+
+					<div class="card my-3 mx-0 rounded shadow-sm overlay-hidden">
+						<div class="card-body py-5" style="height:550px" id="chart-container">
+								Temporarily down on 1-30-2023 for scheduled maintenance. This page will be available on 02-01-2023.
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+
+
+		</div>
+	</div>
+</div>
+{# <div class="row gx-0" style="background-color:rgb(237, 242, 249)">
 	{% include 'forecast-sidebar-macro.html' %}
 
 	<div class="col mx-2 pb-5">
@@ -64,5 +87,5 @@
 			
 		</div>
 	</div>
-</div>
+</div> #}
 {% endblock %}

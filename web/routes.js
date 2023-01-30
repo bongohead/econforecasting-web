@@ -127,6 +127,10 @@ const routes = [
     js: ['helpers', 'forecast-varname'], externaljs: ['hc/highstock', 'hc/highcharts-more', 'dt/jquery.dataTables', 'dt/dataTables.bootstrap5', 'dt/dataTables.buttons', 'dt/buttons.html5'],
     template: 'forecast-macro', title: 'US Inflation Forecast', canonical: 'https://econforecasting.com/forecast-cpi',
     varname: 'cpi', primary_forecast: 'einf', secondary_forecasts: []
+  }, {
+    name: 'nowcast-gdp', endpoints: ['/nowcast-gdp'],
+    js: ['helpers'], externaljs: ['hc/highstock', 'hc/highcharts-more', 'dt/jquery.dataTables', 'dt/dataTables.bootstrap5', 'dt/dataTables.buttons', 'dt/buttons.html5'],
+    template: 'nowcast-gdp', title: 'GDP Nowcast'
   }
 ];
 

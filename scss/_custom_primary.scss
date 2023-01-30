@@ -388,7 +388,6 @@ nav.sidebar div.sidebar-submenu > a.activepage {
   /*background-color: var(--bs-forest-dark);
   color: white;*/
   border-left: 1px solid var(--forest);
-  font-weight: 500;
   color: var(--forest);
 }
 
@@ -397,7 +396,7 @@ nav.sidebar div.sidebar-submenu > a:hover {
   color: white;*/
   color: var(--slate-900);
   cursor: pointer;
-  transition: .2s;
+  transition: .4s;
 }
 
 
@@ -580,7 +579,7 @@ div.loader-container > span {
   
 div.loadee-container {
 	opacity: 0;
-	transition: opacity .5s;
+	transition: opacity 1s;
 	background-color: transparent;
 	position: relative;
 	z-index: 2;

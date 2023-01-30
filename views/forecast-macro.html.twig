@@ -16,11 +16,9 @@
 			<div class="row g-0">
 				<div class="col-12 px-0">
 						<div class="card my-3 mx-0 rounded shadow-sm overlay-hidden">
-							<div class="card-body py-0" style="height:550px">
-								<div id="chart-loader-container" class="loader-container"><span>Pulling data...</span><div></div></div>
-								<div id="chart-loadee-container" class="loadee-container">
-									<div id="chart-container"></div>
-								</div>
+							<div class="card-body py-0" style="height:550px" id="chart-container">
+								<div class="loader-container"><span>Pulling data...</span><div></div></div>
+								<div class="loadee-container"><div></div></div>
 							</div>
 						</div>
 				</div>
@@ -32,12 +30,15 @@
 					<div id="data-card" class="card shadow-sm">
 						<div class="card-body">
 							<div class="mb-2"><span class="font-logo" style="vertical-align:middle;font-size:1.4rem;color:rgb(15, 17, 23)">Data</span></div>
-							<div id="tables-container-loader" class="loader-container"><span>Pulling data...</span><div></div></div>
-							<div id="tables-container" class="loadee-container" style="min-height: 300px">
-								<span style="font-size:.90rem">Select a series:</span>
-								<ul class="list-group list-group-vertical m-3" id="li-container">
-								</ul>
+
+							<div id="table-container" style="min-height: 300px">
+								<div class="loader-container"><span>Pulling data...</span><div></div></div>
+								<div class="loadee-container"><div>
+									<span style="font-size:.90rem">Select a series:</span>
+									<ul class="list-group list-group-vertical m-3" id="li-container"></ul>
+								</div></div>
 							</div>
+
 						</div>
 					</div>
 				</div>
@@ -52,6 +53,9 @@
 									<p>This page provides quarterly forecasts of U.S. real GDP. All historical and forecasted values represent seasonally adjusted annualized rates.</p>
 								{% elseif varname in ['pce'] %}
 									<p>This page provides quarterly forecasts of U.S. real personal consumption. All historical and forecasted values represent seasonally adjusted annualized rates.</p>
+								{% elseif varname in ['pdi'] %}
+									<p>This page provides quarterly forecasts of U.S. real gross private domestic investment. All historical and forecasted values represent seasonally adjusted annualized rates.</p>
+
 								{% elseif varname in ['cpi'] %}
 									<p>This page provides forecasts of monthly inflation rates, as measured by the year over year percent change in standard headline CPI, 
 									i.e. the <a href="https://www.bls.gov/news.release/cpi.t01.htm">consumer price index for all urban consumers (CPI-U)</a>.</p>
@@ -61,7 +65,7 @@
 
 							<div id="primary-forecast">
 								<div class="mb-2"><span class="font-logo" style="vertical-align:middle;font-size:1.4rem;color:rgb(15, 17, 23)">Forecast Models</span></div>
-								{% if varname in ['gdp', 'pce'] %}
+								{% if varname in ['gdp', 'pce', 'pdi'] %}
 									<p>Our <span class="font-bolder"><i class="cmefi-logo mx-1"></i>Composite Forecast Model</span> is a model of models, 
 									optimally finding weights between different qualitative and quantitative forecasts to generate a single composite forecast.<p>
 									<p>Assigned weights are time-varying and depend on the remaining time until the official data release. For example, high-frequency <a href="/forecast-gdp-nowcast">nowcast</a> models 
