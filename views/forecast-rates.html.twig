@@ -91,6 +91,7 @@
 									<p>This page provides monthly forecasts of U.S. Treasury bond yields. With over $20 trillion outstanding, Treasury bonds constitute nearly 15% of the global bond market and are the premier safe assets in many 
 									financial markets across the world. Because of this, they are also often utilized as a benchmark measure of the riskless interest rate in the world economy.</p>
 									<p>Both historical data and forecasted values on this page reflect period average values.</p>
+
 								{% endif %}
 								<hr class="my-3">
 							</div>
@@ -151,6 +152,21 @@
 									We then use survey-based economist forecasts of housing prices to estimate future mortgage-Treasury yield spreads, and add these to our 
 									Market Consensus Forecasts for Treasury yields to arrive at our final estimate.</p>
 									<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days.</p>
+
+								{% elseif varname in ['t01m', 't02m', 't03m', 't06m', 't01y', 't02y', 't05y', 't10y', 't20y', 't30y'] %}
+									<p>Our <span class="font-bolder"><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</span> is a model that calculates the average "market expected" forecast of U.S. Treasury yield rates.</p>
+									<p>It is derived using current <a href="https://www.treasury.gov/resource-center/data-chart-center/Pages/index.aspx">Treasury bond market data</a> as well as futures market data. 
+									In particular, we forecast seperately:</p>
+									<ul>
+										<li>The risk-free rate, using federal funds rate futures;</li>
+										<li>The spread of the Treasury yield curve above the risk-free rate; further decomposed into a term premia factor (estimated using the Treasury futures market) and an 
+										<a href="https://www.bis.org/publ/qtrpdf/r_qt1809h.pdf">expectations component</a> (estimated using the current Treasury yield curve).
+										</li>
+									</ul>
+									<p>We then combine these forecasts and smooth them using a <a href="https://www.sas.upenn.edu/~fdiebold/papers/paper49/Diebold-Li.pdf">3-factor parametrization model</a>, generating the final forecast.
+									 The forecast can be considered an approximation of the market-average expected yield.</p>									
+									<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days.</p>
+
 								{% endif %}
 								<div id="primary-forecast-vintage-div" class="d-flex"></div>
 								<hr class="my-3">

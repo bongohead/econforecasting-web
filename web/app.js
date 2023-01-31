@@ -22,17 +22,20 @@ app.use(helmet({
     crossOriginEmbedderPolicy: false,
     contentSecurityPolicy: {
         directives: {
-            defaultSrc: ["'self'", 'https://cdnjs.cloudflare.com', 'https://fonts.googleapis.com'],
-            scriptSrc: ["'self'", "'unsafe-inline'", 'https://cdnjs.cloudflare.com', 'https://cdn.jsdelivr.net', 'https://cdn.datatables.net', 'https://code.highcharts.com'],
+            defaultSrc: ["'self'", 'https://cdnjs.cloudflare.com', 'https://fonts.googleapis.com', '*'],
+            scriptSrc: ["'self'", "'unsafe-inline'", 'https://cdnjs.cloudflare.com', 'https://cdn.jsdelivr.net', 'https://cdn.datatables.net', 'https://code.highcharts.com', '*'],
             styleSrc: ["'self'", "'unsafe-inline'", 'https://cdnjs.cloudflare.com', 'https://cdn.jsdelivr.net', 'https://cdn.datatables.net', 'https://code.highcharts.com', 'https://fonts.googleapis.com', 'https://fonts.gstatic.com'],
             fontSrc: ["'self'", 'https://cdnjs.cloudflare.com', 'https://fonts.googelapis.com', 'https://fonts.gstatic.com', 'https://cdn.jsdelivr.net'],
-            connectSrc: ["'self'", 'https://cdnjs.cloudflare.com', 'https://*.econforecasting.com', 'https://*.econscale.com']
+            connectSrc: ["'self'", 'https://cdnjs.cloudflare.com', 'https://*.econforecasting.com', 'https://*.econscale.com', '*']
           }
     }
 }));
 
 // Enable CORS for all routes
-const allowlist = ['https://dev1.econscale.com', 'https://dev.econscale.com', 'https://econforecasting.com', 'https://www.econforecasting.com']
+const allowlist = [
+  'https://dev1.econscale.com', 'https://dev.econscale.com', 'https://econforecasting.com', 'https://www.econforecasting.com', 
+  'https://pagead2.googlesyndication.com', 'https://static.cloudflareinsights.com'
+]
 const corsOptionsDelegate = function (req, callback) {
   const origin = (allowlist.indexOf(req.header('Origin')) !== -1) ? true : false;
   const corsOptions = {

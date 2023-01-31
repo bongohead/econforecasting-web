@@ -25,7 +25,7 @@ const routes = [
     name: 'forecast-t03m', endpoints: ['/forecast-t03m'],
     js: ['helpers', 'forecast-varname'], externaljs: ['hc/highstock', 'hc/highcharts-more', 'dt/jquery.dataTables', 'dt/dataTables.bootstrap5', 'dt/dataTables.buttons', 'dt/buttons.html5'],
     template: 'forecast-rates', title: '3-Month Treasury Bill Forecasts', canonical: 'https://econforecasting.com/forecast-t03m',
-    varname: 't03m', primary_forecast: 'int', secondary_forecasts: []
+    varname: 't03m', primary_forecast: 'int', secondary_forecasts: ['cbo', 'spf']
   }, {
     name: 'forecast-t06m', endpoints: ['/forecast-t06m'],
     js: ['helpers', 'forecast-varname'], externaljs: ['hc/highstock', 'hc/highcharts-more', 'dt/jquery.dataTables', 'dt/dataTables.bootstrap5', 'dt/dataTables.buttons', 'dt/buttons.html5'],
@@ -35,7 +35,7 @@ const routes = [
     name: 'forecast-t01y', endpoints: ['/forecast-t01y'],
     js: ['helpers', 'forecast-varname'], externaljs: ['hc/highstock', 'hc/highcharts-more', 'dt/jquery.dataTables', 'dt/dataTables.bootstrap5', 'dt/dataTables.buttons', 'dt/buttons.html5'],
     template: 'forecast-rates', title: '1-Year Treasury Note Forecasts', canonical: 'https://econforecasting.com/forecast-t01y',
-    varname: 't01y', primary_forecast: 'int', secondary_forecasts: []
+    varname: 't01y', primary_forecast: 'int', secondary_forecasts: ['fnma']
   }, {
     name: 'forecast-t02y', endpoints: ['/forecast-t02y'],
     js: ['helpers', 'forecast-varname'], externaljs: ['hc/highstock', 'hc/highcharts-more', 'dt/jquery.dataTables', 'dt/dataTables.bootstrap5', 'dt/dataTables.buttons', 'dt/buttons.html5'],
@@ -50,7 +50,7 @@ const routes = [
     name: 'forecast-t10y', endpoints: ['/forecast-t10y'],
     js: ['helpers', 'forecast-varname'], externaljs: ['hc/highstock', 'hc/highcharts-more', 'dt/jquery.dataTables', 'dt/dataTables.bootstrap5', 'dt/dataTables.buttons', 'dt/buttons.html5'],
     template: 'forecast-rates', title: '10-Year Treasury Bond Forecasts', canonical: 'https://econforecasting.com/forecast-t10y',
-    varname: 't10y', primary_forecast: 'int', secondary_forecasts: []
+    varname: 't10y', primary_forecast: 'int', secondary_forecasts: ['wsj', 'fnma', 'cbo', 'spf']
   }, {
     name: 'forecast-t20y', endpoints: ['/forecast-t20y'],
     js: ['helpers', 'forecast-varname'], externaljs: ['hc/highstock', 'hc/highcharts-more', 'dt/jquery.dataTables', 'dt/dataTables.bootstrap5', 'dt/dataTables.buttons', 'dt/buttons.html5'],
