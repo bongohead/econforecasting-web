@@ -74,8 +74,10 @@ document.addEventListener('DOMContentLoaded', function() {
 			vdate: dayjs().format('YYYY-MM-DD'),
 			data: hist_obs.data
 				.filter(x => dayjs(x.date) <= dayjs().add(10, 'years'))
-				.map(x => [x.date, parseFloat(x.value)]).sort((a, b) => a[0] - b[0])
+				.map(x => [x.date, parseFloat(x.value)]).sort((a, b) =>  dayjs(a[0]) - dayjs(b[0]))
 		};
+
+		console.log(hist_series);
 
 		const forecast_series = forecast_values.map(f => ({
 			tskey: f.forecast,

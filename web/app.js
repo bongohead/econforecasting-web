@@ -26,7 +26,7 @@ app.use(helmet({
             scriptSrc: ["'self'", "'unsafe-inline'", 'https://cdnjs.cloudflare.com', 'https://cdn.jsdelivr.net', 'https://cdn.datatables.net', 'https://code.highcharts.com', '*'],
             styleSrc: ["'self'", "'unsafe-inline'", 'https://cdnjs.cloudflare.com', 'https://cdn.jsdelivr.net', 'https://cdn.datatables.net', 'https://code.highcharts.com', 'https://fonts.googleapis.com', 'https://fonts.gstatic.com'],
             fontSrc: ["'self'", 'https://cdnjs.cloudflare.com', 'https://fonts.googelapis.com', 'https://fonts.gstatic.com', 'https://cdn.jsdelivr.net'],
-            connectSrc: ["'self'", 'https://cdnjs.cloudflare.com', 'https://*.econforecasting.com', 'https://*.econscale.com', '*']
+            connectSrc: ["'self'", 'https://cdnjs.cloudflare.com', 'https://*.econforecasting.com', 'https://*.econscale.com', 'https://*.macropredictions.com', '*']
           }
     }
 }));
@@ -34,7 +34,7 @@ app.use(helmet({
 // Enable CORS for all routes
 const allowlist = [
   'https://dev1.econscale.com', 'https://dev.econscale.com', 'https://econforecasting.com', 'https://www.econforecasting.com', 
-  'https://pagead2.googlesyndication.com', 'https://static.cloudflareinsights.com'
+  'https://pagead2.googlesyndication.com', 'https://static.cloudflareinsights.com', 'https://api.econscale.com', 'https://macropredictions.com', 'https://www.macropredictions.com'
 ]
 const corsOptionsDelegate = function (req, callback) {
   const origin = (allowlist.indexOf(req.header('Origin')) !== -1) ? true : false;
@@ -45,7 +45,7 @@ const corsOptionsDelegate = function (req, callback) {
   callback(null, corsOptions) // callback expects two parameters: error and options
 }
 app.use(cors(corsOptionsDelegate));
-
+app.use(cors())
 // Use body-parser as middleware to decode POST content
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
