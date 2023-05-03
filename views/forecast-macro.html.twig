@@ -28,7 +28,7 @@
 			
 				<div class="col-xxl-4 col-lg-6 pe-lg-2 mb-3">
 					<div id="data-card" class="card shadow-sm">
-						<div class="card-body">
+						<div class="card-body p-4">
 							<div class="mb-2"><span class="font-logo" style="vertical-align:middle;font-size:1.4rem;color:rgb(15, 17, 23)">Data</span></div>
 
 							<div id="table-container" style="min-height: 300px">
@@ -45,10 +45,11 @@
 
 				<div class="col-xxl-8 col-lg-6 ps-lg-2 mb-3" id="text-container">
 					<div class="card shadow-sm">
-						<div class="card-body" style="font-size:.92rem">
-						
-							<div id="variable-description">
-								<div class="mb-2"><span class="font-logo" style="vertical-align:middle;font-size:1.4rem;color:rgb(15, 17, 23)">Description</span></div>
+						<div class="card-body p-4 text-slate-700" style="font-size:.94rem">
+
+							<div class="mb-3"><span class="text-slate-800" style="font-size:1.2rem">Description</span></div>
+
+							<div id="variable-description" class="px-2">
 								{% if varname in ['gdp'] %}
 									<p>This page provides quarterly forecasts of U.S. real GDP. All historical and forecasted values represent seasonally adjusted annualized rates.</p>
 								{% elseif varname in ['pce'] %}
@@ -60,11 +61,11 @@
 									<p>This page provides forecasts of monthly inflation rates, as measured by the year over year percent change in standard headline CPI, 
 									i.e. the <a href="https://www.bls.gov/news.release/cpi.t01.htm">consumer price index for all urban consumers (CPI-U)</a>.</p>
 								{% endif %}
-								<hr class="my-3">
+								<hr class="m-4">
 							</div>
 
-							<div id="primary-forecast">
-								<div class="mb-2"><span class="font-logo" style="vertical-align:middle;font-size:1.4rem;color:rgb(15, 17, 23)">Forecast Models</span></div>
+							<div class="mb-3"><span class="text-slate-800" style="font-size:1.2rem;">Forecast Models</span></div>
+							<div id="primary-forecast" class="px-2">
 								{% if varname in ['gdp', 'pce', 'pdi'] %}
 									<p>Our <span class="font-bolder"><i class="cmefi-logo mx-1"></i>Composite Forecast Model</span> is a model of models, 
 									optimally finding weights between different qualitative and quantitative forecasts to generate a single composite forecast.<p>
@@ -81,7 +82,7 @@
 									The CPI release schedule can be found <a href="https://www.bls.gov/schedule/news_release/cpi.htm">here</a>.</p>
 								{% endif %}
 								<div id="primary-forecast-vintage-div" class="d-flex"></div>
-								<hr class="my-3">
+								<hr class="m-4">
 							</div>
 
 
@@ -116,7 +117,7 @@
 								{% endif %}
 
 								</ul>
-								<hr class="my-3">
+								<hr class="m-4">
 							</div>
 							{% endif %}
 

@@ -18,6 +18,11 @@ style.css.map
 .env.test.local
 .env.production.local
 .env.local
+ecosystem.config.js
 
 # Key test
 tests.r
+
+# Misc
+*.mp4
+*.webm

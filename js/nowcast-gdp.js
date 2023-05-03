@@ -1,17 +1,29 @@
-document.addEventListener("DOMContentLoaded", function(event) {
+init();
+
+document.addEventListener('DOMContentLoaded', function() {
 	
 	/********** INITIALIZE **********/
-	$('div.overlay').show();
-	
-	/********** GET DATA **********/
-	const ud = {...getData('nowcast-model-gdp') || {}};
-	const get_gdp_values_dfd = getFetch('get_nowcast_model_gdp_values', toScript = ['gdp_values'], fromAjax = {});
-	const get_releases_dfd = getFetch('get_nowcast_model_releases', toScript = ['releases'], fromAjax = {});
+	{
+		const ud_prev = getAllData()['nowcast-gdp'] || {};
+		const ud = {... ud_prev, ... {
+			debug: true
+		}};
+		setData('nowcast-gdp', ud);
+	}
 
-	Promise.all([get_gdp_values_dfd, get_releases_dfd]).then(function(response) {
-				
+	/********** GET DATA **********/
+	const ud = getData('nowcast-gdp') || {};
+
+	const get_gdp_values = getApi(`get_nowcast_model_gdp_values`, 10, ud.debug);
+	const get_releases = getApi(`get_nowcast_model_releases`, 10, ud.debug);
+	const start = performance.now();
+
+	Promise.all([get_gdp_values, get_releases]).then(function(response) {
+
+		if (ud.debug) console.log('Fetch get_hist_obs', performance.now() - start, response);
+
 		const gdp_values =
-			response[0].gdp_values.map(x => ({
+			response[0].map(x => ({
 				bdate: x.vdate,
 				date: x.date,
 				pretty_date: x.pretty_date,
@@ -21,29 +33,32 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			}));
 		
 		const releases =
-			response[1].releases.map(x => ({
+			response[1].map(x => ({
 				id: x.id,
 				fullname: x.fullname,
 				url: x.url,
-				input_varnames: JSON.parse(x.input_varnames),
-				release_dates: JSON.parse(x.release_dates)
+				input_varnames: (x.input_varnames),
+				release_dates: (x.release_dates)
 			}));
-		//console.log('gdp_values', gdp_values, 'releases', releases);
-		
+
+		if (ud.debug) console.log('gdp_values', gdp_values, 'releases', releases);
+
 		// Get last backtest date in the dataset
-		const last_bdate = moment.max(...[... new Set(gdp_values.map(x => x.bdate))].map(x => moment(x))).format('YYYY-MM-DD');
-		
+		const last_bdate = dayjs.max([... new Set(gdp_values.map(x => x.bdate))].map(x => dayjs(x))).format('YYYY-MM-DD');
+		if (ud.debug) console.log('last_bdate', last_bdate);
+
 		// Get first obs of last date to use as default display quarter
-		const default_disp_quarter =
-			moment.min([...new Set(gdp_values.filter(x => x.bdate === last_bdate).map(x => x.date))]
-			.map(x => moment(x))).format('YYYY[Q]Q');
+		const default_disp_quarter = dayjs_to_quarter(dayjs.min([...new Set(gdp_values.filter(x => x.bdate === last_bdate).map(x => dayjs(x.date)))]))
+
+		if (ud.debug) console.log('default_disp_quarter', default_disp_quarter);
 
 		// Get list of all display quarters to include
 		const display_quarters = 
-			[...new Set(gdp_values.map(x => x.pretty_date))].
+			[...new Set(gdp_values.map(x => x.date))]
 			// Get 2 quarters ago max
-			filter(x => moment(x, 'YYYY[Q]Q') > moment(default_disp_quarter, 'YYYY[Q]Q').add(-2, 'Q'));
-		
+			.filter(x => dayjs(x) > quarter_to_dayjs(default_disp_quarter).add(-6, 'month'))
+			.map(d => dayjs_to_quarter(dayjs(d)));
+
 		// Order values for table
 		const gdp_varnames = [
 			'gdp',
@@ -97,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		//console.log(this.id.replace('li-', ''));
 		const chart = $('#chart-container').highcharts();
 		chart.xAxis[0].addPlotLine({
-			value: parseInt(moment(this.id.replace('li-', '')).format('x')),
+			value: parseInt(dayjs(this.id.replace('li-', '')).unix() * 1000),
 			color: 'blue',
 			width: 3,
 			id: 'release-calendar-indicator'
@@ -112,10 +127,36 @@ document.addEventListener("DOMContentLoaded", function(event) {
 });
 
 
+const dayjs_to_quarter = function(d) {
+	return d.year().toString() + 'Q' + Math.floor((d.month() + 2)/3)
+}
+
+const quarter_to_dayjs = function(d) {
+	const [year, q] = d.split('Q');
+	const month = (q - 1) * 3 + 1;
+	const monthStr = month.toString().padStart(2, '0');
+	return dayjs(`${year}-${monthStr}-01`);
+}
+
+const get_dates = function(start, end) {
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+    const date = new Date(startDate.getTime());
+    const dates = [];
+
+    while (date <= endDate) {
+        dates.push(date.toISOString().split('T')[0]);
+        date.setDate(date.getDate() + 1);
+    }
+
+    return dates;
+}
+
+
 /*** Draw chart ***/
 function drawChart(gdp_values_grouped, releases, display_quarter, display_quarters) {
 	
-	//console.log(display_quarters);
+	console.log('gdp_values_grouped', gdp_values_grouped);
 	
 	// Create series - each corresponding to a different economic variable
 	const chart_data =
@@ -126,7 +167,7 @@ function drawChart(gdp_values_grouped, releases, display_quarter, display_quarte
 				id: x.varname,
 				name: x.fullname,
 				// Create bdate, value pairs
-				data: x.data.filter(y => y.pretty_date == display_quarter).map(y => [parseInt(moment(y.bdate).format('x')), y.value]).sort((a, b) => a[0] - b[0]),
+				data: x.data.filter(y => y.pretty_date == display_quarter).map(y => [parseInt(dayjs(y.bdate).unix() * 1000), y.value]).sort((a, b) => a[0] - b[0]),
 				type: (x.varname === 'gdp' ? 'area' : 'line'),
 				//dashStyle: (x.fcname === 'hist' ? 'solid' : 'solid'),
 				lineWidth: (x.varname === 'gdp' ? 4 : 2),
@@ -138,22 +179,22 @@ function drawChart(gdp_values_grouped, releases, display_quarter, display_quarte
 			}
 		));
 		
-	//console.log('chart_data', chart_data);
+	console.log('chart_data', chart_data);
 	
 	// Calculate end date (take the first vintage of the GDP release occuring after the quarter end date)
-	const quarter_end_date = moment(display_quarter, 'YYYY[Q]Q').add(1, 'Q');
+	const quarter_end_date = quarter_to_dayjs(display_quarter).add(3, 'month');
 	//console.log('quarter_end_date', quarter_end_date);
-	const chart_end_date_0 = releases.filter(x => x.id == 'BEA.GDP')[0].release_dates.filter(x => moment(x) > quarter_end_date)[0];
+	const chart_end_date_0 = releases.filter(x => x.id == 'BEA.GDP')[0].release_dates.filter(x => dayjs(x) > quarter_end_date)[0];
 	// Modified 7-6-21 to automatically guess the date if doesn't exist
 	const chart_end_date = (typeof(chart_end_date_0) !== 'undefined' ? chart_end_date_0 : quarter_end_date);
 	//console.log('chart_end_date', chart_end_date);
 		
-	//console.log('releases', releases);
+	console.log('releases', releases.filter(x => x.release_dates));
 	// Get flattened array of date x releaseid objects
 	const release_series_data =
 		releases
 		.filter(x => x.release_dates)
-		.map(x => ({...x, release_dates: x.release_dates.filter(y => moment(y) > moment(chart_data[0].data[0][0]) && moment(y) <= moment(chart_end_date))}))
+		.map(x => ({...x, release_dates: x.release_dates.filter(y => dayjs(y) > dayjs(chart_data[0].data[0][0]) && dayjs(y) <= dayjs(chart_end_date))}))
 		.filter(x => x.release_dates.length > 0)
 		.map(function(x, i) {
 			return x.release_dates.map(function(date) {
@@ -168,11 +209,11 @@ function drawChart(gdp_values_grouped, releases, display_quarter, display_quarte
 				};
 			})
 		}).flat();
-	//console.log('release_series_data', release_series_data);
+	console.log('release_series_data', release_series_data);
 	
 	// Now get this data as a date => release id obj
 	const release_data =
-		getDates(chart_data[0].data[0][0], moment(chart_end_date), 1, 'days')
+		get_dates(dayjs.unix(chart_data[0].data[0][0]/1000).format('YYYY-MM-DD'), chart_end_date)
 		.map(date => release_series_data.filter(x => x.value === date))
 		.filter(x => x.length > 0)
 		.sort(x => x.width == 1)
@@ -193,7 +234,7 @@ function drawChart(gdp_values_grouped, releases, display_quarter, display_quarte
 			color: 'orange',
 			dashStyle: 'Solid',
 			test: x[0].value,
-			value: parseInt(moment(x[0].value).format('x')), 
+			value: parseInt(dayjs(x[0].value).unix() * 1000), 
 			width: 1,
 			zIndex: 0
 		}));
@@ -205,7 +246,7 @@ function drawChart(gdp_values_grouped, releases, display_quarter, display_quarte
 		release_data.map(function(x) {
 			return '<li href="#" id="li-' + x[0].value + '" class="list-group-item list-group-item-action release-calendar-date">' +
 				'<div class="d-flex justify-content-between align-items-center">' +
-					moment(x[0].value).format('MMMM Do') +
+					dayjs(x[0].value).format('MMMM Do') +
 					'<span class="badge bg-cmefi-green">' + x.length + '</span>' +
 				'</div>' +
 				'<ul class="ps-2" style="font-size:.8rem">' +
@@ -220,7 +261,7 @@ function drawChart(gdp_values_grouped, releases, display_quarter, display_quarte
 	// Auto scroll to most recent date
 	// https://stackoverflow.com/questions/635706/how-to-scroll-to-an-element-inside-a-div
 	
-	const next_release_date = release_data.map(x => x[0].value).filter(x => moment(x) >= moment())[0] || release_data[release_data.length - 1][0].value;
+	const next_release_date = release_data.map(x => x[0].value).filter(x => dayjs(x) >= dayjs())[0] || release_data[release_data.length - 1][0].value;
 	var myElement = document.getElementById('li-' + next_release_date);
 	var topPos = myElement.offsetTop;
 	document.getElementById('release-container').scrollTop = topPos;
@@ -346,13 +387,13 @@ function drawChart(gdp_values_grouped, releases, display_quarter, display_quarte
 					color: 'black'
 				}
 			},
-			max: parseInt(moment(chart_end_date).add(5, 'day').format('x')),
+			max: parseInt(dayjs(chart_end_date).add(5, 'day').unix() * 1000),
 			ordinal: false,
 			plotLines: [{
 				color: 'red', // Color value
 				dashStyle: 'ShortDash', // Style of the plot line. Default to solid
 				//value: parseInt(moment(chart_end_date).format('x')), // Value of where the line will appear
-				value: parseInt(moment(chart_end_date).format('x')), // Value of where the line will appear
+				value: parseInt(dayjs(chart_end_date).unix() * 1000), // Value of where the line will appear
 				width: 2,
 				label: {
 					text: 'Official GDP Data Release',
@@ -408,7 +449,7 @@ function drawChart(gdp_values_grouped, releases, display_quarter, display_quarte
 				const ud = getData('userData');
 				const text =
 					'<table>' +
-					'<tr style="border-bottom:1px solid black"><td style="font-weight:600; text-align:center">' + moment(x).format('MMM Do YY') + '</td></tr>'  +
+					'<tr style="border-bottom:1px solid black"><td style="font-weight:600; text-align:center">' + dayjs(x).format('MMM Do YY') + '</td></tr>'  +
 					points.map(function(point) {
 						//const freq = ud.ncValuesGrouped.filter(x => x.varname === point.series.options.id)[0].freq;
 						return '<tr><td style="color:' + point.color + '">Nowcast for ' + display_quarter + ' ' + point.series.name + ': ' + point.y.toFixed(2) + '%</td></tr>'; // Remove everything in aprantheses
@@ -439,7 +480,7 @@ function drawTable(gdp_values_grouped) {
 	// Get all dates available for bdate
 	const tbl_display_quarters = [... new Set(gdp_values_grouped.map(x => x.data.filter(y => y.bdate == bdate)).flat().map(x => x.pretty_date))];
 	
-	$('#vdate').text(moment(bdate).format('MMM Do') + ' ');
+	$('#vdate').text(dayjs(bdate).format('MMM Do') + ' ');
 	
 	const dtCols = 
 		[{title: 'Order', data: 'order'}, {title: 'Tabs', data: 'tabs'}, {title: 'NOWCAST', data: 'fancyname'}]

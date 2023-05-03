@@ -2,14 +2,15 @@
  * (2) Run sass inputdir/location.scss outputdir/location.css 
  * Useful for overriding default bootstrap 5 variables
  * Rename css files as scss to import
- */
-@import 'custom_colors';
- 
- 
+ */ 
+
+@import '_custom_colors';
+
 // 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
 @import "libs/bootstrap/_functions";
 
 // 2. Include any default variable overrides here
+// See _variables.scss for a full list
 // Variable Overrides
 // $custom-colors: (
 // );
@@ -24,14 +25,10 @@ $my-container-max-widths: (
   xxl: 1360px
 );
 
-
 // https://getbootstrap.com/docs/5.2/utilities/text/
 // stylelint-disable value-keyword-case
-$font-family-sans-serif:     "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-$font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-// stylelint-enable value-keyword-case
-$font-family-base:            var(--bs-font-sans-serif);
-$font-family-code:            var(--bs-font-monospace);
+$font-family-sans-serif: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
+$font-family-base: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
 
 // $font-size-root affects the value of `rem`, which is used for as well font sizes, paddings, and margins
 // $font-size-base affects the font size of the body text
@@ -44,16 +41,17 @@ $line-height-sm:              1.25;
 $line-height-lg:              2;
 
 // color
-$link-color:                 var(--sky-light); //red
-$link-hover-color:           var(--sky); //green
+// $link-color:                 var(--sky-light); //red
+// $link-hover-color:           var(--sky); //green
 
 // 3. Include remainder of required Bootstrap stylesheets
 @import "libs/bootstrap/_variables";
+@import "libs/bootstrap/_variables-dark";
 
 // 4. Include any default map overrides here
 // Optional Sass map overrides here
 $colors: map-remove($colors, 'blue', 'indigo', 'purple', 'pink', 'red', 'orange', 'yellow', 'green', 'teal', 'cyan', 'black', 'white');
-$theme-colors: $colors;//$custom-colors; //map-merge($theme-colors, $custom-colors);
+$theme-colors: $colors; //$custom-colors; //map-merge($theme-colors, $custom-colors);
 $container-max-widths: map-merge($container-max-widths, $my-container-max-widths);
 
 // 5. Include remainder of required parts
@@ -100,6 +98,43 @@ $container-max-widths: map-merge($container-max-widths, $my-container-max-widths
 @import "libs/bootstrap/_helpers";
 
 // 7. Optionally include utilities API last to generate classes based on the Sass map in `_utilities.scss`
+// $utilities: map-merge(
+//   $utilities,
+//   (
+//     "opacity": (
+//       property: opacity,
+//       class: opacity,
+//       state: hover focus,
+//       values: (
+//         0: 0,
+//         25: .25,
+//         50: .5,
+//         75: .75,
+//         100: 1
+//       )
+//     ),
+//     "transition": (
+//       property: transition-property,
+//       class: transition,
+//       values: none all color opacity box-shadow transform
+//     ),
+//     "duration": (
+//       property: transition-duration,
+//       class: duration,
+//       values:  (
+//         0: '0s',
+//         75: '75ms',
+//         100: '100ms',
+//         150: '150ms',
+//         200: '250ms',
+//         300: '300ms',
+//         500: '500ms'
+//       )
+//     )
+//   )
+// );
+
+
 @import "libs/bootstrap/utilities/_api";
 
 // 8. Add additional custom code here

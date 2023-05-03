@@ -177,7 +177,7 @@ function drawChart(treasury_data, play_index, forecast_vdate) {
 			useHTML: true,
 			text: 
 			'<div class="row text-center justify-content-center">'+
-				'<span class="my-0 py-1" style="font-size: 1.3rem;"><i class="cmefi-logo me-1"></i>Treasury Curve Forecasts (Updated ' + dayjs(forecast_vdate).format('MMM DD') + ')</span>'+
+				'<span class="my-0 py-1 fw-normal" style="font-size: 1.05rem;"><i class="cmefi-logo me-1"></i>Treasury Curve Forecasts (Updated ' + dayjs(forecast_vdate).format('MMM DD') + ')</span>'+
 			'</div>'+
 			'<div class="row text-center"><div class="col-12 btn-group d-inline-block" role="group" id="chart-subtitle-group">' +
 				'<button class="btn text-white btn-sm" style="font-size:.8rem;background-color:rgb(113, 133, 122)" type="button" >Hit "play" to show changes over time!&nbsp;</button>'+

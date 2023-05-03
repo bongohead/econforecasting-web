@@ -17,7 +17,9 @@ async function getApi(endpoint, timeout = 10, verbose = false) {
 	
 	const jwt =  ('; '+document.cookie).split(`; 1ma023mb22d1ampz2yzamqldff3=`).pop().split(';')[0];
 
-	const fetchRequest = fetch('https://api.econscale.com/v0/' + endpoint, {
+	const ep = (window.location.href.includes('dev') ? 'https://dev-api.macropredictions.com/external/' : 'https://api.macropredictions.com/external/');
+
+	const fetchRequest = fetch(ep + endpoint, {
 			method: 'get',
 			headers: new Headers({
 				'X-Requested-With': 'XMLHttpRequest',
@@ -70,7 +72,6 @@ function modifyData(data = {}) {
 	return newData;
 }
 
-
 function isJson(str) { 
 	try { 
 		return (JSON.parse(str) && !!str); 
@@ -98,16 +99,6 @@ function ajaxError(e) {
 	
 	return;
 }
-
-
-/*
-function ajaxErrorEl(e, loader_container_id) {
-	console.log('Error: ', e);
-	document.querySelector('#overlay .spinner-border').style.display = 'none';
-	document.querySelector('#' + loader_container_id).textContent = 'Sorry, it seems like there was an error loading the data! Please refresh or try back later.';
-	return;
-}
-*/
 
 
 function init() {
@@ -151,7 +142,8 @@ function init() {
 			style: {
 				fontFamily: 'var(--bs-font-sans-serif)',
 				color: 'var(--slate-900)',
-				fontSize: '1.1rem'
+				fontSize: '1.1rem',
+				fontWeight: 'bolder'
 			}
 		},
 		subtitle: {
@@ -231,11 +223,10 @@ function init() {
 		maskColor: "rgba(255,255,255,0.3)",
 
 		time: {
-			//timezone: 'America/New_York'
 			getTimezoneOffset: function(timestamp) {
 				const zone = 'US/Eastern';
             	// const timezoneOffset = -moment.tz(timestamp, zone).utcOffset();
-				const timezoneOffset = -dayjs.unix(timestamp).tz(zone).utcOffset();
+				const timezoneOffset = -dayjs.unix(timestamp/1000).tz(zone).utcOffset();
 				return timezoneOffset;
 			}
 		},
@@ -288,7 +279,6 @@ function init() {
 			},
 		}
 	});
-
 
 }
 

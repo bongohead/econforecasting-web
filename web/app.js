@@ -1,5 +1,4 @@
 require('dotenv').config({path: './../.env'})
-const port = process.env.NODE_PORT;
 const path = require('path');
 
 const express = require('express');
@@ -15,7 +14,9 @@ const { rateLimiter, cookieSetter } = require('./middleware');
 const pageRouter = require('./routes');
 
 const app = express();
-app.listen(port, 300);
+app.listen(process.env.PORT, () => {
+  console.log(`App listening on port ${process.env.PORT}`)
+});
 
 // Use Helmet to define headers for sec
 app.use(helmet({
@@ -34,8 +35,9 @@ app.use(helmet({
 // Enable CORS for all routes
 const allowlist = [
   'https://dev1.econscale.com', 'https://dev.econscale.com', 'https://econforecasting.com', 'https://www.econforecasting.com', 
-  'https://pagead2.googlesyndication.com', 'https://static.cloudflareinsights.com', 'https://api.econscale.com', 'https://macropredictions.com', 'https://www.macropredictions.com'
+  'https://pagead2.googlesyndication.com', 'https://static.cloudflareinsights.com', 'https://api.econscale.com', 'https://macropredictions.com', 'https://www.macropredictions.com',
 ]
+
 const corsOptionsDelegate = function (req, callback) {
   const origin = (allowlist.indexOf(req.header('Origin')) !== -1) ? true : false;
   const corsOptions = {
@@ -44,8 +46,10 @@ const corsOptionsDelegate = function (req, callback) {
   }
   callback(null, corsOptions) // callback expects two parameters: error and options
 }
+
 app.use(cors(corsOptionsDelegate));
-app.use(cors())
+// app.use(cors())
+
 // Use body-parser as middleware to decode POST content
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -62,7 +66,6 @@ app.use('/sitemap.xml', express.static(path.join(__dirname, 'static', 'sitemap.x
 
 // Compress files
 app.use(compression());
-
 
 // Set templating engine for page views
 app.set('views', path.join(__dirname, '..', 'views'));

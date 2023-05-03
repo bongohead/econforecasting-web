@@ -28,7 +28,7 @@
 			
 				<div class="col-xxl-4 col-lg-6 pe-lg-2 mb-3">
 					<div id="data-card" class="card shadow-sm">
-						<div class="card-body">
+						<div class="card-body p-4">
 							<div class="mb-2"><span class="font-logo" style="vertical-align:middle;font-size:1.4rem;color:rgb(15, 17, 23)">Data</span></div>
 
 							<div id="table-container" style="min-height: 300px">
@@ -45,10 +45,10 @@
 
 				<div class="col-xxl-8 col-lg-6 ps-lg-2 mb-3" id="text-container">
 					<div class="card shadow-sm">
-						<div class="card-body" style="font-size:.92rem">
-						
-							<div id="variable-description">
-								<div class="mb-2"><span class="font-logo" style="vertical-align:middle;font-size:1.4rem;color:rgb(15, 17, 23)">Description</span></div>
+						<div class="card-body p-4 text-slate-700" style="font-size:.94rem">
+
+							<div class="mb-3"><span class="text-slate-800" style="font-size:1.2rem">Description</span></div>
+							<div id="variable-description" class="px-2">
 								{% if varname == 'sofr' %}
 									<p>This page provides monthly forecasts of the secured overnight financing rate (SOFR), a major <a href="https://www.investopedia.com/terms/r/referencerate.asp">benchmark interest rate</a> in the world economy. 
 									The rate measures the cost of overnight inter-bank borrowing rates for loans collaterized by Treasury securities. 
@@ -93,11 +93,11 @@
 									<p>Both historical data and forecasted values on this page reflect period average values.</p>
 
 								{% endif %}
-								<hr class="my-3">
+								<hr class="m-4">
 							</div>
 
-							<div id="primary-forecast">
-								<div class="mb-2"><span class="font-logo" style="vertical-align:middle;font-size:1.4rem;color:rgb(15, 17, 23)">Forecast Models</span></div>
+							<div class="mb-3"><span class="text-slate-800" style="font-size:1.2rem">Forecast Models</span></div>
+							<div id="primary-forecast" class="px-2">
 								{% if varname == 'sofr' %}
 									<p>Our <span class="font-bolder"><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</span> for the secured overnight financing rate (SOFR) is generated utilizing data on publicly-traded SOFR futures 
 									and other closely related benchmark interest rates. 
@@ -169,13 +169,11 @@
 
 								{% endif %}
 								<div id="primary-forecast-vintage-div" class="d-flex"></div>
-								<hr class="my-3">
 							</div>
 
-
 							{% if secondary_forecasts is defined and secondary_forecasts is not null and secondary_forecasts|length > 0 %}
-							<div id="external-forecasts" class="pt-2">
-								<span>Other included forecasts on this page are from external sources:</span>
+							<div id="external-forecasts" class="pt-2 mx-2">
+								<p>Other included forecasts on this page are from external sources:</p>
 								<ul>
 								{% if 'spf' in secondary_forecasts %}
 									<li>The Philadelphia Federal Reserve's <a href="https://www.philadelphiafed.org/surveys-and-data/real-time-data-research/survey-of-professional-forecasters">Survey of 
@@ -204,7 +202,7 @@
 								{% endif %}
 
 								</ul>
-								<hr class="my-3">
+								<hr class="m-4">
 							</div>
 							{% endif %}
 
