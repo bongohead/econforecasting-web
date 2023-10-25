@@ -29,7 +29,7 @@
 				<div class="col-xxl-4 col-lg-6 pe-lg-2 mb-3">
 					<div id="data-card" class="card shadow-sm">
 						<div class="card-body p-4">
-							<div class="mb-2"><span class="font-logo" style="vertical-align:middle;font-size:1.4rem;color:rgb(15, 17, 23)">Data</span></div>
+							<div class="mb-2"><span class="font-family-logo fw-medium" style="vertical-align:middle;font-size:1.4rem;color:rgb(15, 17, 23)">Data</span></div>
 
 							<div id="table-container" style="min-height: 300px">
 								<div class="loader-container"><span>Pulling data...</span><div></div></div>
@@ -67,14 +67,14 @@
 							<div class="mb-3"><span class="text-slate-800" style="font-size:1.2rem;">Forecast Models</span></div>
 							<div id="primary-forecast" class="px-2">
 								{% if varname in ['gdp', 'pce', 'pdi'] %}
-									<p>Our <span class="font-bolder"><i class="cmefi-logo mx-1"></i>Composite Forecast Model</span> is a model of models, 
+									<p>Our <span class="fw-medium"><i class="cmefi-logo mx-1"></i>Composite Forecast Model</span> is a model of models, 
 									optimally finding weights between different qualitative and quantitative forecasts to generate a single composite forecast.<p>
 									<p>Assigned weights are time-varying and depend on the remaining time until the official data release. For example, high-frequency <a href="/forecast-gdp-nowcast">nowcast</a> models 
 									tend to perform better for short-term forecasts, while qualitative forecasts tend to be better predictors for long-term forecasts; 
 									our model combines these forecasts using a locally linear random forest method to optimize the strengths of each forecast.</p>
 									<p>This model is updated daily. New releases will be made available between 16:00 and 20:00 ET.</p>
 								{% elseif varname in ['cpi'] %}
-									<p>Our <span class="font-bolder"><i class="cmefi-logo mx-1"></i>Consensus Inflation Forecast</span> is a model that measures the average expected inflation rate. 
+									<p>Our <span class="fw-medium-"><i class="cmefi-logo mx-1"></i>Consensus Inflation Forecast</span> is a model that measures the average expected inflation rate. 
 									It is derived using bond market data (utilizing the spread between Treasury Inflation Protected Securities and Treasury yields) 
 									as well as from household survey data. For each point in the forward term structure, our model derives the mean market-expected inflation rate. 
 									The term structure is interpolated and smoothed using a three-factor parametrization model, generating the final forecast.</p>

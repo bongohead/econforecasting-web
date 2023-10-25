@@ -1,4 +1,6 @@
-window.addEventListener('DOMContentLoaded', () => {
+init();
+
+document.addEventListener('DOMContentLoaded', function() {
 	
 	const page_list = [
 		{group: 'Forecast', fullname: 'Federal Funds Rate (FFR)', url: 'forecast-ffr'},

@@ -29,7 +29,7 @@
 				<div class="col-xxl-4 col-lg-6 pe-lg-2 mb-3">
 					<div id="data-card" class="card shadow-sm">
 						<div class="card-body p-4">
-							<div class="mb-2"><span class="font-logo" style="vertical-align:middle;font-size:1.4rem;color:rgb(15, 17, 23)">Data</span></div>
+							<div class="mb-2"><span class="font-family-logo fw-medium" style="vertical-align:middle;font-size:1.4rem;color:rgb(15, 17, 23)">Data</span></div>
 
 							<div id="table-container" style="min-height: 300px">
 								<div class="loader-container"><span>Pulling data...</span><div></div></div>
@@ -99,53 +99,53 @@
 							<div class="mb-3"><span class="text-slate-800" style="font-size:1.2rem">Forecast Models</span></div>
 							<div id="primary-forecast" class="px-2">
 								{% if varname == 'sofr' %}
-									<p>Our <span class="font-bolder"><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</span> for the secured overnight financing rate (SOFR) is generated utilizing data on publicly-traded SOFR futures 
+									<p>Our <span class="fw-medium"><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</span> for the secured overnight financing rate (SOFR) is generated utilizing data on publicly-traded SOFR futures 
 									and other closely related benchmark interest rates. 
 									Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
 									parametrization model, generating the final forecast.</p>
 									<p>This forecast can be interpreted as the mean market-expected values of future SOFR values.</p>
 									<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days.</p>
 								{% elseif varname == 'ffr' %}
-									<p>Our <span class="font-bolder"><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</span> for the federal funds rate rate (FFR) is generated utilizing data on publicly-traded FFR futures 
+									<p>Our <span class="fw-medium"><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</span> for the federal funds rate rate (FFR) is generated utilizing data on publicly-traded FFR futures 
 									and other closely related benchmark interest rates. 
 									Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
 									parametrization model, generating the final forecast.</p>
 									<p>This forecast can be interpreted as the mean market-expected values of future FFR values.</p>
 									<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days.</p>
 								{% elseif varname == 'ameribor' %}
-									<p>Our <span class="font-bolder"><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</span> for the Ameribor Unsecured Overnight Rate (AMERIBOR) is generated utilizing data on publicly-traded AMERIBOR futures 
+									<p>Our <span class="fw-medium"><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</span> for the Ameribor Unsecured Overnight Rate (AMERIBOR) is generated utilizing data on publicly-traded AMERIBOR futures 
 									and other closely related benchmark interest rates. 
 									Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
 									parametrization model, generating the final forecast.</p>
 									<p>This forecast can be interpreted as the mean market-expected values of future AMERIBOR values.</p>
 									<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days. The data for this series is released with a one business-day lag due to a delay in futures market data.</p>
 								{% elseif varname == 'bsby' %}
-									<p>Our <span class="font-bolder"><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</span> for the Bloomberg Short-Term Bank Yield Index (BSBY) is generated utilizing data on publicly-traded BSBY futures 
+									<p>Our <span class="fw-medium"><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</span> for the Bloomberg Short-Term Bank Yield Index (BSBY) is generated utilizing data on publicly-traded BSBY futures 
 									and other closely related benchmark interest rates. 
 									Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
 									parametrization model, generating the final forecast.</p>
 									<p>This forecast can be interpreted as the mean market-expected values of future BSBY values.</p>
 									<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days.</p>
 								{% elseif varname == 'sonia' %}
-									<p>Our <span class="font-bolder"><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</span> for the SONIA rate is generated utilizing data on publicly-traded SONIA futures 
+									<p>Our <span class="fw-medium"><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</span> for the SONIA rate is generated utilizing data on publicly-traded SONIA futures 
 									and other closely related benchmark interest rates. 
 									Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
 									parametrization model, generating the final forecast.</p>
 									<p>This forecast can be interpreted as the mean market-expected values of future SONIA values.</p>
 									<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days.</p>
 								{% elseif varname == 'estr' %}
-									<p>Our <span class="font-bolder"><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</span> for the Euro short-term rate is generated utilizing data on publicly-traded ESTR futures 
+									<p>Our <span class="fw-medium"><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</span> for the Euro short-term rate is generated utilizing data on publicly-traded ESTR futures 
 									and other closely related benchmark interest rates. 
 									Using this information, we construct a forward term structure for the full yield curve. The term structure is interpolated and smoothed using a three-factor 
 									parametrization model, generating the final forecast.</p>
 									<p>This forecast can be interpreted as the mean market-expected values of future ESTR values.</p>
 									<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days.</p>
 								{% elseif varname == 'ukbankrate' %}
-									<p>Our <span class="font-bolder"><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</span> for the UK bank rate is generated utilizing data on publicly-traded SONIA futures 
+									<p>Our <span class="fw-medium"><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</span> for the UK bank rate is generated utilizing data on publicly-traded SONIA futures 
 									and other closely related benchmark interest rates, and projecting the spread between SONIA and the base rate.</p>
 									<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days.</p>
 								{% elseif varname in ['mort15y', 'mort30y'] %}
-									<p>Our <span class="font-bolder"><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</span> for the 15 and 30 year fixed rate mortgage rates are derived from combining our 
+									<p>Our <span class="fw-medium"><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</span> for the 15 and 30 year fixed rate mortgage rates are derived from combining our 
 									<a href="/forecast-t10y">Market Consensus Forecast for Treasury yields</a> with survey-based forecasts for housing prices.</p>
 									<p>First, using historical data, we calculate historical mortgage-Treasury yield spreads; a model is then used to calculate the relationship 
 									between these spreads and housing prices. 
@@ -154,7 +154,7 @@
 									<p>This model is updated daily around 10:30 ET (14:30/15:30 UTC) on market days.</p>
 
 								{% elseif varname in ['t01m', 't02m', 't03m', 't06m', 't01y', 't02y', 't05y', 't10y', 't20y', 't30y'] %}
-									<p>Our <span class="font-bolder"><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</span> is a model that calculates the average "market expected" forecast of U.S. Treasury yield rates.</p>
+									<p>Our <span class="fw-medium"><i class="cmefi-logo mx-1"></i>Market Consensus Forecast</span> is a model that calculates the average "market expected" forecast of U.S. Treasury yield rates.</p>
 									<p>It is derived using current <a href="https://www.treasury.gov/resource-center/data-chart-center/Pages/index.aspx">Treasury bond market data</a> as well as futures market data. 
 									In particular, we forecast seperately:</p>
 									<ul>

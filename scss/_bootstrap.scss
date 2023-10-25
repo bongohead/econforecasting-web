@@ -17,18 +17,18 @@
 
 
 // https://stackoverflow.com/questions/38480156/how-to-increase-width-of-bootstrap-container-on-max-width
-$my-container-max-widths: (
-  sm: 540px,
-  md: 720px,
-  lg: 960px,
-  xl: 1140px,
-  xxl: 1360px
-);
+// $my-container-max-widths: (
+//   sm: 540px,
+//   md: 720px,
+//   lg: 960px,
+//   xl: 1140px,
+//   xxl: 1360px
+// );
 
-// https://getbootstrap.com/docs/5.2/utilities/text/
+// https://getbootstrap.com/docs/5.3/utilities/text/
 // stylelint-disable value-keyword-case
-$font-family-sans-serif: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
-$font-family-base: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
+$font-family-sans-serif: 'Nunito Sans', Helvetica, Arial, sans-serif;
+$font-family-base: 'Nunito Sans', Helvetica, Arial, sans-serif;
 
 // $font-size-root affects the value of `rem`, which is used for as well font sizes, paddings, and margins
 // $font-size-base affects the font size of the body text
@@ -39,6 +39,15 @@ $font-size-base: 1.0rem;
 $line-height-base:            1.5;
 $line-height-sm:              1.25;
 $line-height-lg:              2;
+
+// weights
+$font-weight-light:           300;
+$font-weight-normal:          400;
+$font-weight-medium:          500;
+$font-weight-semibold:        600;
+$font-weight-bold:            700;
+
+$font-weight-base:            $font-weight-normal;
 
 // color
 // $link-color:                 var(--sky-light); //red
@@ -52,7 +61,7 @@ $line-height-lg:              2;
 // Optional Sass map overrides here
 $colors: map-remove($colors, 'blue', 'indigo', 'purple', 'pink', 'red', 'orange', 'yellow', 'green', 'teal', 'cyan', 'black', 'white');
 $theme-colors: $colors; //$custom-colors; //map-merge($theme-colors, $custom-colors);
-$container-max-widths: map-merge($container-max-widths, $my-container-max-widths);
+// $container-max-widths: map-merge($container-max-widths, $my-container-max-widths);
 
 // 5. Include remainder of required parts
 @import "libs/bootstrap/_maps";

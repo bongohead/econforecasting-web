@@ -9,7 +9,7 @@ dayjs.extend(timezone)
 
 */
 
-async function getApi(endpoint, timeout = 10, verbose = false) {
+const getApi = async function(endpoint, timeout = 10, verbose = false) {
 		
 	const timerStart = Date.now();
 	const controller = new AbortController()
@@ -40,13 +40,13 @@ async function getApi(endpoint, timeout = 10, verbose = false) {
 	return fetchRequest;
 }
 
-function getData(k) {
+const getData = function(k) {
 	if (sessionStorage.getItem('data') === null) return null;
 	const data = JSON.parse(sessionStorage.getItem('data'));
 	return data[k];
 }
  
-function setData(k, d) {
+const setData = function(k, d) {
 	var data;
 	if (sessionStorage.getItem('data') === null) data = {};
 	else data = JSON.parse(sessionStorage.getItem('data'));
@@ -55,24 +55,14 @@ function setData(k, d) {
 	sessionStorage.setItem('data', JSON.stringify(data));
 }
 
-function getAllData() {
+const getAllData = function() {
 	const raw = sessionStorage.getItem('data');
 	const res = isJson(raw) ? JSON.parse(raw) : {};
 	return res;
 }
 
 
-function setAllData(data) {
-	sessionStorage.setItem('data', JSON.stringify(data));
-}
-
-function modifyData(data = {}) {
-	const newData = $.extend(true, getAllData(), data);
-	setAllData(newData);
-	return newData;
-}
-
-function isJson(str) { 
+const isJson = function (str) { 
 	try { 
 		return (JSON.parse(str) && !!str); 
 	} catch (e) { 
@@ -81,16 +71,14 @@ function isJson(str) {
 }
 
 
-function getColorArray() {
+const getColorArray = function() {
     return ['#4572A7', '#AA4643', '#0ba828', '#80699B', '#3D96AE','#DB843D', '#92A8CD', '#A47D7C', '#B5CA92',"#7cb5ec", "#434348", "#90ed7d", "#f7a35c", "#8085e9", "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1"];
 }
 
-function ajaxError(e) {
+const ajaxError = function(e) {
+
 	console.log('Error: ', e);
-	/*
-	document.querySelector('#overlay .spinner-border').style.display = 'none';
-	document.querySelector('#overlay h4').textContent = 'Sorry, it seems like there was an error loading the data! Please refresh or try back later.';
-	*/
+
 	document.querySelectorAll('.loader-container > span').forEach(x => {
 		x.textContent = 'Sorry, it seems like there was an error loading the data! Please refresh or try back later.'
 		return;
@@ -101,7 +89,7 @@ function ajaxError(e) {
 }
 
 
-function init() {
+const init = function() {
 
 	dayjs.extend(window.dayjs_plugin_utc);
 	dayjs.extend(window.dayjs_plugin_timezone);
@@ -130,6 +118,37 @@ function init() {
 			return;
 		})
 	}
+
+	// Open navbar on hover for desktops, require a click for mobile
+	const top_level_links = document.querySelectorAll('#navbar-collapse > ul > li.nav-item.dropdown')
+	// Match me to navbar-expand-lg limit (or break limit for navbar collapsing) - check .navbar-toggler @media element
+	top_level_links.forEach(x => {
+
+		x.addEventListener('mouseover', function(e) {
+			if (window.matchMedia('(min-width: 992px)').matches === true) {
+				bootstrap.Dropdown.getOrCreateInstance(this.querySelector('div.dropdown-menu')).show();
+				this.querySelector('a').classList.add('show');
+			}
+			return;
+		});
+		
+		x.addEventListener('click', function(e) {
+			if (window.matchMedia('(min-width: 992px)').matches === false) {
+				bootstrap.Dropdown.getOrCreateInstance(this.querySelector('div.dropdown-menu')).toggle();
+			}
+			return;
+		});
+
+		x.addEventListener('mouseout', function(e) {
+			if (window.matchMedia('(min-width: 992px)').matches === true) {
+				bootstrap.Dropdown.getOrCreateInstance(this.querySelector('.dropdown-menu')).hide()
+				this.querySelector('a').classList.remove('show');
+			}
+			return;
+		});
+
+	})
+
 
 	Highcharts.setOptions({
 		chart: {
@@ -284,7 +303,7 @@ function init() {
 
 
 // Decorator to add load el
-function withLoader(id, fn){
+const withLoader = function(id, fn){
 	return function(){
 		fn_res = fn.apply(this, arguments);
 		document.querySelector(`#${id} > .loader-container`).style.opacity = 0;
