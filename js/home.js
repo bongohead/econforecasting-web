@@ -65,7 +65,6 @@ document.addEventListener('DOMContentLoaded', function() {
 			}
 		}
 	};
-	console.log(autocomplete_config);
 	
 	const autoCompleteJS = new autoComplete(autocomplete_config);
 	
@@ -95,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 const getDir = function(page_obj) {
 	// Simulate an HTTP redirect:
-	console.log('clicked', page_obj);
+	// console.log('clicked', page_obj);
 
 	window.location.replace(page_obj.url);
 	//window.location.href = page_obj.url

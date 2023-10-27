@@ -1,12 +1,13 @@
 const router = require('express').Router();
 const concatJs = require('./middleware').concatJs;
 
-/* GET home page. */
 const routes = [
   {
     name: 'home', endpoints: ['/'],
-    js: ['home'], externaljs: ['hc/highstock'],
-    template: 'home', title: 'Econforecasting.com'
+    js: ['home'], externaljs: ['hc/highstock', 'lottie-player', 'autoComplete'], 
+    template: 'home', title: 'Econforecasting.com',
+    description: 'View and download macroeconomic time series, financial forecasts, and other economic data.',
+    keywords: 'treasury yields, treasury yield forecasts, macroeconomic forecasts, interest rate forecasts, 10 year treasury yield forecast, rate forecasts, economic forecasts'
   }, {
       name: 'forecast-treasury-curve', endpoints: ['/forecast-treasury-curve'],
       js: ['forecast-treasury-curve'], externaljs: ['hc/highstock', 'hc/highcharts-more', 'dt/jquery.dataTables', 'dt/dataTables.bootstrap5', 'dt/dataTables.buttons', 'dt/buttons.html5', 'dt/dataTables.responsive'],
@@ -161,6 +162,8 @@ routes.forEach(r => {
         canonical: r.canonical,
         pagescript: `${r.name}.js`,
         // Optional attributes
+        description: r.description ?? null,
+        keywords: r.keywords ?? null,
         varname: r.varname ?? null,
         primary_forecast: r.primary_forecast ?? null,
         secondary_forecasts: r.secondary_forecasts ?? null

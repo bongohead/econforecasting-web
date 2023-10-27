@@ -11,6 +11,8 @@ Description TBA
 
 
 # CHANGELOG
+## [v3.00]
+- Updated homepage UI
 
 ## [v2.01]
 - Added new Treasury docs

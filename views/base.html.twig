@@ -6,6 +6,7 @@
 	<meta name="robots" content="index, follow" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="description" content="{{description|e}}">
+	<meta name="keywords" content="{{keywords|e}}">
     {% block meta %}{% endblock %}
 
 	{% if canonical is defined and canonical is not null %}
@@ -13,10 +14,13 @@
 	{% endif %}
 
     <title>{{ title | e }}</title>
-	
-	<link rel='dns-prefetch' href='//cdnjs.cloudflare.com' />
-	<link rel='dns-prefetch' href='//fonts.googleapis.com' />
-	<link href='https://fonts.gstatic.com' crossorigin rel='preconnect' />
+    
+	<link rel="preconnect" href="https://api.macropredictions.com" >
+	<link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" />
+	<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+	<link rel="preconnect" href="https://cdn.datatables.net" />
 
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,500,700">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700">
