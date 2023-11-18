@@ -5,9 +5,28 @@
 	--font-family-logo: "Quicksand", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
 }
 
+.font-family-logo {
+	font-family: var(--font-family-logo);
+}
+
 .cursor-pointer {
   cursor: pointer;
 }
+
+p {
+	line-height: 1.2rem;
+}
+
+
+/***** Homepage *****/
+.bg-grid {
+	background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(15 23 42 / 0.04)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
+}
+
+.bg-hp {
+	background: linear-gradient(to bottom right, rgba(150, 200, 200, .5), rgba(200, 255, 100, .3));
+}
+
 
 /***** Logo *****/
 .logo {
@@ -22,6 +41,7 @@
 
 /***** Homepage Autocomplete *****/
 .autoComplete_wrapper {
+
 	display: inline-block;
 	position: relative;
 	width: 100%;
@@ -50,43 +70,43 @@
 		transition:all .4s ease;	
 	}
 
-	input::placeholder{
+	input::placeholder {
 		/*color: rgba(122, 122, 255, 0.5);*/
 		color: var(--sky);
 		transition:all .3s ease;
 	}
 	
-	input:hover::placeholder{
+	input:hover::placeholder {
 		/*color: rgba(122, 122, 255, 0.6);*/
 		color:rgb(12,148,209) ;
 		transition:all .3s ease;
 	}
 	
-	input:focus::placeholder{
+	input:focus::placeholder {
 		padding:.1rem .6rem;
 		color:rgba(158,219,246, .8);
 	
 	}
 	
-	input:focus::selection{
+	input:focus::selection {
 		background-color:rgba(158,219,246, .5);
 	}
 	
-	input::selection{
+	input::selection {
 		background-color:rgba(158,219,246, .5);
 	}
 	
-	input:hover{
+	input:hover {
 		color: rgba(158,219,246, .8);
 		transition:all .3s ease;
 	}
 	
-	input:focus{
+	input:focus {
 		color: var(--slate-500);
 		border: rgba(158,219,246, .8);
 	}
 	
-	ul{
+	ul {
 		position:absolute;
 		max-height:226px;
 		overflow-y:scroll;
@@ -247,8 +267,6 @@ nav.navbar {
 
 }
 
-
-
 nav.navbar.navbar-home {
 	
 	/* Top-level dropdown links */
@@ -290,7 +308,6 @@ nav.navbar:not(.navbar-home) {
 			background-color: var(--forest-dark);
 		}
 	}
-
 
 }
 
