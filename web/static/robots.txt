@@ -3,4 +3,4 @@ Disallow: /static/
 Disallow: /templates/
 Disallow: /cache/
 
-Sitemap: https://econforecasting.com/sitemap.xml
+Sitemap: https://macropredictions.com/sitemap.xml
