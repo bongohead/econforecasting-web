@@ -8,13 +8,19 @@ document.addEventListener('DOMContentLoaded', function() {
 		const fullname = el.dataset.fullname;
 		const primary_forecast = el.dataset.primaryForecast;
 		const show_vintage_chart =  el.dataset.showVintageChart;
-			
+		const hist_freq = el.dataset.histFreq;
+		const hist_update_freq = el.dataset.histUpdateFreq;
+		const units = el.dataset.units;
+
 		const ud_prev = getAllData()['forecast-varname'] || {};
 		const ud = {... ud_prev, ... {
 				varname: varname,
 				fullname: fullname,
 				primary_forecast: primary_forecast,
 				show_vintage_chart: show_vintage_chart,
+				units: units,
+				hist_freq: hist_freq,
+				hist_update_freq: hist_update_freq,
 				debug: true
 		}};
 		setData('forecast-varname', ud);
@@ -23,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	/********** GET DATA **********/
 	const ud = getData('forecast-varname') || {};
 
-	const get_hist_obs = getApi(`get_hist_obs?varname=${ud.varname}`, 10, ud.debug);
+	const get_hist_obs = getApi(`get_hist_obs?varname=${ud.varname}&freq=${ud.hist_freq}`, 10, ud.debug);
 	const get_forecast_values = getApi(`get_latest_forecast_obs?varname=${ud.varname}`, 10, ud.debug);
 	const start = performance.now();
 
@@ -37,14 +43,16 @@ document.addEventListener('DOMContentLoaded', function() {
 			varname: ud.varname,
 			fullname: ud.fullname,
 			units: ud.units,
-			hist_freq: ud.hist_freq
+			hist_freq: ud.hist_freq,
+			hist_update_freq: ud.hist_update_freq
 		};
 
 		const hist_series = {
 			tskey: 'hist',
 			ts_type: 'hist',
-			freq: variable.hist_freq,
+			freq: ud.hist_freq,
 			shortname: 'Historical Data',
+			update_freq: ud.hist_update_freq,
 			description: 'Historical Data',
 			external: false,
 			vdate: dayjs().format('YYYY-MM-DD'),
@@ -60,6 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			ts_type: f.forecast === ud.primary_forecast ? 'primary' : 'secondary',
 			freq: f.freq,
 			shortname: f.shortname,
+			update_freq: f.update_freq,
 			description: f.description,
 			external: f.external,
 			vdate: f.vdate || null,
@@ -83,7 +92,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 		setData('forecast-varname', {...getData('forecast-varname'), ts_data_parsed: ts_data_parsed, ...variable});
 		if (ud.debug) console.log('Data parse time', performance.now() - start, forecast_values);
-		// throw new Error('error')
 
 		return({variable, ts_data_parsed});	
 	}).then(function({variable, ts_data_parsed}) {
@@ -108,11 +116,17 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 				name: x.shortname,
 				custom: {
 					legend_el: 
-						'<span class="fw-bolder" style="font-size:.9rem;color:' + (x.tskey === 'hist' ? 'black' : getColorArray()[i]) + '">' + x.shortname + '</span>' +
-						'<br><span class="fw-normal" style="color:var(--slate-500);font-size:.85rem">(' +
-							'Updated (last update: ' + dayjs(x.vdate).format('MM/DD/YY') + ') '+
-							(x.freq === 'q' ? '; Quarterly Data' : '; Monthly Data')  + 
-						')ℹ️</span>'
+
+						`<div class="forecast-chart-legend-item">
+							<span class="fw-bolder text-sm d-block" style="color: ${(x.tskey === 'hist' ? 'black' : getColorArray()[i])}">
+								${x.shortname}
+							</span>
+							<span class="d-block fst-italic text-slate-500" style="font-size:.85rem;">
+								updated ${x.update_freq  === 'd' ? 'daily' : x.update_freq === 'm' ? 'monthly' : x.update_freq === 'q' ? 'quarterly' : 'unknown'}, last on ${dayjs(x.vdate).format('MM/DD')}
+							</span>
+							<span class="d-block fst-italic text-slate-500" style="font-size:.85rem;">values are ${(x.freq === 'q' ? 'quarterly' : 'monthly')} aggregates</span>
+						</div>
+						`
 				},
 				data: x.data.map(x => [dayjs(x[0]).unix() * 1000, x[1]]),
 				type: 'line',
@@ -120,7 +134,7 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 				lineWidth: (x.ts_type === 'hist' ? 3 : 2),
 				zIndex: (x.ts_type === 'hist' ? 3 : x.ts_type == 'primary' ? 3 : 1),
 				legendIndex: (x.ts_type === 'hist' ? 0 : x.ts_type == 'primary' ? 1 : 2),
-				color: (x.tskey === 'hist' ? 'black' : getColorArray()[i]),
+				color: (x.tskey === 'hist' ? '#344D56' : getColorArray()[i]),
 				opacity: 2,
 				visible: (x.ts_type === 'primary' || x.ts_type === 'hist'),
 				index: i
@@ -305,8 +319,9 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 			padding: 10,
 			verticalAlign: 'top',
 			layout: 'vertical',
+			maxHeight: 320,
 			itemHiddenStyle: {
-				opacity: .4,
+				opacity: .3,
 			},	
 			itemHoverStyle: {
 				opacity: .8
@@ -314,6 +329,15 @@ function drawChart(ts_data_parsed, fullname, units, hist_freq) {
 			labelFormatter: function() {
 				return this.options.custom.legend_el;
 			},
+			navigation: {
+				activeColor: 'var(--sky)',
+				animation: true,
+				arrowSize: 12,
+				inactiveColor: '#CCC',
+				style: {
+					color: 'var(--slate-500)'
+				}
+			},	
 			title: {
 				text:
 					'<span class="text-sm fw-normal">Available Series </span>' +
@@ -668,16 +692,13 @@ function drawTable(ts_data_parsed, units) {
 		
 		// Create button for this forecast
 		const li = document.createElement('li');
-		li.classList.add('list-group-item');
-		li.classList.add('d-flex');
-		li.classList.add('justify-content-between');
-		li.classList.add('align-items-center');
+		li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
 		//li.classList.add('w-100'); // Needed to get the thing to vertically align
 		li.innerHTML =
-			'<span>' +
-				(x.ts_type === 'primary' ? '<i class="cmefi-logo me-1"></i>' : '') + x.shortname +
+			'<span class="d-flex align-items-center fw-medium">' +
+				(x.ts_type === 'primary' ? '<img class="mx-1" width="14" height="14" src="/static/brand/icon-clear-bg-static-for-png.svg">' : '') + x.shortname +
 			'</span>' + 
-			'<span style="font-size:0.7rem;color: rgb(180, 180, 180)" >' +
+			'<span class="text-xs" style="color: rgb(180, 180, 180)" >' +
 				('Updated ' + dayjs(x.vdate).format('MM/DD/YYYY')) +
 			 '</span>';
 		li.setAttribute('data-ref-table', x.tskey); 
@@ -687,11 +708,9 @@ function drawTable(ts_data_parsed, units) {
 		
 		// Create table and style it
 		const table = document.createElement('table');
-		table.classList.add('table');
-		table.classList.add('data-table');
-		table.classList.add('w-100');
+		table.classList.add('table', 'data-table', 'w-100');
 		table.id = 'table-' + x.tskey;
-		document.querySelector('#table-container > .loadee-container > div').appendChild(table);
+		document.querySelector('#table-container > .loadee-container').appendChild(table);
 		
 		// <span style="font-size:.90rem">Select a series:</span>
 		// <ul class="list-group list-group-vertical m-3" id="li-container">
@@ -710,8 +729,8 @@ function drawTable(ts_data_parsed, units) {
 		//console.log('downloadDiv', downloadDiv);
 		downloadDiv.classList.add('float-end');
 		downloadDiv.id = 'download-' + x.tskey;
-		if (i !== 0) downloadDiv.style.display = 'none'
-		$('#data-card > .card-body > div:first-child > span').after($(downloadDiv).detach());
+		if (x.ts_type !== 'primary') downloadDiv.style.display = 'none'
+		$('#table-container > div.loadee-container > span').after($(downloadDiv).detach());
 		
 		/* Now add event listener */
 		li.addEventListener('click', function() { 
