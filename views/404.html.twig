@@ -1,0 +1,17 @@
+{% extends "partials/base.html.twig" %}
+
+{% block meta %}
+	<meta name="robots" content="noindex">
+{% endblock %}
+
+{% block navbar %}
+	{% include 'partials/navbar-fluid.html.twig' %}
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid"><div class="container p-5 col-10 col-6">
+	<h4>Sorry</h4>
+	<p>Looks like you've reached this page in error.</p>
+	<p>This might be because you've entered the web address incorrectly, or because we've moved the page.</p>
+</div></div>
+{% endblock %}
