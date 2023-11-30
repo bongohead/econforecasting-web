@@ -2,6 +2,8 @@ import { Router } from 'express';
 import { concat_js } from '../middleware.js';
 import fs from 'fs'
 import path from 'path';
+import { fileURLToPath } from 'url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 let blog_router = Router();
 
 const libs =
@@ -17,8 +19,8 @@ blog_router.get('/', concat_js('blog.js', libs), async (req, res, next) => {
 
         const page_length = 2;
 
-        const files = await fs.promises.readdir('./../views/blog_posts');
-        const data = await fs.promises.readFile('./../views/blog_posts/posts.json', 'utf8');
+        const files = await fs.promises.readdir(path.join(__dirname, '..', '..', 'views', 'blog_posts'));
+        const data = await fs.promises.readFile(path.join(__dirname, '..', '..', 'views', 'blog_posts', 'posts.json'), 'utf8');
         const json_doc = JSON.parse(data);
 
         const blog_posts_in_fs = files.filter(file => path.extname(file).toLowerCase() === '.twig');
@@ -87,6 +89,7 @@ blog_router.get('/', concat_js('blog.js', libs), async (req, res, next) => {
         res.render(
             'blog.html.twig',
             {
+                site: process.env.SITE,
                 title: 'Blog | Macropredictions.com',
                 description: 'Our latest commentary, analysis and data on economic forecasting, with a focus on the technical side of modeling and macroeconomics.',
                 keywords: '',
@@ -108,7 +111,7 @@ blog_router.get('/', concat_js('blog.js', libs), async (req, res, next) => {
 blog_router.get('/:post_id', concat_js('blog.js', libs), async (req, res) => {
 
     const post_id = req.params.post_id;
-    const files = await fs.promises.readdir('./../views/blog_posts');
+    const files = await fs.promises.readdir(path.join(__dirname, '..', '..', 'views', 'blog_posts'));
     const file_basenames = files.map(filename => {
         const parts = filename.split('.');
         parts.splice(-2, 2);
