@@ -33,7 +33,7 @@ export const cookie_setter = function(req, res, next) {
 		domain: process.env.DOMAIN, 
 		secure: true,
 		sameSite: 'lax',
-		expires: new Date(Date.now() + 8 * 3600000) // cookie will be removed after 8 hours
+		expires: new Date(Date.now() + 2 * 3600000) // cookie will be removed after 8 hours
 	});
 	
 	next()
