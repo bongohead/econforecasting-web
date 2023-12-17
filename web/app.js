@@ -30,11 +30,12 @@ app.use(helmet({
     crossOriginEmbedderPolicy: false,
     contentSecurityPolicy: {
         directives: {
-            defaultSrc: ["'self'", 'https://cdnjs.cloudflare.com', 'https://fonts.googleapis.com', '*'],
-            scriptSrc: ["'self'", "'unsafe-inline'", 'https://cdnjs.cloudflare.com', 'https://cdn.jsdelivr.net', 'https://cdn.datatables.net', 'https://code.highcharts.com', '*'],
-            styleSrc: ["'self'", "'unsafe-inline'", 'https://cdnjs.cloudflare.com', 'https://cdn.jsdelivr.net', 'https://cdn.datatables.net', 'https://code.highcharts.com', 'https://fonts.googleapis.com', 'https://fonts.gstatic.com'],
+            defaultSrc: ["'self'", 'https://cdnjs.cloudflare.com', 'https://fonts.googleapis.com'],
+            scriptSrc: ["'self'", "'unsafe-inline'", 'https://cdnjs.cloudflare.com', 'https://cdn.jsdelivr.net', 'https://cdn.datatables.net'],
+            styleSrc: ["'self'", "'unsafe-inline'", 'https://cdnjs.cloudflare.com', 'https://cdn.jsdelivr.net', 'https://cdn.datatables.net', 'https://fonts.googleapis.com', 'https://fonts.gstatic.com'],
             fontSrc: ["'self'", 'https://cdnjs.cloudflare.com', 'https://fonts.googelapis.com', 'https://fonts.gstatic.com', 'https://cdn.jsdelivr.net'],
-            connectSrc: ["'self'", 'https://cdnjs.cloudflare.com', 'https://*.econforecasting.com', 'https://*.macropredictions.com', '*']
+            connectSrc: ["'self'", 'https://cdnjs.cloudflare.com', 'https://*.econforecasting.com', 'https://*.macropredictions.com', '*'],
+            formAction: ["'self", 'https://export.highcharts.com']
           }
     }
 }));
@@ -43,7 +44,7 @@ app.use(helmet({
 const allowlist = [
   'https://econforecasting.com', 'https://www.econforecasting.com', 
   'https://pagead2.googlesyndication.com', 'https://static.cloudflareinsights.com', 
-  'https://macropredictions.com', 'https://www.macropredictions.com',
+  'https://macropredictions.com', 'https://www.macropredictions.com'
 ]
 
 const corsOptionsDelegate = function (req, callback) {
