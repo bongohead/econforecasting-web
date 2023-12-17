@@ -1,24 +1,13 @@
-/*
-import dayjs from './libs/dayjs/dayjs'
-import utc from './libs/dayjs/utc'
-import timezone from './libs/dayjs/timezone'
-import Highcharts from './libs/hc/highstock';
-
-dayjs.extend(utc)
-dayjs.extend(timezone)
-
-*/
-
 const getApi = async function(endpoint, timeout = 10, verbose = false) {
 		
 	const timerStart = Date.now();
 	const controller = new AbortController()
 	const timeoutId = setTimeout(() => controller.abort(), timeout * 1000)
 	
-	const jwt =  ('; '+document.cookie).split(`; 1ma023mb22d1ampz2yzamqldff3=`).pop().split(';')[0];
+	const jwt =  ('; '+document.cookie).split(`; 1gasdog=`).pop().split(';')[0];
 
 	const ep = (window.location.href.includes('dev') ? 'https://dev-api.macropredictions.com/external/' : 'https://api.macropredictions.com/external/');
-
+	
 	const fetchRequest = fetch(ep + endpoint, {
 			method: 'get',
 			headers: new Headers({
@@ -72,7 +61,10 @@ const isJson = function (str) {
 
 
 const getColorArray = function() {
-    return ['#4572A7', '#AA4643', '#0ba828', '#80699B', '#3D96AE','#DB843D', '#92A8CD', '#A47D7C', '#B5CA92',"#7cb5ec", "#434348", "#90ed7d", "#f7a35c", "#8085e9", "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1"];
+    return [
+		'#0ba828', '#AA4643', '#4572A7', '#80699B', '#3D96AE','#DB843D', '#92A8CD', '#A47D7C', '#B5CA92',"#7cb5ec", "#434348", 
+		"#90ed7d", "#f7a35c", "#8085e9", "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1"
+	];
 }
 
 const ajaxError = function(e) {
@@ -113,78 +105,72 @@ const init = function() {
 	
 	const sidebar = document.querySelector('nav.sidebar');
 	if (sidebar) {
-		sidebar.querySelectorAll('a').forEach(function(x) {
-			if (x.getAttribute('href') == pathname) x.classList.add('activepage');
-			return;
+
+		sidebar.addEventListener('hide.bs.collapse', function (e) {
+			const a_el = sidebar.querySelector(`a[href="#${e.target.id}"]`);
+			a_el.querySelector('.bi-chevron-right').classList.remove('d-none');
+			a_el.querySelector('.bi-chevron-down').classList.add('d-none');
+
+		});
+
+		sidebar.addEventListener('show.bs.collapse', function (e) {
+			const a_el = sidebar.querySelector(`a[href="#${e.target.id}"]`);
+			a_el.querySelector('.bi-chevron-right').classList.add('d-none');
+			a_el.querySelector('.bi-chevron-down').classList.remove('d-none');
+		});
+
+		sidebar.querySelectorAll('a:not(.nav-link)').forEach(function(x) {
+			if (x.getAttribute('href') == pathname) {
+				x.classList.add('activepage');
+				const div_el = x.parentElement;
+				div_el.classList.add('show');
+				const a_el = sidebar.querySelector(`a[href="#${div_el.id}"]`);
+				a_el.classList.remove('collapsed');
+				a_el.querySelector('.bi-chevron-right').classList.add('d-none');
+				a_el.querySelector('.bi-chevron-down').classList.remove('d-none');
+				return;
+			}
 		})
+
 	}
-
-	// Open navbar on hover for desktops, require a click for mobile
-	const top_level_links = document.querySelectorAll('#navbar-collapse > ul > li.nav-item.dropdown')
-	// Match me to navbar-expand-lg limit (or break limit for navbar collapsing) - check .navbar-toggler @media element
-	top_level_links.forEach(x => {
-
-		x.addEventListener('mouseover', function(e) {
-			if (window.matchMedia('(min-width: 992px)').matches === true) {
-				bootstrap.Dropdown.getOrCreateInstance(this.querySelector('div.dropdown-menu')).show();
-				this.querySelector('a').classList.add('show');
-			}
-			return;
-		});
-		
-		x.addEventListener('click', function(e) {
-			if (window.matchMedia('(min-width: 992px)').matches === false) {
-				bootstrap.Dropdown.getOrCreateInstance(this.querySelector('div.dropdown-menu')).toggle();
-			}
-			return;
-		});
-
-		x.addEventListener('mouseout', function(e) {
-			if (window.matchMedia('(min-width: 992px)').matches === true) {
-				bootstrap.Dropdown.getOrCreateInstance(this.querySelector('.dropdown-menu')).hide()
-				this.querySelector('a').classList.remove('show');
-			}
-			return;
-		});
-
-	})
 
 
 	Highcharts.setOptions({
 		chart: {
 			style: {
-				fontFamily: 'var(--bs-font-sans-serif)',
-			}
+				fontFamily: 'var(--font-family-serif)',
+			},
+			spacingTop: 15,
+            backgroundColor: 'rgba(255, 255, 255, 0)',
+			plotBackgroundColor: '#FFFFFF'
 		},
 		title: {
-			align: 'center',
+			align: 'left',
 			style: {
-				fontFamily: 'var(--bs-font-sans-serif)',
 				color: 'var(--slate-900)',
 				fontSize: '1.1rem',
-				fontWeight: 'bolder'
+				fontWeight: 'normal'
 			}
 		},
 		subtitle: {
 			align: 'center',
 			style: {
-				fontFamily: 'var(--bs-font-sans-serif)',
-				color: '#000000'
+				color: '#334155'
 			}
 		},
 		xAxis: {
-			lineColor: "#000000",
+			lineColor: "var(--slate-800)",
 			lineWidth: 2,
-			tickColor: "#000000",
+			tickColor: "var(--slate-800)",
 			tickWidth: 2,
 			labels: {
 				style: {
-					color: "black"
+					color: 'var(--slate-700)'
 				}
 			},
 			title: {
 				style: {
-					color: "black"
+					color: 'var(--slate-700)'
 				}
 			}
 		},
@@ -194,18 +180,24 @@ const init = function() {
 			gridLineColor: "#CEC6B9",
 			lineColor: "#CEC6B9",
 			minorGridLineColor: "#CEC6B9",
-			labels: {
-				style: {
-					color: "black"
-				}
-			},
 			tickLength: 0,
 			tickColor: "#CEC6B9",
 			tickWidth: 1,
+			labels: {
+				style: {
+					color: 'var(--slate-700)'
+				}
+			},
 			title: {
 				style: {
-					color: "black"
+					color: 'var(--slate-700)'
 				}
+			},
+			opposite: false
+		},
+		caption: {
+			style: {
+				fontSize: '.75rem'
 			}
 		},
 		legend: {
@@ -216,86 +208,103 @@ const init = function() {
 				color: "#3C3C3C"
 			}
 		},
-		credits: {
-			style: {
-				color: "#666"
-			}
-		},
-		labels: {
-			style: {
-				color: "#D7D7D8"
-			}
-		},
-		navigation: {
-			buttonOptions: {
-				symbolStroke: "#DDDDDD",
-				theme: {
-					fill: "#505053"
-				}
-			}
-		},
 		legendBackgroundColor: "rgba(0, 0, 0, 0.5)",
 		background2: "#505053",
 		dataLabelsColor: "#B0B0B3",
 		textColor: "#C0C0C0",
 		contrastTextColor: "#F0F0F3",
 		maskColor: "rgba(255,255,255,0.3)",
-
 		time: {
 			getTimezoneOffset: function(timestamp) {
 				const zone = 'US/Eastern';
-            	// const timezoneOffset = -moment.tz(timestamp, zone).utcOffset();
 				const timezoneOffset = -dayjs.unix(timestamp/1000).tz(zone).utcOffset();
 				return timezoneOffset;
 			}
 		},
 		credits: {
-			enabled: true,
-			text: 'econforecasting.com',
-			href: 'https://econforecasting.com'
+			enabled: false
         },
 		lang: {
-			rangeSelectorZoom: 'Display:'
+			rangeSelectorZoom: 'DISPLAY'
 		},
 		scrollbar: {
 			enabled: false
 		},
 		tooltip: {
 			style: {
-				fontWeight: 'bold',
+				fontWeight: 'bolder',
 				fontSize: '0.85rem'
 			}
 		},
+		exporting: {
+			menuItemDefinitions: {
+				downloadPNG: {text: '<i class="bi bi-filetype-png me-1"></i> Image (PNG)'},
+				downloadSVG: {text: '<i class="bi bi-filetype-svg me-1"></i> Image (SVG)'},
+				downloadPDF: {text: '<i class="bi bi-filetype-pdf me-1"></i> PDF'},
+			},
+			buttons: {
+				contextButton: {
+					menuItems: ['downloadPNG', 'downloadSVG', 'downloadPDF'],
+					text: `<span class="d-flex align-items-center text-xs"><i class="bi bi-download me-1"></i>EXPORT</span>`,
+					useHTML: true,
+					symbol: null,
+					theme: {
+						padding: 6,
+						fill: 'var(--sky)',
+						r:0,
+						style: {fontWeight: 'normal', color: 'var(--slate-100)'},
+						states: {
+							hover: {
+								fill: 'var(--sky-dark)',
+								style: {fontWeight: 'normal', color: 'var(--slate-100)'}
+							},
+							select: {
+								fill: 'var(--sky-darker)',
+								style: {fontWeight: 'normal', color: 'var(--slate-100)'}
+							}
+						}
+					}
+				}
+			}
+		},
 		rangeSelector: {
-			buttonTheme: { // styles for the buttons
-				fill: 'var(--sky-light)',
-				style: {
-					color: 'white'
-				},
+			enabled: true,
+			verticalAlign: 'top',
+			buttonSpacing: 0,
+			buttonPosition: {
+				align: 'center'
+			},
+			inputEnabled: false,
+			inputPosition: {
+				align: 'right',
+				x: -100
+			},	
+			buttonTheme: {
+				width: '6rem',
+				padding: 5,
+				fill: 'var(--sky)',
+				r: 0,
+				style: {fontWeight: 'normal', color: 'var(--slate-100)', fontSize: '.75rem'},
 				states: {
 					hover: {
 						fill: 'var(--sky-dark)',
-						style: {
-							transition: '.2s'
-						}
+						style: {fontWeight: 'normal', color: 'var(--slate-100)'}
 					},
 					select: {
-						fill: 'var(--sky)',
-						style: {
-							color: 'white',
-							fontWeight: 'normal',
-							transition: '.5s'
-						}
+						fill: 'var(--sky-darker)',
+						style: {fontWeight: 'normal', color: 'var(--slate-100)'}
 					}
 				}
 			},
 			inputBoxBorderColor: 'gray',
 			inputStyle: {
-				color: 'black'
+				color: 'var(--slate-600)'
 			},
 			labelStyle: {
-				color: 'black',
-			},
+				fontSize: '.75rem',
+				fontWeight: 'bold',
+				color: 'var(--slate-500)',
+			}
 		}
 	});
 

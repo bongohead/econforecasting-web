@@ -9,13 +9,36 @@ $custom-colors: (
 	slate-800: rgb(30 41 59),
 	slate-900: rgb(15 23 42),
 
-	forest: #2D8C26,
-	forest-dark: #1C6F4A,
-	forest-light: #DDFBD2,
+	// To make a color lighter, rotate the hue towards the nearest bright hue — 60°, 180°, or 300°.
+	// To make a color darker, rotate the hue towards the nearest dark hue — 0°, 120°, or 240°.
+	forest-darker: hsl(120, 58%, 30%),
+	forest-dark: hsl(118, 58%, 35%),
+	forest: hsl(116, 58%, 40%),
+	forest-light: hsl(112, 58%, 55%),
+	forest-lighter: hsl(95, 58%, 75%),
+	forest-lightest: hsl(95, 58%, 90%),
 
-	sky: #0EA5E9,
-	sky-dark: #3276B5,
-	sky-light: #63a7e6,
+	sky-darker: hsl(208, 89%, 40%),
+	sky-dark: hsl(205, 89%, 45%),
+	sky: hsl(199, 89%, 48%),
+	sky-light: hsl(195, 89%, 60%),
+	sky-lighter: hsl(192, 89%, 75%),
+	sky-lightest: hsl(188, 89%, 90%),
+
+	// Accents
+	amber-lightest: #fffbeb,
+	amber-lighter:	#fef3c7,
+	amber-light: #fde68a,
+	amber: #fcd34d,
+	amber-dark: #f59e0b,
+	amber-darker: #d97706, 
+
+	rose-lightest: #fecaca,
+	rose-lighter: #fca5a5,
+	rose-light: #f87171,
+	rose: #ef4444,
+	rose-dark: #dc2626,
+	rose-darker: #991b1b,
 
     "white": #FFFFFF,
 	white-cool: #EDF2F9,
