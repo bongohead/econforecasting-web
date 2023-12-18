@@ -1,0 +1,11 @@
+{
+    "spf": "<li>The Philadelphia Federal Reserve's <a class=\"text-sky-dark fw-bold\" href=\"https://www.philadelphiafed.org/surveys-and-data/real-time-data-research/survey-of-professional-forecasters\">Survey of Professional Forecasters</a></li>",
+    "cbo": "<li>The U.S. Congressional Budget Office's <a class=\"text-sky-dark fw-bolder\" href=\"https://www.cbo.gov/data/budget-economic-data\">10-Year Economic Projections</a></li>",
+    "cb": " <li>The Conference Board's <a class=\"text-sky-dark fw-bolder\"  href=\"https://www.conference-board.org/research/us-forecast/us-forecast\">US Economic Outlook</a></li>",
+    "wsj": "<li>The Wall Street Journal <a class=\"text-sky-dark fw-bolder\" href=\"https://www.wsj.com/economy/economic-forecasting-survey-archive-11617814998\">Economic Forecasting Survey</a></li>",
+    "atl": "<li>The Atlanta Fed's <a class=\"text-sky-dark fw-bolder\"  href=\"https://www.atlantafed.org/cqer/research/gdpnow\">GDPNow</a> model</li>",
+    "stlnow": "<li>The St. Louis Fed's <a  class=\"text-sky-dark fw-bolder\"  href=\"https://fred.stlouisfed.org/series/STLENI\">real GDP nowcast</a></li>",
+    "fnma": "<li>Fannie Mae's <a class=\"text-sky-dark fw-bolder\"  href=\"https://www.fanniemae.com/research-and-insights/forecast\">Economic & Housing Outlook</a></li>",
+    "now": "<li>Our GDP Nowcsat</li>"
+}
+
