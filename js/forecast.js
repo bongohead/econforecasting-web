@@ -87,13 +87,56 @@ document.addEventListener('DOMContentLoaded', function() {
 		withLoader('chart-container', drawChart)(res.ts_data_parsed, res.fullname, res.units, res.hist_freq, res.site);
 		withLoader('table-container', drawTable)(res.ts_data_parsed, res.units);
 
-		if (ud.show_vintage_chart === true) addVintageChartListener(res)
 		if (ud.debug) console.log('Draw time', Date.now() - start);
 	})
 	.catch(e => ajaxError(e));
+
+	if (ud.show_vintage_chart === true) {		
+
+		document.querySelector('#fixed-date-chart-modal').addEventListener('shown.bs.modal', function(e) {
+			e.preventDefault();
+			e.stopPropagation();
+			if (Highcharts.charts[document.querySelector('#fixed-date-chart-container > div.loadee-container').getAttribute('data-highcharts-chart')] != undefined) return;
+
+			const get_dates_with_vintages = getApi(`get_dates_with_vintages?varname=${ud.varname}&forecast=${ud.primary_forecast}`)
+
+			Promise.all([get_hist_obs, get_dates_with_vintages])
+				.then(function(r) {
+					// if (ud.debug) console.log('Obs dates data load time', performance.now() - start, r[1]);
+					const res = {...ud, hist: r[0][0], dates_with_vintages: r[1].map(z => z.date)};
+					return(res);
+				}).then(function(res) {
+					// if (ud.debug) console.log('r', res);
+					withLoader('fixed-date-chart-container', drawFixedDateChart)(res);
+				})
+				.catch(e => ajaxError(e));
+		});
+
+		document.querySelector('#fixed-vdate-chart-modal').addEventListener('shown.bs.modal', function(e) {
+			e.preventDefault();
+			e.stopPropagation();
+			if (Highcharts.charts[document.querySelector('#fixed-vdate-chart-container > div.loadee-container').getAttribute('data-highcharts-chart')] != undefined) return;
+
+			const get_vdates = getApi(`get_vdates?varname=${ud.varname}&forecast=${ud.primary_forecast}`);
+		
+			Promise.all([get_hist_obs, get_vdates])
+				.then(function(r) {
+					// if (ud.debug) console.log('Obs dates data load time', performance.now() - start, r[1]);
+					const res = {...ud, hist: r[0][0], vdates: r[1].map(z => z.vdate)};
+					return(res);
+				}).then(function(res) {
+					// if (ud.debug) console.log('r', res);
+					withLoader('fixed-vdate-chart-container', drawFixedVdateChart)(res);
+				})
+				.catch(e => ajaxError(e));
+		});
+
+	}
+
+
 });
 
-/*** Draw chart ***/
+/*** Draw primary chart ***/
 const drawChart = function(ts_data_parsed, fullname, units, hist_freq, site) {
 	
 	const chart_data =
@@ -113,7 +156,7 @@ const drawChart = function(ts_data_parsed, fullname, units, hist_freq, site) {
 							</span>
 							<span class="d-block fst-italic text-slate-500" style="font-size:.85rem;">values are ${(x.freq === 'q' ? 'quarterly' : 'monthly')} aggregates</span>
 						</div>`,
-						label_el: `${x.shortname}${x.tskey === 'hist' ? '' : ' ' + dayjs(x.vdate).format('MM/DD')}`
+					label_el: `${x.shortname}${x.tskey === 'hist' ? '' : ' ' + dayjs(x.vdate).format('MM/DD')}`
 				},
 				data: x.data.map(x => [dayjs(x[0]).unix() * 1000, x[1]]),
 				type: 'line',
@@ -127,6 +170,8 @@ const drawChart = function(ts_data_parsed, fullname, units, hist_freq, site) {
 				index: i
 			}
 		));
+
+	const hist_data = chart_data.filter(x => x.id === 'hist')[0].data;
 	// console.log('chart_data', chart_data);
 	
 	const o = {
@@ -177,6 +222,7 @@ const drawChart = function(ts_data_parsed, fullname, units, hist_freq, site) {
 			enabled: true,
 			sourceWidth: 1200,
 			sourceHeight: 600,
+			fallbackToExportServer: false,
 			chartOptions: {
 				chart: {
 					backgroundColor: 'rgba(255, 255, 255, 1)',
@@ -230,6 +276,7 @@ const drawChart = function(ts_data_parsed, fullname, units, hist_freq, site) {
 			}
         },
 		rangeSelector: {
+			enabled: true,
 			buttons: [
 				{
 					text: '1Y',
@@ -237,12 +284,9 @@ const drawChart = function(ts_data_parsed, fullname, units, hist_freq, site) {
 						click: function(e) {
 							const state = $('#chart-container > div.loadee-container ').highcharts().rangeSelector.buttons[0].state;
 							chart.xAxis[0].setExtremes(
-								Math.max(
-									dayjs.min(ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => dayjs(x[0]))).unix() * 1000,
-									dayjs().add(-12, 'M').unix() * 1000
-									),
+								Math.max(hist_data[0][0], dayjs().add(-12, 'M').unix() * 1000),
 								dayjs().add(12, 'M').unix() * 1000
-								);
+							);
 							$('#chart-container > div.loadee-container').highcharts().rangeSelector.buttons[0].setState(state === 0 ? 2 : 0);
 							return false;
 						}
@@ -253,10 +297,7 @@ const drawChart = function(ts_data_parsed, fullname, units, hist_freq, site) {
 						click: function(e) {
 							const state = $('#chart-container > div.loadee-container ').highcharts().rangeSelector.buttons[1].state;
 							chart.xAxis[0].setExtremes(
-								Math.max(
-									dayjs.min(ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => dayjs(x[0]))).unix() * 1000,
-									dayjs().add(-24, 'M').unix() * 1000
-									),
+								Math.max(hist_data[0][0], dayjs().add(-24, 'M').unix() * 1000),
 								dayjs().add(24, 'M').unix() * 1000
 								);
 							$('#chart-container > div.loadee-container ').highcharts().rangeSelector.buttons[1].setState(state === 0 ? 2 : 0);
@@ -269,10 +310,7 @@ const drawChart = function(ts_data_parsed, fullname, units, hist_freq, site) {
 						click: function(e) {
 							const state = $('#chart-container > div.loadee-container ').highcharts().rangeSelector.buttons[2].state;
 							chart.xAxis[0].setExtremes(
-								Math.max(
-									dayjs.min(ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => dayjs(x[0]))).unix() * 1000,
-									dayjs().add(-60, 'M').unix() * 1000
-									),
+								Math.max(hist_data[0][0], dayjs().add(-60, 'M').unix() * 1000),
 								dayjs().add(60, 'M').unix() * 1000
 								);
 							$('#chart-container > div.loadee-container ').highcharts().rangeSelector.buttons[2].setState(state === 0 ? 2 : 0);
@@ -298,20 +336,8 @@ const drawChart = function(ts_data_parsed, fullname, units, hist_freq, site) {
 				{color: '#D8D8D8', from: Date.UTC(2001, 3, 1), to: Date.UTC(2001, 11, 30)}
 			],
 			ordinal: false,
-			min:
-				Math.max(
-					// Show max of either 2 years ago or first historical date. This handles situations where the first historical date is very recent.
-					dayjs.min(ts_data_parsed.filter(x => x.tskey === 'hist')[0].data.map(x => dayjs(x[0]))).unix() * 1000,
-					dayjs().add(-24, 'M').unix() * 1000
-				),
-			max: 
-				Math.min(
-					// Show min of either 2 years ahead or last end date of any forecast ( + 1 month).
-					dayjs.max(
-						getData('forecast').ts_data_parsed.filter(x => x.tskey !== 'hist').map(x => dayjs(x.data[x.data.length - 1][0]))
-						).add(1, 'month').unix() * 1000,
-					dayjs().add(24, 'M').unix() * 1000,
-				)
+			min: Math.max(hist_data[0][0], dayjs().add(-24, 'M').unix() * 1000),
+			max: dayjs().add(24, 'M').unix() * 1000
 		},
 		yAxis: {
             labels: {
@@ -408,247 +434,531 @@ const drawChart = function(ts_data_parsed, fullname, units, hist_freq, site) {
 }
 
 
+const drawFixedDateChart = function(res) {
 
+	const obs_dates = res.dates_with_vintages;
+	const freq = res.hist_freq === 'm' ? 'month' : 'quarter';
+	const floor_today = dayjs().startOf(freq).format('YYYY-MM-DD');
 
-const addVintageChartListener = function (res) {
+	// Define a custom symbol path
+	Highcharts.SVGRenderer.prototype.symbols.cross = function (x, y, w, h) {
+		return ['M', x, y, 'L', x + w, y + h, 'M', x + w, y, 'L', x, y + h, 'z'];
+	};
+
+	const hist_data = {
+		name: 'Actual values',
+		data: res.hist.data.map(x => [dayjs(x.date).endOf(freq).unix() * 1000, x.value]).sort((a, b) => a[0]- b[0]),
+		type: 'line',
+		showInLegend: false,
+		enableMouseTracking: false,
+		color: 'rgb(100, 116, 139)',
+		visible: true,
+		custom: {
+			type: 'hist'
+		},
+		states: {
+			inactive: {
+				opacity: 1
+			}
+		}
+	};
 	
-	if (res.debug) console.log('Data stored in memory for event listener', res);
-
-	const modal = document.querySelector('#primary-forecast-vintage-modal')
+	const chart_data_0 = obs_dates.map((d, i) => {
+		const pred = {
+			name: dayjs(d).format('MMM YYYY'),
+			type: 'line',
+			id: 's' + d,
+			data: [],
+			color: getColor(i),
+			visible: false,
+			custom: {
+				type: 'forecast',
+				yyyymmdd_date: d
+			}
+		};
+		const hist = {
+			linkedTo: 's' + d,
+			name: 'Final ' + dayjs(d).format('MMM YYYY') + ' value',
+			data: [],
+			color: pred.color,
+			type: 'scatter',
+			visible: pred.visible,
+			showInLegend: false,
+			custom: {
+				type: 'actual'
+			}
+		};
 		
-	modal.addEventListener('shown.bs.modal', function(e) {
+		return [pred, hist]
+	}).flat();
 
-		e.preventDefault();
-		e.stopPropagation();
-		// Only build on first modal load
-		if (Highcharts.charts[document.querySelector('#vintage-chart-container').getAttribute('data-highcharts-chart')] != undefined) return;
+	const chart_data = chart_data_0.concat(hist_data);
 
-		const get_monthly_vintage_forecast_obs = getApi(`get_monthly_vintage_forecast_obs?varname=${res.varname}&forecast=${res.primary_forecast}`, 10, res.debug);
-		get_monthly_vintage_forecast_obs.then(r => {
+	const o = {
+		chart: {
+		},
+		title: {
+			text: res.fullname + ' - Rolling Forecasts by Target Period',
+			align: 'left',
+			style: {
+				fontWeight: "normal"
+			}
+		},
+		caption: {
+			enabled: true,
+			useHTML: true,
+			text: 
+				`
+				<span class="text-xs d-block">
+					<a href="https://${res.site}.com" class="d-flex align-items-center text-xs justify-content-end"><img class="me-1" width="12" height="12" src="/static/brand/small.svg"> https://${res.site}.com</a>
+				</span>
+				`,
+			align: 'left',
+			floating: false
+		},
+		exporting: {
+			enabled: true,
+			fallbackToExportServer: false,
+			sourceWidth: 1000,
+			sourceHeight: 500,
+			chartOptions: {
+				chart: {
+					backgroundColor: 'rgba(255, 255, 255, 1)',
+					plotBackgroundColor: '#FFFFFF',	
+					plotBorderWidth: 0,
+					style: {
+						fontFamily: 'sans-serif'
+					}
+				},
+				filename: res.fullname,
+				title: {
+					align: 'center',
+					margin: 20
+				},
+				legend: {
+					enabled: false
+				},
+				rangeSelector: {
+					enabled: false
+				},
+				navigator: {
+					enabled: false
+				},
+				caption: {
+					enabled: true,
+					floating: false,
+					text: `https://${res.site}.com`
+				}	
+			}
+		},			
+		plotOptions: {
+			line: {
+				showInNavigator: true,
+				label: {
+					enabled: true,
+					formatter: function() {
+						return this.options.custom.type === 'forecast' ? `<span>${this.name} forecast</span>` : `${this.name}`
+					}
+				},
+				dataGrouping: {
+					enabled: false
+				},
+				events: {
+					show: function () {
 
-			const vintage_values_parsed = r.map(x => ({date: x.date, vdate: x.vdate, value: parseFloat(x.d1)}));
-			const vdates = [...new Set(vintage_values_parsed.map(x => x.vdate))]
+						const series = this;
+						const hist_series = this.linkedSeries[0];
+						const chart = this.chart;
+						chart.showLoading('Loading data ...');
 
-			const gradient_map = gradient.create(
-			  [0, vdates.length * .25, vdates.length * .3, vdates.length * .35, vdates.length * .6, vdates.length * .8, vdates.length], //array of color stops
-			  ['#0094ff', '#00ffa8', '#8aff00', '#FFd200', '#FF8c00', '#FF5a00', '#FF1e00'], //array of colors corresponding to color stops
-			  'hex' //format of colors in previous parameter - 'hex', 'htmlcolor', 'rgb', or 'rgba'
-			);
-
-			const chart_data_0 = vdates
-				.map(vdate => ({
-					vdate: vdate,
-					data: vintage_values_parsed.filter(y => y.vdate === vdate).map(y => [y.date, y.value])
-				}))
-				.sort((a, b) => dayjs(a.vdate) > dayjs(b.vdate) ? 1 : -1)
-				.map((x, i) => ({
-					index: i,
-					color: gradient.valToColor(i, gradient_map, 'hex'),
-					name: dayjs(x.vdate).format('YYYY - MMM'),
-					custom: {
-						label: x.vdate + ' Forecast'
-					},
-					data: x.data.map(y => [dayjs(y[0]).unix() * 1000, y[1]]),
-					visible: (res.hist_freq === 'm' ? dayjs(x.vdate).month() == dayjs().month() : dayjs(x.vdate).quarter() == dayjs().quarter() ),
-					lineWidth: 2,
-					opacity: .7,
-					dashStyle: 'ShortDash',
-					zIndex: 4
-				}));
-
-				const hist_chart_data = {
-					data: res.ts_data_parsed.filter(x => x.tskey === 'hist')[0]['data']
-						.map(y => [dayjs(y[0]).unix() * 1000, y[1]])
-						.filter(y => dayjs(y[0]) >= dayjs(chart_data_0[0].data[0][0]) - 5 * 365 * 86400000),
-					color: 'black',
-					name: 'Historical Data',
-					visible: true,
-					lineWidth: 4,
-					opacity: .7,
-					custom: {
-						label: 'Realized History'
-					},
-					marker : {
-						enabled: true,
-						radius: 2,
-						symbol: 'triangle'
-					},
-					zIndex: 3
-				};
-				
-				// console.log(hist_chart_data);
-				const chart_data = chart_data_0.concat(hist_chart_data)
-				
-				if (res.debug) console.log('vintage_chart_data', chart_data);
-				
-				const o = {
-					chart: {
-					},
-					title: {
-						text: res.fullname + ' - Historical Forecast Values',
-						align: 'left',
-						style: {
-							fontWeight: "normal"
-						}
-					},
-					caption: {
-						enabled: true,
-						useHTML: true,
-						text: 
-							`
-							<span class="text-xs d-block">
-								<a href="https://${res.site}.com" class="d-flex align-items-center text-xs justify-content-end"><img class="me-1" width="12" height="12" src="/static/brand/small.svg"> https://${res.site}.com</a>
-							</span>
-							`,
-						align: 'left',
-						floating: false
-					},
-					exporting: {
-						enabled: true,
-						sourceWidth: 1200,
-						sourceHeight: 600,
-						chartOptions: {
-							chart: {
-								backgroundColor: 'rgba(255, 255, 255, 1)',
-								plotBackgroundColor: '#FFFFFF',	
-								plotBorderWidth: 0,
-								style: {
-									fontFamily: 'sans-serif'
+						getApi(`get_forecast_vintages_for_date?varname=${res.varname}&forecast=${res.primary_forecast}&date=${this.options.custom.yyyymmdd_date}&hist_freq=${res.hist_freq}`, 10, res.debug)
+							.then(function(r) {
+								chart.series.forEach(s => {
+									if (s.options.id !== series.options.id & s.options.id !== hist_series.options.id && s.options.visible) s.hide()
+								});
+								if (r[0].actual !== null) {
+									hist_series.setData([[dayjs(r[0].date).endOf(freq).unix() * 1000, r[0].actual]], true);
 								}
-							},
-							filename: res.fullname,
-							title: {
-								align: 'center',
-								margin: 20
-							},
-							legend: {
-								enabled: false
-							},
-							rangeSelector: {
-								enabled: false
-							},
-							navigator: {
-								enabled: false
-							},
-							caption: {
-								enabled: true,
-								floating: false,
-								text: `https://${res.site}.com`
-							}	
-						}
-					},			
-					plotOptions: {
-						series: {
-							//shadow: true,
-							showInNavigator: true,
-							label: {
-								enabled: false 
-							},
-							dataGrouping: {
-								enabled: true,
-								units: [['day', [1]]]
-							},
-							dataLabels: {
-								enabled: true,
-								crop: false,
-								overflow: 'none',
-								align: 'left',
-								verticalAlign: 'middle',
-								formatter: function() {
-									if (this.point === this.series.points[Math.ceil((this.series.points.length - 1)/3)]) {
-										return '<span style="color:'+this.series.color+'">'+this.series.options.custom.label+'</span>';
-									}
-								}
-							}
-						}
+								const new_data = r[0].values.map(y => [dayjs(y[0]).unix() * 1000, y[1]]);
+								series.setData(new_data, true);
+								chart.xAxis[0].setExtremes(new_data[0][0], new_data[new_data.length - 1][0] + 86400 * 31000 )
+								chart.hideLoading();
+							})
 					},
-					rangeSelector: {
-						enabled: false
-					},
-					xAxis: {
-						type: 'datetime',
-						dateTimeLabelFormats: {
-							day: "%m-%d-%Y",
-							week: "%m-%d-%Y",
-							month: "%m/%Y",
-						},
-						plotBands: [
-							{color: '#D8D8D8', from: Date.UTC(2020, 2, 1), to: Date.UTC(2021, 2, 28)},
-							{color: '#D8D8D8', from: Date.UTC(2007, 12, 1), to: Date.UTC(2009, 6, 30)},
-							{color: '#D8D8D8', from: Date.UTC(2001, 3, 1), to: Date.UTC(2001, 11, 30)}
-						],
-						ordinal: false
-					},
-					yAxis: {
-						labels: {
-							reserveSpace: true,
-							formatter: function () {
-								return this.value.toFixed(1) + '%';
-							}
-						},
-						title: {
-							text: res.units
-						},
-						opposite: false
-					},
-					navigator: {
-						enabled: true,
-						height: 20,
-						maskFill: 'rgba(48, 79, 11, .3)'
-					},
-					legend: {
-						enabled: true,
-						y: 38,
-						backgroundColor: 'var(--white-warmer)',
-						borderWidth: 0,
-						align: 'right',
-						padding: 10,
-						verticalAlign: 'top',
-						layout: 'vertical',
-						title: {
-							text: 
-								'<span class="text-sm fw-normal">Prior Forecasts </span>' +
-								'<span class="text-xs fw-normal fst-italic text-slate-500" >(click labels to hide/show)</span>'
-						},
-						reversed: true
-					},
-					tooltip: {
-						useHTML: true,
-						shared: true,
-						backgroundColor: 'rgba(255, 255, 255, .8)',
-						formatter: function () {
-							const points = this.points;
-							const text =
-								'Historical Forecasts for ' + dayjs(this.x).format('MMM YYYY') + '' +
-								'<table>' +
-								'<tr class="px-1" style="border-bottom:1px solid black;font-weight:400;"><td>DATE</td><td class="px-2" style="font-weight:400">' +
-									'FORECAST' +
-								'</td></tr>' +
-								points.map(function(point) {
-									const str =
-										`<tr>
-											<td class="px-1" style="font-weight:500;color:${point.color}">${point.series.options.custom.label}</td>
-											<td class="px-2" style="font-weight:500;">${point.y.toFixed(2)}</td>
-										</tr>`;
-									return str;
-								}).join('') +
-								'</table>';
-							return text;
-						}
-					},
-					series: chart_data
-				};
-				
-				const chart = Highcharts.stockChart('vintage-chart-container', o);
-				return;
-		
-		});
-		
-	});
+					hide: function() {
+						this.setData([], true);
+					}
+				}
+			},
+			scatter: {
+				enableMouseTracking: false,
+				dataLabels: {
+					enabled: true,
+					formatter: function() {
+						return `<span style="color:${this.series.color}">Final value: ` + this.y + '</span>';
+					}
+				},
+				marker: {
+					symbol: 'cross',
+					lineColor: null,
+					lineWidth: 3,
+					// height: 10,
+					// width: 10,
+					radius: 7
+				}
+			}
+		},
+		rangeSelector: {
+			enabled: false
+		},
+		xAxis: {
+			type: 'datetime',
+			dateTimeLabelFormats: {
+				day: "%m-%d-%Y",
+				week: "%m-%d-%Y",
+				month: "%m/%Y",
+			},
+			plotBands: [
+				{color: '#D8D8D8', from: Date.UTC(2020, 2, 1), to: Date.UTC(2021, 2, 28)},
+				{color: '#D8D8D8', from: Date.UTC(2007, 12, 1), to: Date.UTC(2009, 6, 30)},
+				{color: '#D8D8D8', from: Date.UTC(2001, 3, 1), to: Date.UTC(2001, 11, 30)}
+			],
+			ordinal: false,
+			title: {
+				text: 'Date of forecast'
+			}
+		},
+		yAxis: {
+			labels: {
+				reserveSpace: true,
+				formatter: function () {
+					return this.value.toFixed(2) + '%';
+				}
+			},
+			opposite: false
+		},
+		navigator: {
+			enabled: false,
+		},
+		legend: {
+			enabled: true,
+			y: 38,
+			backgroundColor: 'var(--white-warmer)',
+			borderWidth: 0,
+			align: 'right',
+			padding: 10,
+			verticalAlign: 'top',
+			layout: 'vertical',
+			title: {
+				text: 
+					'<span class="text-sm fw-normal">Target Forecast</span>'
+			},
+			reversed: true,
+			navigation: {
+				activeColor: 'var(--sky)',
+				animation: true,
+				arrowSize: 12,
+				inactiveColor: '#CCC',
+				style: {
+					color: 'var(--slate-500)'
+				}
+			}
+		},
+		tooltip: {
+			useHTML: true,
+			shared: true,
+			backgroundColor: 'rgba(255, 255, 255, .8)',
+			formatter: function () {
+				return `${dayjs(this.x).format('MMM Do YYYY')} forecast for <span style="color:${this.color}">${this.series.name} ${res.fullname}</span>: ${this.y}`
+			}
+
+		},
+		series: chart_data
+	};
 	
-	
+	const chart = Highcharts.stockChart(document.querySelector('#fixed-date-chart-container > .loadee-container'), o);
+	chart.series.filter(s => s.options.custom.yyyymmdd_date === floor_today)[0].show();
 	return;
 }
+
+const drawFixedVdateChart = function (res) {
+
+	// const vintage_values_parsed = r.map(x => ({date: x.date, vdate: x.vdate, value: parseFloat(x.d1)}));
+	const vdates = res.vdates;
+
+	// const gradient_map = gradient.create(
+	// 	[0, vdates.length * .25, vdates.length * .3, vdates.length * .35, vdates.length * .6, vdates.length * .8, vdates.length], //array of color stops
+	// 	['#0094ff', '#00ffa8', '#8aff00', '#FFd200', '#FF8c00', '#FF5a00', '#FF1e00'], //array of colors corresponding to color stops
+	// 	'hex' //format of colors in previous parameter - 'hex', 'htmlcolor', 'rgb', or 'rgba'
+	// );
+
+	const hist_data = {
+		data: res.hist.data.map(x => [dayjs(x.date).unix() * 1000, x.value]).sort((a, b) => a[0]- b[0]),
+		color: 'rgb(100, 116, 139)',
+		name: 'Historical Data',
+		visible: true,
+		lineWidth: 4,
+		opacity: .7,
+		custom: {
+			type: 'hist',
+			legend_label: 'Realized Value'
+		},
+		marker : {
+			enabled: true,
+			radius: 2,
+			symbol: 'triangle'
+		},
+		zIndex: 3
+	};
+
+	const chart_data_0 = 
+		vdates.map((vdate, i) => ({
+			index: i,
+			color: getColor(i),
+			name: dayjs(vdate).format('MM/DD/YY'),
+			custom: {
+				type: 'forecast',
+				legend_label: dayjs(vdate).format('MMM Do YYYY') + ' Forecast',
+				yyyymmdd_vdate: vdate
+			},
+			data: [],
+			visible: false,
+			lineWidth: 2,
+			opacity: .7,
+			dashStyle: 'ShortDash',
+			zIndex: 4
+		}));
+
+	const chart_data = chart_data_0.concat(hist_data);
+				
+	const o = {
+		chart: {
+		},
+		title: {
+			text: res.fullname + ' - Prior Forecasts',
+			align: 'left',
+			style: {
+				fontWeight: "normal"
+			}
+		},
+		caption: {
+			enabled: true,
+			useHTML: true,
+			text: 
+				`
+				<span class="text-xs d-block">
+					<a href="https://${res.site}.com" class="d-flex align-items-center text-xs justify-content-end"><img class="me-1" width="12" height="12" src="/static/brand/small.svg"> https://${res.site}.com</a>
+				</span>
+				`,
+			align: 'left',
+			floating: false
+		},
+		exporting: {
+			enabled: true,
+			fallbackToExportServer: false,
+			sourceWidth: 1200,
+			sourceHeight: 600,
+			chartOptions: {
+				chart: {
+					backgroundColor: 'rgba(255, 255, 255, 1)',
+					plotBackgroundColor: '#FFFFFF',	
+					plotBorderWidth: 0,
+					style: {
+						fontFamily: 'sans-serif'
+					}
+				},
+				filename: res.fullname,
+				title: {
+					align: 'center',
+					margin: 20
+				},
+				legend: {
+					enabled: false
+				},
+				rangeSelector: {
+					enabled: false
+				},
+				navigator: {
+					enabled: false
+				},
+				caption: {
+					enabled: true,
+					floating: false,
+					text: `https://${res.site}.com`
+				}	
+			}
+		},			
+		plotOptions: {
+			line: {
+				label: {
+					enabled: true,
+					formatter: function() {
+						return `${this.name}`
+					}
+				},
+				dataGrouping: {
+					enabled: false
+				},
+				events: {
+					show: function () {
+						const series = this;
+						const chart = this.chart;
+						if (this.options.custom.type !== 'forecast') return;
+						chart.showLoading('Loading data ...');
+
+						getApi(`get_forecasts_for_vdate?varname=${res.varname}&forecast=${res.primary_forecast}&vdate=${this.options.custom.yyyymmdd_vdate}`, 10, res.debug)
+							.then(function(r) {
+								const new_data = r[0].values.map(y => [dayjs(y[0]).unix() * 1000, y[1]]);
+								series.setData(new_data, true);
+								chart.hideLoading();
+							})
+					},
+					hide: function() {
+						if (this.options.custom.type !== 'forecast') return;
+						this.setData([], true);
+					}
+				}
+			}
+		},
+		rangeSelector: {
+			enabled: true,
+			floating: true,
+			y: -40,
+			buttons: [
+				{
+					text: '1Y',
+					events: {
+						click: function(e) {
+							const state = $('#fixed-vdate-chart-container > div.loadee-container ').highcharts().rangeSelector.buttons[0].state;
+							chart.xAxis[0].setExtremes(
+								Math.max(hist_data.data[0][0], dayjs().add(-12, 'M').unix() * 1000),
+								dayjs().add(12, 'M').unix() * 1000
+							);
+							$('#fixed-vdate-chart-container > div.loadee-container').highcharts().rangeSelector.buttons[0].setState(state === 0 ? 2 : 0);
+							return false;
+						}
+					}
+				}, {
+					text: '2Y',
+					events: {
+						click: function(e) {
+							const state = $('#fixed-vdate-chart-container > div.loadee-container ').highcharts().rangeSelector.buttons[1].state;
+							chart.xAxis[0].setExtremes(
+								Math.max(hist_data.data[0][0], dayjs().add(-24, 'M').unix() * 1000),
+								dayjs().add(24, 'M').unix() * 1000
+							);
+							$('#fixed-vdate-chart-container > div.loadee-container ').highcharts().rangeSelector.buttons[1].setState(state === 0 ? 2 : 0);
+							return false;
+						}
+					}
+				}, {
+					text: '5Y',
+					events: {
+						click: function(e) {
+							const state = $('#fixed-vdate-chart-container > div.loadee-container ').highcharts().rangeSelector.buttons[2].state;
+							chart.xAxis[0].setExtremes(
+								Math.max(hist_data.data[0][0], dayjs().add(-60, 'M').unix() * 1000),
+								dayjs().add(60, 'M').unix() * 1000
+							);
+							$('#fixed-vdate-chart-container > div.loadee-container ').highcharts().rangeSelector.buttons[2].setState(state === 0 ? 2 : 0);
+							return false;
+						}
+					}
+				}, {
+					type: 'all',
+					text: 'Full Historical Data & Forecast'
+				}
+			]
+		},
+		xAxis: {
+			type: 'datetime',
+			dateTimeLabelFormats: {
+				day: "%m-%d-%Y",
+				week: "%m-%d-%Y",
+				month: "%m/%Y",
+			},
+			plotBands: [
+				{color: '#D8D8D8', from: Date.UTC(2020, 2, 1), to: Date.UTC(2021, 2, 28)},
+				{color: '#D8D8D8', from: Date.UTC(2007, 12, 1), to: Date.UTC(2009, 6, 30)},
+				{color: '#D8D8D8', from: Date.UTC(2001, 3, 1), to: Date.UTC(2001, 11, 30)}
+			],
+			ordinal: false,
+			min: Math.max(hist_data.data[0][0], dayjs().add(-60, 'M').unix() * 1000),
+			max: dayjs().add(60, 'M').unix() * 1000
+		},
+		yAxis: {
+			labels: {
+				reserveSpace: true,
+				formatter: function () {
+					return this.value.toFixed(1) + '%';
+				}
+			},
+			opposite: false
+		},
+		navigator: {
+			enabled: false,
+			height: 20,
+			maskFill: 'rgba(48, 79, 11, .3)'
+		},
+		legend: {
+			enabled: true,
+			y: 8,
+			backgroundColor: 'var(--white-warmer)',
+			borderWidth: 0,
+			align: 'right',
+			padding: 10,
+			verticalAlign: 'top',
+			layout: 'vertical',
+			title: {
+				text: '<span class="text-sm fw-normal">Prior Forecasts </span>'
+			},
+			maxHeight: 400,
+			reversed: true,
+			navigation: {
+				activeColor: 'var(--sky)',
+				animation: true,
+				arrowSize: 12,
+				inactiveColor: '#CCC',
+				style: {
+					color: 'var(--slate-500)'
+				}
+			}	
+		},
+		tooltip: {
+			useHTML: true,
+			shared: true,
+			backgroundColor: 'rgba(255, 255, 255, .8)',
+			formatter: function () {
+				const points = this.points;
+				const text =
+					'Historical Forecasts for ' + dayjs(this.x).format('MMM YYYY') + '' +
+					'<table>' +
+					'<tr class="px-1" style="border-bottom:1px solid black;font-weight:400;"><td>DATE</td><td class="px-2" style="font-weight:400">' +
+						'FORECAST' +
+					'</td></tr>' +
+					points.map(function(point) {
+						const str =
+							`<tr>
+								<td class="px-1" style="font-weight:500;color:${point.color}">${point.series.options.custom.legend_label}</td>
+								<td class="px-2" style="font-weight:500;">${point.y.toFixed(2)}</td>
+							</tr>`;
+						return str;
+					}).join('') +
+					'</table>';
+				return text;
+			}
+		},
+		series: chart_data
+	};
+	
+	const chart = Highcharts.stockChart(document.querySelector('#fixed-vdate-chart-container > .loadee-container'), o);
+	chart.series.slice(-4).forEach(s => s.show());
+	chart.rangeSelector.buttons[2].setState(2);
+
+	return;
+		
+}
+
 
 
 

@@ -19,7 +19,7 @@ const getApi = async function(endpoint, timeout = 10, verbose = false) {
 			signal: controller.signal  // Eventually migrate to AbortSignal https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal/timeout
 		}).then((response) => {
 			if (!response.ok) {
-				throw new Error(`HTTP error: ${response.status}`);
+				return response.text().then(text => {throw new Error(`HTTP error: ${response.status} - ${text}`)})
 			}
 			clearTimeout(timeoutId);
 			if (verbose) console.log('Fetch: '+ (Date.now() - timerStart));
@@ -67,6 +67,15 @@ const getColorArray = function() {
 	];
 }
 
+
+function getColor(i) {
+	const colors = [
+		'#0ba828', '#AA4643', '#4572A7', '#80699B', '#3D96AE','#DB843D', '#92A8CD', '#A47D7C', '#B5CA92',"#7cb5ec", "#434348", 
+		"#90ed7d", "#f7a35c", "#8085e9", "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1"
+	];
+	return colors[i % colors.length];
+ }
+
 const ajaxError = function(e) {
 
 	console.log('Error: ', e);
@@ -87,6 +96,7 @@ const init = function() {
 	dayjs.extend(window.dayjs_plugin_timezone);
 	dayjs.extend(window.dayjs_plugin_minMax);
 	dayjs.extend(window.dayjs_plugin_advancedFormat);
+	dayjs.extend(window.dayjs_plugin_quarterOfYear);
 
 	const pathname = window.location.pathname;
 	const navbar = document.querySelector('nav.navbar');
