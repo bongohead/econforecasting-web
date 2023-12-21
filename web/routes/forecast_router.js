@@ -12,8 +12,8 @@ const libs =
     [
         'jquery/jquery',
         'dt/jquery.dataTables', 'dt/dataTables.bootstrap5', 'dt/dataTables.buttons', 'dt/buttons.html5',
-        'dayjs/dayjs', 'dayjs/timezone', 'dayjs/utc', 'dayjs/minmax', 'dayjs/advancedformat',
-        'hc/highstock', 'hc/highcharts-more', 'hc/modules/accessibility',
+        'dayjs/dayjs', 'dayjs/timezone', 'dayjs/utc', 'dayjs/minmax', 'dayjs/advancedformat', 'dayjs/quarterofyear',
+        'hc/highstock', 'hc/highcharts-more', 'hc/modules/accessibility', 'hc/modules/exporting', 'hc/modules/offline-exporting', 'hc/modules/series-labels',
         'bootstrap/bootstrap', 'gradient/gradient', 
     ].map(f => `libs/${f}`)
     .concat(['helpers'])
@@ -38,7 +38,7 @@ forecast_router.get('/:varname', concat_js('forecast.js', libs), async (req, res
 
         res.render('forecast.html.twig', {
             site: process.env.SITE,
-            title: varname_data.fullname + ' | Macropredictions.com',
+            title: varname_data.fullname + ' | ' + process.env.SITE +'.com',
             description: varname_data.meta_description,
             keywords: varname_data.meta_keywords,
             canonical: `https://macropredictions.com/forecast/${varname_data.varname}`,
@@ -47,7 +47,7 @@ forecast_router.get('/:varname', concat_js('forecast.js', libs), async (req, res
             fullname: varname_data.fullname,
             primary_forecast: varname_data.primary_forecast,
             secondary_forecasts: varname_data.secondary_forecasts,
-            show_vintage_chart: true,
+            show_vintage_chart: varname_data.show_vintage_chart,
             units: varname_data.units,
             hist_freq: varname_data.hist_freq,
             hist_update_freq: varname_data.hist_update_freq,

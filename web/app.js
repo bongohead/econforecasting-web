@@ -31,11 +31,12 @@ app.use(helmet({
     contentSecurityPolicy: {
         directives: {
             defaultSrc: ["'self'", 'https://cdnjs.cloudflare.com', 'https://fonts.googleapis.com'],
-            scriptSrc: ["'self'", "'unsafe-inline'", 'https://cdnjs.cloudflare.com', 'https://cdn.jsdelivr.net', 'https://cdn.datatables.net'],
+            scriptSrc: ["'self'", "'unsafe-inline'", 'https://cdnjs.cloudflare.com', 'https://cdn.jsdelivr.net', 'https://cdn.datatables.net', 'https://code.highcharts.com'],
             styleSrc: ["'self'", "'unsafe-inline'", 'https://cdnjs.cloudflare.com', 'https://cdn.jsdelivr.net', 'https://cdn.datatables.net', 'https://fonts.googleapis.com', 'https://fonts.gstatic.com'],
             fontSrc: ["'self'", 'https://cdnjs.cloudflare.com', 'https://fonts.googelapis.com', 'https://fonts.gstatic.com', 'https://cdn.jsdelivr.net'],
             connectSrc: ["'self'", 'https://cdnjs.cloudflare.com', 'https://*.econforecasting.com', 'https://*.macropredictions.com', '*'],
-            formAction: ["'self", 'https://export.highcharts.com']
+            formAction: ["'self'", 'https://export.highcharts.com'],
+            imgSrc: ["'self'", 'blob:']
           }
     }
 }));
