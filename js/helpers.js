@@ -157,36 +157,36 @@ const init = function() {
 		title: {
 			align: 'left',
 			style: {
-				color: 'var(--slate-900)',
+				color: 'rgb(15, 23, 42)', //'var(--slate-900)',
 				fontSize: '1.1rem',
 				fontWeight: 'normal'
 			}
 		},
 		subtitle: {
-			align: 'center',
+			align: 'left',
 			style: {
 				color: '#334155'
 			}
 		},
 		xAxis: {
-			lineColor: "var(--slate-800)",
-			lineWidth: 2,
-			tickColor: "var(--slate-800)",
-			tickWidth: 2,
+			lineColor: "rgb(30, 41, 59)", //"var(--slate-800)",
+			lineWidth: 1.5,
+			tickColor: "rgb(30, 41, 59)", //"var(--slate-800)",
+			tickWidth: 1.5,
 			labels: {
 				style: {
-					color: 'var(--slate-700)'
+					color: 'rgb(51, 65, 85)'//'var(--slate-700)'
 				}
 			},
 			title: {
 				style: {
-					color: 'var(--slate-700)'
+					color: 'rgb(51, 65, 85)'//'var(--slate-700)'
 				}
 			}
 		},
 		yAxis: {
 			gridLineDashStyle: 'Dot',
-			gridLineWidth: 2,
+			gridLineWidth: 1,
 			gridLineColor: "#CEC6B9",
 			lineColor: "#CEC6B9",
 			minorGridLineColor: "#CEC6B9",
@@ -195,12 +195,12 @@ const init = function() {
 			tickWidth: 1,
 			labels: {
 				style: {
-					color: 'var(--slate-700)'
+					color: 'rgb(51, 65, 85)'//'var(--slate-700)'
 				}
 			},
 			title: {
 				style: {
-					color: 'var(--slate-700)'
+					color: 'rgb(51, 65, 85)'//'var(--slate-700)'
 				}
 			},
 			opposite: false
@@ -218,12 +218,10 @@ const init = function() {
 				color: "#3C3C3C"
 			}
 		},
-		legendBackgroundColor: "rgba(0, 0, 0, 0.5)",
-		background2: "#505053",
 		dataLabelsColor: "#B0B0B3",
 		textColor: "#C0C0C0",
 		contrastTextColor: "#F0F0F3",
-		maskColor: "rgba(255,255,255,0.3)",
+		maskColor: "rgba(255, 255, 255, 0.3)",
 		time: {
 			getTimezoneOffset: function(timestamp) {
 				const zone = 'US/Eastern';

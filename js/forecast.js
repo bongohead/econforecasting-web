@@ -513,6 +513,22 @@ const drawFixedDateChart = function(res) {
 				fontWeight: "normal"
 			}
 		},
+		responsive: {
+			rules: [{
+				chartOptions: {
+					title: {
+						align: 'center',
+						floating: false
+					},
+					exporting: {
+						enabled: false
+					},
+				},
+				condition: {
+					maxWidth: 700 
+				}
+			}]
+		},
 		caption: {
 			enabled: true,
 			useHTML: true,
@@ -749,6 +765,32 @@ const drawFixedVdateChart = function (res) {
 			style: {
 				fontWeight: "normal"
 			}
+		},
+		responsive: {
+			rules: [{
+				chartOptions: {
+					title: {
+						align: 'center',
+						floating: false,
+						margin: 50
+					},
+					exporting: {
+						enabled: false
+					},
+					rangeSelector: {
+						buttonPosition: {
+							align: 'center',
+						}
+					},
+					legend: {
+						y: 0,
+						maxHeight: 350,
+					},			
+				},
+				condition: {
+					maxWidth: 700 
+				}
+			}]
 		},
 		caption: {
 			enabled: true,

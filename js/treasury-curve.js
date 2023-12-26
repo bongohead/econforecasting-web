@@ -606,7 +606,7 @@ const drawTable = function(treasury_data, forecast_vdate, hist_vdate) {
 		li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
 		li.innerHTML =
 			'<span class="d-flex align-items-center fw-medium">' +
-				(series.type === 'forecast' ? '<img class="mx-1" width="14" height="14" src="/static/brand/icon-clear-bg-static-for-png.svg">Forecast' : 'Historical data') +
+				(series.type === 'forecast' ? '<img class="mx-1" width="14" height="14" src="/static/brand/icon-clear-bg-static-for-png.svg">Market Consensus Forecast' : 'Historical data') +
 			'</span>' + 
 			'<span class="text-xs" style="color: rgb(180, 180, 180)" >' +
 				('Updated ' + dayjs(series.vdate).format('MM/DD/YYYY')) +
@@ -651,97 +651,6 @@ const drawTable = function(treasury_data, forecast_vdate, hist_vdate) {
 	});
 
 }
-// function drawTable(treasury_data) {
-	
-// 	// Get list of ttm's present in data as array of form [{num: 1, fmt: '1m'}, {num: 3, fmt: '3m'}, ...]
-// 	const ttmsList =
-// 		[...new Set(treasury_data.map(x => (x.data.map(y => y[0]))).flat(1))].sort((a, b) => a > b ? 1 : -1)
-// 		.filter(x => x !== 24 && x != 2)
-// 		.map(x => ({num: x, fmt: (x >= 12 ? x/12 + 'y' : x + 'm')}));
-	
-// 	// Get obj of form 1m: 1, 3m: 3, 6m: 6, etc..
-// 	/*
-// 	const ttmVarnameMap = [... new Set(histTtms.concat(forecastTtms)].reduce((accum, x) => Object.assign(accum, {[(x >= 12 ? x/12 + 'y' : x + 'm')]: x}), {});
-// 	*/
-// 	// Create array of objects with each object of form {date: , 1m: , 3m: , ...,} returning null if data is unavailable
-// 	const fcDataTable =
-// 		treasury_data.map(function(x) {
-// 			let res = {
-// 				date: dayjs(x.date).format('YYYY-MM'),
-// 				type: x.type
-// 			};
-// 			ttmsList.forEach(function(ttm) {
-// 				res[ttm.fmt] = (x.data.filter(x => x[0] === ttm.num).length === 0 ? null : x.data.filter(x => x[0] === ttm.num)[0][1].toFixed(2));
-// 				return;
-// 			});
-// 			return res;
-// 		});
-// 	//console.log('fcDataTable', fcDataTable, ttmsList);
-	
-// 	const dtCols =
-// 		[
-// 			{title: 'Date', data: 'date'},
-// 		]
-// 		.concat(ttmsList.map(ttm => ({title: ttm.fmt, data: ttm.fmt}))) // title and object property name are the same 
-// 		.map(function(x, i) {
-// 			return {...x, ...{
-// 				visible: true,
-// 				orderable: true,
-// 				ordering: true,
-// 				searchable: (x.title === 'Date'),
-// 				type: (x.title === 'Date' ? 'date' : 'num'),
-// 				className: 'dt-center'
-// 			}};
-// 		});
-// 	//console.log('dtCols', dtCols, fcDataTable.filter(x => x.type === 'history'));
-// 	const o = {
-// 		data: fcDataTable.filter(x => x.type === 'history'),
-// 		columns: dtCols,
-// 		iDisplayLength: 15,
-// 		dom:
-// 			"<'row pb-1 justify-content-end'<'col-auto'f>>" +
-// 			"<'row justify-content-end'<'col-auto'B>>" +
-// 			"<'row justify-content-center'<'col-12'tr>>" +
-// 			"<'row justify-content-end'<'col-auto'p>>",
-// 		buttons: [
-// 			{extend: 'copyHtml5', text: 'Copy', exportOptions: {columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]}, className: 'btn btn-sm btn-light'},
-// 			{extend: 'csvHtml5', text: 'Download', exportOptions: {columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]}, className: 'btn btn-sm btn-light'}
-// 		],
-// 		order: [[0, 'desc']],
-// 		paging: true,
-// 		pagingType: 'numbers',
-// 		language: {
-// 			search: "Filter By Date:",
-// 			searchPlaceholder: "YYYY-MM"
-// 		},
-// 		responsive: true
-// 	}
-	
-// 	// const o2 = {
-// 	// 	...o,
-// 	// 	...{
-// 	// 		data: fcDataTable.filter(x => x.type === 'forecast'),
-// 	// 		order: [[0, 'asc']]
-// 	// 	}
-// 	// }
-
-// 	const table = document.createElement('table');
-// 	table.classList.add('table', 'data-table', 'w-100');
-// 	table.id = 'table-' + x.tskey;
-// 	document.querySelector('#table-container > .loadee-container').appendChild(table);
-
-// 	$(table).DataTable(o);
-// 	// $('#table-container-2').DataTable(o2).draw();
-
-// 	// document.querySelector('#table-container-2-loader').style.opacity = 0;
-// 	// document.querySelector('#table-container-2-loadee').style.opacity = 1;
-// 	// document.querySelector('#table-container-loader').style.opacity = 0;
-// 	// document.querySelector('#table-container-loadee').style.opacity = 1;
-
-// 	return;
-// }
-
-
 
 /*** Update Chart ***/
 function updateChart() {
@@ -811,14 +720,6 @@ function updateChart2() {
         width: 5,
         id: 'plot-line',
         zIndex: 3,
-        // label: {
-		// 	text: '<span class="text-danger">SELECT DATE ON TIMELINE</span>',
-		// 	align: 'center',
-		// 	verticalAlign: 'top',
-		// 	rotation: 0,
-		// 	y: -5,
-		// 	useHTML: true
-        // }
     });
 }
 
