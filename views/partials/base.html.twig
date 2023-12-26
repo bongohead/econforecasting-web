@@ -1,0 +1,79 @@
+{#
+Passable variables below; all @var variables are REQUIRED.
+- @var title 
+- @var description 
+- @var keywords
+- @var canonical 
+- @var pagescript: pass null if you don't want this to render
+- @var site: econforecasting/macropredictions
+- @block meta 
+- @block navbar
+- @block content
+#}
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="robots" content="index, follow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	<meta name="description" content="{{ description | e}}">
+	<meta name="keywords" content="{{ keywords | e}}">
+	<link rel="canonical" href="{{ canonical | raw }}" />
+
+    {% block meta %}
+	{% endblock %}
+
+    <title>{{ title | e }}</title>
+    
+	<link rel="preconnect" href="https://api.macropredictions.com" >
+	<link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" />
+
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,500,700">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700">
+
+    <link rel="icon" type=image/ico href="/static/brand/icon-clear-bg-static-for-png.png"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+
+</head>
+
+<body>
+	{% block navbar %}
+	{% endblock %}
+	<main>
+		{% block content %}
+		{% endblock %}
+	</main>
+
+	<footer class="container-fluid text-slate-900 px-0 bg-white border-top py-4">
+		<div class="container py-3">
+			<div class="row">
+				<div class="col-6 mb-2 mb-md-0">
+				</div>
+				<div class="col-6 mb-2 mb-md-0 text-end">
+					<h5 class="text-uppercase mb-0">CONTACT</h5>
+					<ul class="list-unstyled">
+					  <li>Questions or concerns? Contact <a href="mailto:charles@macropredictions.com">charles@{{ site }}.com</a>.</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid">
+			<div class="container text-end p-2">
+				<span>© {{'now' | date('Y')}} <img class="mx-1" width="16" height="16" src="/static/brand/icon-clear-bg-static-for-png.svg">{{ site  }}.com</span>
+			</div>
+		</div>
+	</footer>
+
+	
+	{% if pagescript is not null %}
+		<script src="/static/cache/{{ pagescript | raw }}"></script>
+	{% endif %}
+	
+	{# {% include 'g-tags.html' ignore missing  %} #}
+
+</body>
+</html>
