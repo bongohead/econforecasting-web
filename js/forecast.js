@@ -23,10 +23,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	/********** GET DATA **********/
 	const ud = getData('forecast') || {};
+	const start = performance.now();
 
 	const get_hist_obs = getApi(`get_hist_obs?varname=${ud.varname}&freq=${ud.hist_freq}`, 10, ud.debug);
 	const get_forecast_values = getApi(`get_latest_forecast_obs?varname=${ud.varname}&forecast=${[ud.primary_forecast, ud.secondary_forecasts].join(',')}`, 10, ud.debug);
-	const start = performance.now();
 
 	Promise.all([get_hist_obs, get_forecast_values]).then(function(r) {
 
@@ -180,8 +180,17 @@ const drawChart = function(ts_data_parsed, fullname, units, hist_freq, site) {
 		responsive: {
 			rules: [{
 				chartOptions: {
+					title: {
+						align: 'center',
+						margin: 20
+					},
 					legend: {
 						enabled: false
+					},
+					yAxis: {
+						title: {
+							text: null
+						}
 					},
 					navigator: {
 						enabled: false
@@ -196,10 +205,10 @@ const drawChart = function(ts_data_parsed, fullname, units, hist_freq, site) {
 					}
 				},
 				condition: {
-					maxWidth: 800
+					maxWidth: 576 // <= md
 				}
 			}]
-		},	
+		},
         title: {
 			text: fullname,
 			margin: -20,
@@ -967,12 +976,13 @@ const drawTable = function(ts_data_parsed, units) {
 	// Turn into list of series
 	// Separate tab for each table
 	const table_data = ts_data_parsed.sort((a, b) => a.ts_type === 'hist' ? -1 : b.ts_type === 'hist' ? 1 : a.ts_type === 'primary' ? -1: 0).forEach(function(x, i) {
-		//console.log(x.data);
-		const seriesData =
+
+		const series_data =
 			(x.tskey === 'hist') ?
 			x.data.map(y => ({date: (x.freq === 'q' ? dayjs(y[0]).format('YYYY[Q]Q') : dayjs(y[0]).format('YYYY-MM')), type: 'Historical Data', value: y[1].toFixed(4)})) :
 			x.data.map(y => ({date: (x.freq === 'q' ? dayjs(y[0]).format('YYYY[Q]Q') : dayjs(y[0]).format('YYYY-MM')), type: 'Forecast', value: y[1].toFixed(4)}));
-		const dtCols = [
+		
+		const dt_cols = [
 			{title: 'Date', data: 'date'},
 			{title: 'Type', data: 'type'},
 			{title: units, data: 'value'}
@@ -987,29 +997,30 @@ const drawTable = function(ts_data_parsed, units) {
 				width: '50%'
 			}}
 		});
-		//console.log(dtCols);
 		
-		const copySvg =
-		`<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-clipboard me-1" viewBox="0 0 16 16">
-			<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-			<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
-		</svg>`;
-		const dlSvg = 
-		`<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-download me-1" viewBox="0 0 16 16">
-		  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"></path>
-		  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"></path>
-		</svg>`;
+		const copy_svg =
+			`<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-clipboard me-1" viewBox="0 0 16 16">
+				<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+				<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+			</svg>`;
+			
+		const download_svg = 
+			`<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-download me-1" viewBox="0 0 16 16">
+			<path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"></path>
+			<path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"></path>
+			</svg>`;
+
 		const o = {
-			data: seriesData,
-			columns: dtCols,
+			data: series_data,
+			columns: dt_cols,
 			iDisplayLength: 15,
 			dom:
 				"<'row justify-content-end'<'col-auto'B>>" +
 				"<'row justify-content-center'<'col-12'tr>>" +
 				"<'row justify-content-end'<'col-auto'p>>",
 			buttons: [
-				{extend: 'copyHtml5', text: copySvg + 'Copy', exportOptions: {columns: [0, 2]}, className: 'btn btn-sm'},
-				{extend: 'csvHtml5', text: dlSvg + 'Download', exportOptions: {columns: [0, 2]}, className: 'btn btn-sm'}
+				{extend: 'copyHtml5', text: copy_svg + 'Copy', exportOptions: {columns: [0, 2]}, className: 'btn btn-sm'},
+				{extend: 'csvHtml5', text: download_svg + 'Download', exportOptions: {columns: [0, 2]}, className: 'btn btn-sm'}
 			],
 			order: (x.tskey === 'hist' ? [[0, 'desc']] : [[0, 'asc']]),
 			paging: true,
@@ -1024,7 +1035,6 @@ const drawTable = function(ts_data_parsed, units) {
 				}*/
 			}
 		}
-		//console.log('seriesData', seriesData);
 		
 		// Create button for this forecast
 		const li = document.createElement('li');
@@ -1037,52 +1047,41 @@ const drawTable = function(ts_data_parsed, units) {
 			'<span class="text-xs" style="color: rgb(180, 180, 180)" >' +
 				('Updated ' + dayjs(x.vdate).format('MM/DD/YYYY')) +
 			 '</span>';
-		li.setAttribute('data-ref-table', x.tskey); 
 		if (x.ts_type === 'primary') li.classList.add('active');
 		document.querySelector('#li-container').appendChild(li);
 		
-		
 		// Create table and style it
-		const table = document.createElement('table');
-		table.classList.add('table', 'data-table', 'w-100');
-		table.id = 'table-' + x.tskey;
-		document.querySelector('#table-container > .loadee-container').appendChild(table);
+		const table_el = document.createElement('table');
+		table_el.classList.add('table', 'data-table', 'w-100');
+		document.querySelector('#dt-container').appendChild(table_el);
 		
-		// <span style="font-size:.90rem">Select a series:</span>
-		// <ul class="list-group list-group-vertical m-3" id="li-container">
-		// </ul>
-
 		// Draw the table
-		//console.log('#table-' + x.tskey);
-		//const dTable = new DataTable(document.querySelector('#table-' + x.tskey), o); for ES6 imports
-		$(table).DataTable(o); //new DataTable(table, o) $(table).DataTable(o);
-		if (x.ts_type !== 'primary') $(table).parents('div.dataTables_wrapper').first().hide();
-		//console.log(dTable);
+		$(table_el).DataTable(o);
+		$(table_el).parents('div.dataTables_wrapper').addClass('transition duration-400');
+		if (i !== 0) $(table_el).parents('div.dataTables_wrapper').addClass('position-absolute'); // Make all els after first el absolute-positioned
+		if (x.ts_type !== 'primary') {
+			$(table_el).parents('div.dataTables_wrapper').css('opacity', 0).css('z-index', 1);
+		} else {
+			$(table_el).parents('div.dataTables_wrapper').css('opacity', 1).css('z-index', 2);
+		}
 
 		// Move the download buttons
-		//console.log(table.parentElement);
-		const downloadDiv = table.closest('.dataTables_wrapper').querySelector('.dt-buttons');
-		//console.log('downloadDiv', downloadDiv);
-		downloadDiv.classList.add('float-end');
-		downloadDiv.id = 'download-' + x.tskey;
-		if (x.ts_type !== 'primary') downloadDiv.style.display = 'none'
-		$('#table-container > div.loadee-container > span').after($(downloadDiv).detach());
+		const download_div = table_el.closest('.dataTables_wrapper').querySelector('.dt-buttons');
+		download_div.classList.add('float-end');
+		if (x.ts_type !== 'primary') download_div.style.display = 'none'
+		$('#table-container > div.loadee-container > span').after($(download_div).detach());
 		
 		/* Now add event listener */
 		li.addEventListener('click', function() { 
-			//console.log(this, this.getAttribute('data-ref-table'));
-			// Change active li
 			document.querySelectorAll('#li-container > li').forEach(el => el.classList.remove('active'));
 			this.classList.add('active');
 			
-			// First hide all tables-container
-			$('div.dataTables_wrapper').hide();
+			$('div.dataTables_wrapper').css('opacity', 0).css('z-index', 1);
 			
-			const table = document.querySelector('#table-' + this.getAttribute('data-ref-table'));
-			$(table).parents('div.dataTables_wrapper').first().show();
+			$(table_el).parents('div.dataTables_wrapper').css('opacity', 1).css('z-index', 2);
 			
 			$('#data-card div.dt-buttons').hide();
-			$('#download-' + this.getAttribute('data-ref-table')).show();
+			$(download_div).show();
 						
 		}, false);
 	});
