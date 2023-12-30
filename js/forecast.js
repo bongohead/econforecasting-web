@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			show_vintage_chart: el.dataset.showVintageChart === 'true',
 			hist_freq: el.dataset.histFreq,
 			hist_update_freq: el.dataset.histUpdateFreq,
+			hist_is_agg: el.dataset.histIsAgg === 'true',
 			site: el.dataset.site,
 			debug: window.location.host.split('.')[0] === 'dev'
 		};
@@ -264,9 +265,8 @@ const drawChart = function(ts_data_parsed, fullname, units, hist_freq, site) {
 		},
         plotOptions: {
 			series: {
-				//shadow: true,
 				showInNavigator: true,
-				label: { // Series labels
+				label: {
 					enabled: true,
 					formatter: function() {
 						return this.options.custom.label_el;
@@ -582,7 +582,7 @@ const drawFixedDateChart = function(res) {
 				label: {
 					enabled: true,
 					formatter: function() {
-						return this.options.custom.type === 'forecast' ? `<span>${this.name} forecast</span>` : `${this.name}`
+						return this.options.custom.type === 'forecast' ? `<span>Forecast for ${this.name}</span>` : `${this.name}`
 					}
 				},
 				dataGrouping: {
@@ -720,13 +720,13 @@ const drawFixedVdateChart = function (res) {
 	const hist_data = {
 		data: res.hist.data.map(x => [dayjs(x.date).unix() * 1000, x.value]).sort((a, b) => a[0]- b[0]),
 		color: 'rgb(100, 116, 139)',
-		name: 'Historical Data',
+		name: 'Historical data',
 		visible: true,
 		lineWidth: 4,
 		opacity: .7,
 		custom: {
 			type: 'hist',
-			legend_label: 'Realized Value'
+			legend_label: 'Actual value'
 		},
 		marker : {
 			enabled: true,
@@ -743,7 +743,7 @@ const drawFixedVdateChart = function (res) {
 			name: dayjs(vdate).format('MM/DD/YY'),
 			custom: {
 				type: 'forecast',
-				legend_label: dayjs(vdate).format('MMM Do YYYY') + ' Forecast',
+				legend_label: dayjs(vdate).format('MMM Do YYYY') + ' forecast',
 				yyyymmdd_vdate: vdate
 			},
 			data: [],
@@ -844,7 +844,7 @@ const drawFixedVdateChart = function (res) {
 				label: {
 					enabled: true,
 					formatter: function() {
-						return `${this.name}`
+						return this.options.custom.type !== 'hist' ? this.name + ' forecast': 'Realized values'
 					}
 				},
 				dataGrouping: {
@@ -953,7 +953,7 @@ const drawFixedVdateChart = function (res) {
 		},
 		legend: {
 			enabled: true,
-			y: 8,
+			y: 5,
 			backgroundColor: 'var(--white-warmer)',
 			borderWidth: 0,
 			align: 'right',
@@ -961,7 +961,7 @@ const drawFixedVdateChart = function (res) {
 			verticalAlign: 'top',
 			layout: 'vertical',
 			title: {
-				text: '<span class="text-sm fw-normal">Prior Forecasts </span>'
+				text: '<span class="text-sm fw-normal">LEGEND</span>'
 			},
 			maxHeight: 400,
 			reversed: true,
@@ -981,21 +981,20 @@ const drawFixedVdateChart = function (res) {
 			backgroundColor: 'rgba(255, 255, 255, .8)',
 			formatter: function () {
 				const points = this.points;
+				const x_date = dayjs(this.x).format('MMM YYYY');
 				const text =
-					'Historical Forecasts for ' + dayjs(this.x).format('MMM YYYY') + '' +
-					'<table>' +
-					'<tr class="px-1" style="border-bottom:1px solid black;font-weight:400;"><td>DATE</td><td class="px-2" style="font-weight:400">' +
-						'FORECAST' +
-					'</td></tr>' +
-					points.map(function(point) {
+					points.filter(p => p.series.options.custom.type !== 'hist').map(function(point) {
 						const str =
-							`<tr>
-								<td class="px-1" style="font-weight:500;color:${point.color}">${point.series.options.custom.legend_label}</td>
-								<td class="px-2" style="font-weight:500;">${point.y.toFixed(2)}</td>
-							</tr>`;
+							`<span class="fw-normal d-block"><span class="fw-bolder" style="color:${point.color}">${point.series.options.custom.legend_label}</span> for ${x_date} ${res.fullname}:
+							<span class="fw-bolder">${point.y.toFixed(2)}</span></span>`
 						return str;
 					}).join('') +
-					'</table>';
+					points.filter(p => p.series.options.custom.type === 'hist').map(function(point) {
+						const str =
+							`<span class="fw-normal d-block"><span class="fw-bolder text-slate-500">Actual value</span> for ${x_date}:
+							<span class="fw-bolder">${point.y.toFixed(2)}</span></span>`
+						return str;
+					}).join('');
 				return text;
 			}
 		},

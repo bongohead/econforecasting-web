@@ -51,6 +51,7 @@ forecast_router.get('/:varname', concat_js('forecast.js', libs), async (req, res
             units: varname_data.units,
             hist_freq: varname_data.hist_freq,
             hist_update_freq: varname_data.hist_update_freq,
+            hist_is_agg: varname_data.hist_is_agg,
             variable_description: varname_data.variable_description,
             primary_forecast_description: varname_data.primary_forecast_description,
             secondary_forecasts_description: secondary_forecasts_description

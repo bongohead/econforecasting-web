@@ -219,12 +219,12 @@ p {
 
 	li.active {
 		border-left: 1px solid var(--forest-dark);
-		@extend .bg-slate-100;
-		@extend .text-sky;
+		@extend .bg-slate-200;
+		@extend .text-forest;
 	}
 
 	li:hover {
-		background-color: var(--slate-200) !important;
+		background-color: var(--slate-300) !important;
 		border-left: 1px solid var(--sky) !important;
 		color: var(--sky) !important;
 	}
@@ -244,19 +244,6 @@ button.buttons-html5:hover {
 	transition: .4s;
 	color: white;
 }
-
-
-/****** DT Buttons *****/
-/*
-button.dt-button {
-	color: rgb(64, 74, 87);
-	box-shadow: 0 0 0 1px rgba(43, 45, 80, 0.1), 0 2px 5px 0 rgba(43, 45, 80, 0.08), 0 1px 1.5px 0 rgba(0, 0, 0, 0.07), 0 1px 2px 0 rgba(0, 0, 0, 0.08);
-}
-button.dt-button:hover {
-	color: rgb(44, 54, 67);
-	box-shadow: 0 0 0 1px rgba(43, 45, 80, 0.1), 0 2px 5px 0 rgba(43, 45, 80, 0.1), 0 3px 9px 0 rgba(43, 45, 80, 0.08), 0 1px 1.5px 0 rgba(0, 0, 0, 0.08), 0 1px 2px 0 rgba(0, 0, 0, 0.08)
-}
-*/
 
 
 /****** Navbar *****/
@@ -305,6 +292,13 @@ nav.navbar {
 	.dropdown-menu > div.d-md-flex > div {
 		margin: 0 3px;
 	}
+
+	.dropdown-header {
+		font-size: .9rem;
+		border-bottom: 1px solid var(--slate-300);
+		color: var(--slate-500);
+	}
+
 
 }
 
@@ -450,90 +444,107 @@ div.chart-container {
 
 
 /****** DT Table *****/
-
-table.dataTable.data-table th {
-	background-color: transparent;
-	color: rgb(30, 50, 50);
-	font-size: .90rem;
+table.dataTable {
+	.dt-center {
+		text-align: center;
+	}
+	.dt-left {
+		text-align: left;
+	}
+	.dt-right {
+		text-align: right;
+	}
+	thead {
+		background-color: var(--slate-100);
+		padding-top: .55rem;
+		padding-bottom: .55rem;
+	}
+	thead > tr > th.sorting::after {
+		color: var(--sky);
+	}
+	thead > tr > th.sorting::before {
+		color: var(--sky);
+	}
 }
 
-table.dataTable.data-table td {
-    padding: .25rem .5rem;
-    font-size: 0.82rem;
-	border: none;
-	font-family: var(--bs-font-family-serif);
+
+table.dataTable.data-table {
+
+	th {
+		background-color: transparent;
+		color: var(--slate-600);
+		font-size: .85rem;
+		font-weight: bold;
+	}
+
+	td {
+		padding: .3rem .5rem;
+		font-size: 0.85rem;
+		border: none;
+	}
+
+	tr.odd  {
+		background-color: rgba(200, 230, 245, .35);
+	}
+
+	tr.odd:hover  {
+		background-color: rgba(200, 230, 245, .9);
+	}
+
+	tr.even:hover {
+		background-color: var(--slate-300);
+	}
+
+
+	tr {
+		border: none;
+	}
+	
+
 }
-li.paginate_button.page-item {
+
+li.paginate_button.page-item a.page-link {
 	font-size: .80rem;
+	border-radius: 0;
+	background-color: transparent;
+	@extend .text-slate-800;
+	border: 0;
+	padding: .3rem .7rem;
 }
 
-table.dataTable.summary-table td {
-    padding: .25rem .25rem;
-    font-size: 0.92rem;
-	border: none;
+li.paginate_button.page-item {
+	@extend .bg-active-slate-300;
+	@extend .bg-hover-slate-300;
+	@extend .bg-slate-100;
+	@extend .transition;
+	@extend .duration-300;
 }
 
-table.dataTable .dt-center {
-	text-align: center;
-}
-
-table.dataTable .dt-left {
-	text-align: left;
-}
-
-table.dataTable .dt-right {
-	text-align: right;
-}
-
-
-table.dataTable tbody {
-	border-bottom: 2px solid black;
-}
-
-table.dataTable tr {
-	border: none;
-}
-
-table.dataTable tr.odd  {
-    background-color: rgba(200, 230, 245, .35); /*var(--bs-cmefi-light-warm);*/
-}
-
-/****** DT Paginage *****/
-.page-item.active .page-link {
-    background-color: rgba(200, 230, 245, .35) !important; /*var(--bs-efpale) !important;*/
-    border: 1px solid  rgba(220, 220, 220) !important;
-}
-.page-link {
-    color: black !important;
-}
-.page-link:focus {
+li.paginate_button.page-item a.page-link:focus {
 	box-shadow: none !important;
 }
 
 /***** Forecast Play *****/
-#chart-subtitle-group {
+#treasury-curve-subtitle-group {
 	
-	button.chart-subtitle {
+	button.treasury-curve-action-button {
 		background-color: var(--sky);
-		color: white;
-		border-top: 1px solid var(--sky);
-		border-bottom: 1px solid var(--sky);
-		border-left: 0px solid transparent;
-		border-right: 0px solid transparent;
-		transition: .5s;
-	}
+		color: var(--slate-100);
+		transition: all .5s;
+		border: 0;
 
-	button.chart-subtitle.active {
-		background-color: var(--sky-dark);
-		border-top: 1px solid var(--sky-dark);
-		border-bottom: 1px solid var(--sky-dark);
-	}
+		&.active {
+			background-color: var(--sky-darker);
+		}
 
-	button.chart-subtitle:disabled {
-		background-color: var(--sky-light);
-		border-top: 1px solid var(--sky-light);
-		border-bottom: 1px solid var(--sky-light);
-		opacity: 1;
+		&:hover {
+			background-color: var(--sky-dark);
+		}
+
+		&:disabled {
+			background-color: var(--slate-500);
+		}
+	
 	}
 
 }

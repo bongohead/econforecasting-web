@@ -9,7 +9,7 @@
 <div class="d-flex bg-white-warm">
 	{% include "partials/forecast-sidebar.html.twig" %}
 	<div class="col mx-2 pb-5">
-		<div class="container-xxl" id="forecast-container" data-site="{{ site }}" data-varname="{{ varname }}" data-fullname="{{ fullname }}" data-hist-freq="{{ hist_freq }}" data-hist-update-freq="{{ hist_update_freq }}" data-units="{{ units }}" data-primary-forecast="{{ primary_forecast }}" data-secondary-forecasts="{{ secondary_forecasts }}" data-show-vintage-chart="{{ show_vintage_chart }}">
+		<div class="container-xxl" id="forecast-container" data-site="{{ site }}" data-varname="{{ varname }}" data-fullname="{{ fullname }}" data-hist-freq="{{ hist_freq }}" data-hist-update-freq="{{ hist_update_freq }}" data-hist-is-agg="{{ hist_is_agg }}" data-units="{{ units }}" data-primary-forecast="{{ primary_forecast }}" data-secondary-forecasts="{{ secondary_forecasts }}" data-show-vintage-chart="{{ show_vintage_chart }}">
 
 			<div class="row">
 				<div class="col-12 card p-4 my-3 rounded">
@@ -74,10 +74,15 @@
 												<div class="loader-container"><span>Pulling data...</span><div></div></div>
 												<div class="loadee-container position-absolute px-2 pt-1"></div>
 											</div>
-											<p class="mt-4">The above graph displays prior forecasts by <span class="fst-italic fw-bolder">the date the forecast was generated</span>. Click a date on the chart legend to add or remove a prior forecast. The most recent forecast as well as the first forecast of each month are available.</p>
-											<p class="">Realized (actual) values of the variable are displayed in <span class="fw-bolder text-slate-500">grey</span>†.</p>
-
-											<p class="text-sm mb-0"><sup>† If the date is for the current period, this value represents an average of data available so far.</sup></p>
+											<div class="row mt-4 justify-content-center">
+												<div class="col-12 col-lg-9 col-xxl-7 bg-white-warm px-3 py-2">
+													<p>Each <span class="text-amber-darker fw-bolder">colored</span> line represents a forecast <span class="fst-italic fw-bolder">generated on a single date</span>. Click a date on the chart legend to add or remove a forecast. The most recent forecast as well as the first forecast of each month are available.</p>
+													<p>The <span class="fw-bolder text-slate-500">grey</span> line shows realized (actual) values of the variable{% if hist_is_agg == true %}†{% endif %}.</p>
+													{% if hist_is_agg == true %}
+													<p class="text-sm mb-0"><sup>† If the date is for the current period, this value represents an average of data available so far.</sup></p>
+													{% endif %}
+												</div>
+											</div>
 										</div>
 										</div>
 									</div>
@@ -98,10 +103,15 @@
 												<div class="loader-container"><span>Pulling data...</span><div></div></div>
 												<div class="loadee-container position-absolute px-2 pt-1"></div>
 											</div>
-											<p class="mt-4">The above graph displays forecasts generated over time for a <span class="fst-italic fw-bolder">fixed target forecast period</span>. Click a date on the chart legend to change the target date.</p>
-
-											<p class="">Realized (actual) values of the variable are displayed in <span class="fw-bolder text-slate-500">grey</span>. Thus, the difference between the grey line and the forecast line represents how much the variable is forecasted to change between the time the forecast was made and the target date. For forecasts whose target dates have already arrived, the <span class="fw-bold text-forest">✕</span> indicator displays the realized value of the target forecast†.</p>
-											<p class="text-sm mb-0"><sup>† If the target date is for the current period, this value represents an average of data available so far.</sup></p>
+											<div class="row mt-4 justify-content-center">
+												<div class="col-12 col-lg-9 col-xxl-7 bg-white-warm px-3 py-2">
+													<p>Each <span class="text-amber-darker fw-bolder">colored</span> line represents <span class="fst-italic fw-bolder">forecasts over time for a single target period</span>. Click a date on the chart legend to change the target date. The most recent forecast as well as the first forecast of each month are available.</p>
+													<p>The <span class="fw-bolder text-slate-500">grey</span> line shows realized (actual) values of the variable. Thus, the difference between the grey line and the forecast line represents how much the variable is forecasted to change between the time the forecast was made and the target date. For forecasts whose target dates have already arrived, the <span class="fw-bold text-amber-darker">✕</span> indicator displays the realized value of the target forecast{% if hist_is_agg == true %}†{% endif %}.</p>
+													{% if hist_is_agg == true %}
+													<p class="text-sm mb-0"><sup>† If the date is for the current period, this value represents an average of data available so far.</sup></p>
+													{% endif %}
+												</div>
+											</div>
 										</div>
 										</div>
 									</div>
