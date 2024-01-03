@@ -590,7 +590,7 @@ div.loader-container > div {
 	width: min(8%, 6rem);
 	aspect-ratio: 1 / 1;
 	height: unset;
-	color: rgb(148 163 184);
+	color: rgb(148, 163, 184);
 	border-width: 0.25rem;
 	animation: 2.4s linear infinite loader-spin;
 }
@@ -598,7 +598,7 @@ div.loader-container > div {
 @keyframes loader-spin {
 	0% {
 		rotate: 0deg;
-		color: rgb(148 163 184);
+		color: rgb(148, 163, 184);
 	}
 	25% {
 		rotate: 180deg;
@@ -606,7 +606,7 @@ div.loader-container > div {
 	}
 	50% {
 		rotate: 360deg;
-		color: rgb(148 163 184);
+		color: rgb(148, 163, 184);
 	}
 	75% {
 		rotate: 540deg;
@@ -614,14 +614,14 @@ div.loader-container > div {
 	}
 	100% {
 		rotate: 720deg;
-		color: rgb(148 163 184);
+		color: rgb(148, 163, 184);
 	}
 }
 
 div.loader-container > span {
 	font-family: var(--font-family-logo);
 	font-weight: 500;
-	color: rgb(148 163 184);
+	color: rgb(148, 163, 184);
 	margin-bottom: 1rem;
 	font-size: 1.2rem;
 	animation: 2.4s linear infinite loader-text;
@@ -629,19 +629,19 @@ div.loader-container > span {
 
 @keyframes loader-text {
 	0% {
-		color: rgb(148 163 184);
+		color: rgb(148, 163, 184);
 	}
 	25% {
 		color: var(--forest);
 	}
 	50% {
-		color: rgb(148 163 184);
+		color: rgb(148, 163, 184);
 	}
 	75% {
 		color: var(--sky);
 	}
 	100% {
-		color: rgb(148 163 184);
+		color: rgb(148, 163, 184);
 	}
   }
   
