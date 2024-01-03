@@ -1,6 +1,0 @@
-User-agent: *
-Disallow: /static/
-Disallow: /templates/
-Disallow: /cache/
-
-Sitemap: https://macropredictions.com/sitemap.xml

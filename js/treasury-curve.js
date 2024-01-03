@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	const ud = getData('treasury-curve') || {};
 	const start = performance.now();
 
-	const get_hist_obs = getApi(`get_hist_obs?varname=t01m,t02m,t03m,t06m,t01y,t02y,t05y,t07y,t10y,t20y,t30y`, 10, ud.debug);
+	const get_hist_obs = getApi(`get_hist_obs?varname=t01m,t02m,t03m,t06m,t01y,t02y,t05y,t07y,t10y,t20y,t30y&freq=m`, 10, ud.debug);
 	const get_forecast_values = getApi(`get_latest_forecast_obs?varname=t01m,t02m,t03m,t06m,t01y,t02y,t05y,t07y,t10y,t20y,t30y&forecast=int`, 10, ud.debug);
 
 	const get_cleaned_hist = get_hist_obs.then(function(r) {

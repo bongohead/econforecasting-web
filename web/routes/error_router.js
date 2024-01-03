@@ -4,6 +4,7 @@ let error_router = Router();
 // 404
 error_router.get('/404', (req, res) => {
     res.render('./404.html.twig', {
+        domain: process.env.DOMAIN,
         site: process.env.SITE,
         title_site: process.env.TITLE_SITE,
         title: '404',

@@ -20,14 +20,5 @@ style.css.map
 
 # Env files
 .env
-.env.development.local
-.env.test.local
-.env.production.local
-.env.local
 ecosystem.config.js
 ecosystem.config.cjs
-
-
-# Misc
-*.mp4
-*.webm

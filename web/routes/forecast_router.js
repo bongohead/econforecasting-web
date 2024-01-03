@@ -38,8 +38,9 @@ forecast_router.get('/:varname', concat_js('forecast.js', libs), async (req, res
 
         res.render('forecast.html.twig', {
             site: process.env.SITE,
-            title_site: process.env.TITLE_SITE,
+            domain: process.env.DOMAIN,
             title: varname_data.fullname + ' | ' + process.env.SITE +'.com',
+            title_site: process.env.TITLE_SITE,
             description: varname_data.meta_description,
             keywords: varname_data.meta_keywords,
             canonical: `https://macropredictions.com/forecast/${varname_data.varname}`,

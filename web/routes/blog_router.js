@@ -89,6 +89,7 @@ blog_router.get('/', concat_js('blog.js', libs), async (req, res, next) => {
         res.render(
             'blog.html.twig',
             {
+                domain: process.env.DOMAIN,
                 site: process.env.SITE,
                 title_site: process.env.TITLE_SITE,
                 title: 'Blog | Macropredictions.com',

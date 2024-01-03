@@ -60,7 +60,7 @@
 							{{ primary_forecast_description }}
 
 							{% if show_vintage_chart == true %}
-								<p class="mb-2"><a href="#" class="btn btn-sm bg-sky bg-hover-sky-dark rounded-0 text-slate-100 border-0" role="button" data-bs-toggle="modal" data-bs-target="#fixed-vdate-chart-modal"><i class="me-1  bi bi-bar-chart text-sm align-top"></i>View forecast history by date of forecast</a></p>
+								<p class="mb-2"><a href="#" class="btn btn-sm bg-sky bg-hover-sky-dark transition duration-300 rounded-0 text-slate-100 border-0" role="button" data-bs-toggle="modal" data-bs-target="#fixed-vdate-chart-modal"><i class="me-1  bi bi-bar-chart text-sm align-top"></i>View forecast history by date of forecast</a></p>
 								
 								<div class="modal fade" id="fixed-vdate-chart-modal" tabindex="-1">
 									<div class="modal-dialog modal-xl" style="max-width: min(calc(100% - 20px), 1200px);">
@@ -88,7 +88,7 @@
 									</div>
 								</div>
 
-								<p><a href="#" class="btn btn-sm bg-sky bg-hover-sky-dark rounded-0 text-slate-100 border-0" role="button" data-bs-toggle="modal" data-bs-target="#fixed-date-chart-modal"><i class="me-1  bi bi-bar-chart text-sm align-top"></i>View forecast history by targeted forecast period</a></p>
+								<p><a href="#" class="btn btn-sm bg-sky bg-hover-sky-dark transition duration-300  rounded-0 text-slate-100 border-0" role="button" data-bs-toggle="modal" data-bs-target="#fixed-date-chart-modal"><i class="me-1  bi bi-bar-chart text-sm align-top"></i>View forecast history by targeted forecast period</a></p>
 
 
 								<div class="modal fade" id="fixed-date-chart-modal" tabindex="-1">
@@ -127,7 +127,7 @@
 
 						<div id="secondary-forecasts-description">
 							<p>Other forecasts included on this page:</p>
-							<ol style="list-style-type:upper-roman" style="font-size:.99em">
+							<ol style="list-style-type:upper-roman;font-size:.98em">
 								{{ secondary_forecasts_description }}
 							</ol>
 						</div>
