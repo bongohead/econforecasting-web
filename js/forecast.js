@@ -43,9 +43,9 @@ document.addEventListener('DOMContentLoaded', function() {
 			update_freq: ud.hist_update_freq,
 			description: 'Historical Data',
 			external: false,
-			vdate: dayjs().format('YYYY-MM-DD'),
+			vdate: dayjs(hist_obs.data.map(d => d.vdate).sort().slice(-1)[0]).format('YYYY-MM-DD'),
 			data: hist_obs.data
-				.filter(x => dayjs(x.date) <= dayjs().add(15, 'years'))
+				.filter(x => dayjs(x.date) <= dayjs().add(20, 'years'))
 				.map(x => [x.date, parseFloat(x.value)]).sort((a, b) =>  dayjs(a[0]) - dayjs(b[0]))
 		};
 
@@ -153,7 +153,7 @@ const drawChart = function(ts_data_parsed, fullname, units, hist_freq, site) {
 								${x.shortname}
 							</span>
 							<span class="d-block fst-italic text-slate-500" style="font-size:.85rem;">
-								updated ${x.update_freq  === 'd' ? 'daily' : x.update_freq === 'm' ? 'monthly' : x.update_freq === 'q' ? 'quarterly' : 'unknown'}, last on ${dayjs(x.vdate).format('MM/DD')}
+								updated ${x.update_freq  === 'd' ? 'daily' : x.update_freq === 'w' ? 'weekly' : x.update_freq === 'm' ? 'monthly' : x.update_freq === 'q' ? 'quarterly' : 'unknown'}, last on ${dayjs(x.vdate).format('MM/DD')}
 							</span>
 							<span class="d-block fst-italic text-slate-500" style="font-size:.85rem;">values are ${(x.freq === 'q' ? 'quarterly' : 'monthly')} aggregates</span>
 						</div>`,

@@ -25,11 +25,18 @@ const basic_routes = [
   }, {
     title: 'Treasury Curve Forecast',
     url: '/treasury-curve',
-    description: '10-year monthly forecasts for the Treasury curve.',
-    keywords: 'treasury yields, treasury yield forecasts, 10-year treasury yield forecast, 30-year treasury forecast, treasury forecasts',
+    description: 'Historical data and daily-updated monthly forecasts for the full Treasury yield curve.',
+    keywords: 'treasury yields, treasury curve, treasury curve forecasts, treasury yield forecasts, treasury forecasts',
     template: 'treasury-curve', endpoints: ['/treasury-curve'],  
     input_js: standard_libs.concat(['treasury-curve']), output_js: 'treasury-curve'
-  }
+  }, {
+    title: 'Real Treasury Curve Forecast',
+    url: '/real-treasury-curve',
+    description: 'Historical data and daily-updated monthly forecasts for the TIPS curve and real Treasury yield curve.',
+    keywords: 'real treasury yields, real treasury curve, real treasury curve forecasts, real treasury yield forecasts, real treasury forecasts',
+    template: 'real-treasury-curve', endpoints: ['/real-treasury-curve'],  
+    input_js: standard_libs.concat(['real-treasury-curve']), output_js: 'real-treasury-curve'
+  }, 
 ];
 
 

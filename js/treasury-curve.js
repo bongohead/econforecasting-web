@@ -144,9 +144,12 @@ document.addEventListener('DOMContentLoaded', function() {
 function drawChart(treasury_data, play_index, forecast_vdate, hist_vdate, site) {
 	
 	Highcharts.AST.allowedAttributes.push('data-dir');
-
 	const o = {
         chart: {
+			animation: {
+				duration: 500,
+				easing: 'linear'
+			},	
 			spacingTop: 10,
 			marginBottom: 80,
 			spacingRight: 150,
@@ -158,7 +161,7 @@ function drawChart(treasury_data, play_index, forecast_vdate, hist_vdate, site) 
 					const text = this.renderer.label(
 						`
 						<tspan dy="0" x="5" id="date-text-current" style="color: #334155;font-size:13px;">
-							⎯ Current yield curve for <tspan style="font-weight:bold">${dayjs(treasury_data[play_index - 1].date).format('MMM YYYY')}</tspan>*
+							⎯ Current yield curve for <tspan style="font-weight:bold">${dayjs(treasury_data.filter(t => t.type == 'history').slice(-1)[0].date).format('MMM YYYY')}</tspan>*
 						</tspan>
 						<tspan dy="16px" x="5" id="date-text-forecast" style="color:#298D25;font-size:13px;">
 							⎯ Forecasted curve for <tspan style="font-weight:bold">${dayjs(treasury_data[play_index].date).format('MMM YYYY')}</tspan> (updated ${dayjs(forecast_vdate).format('MM/DD')})
@@ -327,9 +330,7 @@ function drawChart(treasury_data, play_index, forecast_vdate, hist_vdate, site) 
 			},
 			labels: {
 				format: '{value}%'
-			},
-			min: 0,
-			max: 8
+			}
 		},
 		legend: {
 			enabled: false
