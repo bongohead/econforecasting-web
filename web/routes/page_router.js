@@ -48,6 +48,7 @@ basic_routes.forEach(function(r) {
     try {
       res.render(`./${r.template}.html.twig`, {
         site: process.env.SITE,
+        title_site: process.env.TITLE_SITE, // For home page
         title: r.title === process.env.TITLE_SITE ? r.title : r.title + ' | ' + process.env.SITE +'.com',
         description: r.description,
         keywords: r.keywords,
