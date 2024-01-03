@@ -1,43 +1,57 @@
-init();
-
 document.addEventListener('DOMContentLoaded', function() {
+
+	console.log('TEST');
+
 	
 	const page_list = [
-		{group: 'Forecast', fullname: 'Federal Funds Rate (FFR)', url: 'forecast-ffr'},
-		{group: 'Forecast', fullname: 'Secured Overnight Financing Rate (SOFR)', url: 'forecast-sofr'},
-		{group: 'Forecast', fullname: '3-Month Treasury Yield', url: 'forecast-t03m'},
-		{group: 'Forecast', fullname: '6-Month Treasury Yield', url: 'forecast-t06m'},
-		{group: 'Forecast', fullname: '1-Year Treasury Yield', url: 'forecast-t01y'},
-		{group: 'Forecast', fullname: '2-Year Treasury Yield', url: 'forecast-t02y'},
-		{group: 'Forecast', fullname: '5-Year Treasury Yield', url: 'forecast-t05y'},
-		{group: 'Forecast', fullname: '10-Year Treasury Yield', url: 'forecast-t10y'},
-		{group: 'Forecast', fullname: '20-Year Treasury Yield', url: 'forecast-t20y'},
-		{group: 'Forecast', fullname: '30-Year Treasury Yield', url: 'forecast-t30y'},
-		{group: 'Forecast', fullname: '30-Year Mortgage Rate', url: 'forecast-mort30y'},
-		{group: 'Forecast', fullname: '15-Year Mortgage Rate', url: 'forecast-mort15y'},
-		{group: 'Forecast', fullname: 'BSBY Rate', url: 'forecast-bsby'},
-		{group: 'Forecast', fullname: 'AMERIBOR', url: 'forecast-ameribor'},
-		{group: 'Forecast', fullname: 'Sterling Overnight Rate (SONIA)', url: 'forecast-sonia'},
-		{group: 'Forecast', fullname: 'Euro Short-Term Rate (ESTR)', url: 'forecast-estr'},
-		{group: 'Forecast', fullname: 'Bank of England Base Rate', url: 'forecast-ukbankrate'},
+		{group: 'Interest Rates', fullname: 'Federal Funds Rate (FFR)', url: 'forecast/ffr'},
+		{group: 'Interest Rates', fullname: 'Secured Overnight Financing Rate (SOFR)', url: 'forecast/sofr'},
+		{group: 'Interest Rates', fullname: 'BSBY Overnight Rate', url: 'forecast/bsby'},
+		{group: 'Interest Rates', fullname: 'AMERIBOR Overnight Rate', url: 'forecast/ameribor'},
+		{group: 'Interest Rates', fullname: 'Sterling Overnight Rate (SONIA)', url: 'forecast/sonia'},
+		{group: 'Interest Rates', fullname: 'Euro Short-Term Rate (ESTR)', url: 'forecast/estr'},
+		{group: 'Interest Rates', fullname: 'Bank of England Base Rate', url: 'forecast/ukbankrate'},
 
-		{group: 'US Economy', fullname: 'Gross Domestic Product (GDP)', url: 'forecast-gdp'},
-		{group: 'US Economy', fullname: 'Personal Consumption (PCE)', url: 'forecast-pce'},
-		
-		{group: 'Sentiment', fullname: 'Social Media Financial Sentiment Index', url: 'sentiment'},
-		{group: 'Sentiment', fullname: 'Traditional Media Financial Sentiment Index', url: 'sentiment'},
-		{group: 'Sentiment', fullname: 'Social Media Labor Market Sentiment Index', url: 'sentiment'},
-		{group: 'Sentiment', fullname: 'Social Media News Sentiment Index', url: 'sentiment'}
+		{group: 'Interest Rates', fullname: 'Treasury Yield Curve', url: 'treasury-curve'},
+		{group: 'Interest Rates', fullname: '1-Month Treasury Yield', url: 'forecast/t01m'},
+		{group: 'Interest Rates', fullname: '2-Month Treasury Yield', url: 'forecast/t02m'},
+		{group: 'Interest Rates', fullname: '3-Month Treasury Yield', url: 'forecast/t03m'},
+		{group: 'Interest Rates', fullname: '6-Month Treasury Yield', url: 'forecast/t06m'},
+		{group: 'Interest Rates', fullname: '1-Year Treasury Yield', url: 'forecast/t01y'},
+		{group: 'Interest Rates', fullname: '2-Year Treasury Yield', url: 'forecast/t02y'},
+		{group: 'Interest Rates', fullname: '5-Year Treasury Yield', url: 'forecast/t05y'},
+		{group: 'Interest Rates', fullname: '10-Year Treasury Yield', url: 'forecast/t10y'},
+		{group: 'Interest Rates', fullname: '20-Year Treasury Yield', url: 'forecast/t20y'},
+		{group: 'Interest Rates', fullname: '30-Year Treasury Yield', url: 'forecast/t30y'},
+		{group: 'Interest Rates', fullname: '10 Year - 2 Year Treasury Spread', url: 'forecast/t10yt02yspread'},
+		{group: 'Interest Rates', fullname: '10 Year - 3 Month Treasury Spread', url: 'forecast/t10yt03mspread'},
+
+		{group: 'Interest Rates', fullname: 'Real Treasury Curve (TIPS Curve)', url: 'real-treasury-curve'},
+		{group: 'Interest Rates', fullname: '3-Month Real Treasury Yield', url: 'forecast/rt03m'},
+		{group: 'Interest Rates', fullname: '6-Month Real Treasury Yield', url: 'forecast/rt06m'},
+		{group: 'Interest Rates', fullname: '1-Year Real Treasury Yield', url: 'forecast/rt01y'},
+		{group: 'Interest Rates', fullname: '2-Year Real Treasury Yield', url: 'forecast/rt02y'},
+		{group: 'Interest Rates', fullname: '5-Year Real Treasury Yield', url: 'forecast/rt05y'},
+		{group: 'Interest Rates', fullname: '10-Year Real Treasury Yield/TIPS', url: 'forecast/rt10y'},
+		{group: 'Interest Rates', fullname: '20-Year Real Treasury Yield/TIPS', url: 'forecast/rt20y'},
+		{group: 'Interest Rates', fullname: '30-Year Real Treasury Yield/TIPS', url: 'forecast/r30y'},
+		{group: 'Interest Rates', fullname: 'Real 10 Year - 2 Year Treasury Spread', url: 'forecast/rt10yt02yspread'},
+
+		{group: 'Interest Rates', fullname: '30-Year US Fixed-Rate Mortgage Rate', url: 'forecast/mort30y'},
+		{group: 'Interest Rates', fullname: '15-Year US Fixed-Rate Mortgage Rate', url: 'forecast/mort15y'},
+		{group: 'Interest Rates', fullname: '30-Year Mortgage Spread', url: 'forecast/mort30yt10yspread'},
+
+		{group: 'US Macro', fullname: 'CPI Inflation', url: 'forecast/cpi'},
 		
 	];
 	
 	// API Basic Configuration Object
 	const autocomplete_config = {
-		placeHolder: 'Type an economic variable name (e.g. "Treasury Yield")',
+		placeHolder: 'Type an economic variable name (e.g. "mortgage rate")',
 		data: {
 			cache: false,
 			// Weird bug - can't be empty 
-			src: page_list.map(x => ({'Forecast': 'poop', 'US Economy': 'poop', 'Sentiment': 'poop', ...{[x.group]: x.fullname}})),
+			src: page_list.map(x => ({[x.group]: x.fullname})),
 			keys: [...new Set(page_list.map(x => x.group))]
 		},
 		wrapper: false,
@@ -83,7 +97,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 	
 	document.querySelector("#autoComplete").addEventListener("click", function (event) {
-		//console.log(autoCompleteJS.input.value);
 		autoCompleteJS.start(' ');
 		autoCompleteJS.input.value = null;
 	});
@@ -93,9 +106,5 @@ document.addEventListener('DOMContentLoaded', function() {
 }); 
 
 const getDir = function(page_obj) {
-	// Simulate an HTTP redirect:
-	// console.log('clicked', page_obj);
-
-	window.location.replace(page_obj.url);
-	//window.location.href = page_obj.url
+	window.location.href = (page_obj.url);
 }

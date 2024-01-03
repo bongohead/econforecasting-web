@@ -1,0 +1,24 @@
+[
+    {
+        "id": "2023-11-20_rate-forecasts",
+        "title": "How accurate are forecast markets for interest rates?",
+        "datetime": "2023-11-20 20:42",
+        "blurb": "Blah blah blah",
+        "img": "",
+        "tags": ["forecasting", "macroeconomics"]
+    }, {
+        "id": "2023-11-05_test-2",
+        "title": "Test",
+        "datetime": "2023-11-20 17:42",
+        "blurb": "Blah blah blah",
+        "img": "",
+        "tags": []
+    }, {
+        "id": "2023-11-05_test-3",
+        "title": "Test",
+        "datetime": "2023-11-20 17:42",
+        "blurb": "Blah blah blah",
+        "img": "",
+        "tags": []
+    }
+]

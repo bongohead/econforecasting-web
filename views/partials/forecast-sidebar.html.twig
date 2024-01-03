@@ -1,6 +1,40 @@
 <nav class="sidebar d-none d-lg-block px-0 py-2 bg-white ps-2" id="sidebar"> <!-- Hide Sidebar for XS to M Devices -->
 	<div class="d-flex flex-column">
-		<span class="navbar-header fw-bolder my-3 text-slate-600 fs-6 ps-3 pe-4">RATE FORECASTS</span>
+		<span class="navbar-header fw-bolder my-3 text-slate-600 fs-6 ps-3 pe-4">FORECASTS</span>
+
+		
+		<a href="#brates" data-bs-toggle="collapse" class="nav-link collapsed">
+			<svg width="1em" height="1em" fill="currentColor" class="bi bi-chevron-down me-1 d-none" style="vertical-align:-.125em;" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>
+			<svg width="1em" height="1em" fill="currentColor" class="bi bi-chevron-right me-1" style="vertical-align:-.125em;" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>
+			<span>Benchmark Rates</span>
+		</a>
+		<div id='brates' class="collapse sidebar-submenu">
+			<a class="text-truncate" href="/forecast/ffr">
+				<span class="ps-2">Fed Funds Rate Forecast</span>
+			</a>
+			<a class="text-truncate" href="/forecast/sofr">
+				<span class="ps-2">SOFR Forecast</span>
+			</a>
+			<a class="text-truncate" href="/forecast/sonia">
+				<span class="ps-2">SONIA Forecast</span>
+			</a>
+			<a class="text-truncate" href="/forecast/estr">
+				<span class="ps-2">&euro;STR Forecast</span>
+			</a>
+			<a class="text-truncate" href="/forecast/ukbankrate">
+				<span class="ps-2">UK Bank Rate Forecast</span>
+			</a>
+			<a class="text-truncate" href="/forecast/ameribor">
+				<span class="ps-2">AMERIBOR Forecast</span>
+			</a>
+			<a class="text-truncate" href="/forecast/bsby">
+				<span class="ps-2">BSBY Forecast</span>
+			</a>
+
+
+		</div>
+
+
 		<a href="#t" data-bs-toggle="collapse" class="nav-link collapsed">
 			<svg width="1em" height="1em" fill="currentColor" class="bi bi-chevron-down me-1 d-none" style="vertical-align:-.125em;" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>
 			<svg width="1em" height="1em" fill="currentColor" class="bi bi-chevron-right me-1" style="vertical-align:-.125em;" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>
@@ -40,43 +74,58 @@
 			<a class="text-truncate" href="/forecast/t30y">
 				</span><span class="ps-2">30-Year Treasury Bond</span>
 			</a>
+			<a class="text-truncate" href="/forecast/t10yt02yspread">
+				</span><span class="ps-2">10Y-2Y Treasury Spread</span>
+			</a>
+			<a class="text-truncate" href="/forecast/t10yt03mspread">
+				</span><span class="ps-2">10Y-3M Treasury Spread</span>
+			</a>
 
 		</div>				
-		
-		<a href="#brates" data-bs-toggle="collapse" class="nav-link collapsed">
+
+		<a href="#rt" data-bs-toggle="collapse" class="nav-link collapsed">
 			<svg width="1em" height="1em" fill="currentColor" class="bi bi-chevron-down me-1 d-none" style="vertical-align:-.125em;" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>
 			<svg width="1em" height="1em" fill="currentColor" class="bi bi-chevron-right me-1" style="vertical-align:-.125em;" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>
-			<span>Benchmark Rates</span>
+			<span>TIPS & Real Treasury Yields</span>
 		</a>
-		<div id='brates' class="collapse sidebar-submenu">
-			<a class="text-truncate" href="/forecast/ffr">
-				<span class="ps-2">Fed Funds Rate Forecast</span>
+		<div id='rt' class="collapse sidebar-submenu">
+			<a class="text-truncate" href="/real-treasury-curve">
+				<span class="ps-2">Real Treasury Yield Curve</span>
 			</a>
-			<a class="text-truncate" href="/forecast/sofr">
-				<span class="ps-2">SOFR Forecast</span>
+			<a class="text-truncate" href="/forecast/rt03m">
+				<span class="ps-2">3-Month Real Yield</span>
 			</a>
-			<a class="text-truncate" href="/forecast/ameribor">
-				<span class="ps-2">AMERIBOR Forecast</span>
+			<a class="text-truncate" href="/forecast/rt06m">
+				<span class="ps-2">6-Month Real Yield</span>
 			</a>
-			<a class="text-truncate" href="/forecast/bsby">
-				<span class="ps-2">BSBY Forecast</span>
+			<a class="text-truncate" href="/forecast/rt01y">
+				<span class="ps-2">1-Year Real Yield</span>
 			</a>
-			<a class="text-truncate" href="/forecast/sonia">
-				<span class="ps-2">SONIA Forecast</span>
+			<a class="text-truncate" href="/forecast/rt02y">
+				<span class="ps-2">2-Year Real Yield</span>
 			</a>
-			<a class="text-truncate" href="/forecast/estr">
-				<span class="ps-2">&euro;STR Forecast</span>
+			<a class="text-truncate" href="/forecast/rt05y">
+				<span class="ps-2">5-Year Real Yield/TIPS</span>
 			</a>
-			<a class="text-truncate" href="/forecast/ukbankrate">
-				<span class="ps-2">UK Bank Rate Forecast</span>
+			<a class="text-truncate" href="/forecast/rt10y">
+				<span class="ps-2">10-Year Real Yield/TIPS</span>
 			</a>
+			<a class="text-truncate" href="/forecast/rt20y">
+				<span class="ps-2">20-Year Real Yield</span>
+			</a>
+			<a class="text-truncate" href="/forecast/rt30y">
+				</span><span class="ps-2">30-Year Real Yield/TIPS</span>
+			</a>
+			<a class="text-truncate" href="/forecast/rt10yrt02yspread">
+				</span><span class="ps-2">Real 10Y-2Y Treasury Spread</span>
+			</a>
+		</div>				
 
-		</div>
 		
 		<a href="#mor" data-bs-toggle="collapse" class="nav-link collapsed">
 			<svg width="1em" height="1em" fill="currentColor" class="bi bi-chevron-down me-1 d-none" style="vertical-align:-.125em;" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>
 			<svg width="1em" height="1em" fill="currentColor" class="bi bi-chevron-right me-1" style="vertical-align:-.125em;" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>
-			<span>Mortgage Rates</span>
+			<span>US Mortgage Rates</span>
 		</a>
 		<div id='mor' class="collapse sidebar-submenu">
 			<a class="text-truncate" href="/forecast/mort15y">
@@ -85,6 +134,22 @@
 			<a class="text-truncate" href="/forecast/mort30y">
 				<span class="ps-2">30-Year US Mortgage Rate</span>
 			</a>
+			<a class="text-truncate" href="/forecast/mort30yt10yspread">
+				<span class="ps-2">30-Year Mortgage - Treasury Spread</span>
+			</a>
+
 		</div>
+
+		<a href="#macro" data-bs-toggle="collapse" class="nav-link collapsed">
+			<svg width="1em" height="1em" fill="currentColor" class="bi bi-chevron-down me-1 d-none" style="vertical-align:-.125em;" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>
+			<svg width="1em" height="1em" fill="currentColor" class="bi bi-chevron-right me-1" style="vertical-align:-.125em;" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>
+			<span>US Macro</span>
+		</a>
+		<div id='macro' class="collapse sidebar-submenu">
+			<a class="text-truncate" href="/forecast/cpi">
+				<span class="ps-2">CPI Inflation</span>
+			</a>
+		</div>
+
 	</div>
 </nav>

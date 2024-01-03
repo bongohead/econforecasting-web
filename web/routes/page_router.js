@@ -21,7 +21,7 @@ const basic_routes = [
     description: 'Open datasets for macroeconomic time series, financial forecasts, and other economic data.',
     keywords: 'treasury yields, treasury yield forecasts, macroeconomic forecasts, interest rate forecasts, 10 year treasury yield forecast, rate forecasts, economic forecasts',
     template: 'home', endpoints: ['/'], 
-    input_js: ['libs/lottie/lottie-player', 'libs/autocomplete/autoComplete'], output_js: 'home'
+    input_js: ['libs/lottie/lottie-player', 'libs/autocomplete/autoComplete', 'home'], output_js: 'home'
   }, {
     title: 'Treasury Curve Forecast',
     url: '/treasury-curve',
@@ -51,7 +51,7 @@ basic_routes.forEach(function(r) {
         title: r.title + ' | ' + process.env.SITE +'.com',
         description: r.description,
         keywords: r.keywords,
-        canonical: `https://macropredictions.com${r.canonical}`,
+        canonical: `https://macropredictions.com${r.url}`,
         pagescript: `${r.output_js}.js`
       });
 

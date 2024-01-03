@@ -19,6 +19,7 @@ import page_router from './routes/page_router.js';
 import blog_router from './routes/blog_router.js';
 import error_router from './routes/error_router.js';
 import forecast_router from './routes/forecast_router.js';
+import robot_router from './routes/robot_router.js';
 
 const app = express();
 app.listen(process.env.PORT, () => {
@@ -36,7 +37,7 @@ app.use(helmet({
             fontSrc: ["'self'", 'https://cdnjs.cloudflare.com', 'https://fonts.googelapis.com', 'https://fonts.gstatic.com', 'https://cdn.jsdelivr.net'],
             connectSrc: ["'self'", 'https://cdnjs.cloudflare.com', 'https://*.econforecasting.com', 'https://*.macropredictions.com', '*'],
             formAction: ["'self'", 'https://export.highcharts.com'],
-            imgSrc: ["'self'", 'blob:']
+            imgSrc: ["'self'", 'blob:', 'data:']
           }
     }
 }));
@@ -74,8 +75,8 @@ app.use(cookie_setter);
 // Serve static files
 app.use('/static', express.static(path.join(__dirname, 'static')));
 app.use('/static/cache', express.static(path.join(__dirname, 'cache')));
-app.use('/robots.txt', express.static(path.join(__dirname, 'static', 'robots.txt')));
-app.use('/sitemap.xml', express.static(path.join(__dirname, 'static', 'sitemap.xml')));
+// app.use('/robots.txt', express.static(path.join(__dirname, 'static', 'robots.txt')));
+// app.use('/sitemap.xml', express.static(path.join(__dirname, 'static', 'sitemap.xml')));
 
 // Compress files
 app.use(compression());
@@ -92,6 +93,7 @@ app.set("twig options", {
 app.use('/', page_router);
 app.use('/blog', blog_router);
 app.use('/forecast', forecast_router);
+app.use('/', robot_router);
 app.use('/', error_router);
 
 
