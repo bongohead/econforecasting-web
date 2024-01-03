@@ -90,6 +90,7 @@ blog_router.get('/', concat_js('blog.js', libs), async (req, res, next) => {
             'blog.html.twig',
             {
                 site: process.env.SITE,
+                title_site: process.env.TITLE_SITE,
                 title: 'Blog | Macropredictions.com',
                 description: 'Our latest commentary, analysis and data on economic forecasting, with a focus on the technical side of modeling and macroeconomics.',
                 keywords: '',

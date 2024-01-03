@@ -38,6 +38,7 @@ forecast_router.get('/:varname', concat_js('forecast.js', libs), async (req, res
 
         res.render('forecast.html.twig', {
             site: process.env.SITE,
+            title_site: process.env.TITLE_SITE,
             title: varname_data.fullname + ' | ' + process.env.SITE +'.com',
             description: varname_data.meta_description,
             keywords: varname_data.meta_keywords,
