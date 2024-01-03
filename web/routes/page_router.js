@@ -16,7 +16,7 @@ const standard_libs =
 
 const basic_routes = [
   {
-    title: 'Macropredictions',
+    title: process.env.TITLE_SITE,
     url: '',
     description: 'Open datasets for macroeconomic time series, financial forecasts, and other economic data.',
     keywords: 'treasury yields, treasury yield forecasts, macroeconomic forecasts, interest rate forecasts, 10 year treasury yield forecast, rate forecasts, economic forecasts',
@@ -48,7 +48,7 @@ basic_routes.forEach(function(r) {
     try {
       res.render(`./${r.template}.html.twig`, {
         site: process.env.SITE,
-        title: r.title + ' | ' + process.env.SITE +'.com',
+        title: r.title === process.env.TITLE_SITE ? r.title : r.title + ' | ' + process.env.SITE +'.com',
         description: r.description,
         keywords: r.keywords,
         canonical: `https://macropredictions.com${r.url}`,
