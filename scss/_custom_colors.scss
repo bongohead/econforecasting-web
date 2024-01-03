@@ -1,13 +1,13 @@
 $custom-colors: (
-	slate-100: rgb(241 245 249),
-	slate-200: rgb(226 232 240),
-	slate-300: rgb(203 213 225),
-	slate-400: rgb(148 163 184),
-	slate-500: rgb(100 116 139),
-	slate-600: rgb(71 85 105),
-	slate-700: rgb(51 65 85),
-	slate-800: rgb(30 41 59),
-	slate-900: rgb(15 23 42),
+	slate-100: rgb(241, 245, 249),
+	slate-200: rgb(226, 232, 240),
+	slate-300: rgb(203, 213, 225),
+	slate-400: rgb(148, 163, 184),
+	slate-500: rgb(100, 116, 139),
+	slate-600: rgb(71, 85, 105),
+	slate-700: rgb(51, 65, 85),
+	slate-800: rgb(30, 41, 59),
+	slate-900: rgb(15, 23, 42),
 
 	// To make a color lighter, rotate the hue towards the nearest bright hue — 60°, 180°, or 300°.
 	// To make a color darker, rotate the hue towards the nearest dark hue — 0°, 120°, or 240°.
