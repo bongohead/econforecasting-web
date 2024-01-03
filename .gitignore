@@ -25,6 +25,8 @@ style.css.map
 .env.production.local
 .env.local
 ecosystem.config.js
+ecosystem.config.cjs
+
 
 # Misc
 *.mp4
