@@ -1,0 +1,86 @@
+{% extends "partials/base.html.twig" %}
+
+{% block navbar %}
+	{% include "partials/navbar-fluid.html.twig" %}
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex bg-white-warm">
+	{% include "partials/forecast-sidebar.html.twig" %}
+	<div class="col mx-2 pb-5">
+		<div class="container-xxl" id="forecast-container" data-site="{{ site }}">
+
+			<div class="row">
+				<div class="col-12 card p-4 my-3 rounded">
+					<h4 class="mb-3 d-flex align-items-center" >
+						<span style="letter-spacing: .05rem;" class="badge bg-slate-500 font-family-logo  text-bold text-xs font-family-sans-serif fw-bold text-slate-100 rounded-0 px-2 py-1">YIELD CURVE FORECASTS</span>
+					</h4>
+					<div class="chart-container position-relative rounded" id="chart-container">
+						<div class="loader-container"><span>Pulling data...</span><div></div></div>
+						<div class="loadee-container position-relative" style="height:400px">
+							<div id="chart-container-1" class="position-absolute w-100 px-2 pt-1"></div>
+							<div id="chart-container-2" class="position-absolute d-none d-md-block" style="width:150px; right:.5rem" ></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+			
+				<div class="col-xxl-6 col-lg-12 px-0 pe-xxl-2 mb-3 order-xxl-1 order-lg-2">
+					<div id="data-card" class="card shadow-sm p-4">
+
+						<h4 class="mb-3" >
+							<span style="letter-spacing: .05rem;" class="badge bg-slate-500 font-family-logo  text-bold text-xs font-family-sans-serif fw-bold text-slate-100 rounded-0 px-2 py-1">VIEW DATA</span>
+						</h4>
+					
+						<div id="table-container" class="position-relative" style="min-height: 550px">
+							<div class="loader-container"><span>Pulling data...</span><div></div></div>
+							<div class="loadee-container position-relative">
+								<span class="text-sm text-slate-800">Select a series:</span>
+								<ul class="list-group m-3" id="li-container" style="max-width: 25rem"></ul>
+								<div id="dt-container" class="d-grid position-relative"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-xxl-6 col-lg-12 px-0 ps-xxl-2 mb-3 order-xxl-2 order-lg-1">
+					<div class="card shadow-sm p-4">
+						<h4 class="mb-3" >
+							<span style="letter-spacing: .05rem;" class="badge bg-slate-500 font-family-logo  text-bold text-xs font-family-sans-serif fw-bold text-slate-100 rounded-0 px-2 py-1">DESCRIPTION</span>
+						</h4>
+						<div id="variable-description">
+							<p>
+								Values on this page reflect the <span class="fst-italic">real</span> Treasury yield curve (or equivalently, the TIPS Treasury curve). The real curve is equal to i.e. the <a href="treasury-curve">nominal Treasury yield curve</a> minus a curve of investors' annualized inflation expectations.</p>
+							<p>
+								Changes in real yields reflect changes in nominal Treasury yields or changes in inflation expectations. For example, a rise in the 20-year real yield can be due to either a rise in the 20-year standard Treasury bond yield, or a decline in investors' expected inflation for the subsequent 20 years.
+							</p>
+							<p>
+								Since the Treasury yield is generally considered risk-free, the real Treasury yield can also be interpreted as the minimum risk-free real rate of return. For example, if the 1-year real yield is 1%, all alternative investments with a 1-year return horizon should return at least 1% or more on an inflation-adjusted basis to perform as well as the "riskless" return.
+							</p>
+							<p>
+								The <span class="fw-bolder text-forest">market consensus forecast</span> is a forecast calibrated to represent the median expectation of market participants. It is calculated as the simple difference between two component forecasts:
+							</p>
+							<ol>
+								<li>A <a href="/treasury-curve">nominal yield forecast</a> (calculated from futures prices, Treasury yields, and survey data)</li>
+								<li>An <a href="/forecast/cpi">expected inflation forecast</a> (calculated from TIPS-Treasury spreads, CPI data, and zero-coupon inflation swaps)</li>
+							</ol>
+							<p>The model is updated daily between <small>9:30-10:00 ET (13:30/14:30 UTC)</small>.</p>
+
+							<p>Historical data on this page represents monthly means of daily values. Historical data for 5, 10, and 30-year yields are directly taken from TIPS markets. Historical yields for other maturities are interpolated by using a curve smoother on TIPS yields.</p>
+							<p>Note that historical data does not represent actual (realized) inflation. For example, the historical value for the 10-year real yield in Dec. 2022 does not take into the account the 10-year forward inflation from 2022, but instead the actual expected 10-year forward inflation at Dec. 2022.</p>
+
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+
+</div>
+{% endblock %}

@@ -8,6 +8,12 @@ scss/libs/
 js/libs/
 web/cache/
 
+# Static
+web/static/icons
+web/static/img/homepage-animation.json
+web/static/ads.txt
+web/statis/css/
+
 # Compiled files
 style.css
 style.css.map
@@ -19,9 +25,6 @@ style.css.map
 .env.production.local
 .env.local
 ecosystem.config.js
-
-# Key test
-tests.r
 
 # Misc
 *.mp4
