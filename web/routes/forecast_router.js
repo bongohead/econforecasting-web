@@ -43,7 +43,7 @@ forecast_router.get('/:varname', concat_js('forecast.js', libs), async (req, res
             title_site: process.env.TITLE_SITE,
             description: varname_data.meta_description,
             keywords: varname_data.meta_keywords,
-            canonical: `https://macropredictions.com/forecast/${varname_data.varname}`,
+            canonical: `https://econforecasting.com/forecast/${varname_data.varname}`,
             pagescript: 'forecast.js',
             varname: varname_data.varname,
             fullname: varname_data.fullname,

@@ -53,7 +53,7 @@ basic_routes.forEach(function(r) {
         title_site: process.env.TITLE_SITE, // For home page
         description: r.description,
         keywords: r.keywords,
-        canonical: `https://macropredictions.com${r.url}`,
+        canonical: `https://econforecasting.com${r.url}`,
         pagescript: `${r.output_js}.js`
       });
 

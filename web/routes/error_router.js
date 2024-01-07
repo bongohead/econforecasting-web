@@ -10,7 +10,7 @@ error_router.get('/404', (req, res) => {
         title: '404',
         description: '404',
         keywords: '',
-        canonical: 'https://macropredictions.com/404',
+        canonical: 'https://econforecasting.com/404',
         pagescript: null
     });
 
