@@ -6,15 +6,15 @@
 
 {% block content %}
 
-<div class="d-flex bg-white-warm">
+<div class="d-flex bg-white-neutral">
 	{% include "partials/forecast-sidebar.html.twig" %}
 	<div class="col mx-2 pb-5">
 		<div class="container-xxl" id="forecast-container" data-site="{{ site }}" data-varname="{{ varname }}" data-fullname="{{ fullname }}" data-hist-freq="{{ hist_freq }}" data-hist-update-freq="{{ hist_update_freq }}" data-hist-is-agg="{{ hist_is_agg }}" data-units="{{ units }}" data-primary-forecast="{{ primary_forecast }}" data-secondary-forecasts="{{ secondary_forecasts }}" data-show-vintage-chart="{{ show_vintage_chart }}">
 
 			<div class="row">
-				<div class="col-12 card p-4 my-3 rounded">
+				<div class="col-12 card p-4 my-3">
 					<h4 class="mb-3 d-flex align-items-center" >
-						<span style="letter-spacing: .05rem;" class="badge bg-slate-500 font-family-logo  text-bold text-xs font-family-sans-serif fw-bold text-slate-100 rounded-0 px-2 py-1">{{ fullname | upper }} - FORECAST CHART</span>
+						<span class="card-header">{{ fullname | upper }} - FORECAST CHART</span>
 					</h4>
 					<div class="chart-container position-relative rounded" style="height:420px" id="chart-container">
 						<div class="loader-container"><span>Pulling data...</span><div></div></div>
@@ -25,9 +25,9 @@
 			
 			<div class="row">
 				<div class="col-xxl-4 col-lg-6 px-0 pe-lg-3 mb-3">
-					<div id="data-card" class="card shadow-sm p-4">
+					<div id="data-card" class="card p-4">
 						<h4 class="mb-3" >
-							<span style="letter-spacing: .05rem;" class="badge bg-slate-500 font-family-logo  text-bold text-xs font-family-sans-serif fw-bold text-slate-100 rounded-0 px-2 py-1">VIEW DATA</span>
+							<span class="card-header">VIEW DATA</span>
 						</h4>
 
 						<div id="table-container" class="position-relative" style="min-height: 550px">
@@ -43,10 +43,10 @@
 				</div>
 
 				<div class="col-xxl-8 col-lg-6 px-0 ps-lg-3 mb-3" id="text-container">
-					<div class="card shadow-sm p-4 text-slate-700 pe-xxl-5 fs-6">
+					<div class="card p-4 text-slate-700 pe-xxl-5 fs-6">
 
 						<h4 class="mb-3" >
-							<span style="letter-spacing: .05rem;" class="badge bg-slate-500 font-family-logo  text-bold text-xs font-family-sans-serif fw-bold text-slate-100 rounded-0 px-2 py-1">VARIABLE DESCRIPTION</span>
+							<span class="card-header">VARIABLE DESCRIPTION</span>
 						</h4>
 						<div id="variable-description">
 							{{ variable_description }}
@@ -54,7 +54,7 @@
 
 
 						<h4 class="mb-3 mt-3" >
-							<span style="letter-spacing: .05rem;" class="badge bg-slate-500 font-family-logo text-bold text-xs font-family-sans-serif fw-bold text-slate-100 rounded-0 px-2 py-1">PRIMARY FORECAST MODEL</span>
+							<span class="card-header">PRIMARY FORECAST MODEL</span>
 						</h4>
 						<div id="primary-forecast-description" >
 							{{ primary_forecast_description }}
@@ -122,7 +122,7 @@
 						
 						{% if secondary_forecasts|length > 0 %}
 						<h4 class="mb-3 mt-3" >
-							<span style="letter-spacing: .05rem;" class="badge bg-slate-500 font-family-logo  text-bold text-xs font-family-sans-serif fw-bold text-slate-100 rounded-0 px-2 py-1">ALTERNATE FORECASTS</span>
+							<span class="card-header">ALTERNATE FORECASTS</span>
 						</h4>
 
 						<div id="secondary-forecasts-description">

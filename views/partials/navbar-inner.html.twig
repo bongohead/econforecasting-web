@@ -1,64 +1,65 @@
-    <ul class="navbar-nav">						
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Interest Rate Forecasts</a>
-            <div class="dropdown-menu">
-                <div class="d-md-flex align-items-start justify-content-start">
-                    <div>   
-                        <div class="dropdown-header py-0 mx-2 mb-1">US TREASURY YIELDS</div>
-                        <a class="dropdown-item" href="/treasury-curve">Full Yield Curve</a>
-                        <a class="dropdown-item" href="/forecast/t03m">3 Month T-Bill</a>
-                        <a class="dropdown-item" href="/forecast/t06m">6 Month T-Bill</a>
-                        <a class="dropdown-item" href="/forecast/t01y">1 Year T-Note</a>
-                        <a class="dropdown-item" href="/forecast/t02y">2 Year T-Note</a>
-                        <a class="dropdown-item" href="/forecast/t05y">5 Year T-Note</a>
-                        <a class="dropdown-item" href="/forecast/t10y">10 Year T-Note</a>
-                        <a class="dropdown-item" href="/forecast/t20y">20 Year T-Bond</a>
-                        <a class="dropdown-item" href="/forecast/t30y">30 Year T-Bond</a>
-                    </div>
-                    <div>
-                        <div class="dropdown-header py-0 mx-2 mb-1">BENCHMARK RATES</div>
-                        <a class="dropdown-item" href="/forecast/ffr">Federal Funds Rate</a>
-                        <a class="dropdown-item" href="/forecast/sofr">SOFR</a>
-                        <a class="dropdown-item" href="/forecast/ameribor">AMERIBOR</a>
-                        <a class="dropdown-item" href="/forecast/bsby">BSBY</a>
-                        <a class="dropdown-item" href="/forecast/sonia">SONIA Rate</a>
-                        <a class="dropdown-item" href="/forecast/estr">Euro Short-Term Rate</a>
-                        <a class="dropdown-item" href="/forecast/ukbankrate">BoE Bank Rate</a>
-                    </div>
-                    <div>
-                        <div class="dropdown-header py-0 mx-2 mb-1">MORTGAGE RATES</div>
-                        <a class="dropdown-item" href="/forecast/mort15y">U.S. 15-Year Mortgage</a>
-                        <a class="dropdown-item" href="/forecast/mort30y">U.S. 30-Year Mortgage</a>
-                    </div>
+<ul class="navbar-nav">						
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Interest Rate Forecasts</a>
+        <div class="dropdown-menu">
+            {# Wrapping causes issues when navbar is fully expanded #}
+            <div class="d-flex flex-wrap flex-md-nowrap row-gap-4 align-items-start justify-content-start"> 
+                <div>   
+                    <div class="dropdown-header py-0 mx-2 mb-1">US TREASURY YIELDS</div>
+                    <a class="dropdown-item" href="/treasury-curve">Full Yield Curve</a>
+                    <a class="dropdown-item" href="/forecast/t03m">3 Month T-Bill</a>
+                    <a class="dropdown-item" href="/forecast/t06m">6 Month T-Bill</a>
+                    <a class="dropdown-item" href="/forecast/t01y">1 Year T-Note</a>
+                    <a class="dropdown-item" href="/forecast/t02y">2 Year T-Note</a>
+                    <a class="dropdown-item" href="/forecast/t05y">5 Year T-Note</a>
+                    <a class="dropdown-item" href="/forecast/t10y">10 Year T-Note</a>
+                    <a class="dropdown-item" href="/forecast/t20y">20 Year T-Bond</a>
+                    <a class="dropdown-item" href="/forecast/t30y">30 Year T-Bond</a>
+                </div>
+                <div>
+                    <div class="dropdown-header py-0 mx-2 mb-1">BENCHMARK RATES</div>
+                    <a class="dropdown-item" href="/forecast/ffr">Federal Funds Rate</a>
+                    <a class="dropdown-item" href="/forecast/sofr">SOFR</a>
+                    <a class="dropdown-item" href="/forecast/ameribor">AMERIBOR</a>
+                    <a class="dropdown-item" href="/forecast/bsby">BSBY</a>
+                    <a class="dropdown-item" href="/forecast/sonia">SONIA Rate</a>
+                    <a class="dropdown-item" href="/forecast/estr">Euro Short-Term Rate</a>
+                    <a class="dropdown-item" href="/forecast/ukbankrate">BoE Bank Rate</a>
+                </div>
+                <div>
+                    <div class="dropdown-header py-0 mx-2 mb-1">MORTGAGE RATES</div>
+                    <a class="dropdown-item" href="/forecast/mort15y">U.S. 15-Year Mortgage</a>
+                    <a class="dropdown-item" href="/forecast/mort30y">U.S. 30-Year Mortgage</a>
+                </div>
 
+            </div>
+        </div>
+    </li>
+    
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Macroeconomic Forecasts</a>
+        <div class="dropdown-menu">
+            <div class="d-flex flex-wrap row-gap-4 align-items-start justify-content-start">
+                <div>   
+                    <div class="dropdown-header py-0 mx-3 mb-1 border-bottom border-black" style="font-size:1.0rem">U.S. MACROECONOMY</div>
+                    {# <a class="dropdown-item" href="/forecast-gdp">GDP Growth Forecast</a>
+                    <a class="dropdown-item" href="/forecast-pce">Consumption Forecast</a>
+                    <a class="dropdown-item" href="/forecast-pdi">Investment Forecast</a> #}
+                    <a class="dropdown-item" href="/forecast/cpi">Inflation Forecast</a>
+                    {# <a class="dropdown-item" href="/nowcast-gdp">Short-term GDP Nowcast</a> #}
                 </div>
             </div>
-        </li>
-        
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Macroeconomic Forecasts</a>
-            <div class="dropdown-menu">
-                <div class="d-md-flex align-items-start justify-content-start">
-                    <div>   
-                        <div class="dropdown-header py-0 mx-3 mb-1 border-bottom border-black" style="font-size:1.0rem">U.S. MACROECONOMY</div>
-                        {# <a class="dropdown-item" href="/forecast-gdp">GDP Growth Forecast</a>
-                        <a class="dropdown-item" href="/forecast-pce">Consumption Forecast</a>
-                        <a class="dropdown-item" href="/forecast-pdi">Investment Forecast</a> #}
-                        <a class="dropdown-item" href="/forecast/cpi">Inflation Forecast</a>
-                        {# <a class="dropdown-item" href="/nowcast-gdp">Short-term GDP Nowcast</a> #}
-                    </div>
-                </div>
-            </div>
-        </li>
+        </div>
+    </li>
 
-        <!--
-        <li class="nav-item">
-            <a class="nav-link" href="/blog">Blog</a>
-        </li>
+    <!--
+    <li class="nav-item">
+        <a class="nav-link" href="/blog">Blog</a>
+    </li>
 
-        <li class="nav-item">
-            <a class="nav-link" href="/about">About</a>
-        </li>
-        -->
+    <li class="nav-item">
+        <a class="nav-link" href="/about">About</a>
+    </li>
+    -->
 
-    </ul>
+</ul>

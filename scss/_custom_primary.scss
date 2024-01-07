@@ -45,6 +45,9 @@ p {
 }
 
 
+
+
+
 /***** Homepage *****/
 .bg-grid {
 	background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(15 23 42 / 0.04)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
@@ -54,6 +57,24 @@ p {
 	background: linear-gradient(to bottom right, rgba(150, 200, 200, .5), rgba(200, 255, 100, .3));
 }
 
+/***** Card Header *****/
+.card-header {
+	@extend .bg-slate-500;
+	@extend .font-family-serif;
+	@extend .text-xs;
+	@extend .fw-bold;
+	@extend .text-slate-100;
+	@extend .rounded-0;
+	@extend .px-2;
+	@extend .py-1;
+	letter-spacing: .05rem
+}
+
+.card {
+	border:none;
+	box-shadow: 0 5px 5px 0 hsla(0, 0%, 0%, .15);
+	@extend .rounded-1;
+}
 
 /***** Logo *****/
 .logo {
@@ -218,15 +239,14 @@ p {
 	}
 
 	li.active {
-		border-left: 1px solid var(--forest-dark);
-		@extend .bg-slate-200;
+		border-left: 1px solid var(--amber);
+		@extend .bg-white-warmer;
 		@extend .text-forest;
 	}
 
 	li:hover {
-		background-color: var(--slate-300) !important;
-		border-left: 1px solid var(--sky) !important;
-		color: var(--sky) !important;
+		@extend .bg-white-warmer;
+		border-left: 1px solid var(--amber);
 	}
 
 }
@@ -355,11 +375,7 @@ nav.sidebar {
 	z-index: 95;
 	overflow-x: hidden;
 	overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-	border-right: 1px solid #eee;
-	border-left: 1px solid #eee;
-
-	width:16rem;
-
+	width: 16rem;
 	a {
 		color: var(--slate-600);
 		text-decoration: none;
@@ -371,8 +387,8 @@ nav.sidebar {
 		font-weight: 500;
 		font-size: 0.89rem;
 		padding-left: 1.0rem;
-		padding-top: .4rem;
-		padding-bottom: .4rem;
+		padding-top: .45rem;
+		padding-bottom: .45rem;
 		color: var(--slate-600);
 	}
 
@@ -395,7 +411,7 @@ nav.sidebar {
 		padding-left: 0.25rem;
 		padding-top: .25rem;
 		padding-bottom: .25rem;
-		padding-right: 2.5rem;
+		padding-right: 2.0rem;
 		display: block;
 		font-size: .89rem;
 		color: rgb(94, 110, 130);
@@ -487,19 +503,14 @@ table.dataTable.data-table {
 		background-color: rgba(200, 230, 245, .35);
 	}
 
-	tr.odd:hover  {
-		background-color: rgba(200, 230, 245, .9);
+	tr.odd:hover, tr.even:hover  {
+		background-color: rgba(240, 235, 235, .8);
 	}
-
-	tr.even:hover {
-		background-color: var(--slate-300);
-	}
-
 
 	tr {
 		border: none;
 	}
-	
+
 
 }
 

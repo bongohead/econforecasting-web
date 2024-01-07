@@ -19,9 +19,9 @@ const basic_routes = [
     title: process.env.TITLE_SITE,
     url: '',
     description: 'Open datasets for macroeconomic time series, financial forecasts, and other economic data.',
-    keywords: 'treasury yields, treasury yield forecasts, macroeconomic forecasts, interest rate forecasts, 10 year treasury yield forecast, rate forecasts, economic forecasts',
+    keywords: 'treasury yields, treasury yield forecasts, macroeconomic forecasts, interest rate forecasts, 10 year treasury yield forecast, rate forecasts, economic forecasts, sofr forecasts',
     template: 'home', endpoints: ['/'], 
-    input_js: ['libs/lottie/lottie-player', 'libs/autocomplete/autoComplete', 'home'], output_js: 'home'
+    input_js: ['libs/lottie/lottie-player', 'libs/autocomplete/autoComplete', 'home', 'libs/bootstrap/bootstrap'], output_js: 'home'
   }, {
     title: 'Treasury Curve Forecast',
     url: '/treasury-curve',

@@ -7,6 +7,8 @@
     "stlnow": "<li>The St. Louis Fed's <a  href=\"https://fred.stlouisfed.org/series/STLENI\">real GDP nowcast</a></li>",
     "fnma": "<li>Fannie Mae's <a href=\"https://www.fanniemae.com/research-and-insights/forecast\">Economic & Housing Outlook</a></li>",
     "now": "<li>Our GDP Nowcsat</li>",
-    "einf": "<li>The Cleveland Fed's <a href=\"https://www.clevelandfed.org/indicators-and-data/inflation-expectations\">Inflation Expectations Model</a> (monthly-interpolated)</li>"
+    "einf": "<li>The Cleveland Fed's <a href=\"https://www.clevelandfed.org/indicators-and-data/inflation-expectations\">Inflation Expectations Model</a> (monthly-interpolated)</li>",
+    "wfc": "<li>Wells Fargo's <a href=\"https://www.wellsfargo.com/cib/insights/economics/us-outlook/\">U.S. Economic Outlook</a></li>"
+
 }
 

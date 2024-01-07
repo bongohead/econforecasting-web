@@ -117,16 +117,20 @@ const init = function() {
 	if (sidebar) {
 
 		sidebar.addEventListener('hide.bs.collapse', function (e) {
-			const a_el = sidebar.querySelector(`a[href="#${e.target.id}"]`);
+			const a_el = sidebar.querySelector(`a.nav-link[href="#${e.target.id}"]`);
 			a_el.querySelector('.bi-chevron-right').classList.remove('d-none');
 			a_el.querySelector('.bi-chevron-down').classList.add('d-none');
 
 		});
 
 		sidebar.addEventListener('show.bs.collapse', function (e) {
-			const a_el = sidebar.querySelector(`a[href="#${e.target.id}"]`);
+			const a_el = sidebar.querySelector(`a.nav-link[href="#${e.target.id}"]`);
 			a_el.querySelector('.bi-chevron-right').classList.add('d-none');
 			a_el.querySelector('.bi-chevron-down').classList.remove('d-none');
+
+			// Collapse all other elements
+			const a_el_alts = sidebar.querySelectorAll(`div.collapse.sidebar-submenu:not([id="#${e.target.id}"])`);
+			a_el_alts.forEach(el => bootstrap.Collapse.getOrCreateInstance(el, {toggle: false}).hide());
 		});
 
 		sidebar.querySelectorAll('a:not(.nav-link)').forEach(function(x) {
@@ -134,7 +138,7 @@ const init = function() {
 				x.classList.add('activepage');
 				const div_el = x.parentElement;
 				div_el.classList.add('show');
-				const a_el = sidebar.querySelector(`a[href="#${div_el.id}"]`);
+				const a_el = sidebar.querySelector(`a.nav-link[href="#${div_el.id}"]`);
 				a_el.classList.remove('collapsed');
 				a_el.querySelector('.bi-chevron-right').classList.add('d-none');
 				a_el.querySelector('.bi-chevron-down').classList.remove('d-none');
