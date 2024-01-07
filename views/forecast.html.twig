@@ -60,14 +60,17 @@
 							{{ primary_forecast_description }}
 
 							{% if show_vintage_chart == true %}
-								<p class="mb-2"><a href="#" class="btn btn-sm bg-sky bg-hover-sky-dark transition duration-300 rounded-0 text-slate-100 border-0" role="button" data-bs-toggle="modal" data-bs-target="#fixed-vdate-chart-modal"><i class="me-1  bi bi-bar-chart text-sm align-top"></i>View forecast history by date of forecast</a></p>
-								
+								<div class="mb-3 d-flex column-gap-2 justify-content-between bg-white-warm p-3 text-slate-500 align-self-center" style="max-width:30rem">
+									<h4 class="fs-6 m-0 align-items-center d-flex">Forecast<br>history</h4>
+									<a href="#" class="btn btn-sm bg-sky bg-hover-sky-dark transition duration-300 rounded-0 text-slate-100 border-0 d-flex align-items-center" role="button" data-bs-toggle="modal" data-bs-target="#fixed-vdate-chart-modal"><i class="me-1 bi bi-bar-chart text-sm align-top"></i>By date of forecast</a>
+									<a href="#" class="btn btn-sm bg-sky bg-hover-sky-dark transition duration-300 rounded-0 text-slate-100 border-0 d-flex align-items-center" role="button" data-bs-toggle="modal" data-bs-target="#fixed-date-chart-modal"><i class="me-1 bi bi-activity text-sm align-top"></i>By target forecast period</a>
+								</div>
 								<div class="modal fade" id="fixed-vdate-chart-modal" tabindex="-1">
 									<div class="modal-dialog modal-xl" style="max-width: min(calc(100% - 20px), 1200px);">
 										<div class="modal-content">
 										<div class="modal-body p-4">
 											<h4 class="mb-3 d-flex align-items-center justify-content-between" >
-												<span style="letter-spacing: .05rem;" class="badge bg-slate-500 font-family-logo  text-bold text-xs font-family-sans-serif fw-bold text-slate-100 rounded-0 px-2 py-1">HISTORICAL FORECAST VINTAGES</span>
+												<span class="card-header">HISTORICAL FORECAST VINTAGES</span>
 												<button type="button" class="btn btn-sm bg-rose-dark text-slate-100" data-bs-dismiss="modal">Close</button>
 											</h4>
 											<div class="chart-container position-relative rounded" style="height:500px" id="fixed-vdate-chart-container">
@@ -88,15 +91,13 @@
 									</div>
 								</div>
 
-								<p><a href="#" class="btn btn-sm bg-sky bg-hover-sky-dark transition duration-300  rounded-0 text-slate-100 border-0" role="button" data-bs-toggle="modal" data-bs-target="#fixed-date-chart-modal"><i class="me-1  bi bi-bar-chart text-sm align-top"></i>View forecast history by targeted forecast period</a></p>
-
 
 								<div class="modal fade" id="fixed-date-chart-modal" tabindex="-1">
 									<div class="modal-dialog modal-xl" style="max-width: min(calc(100% - 20px), 1200px);">
 										<div class="modal-content">
 										<div class="modal-body p-4">
 											<h4 class="mb-3 d-flex align-items-center justify-content-between" >
-												<span style="letter-spacing: .05rem;" class="badge bg-slate-500 font-family-logo  text-bold text-xs font-family-sans-serif fw-bold text-slate-100 rounded-0 px-2 py-1">ROLLING PREDICTION HISTORIES</span>
+												<span class="card-header">ROLLING PREDICTION HISTORIES</span>
 												<button type="button" class="btn btn-sm bg-rose-dark text-slate-100" data-bs-dismiss="modal">Close</button>
 											</h4>
 											<div class="chart-container position-relative rounded" style="height:500px" id="fixed-date-chart-container">
