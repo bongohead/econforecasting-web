@@ -1,0 +1,123 @@
+{% extends "partials/base.html.twig" %}
+
+{% block meta %}
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+{% endblock %}
+
+{% block navbar %}
+	{% include 'partials/navbar-fluid.html.twig' %}
+{% endblock %}
+
+
+{% block content %}
+<div class="bg-white-neutral pb-5">
+
+    <div style="background:linear-gradient(to bottom right, rgba(200, 250, 209, .5), rgba(155, 190, 250, .3));padding-bottom:5rem">
+        <div class="container-xxl">
+            <div class="row py-5">
+                <div class="px-3">
+                    <h5 class="text-slate-500 fw-bolder my-4">CONTACT US</h5>
+                    <p class="text-slate-800">For questions or inqueries, please reach out using our form below or by directly emailing <a href="mailto:charles@macropredictions.com">charles@macropredictions.com</a>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container d-flex pb-5">
+        <div class="shadow bg-white-cool rounded-0 p-0" style="margin-top:-4.5rem;max-width:40rem">
+            <div class="bg-sky-dark" style="height:5px"></div>
+            <div class="d-flex justify-content-center">
+                <div style="margin-top: -1.25rem;" class="bg-sky-dark rounded rounded-5 px-5 py-1 text-slate-200">Contact</div>
+            </div>
+            <form id="contact-form" class="mx-3 px-3 my-4">
+                <div class="form-content py-2">
+                    <div class="mb-4">
+                        <label for="email" class="form-label fw-bold text-slate-700 fs-6">Email<span class="text-danger">*</span></label><small class="text-slate-500 mb-2 ms-2 mt-0 fs-6 fst-italic">Business email if applicable</small>
+                        <input type="email" class="form-control fs-6" style="max-width:25rem" name="email" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="name" class="form-label fs-6 fw-bold text-slate-700">Name<span class="text-danger">*</span></label>
+                        <input value="" type="text" class="form-control fs-6" style="max-width:25rem" name="name" required oninvalid="this.setCustomValidity('Enter your first and last name')" oninput="this.setCustomValidity('')"  pattern=".{2,}"/>
+                    </div>
+                    <div class="mb-4">
+                        <label for="company" class="form-label fs-6 fw-bold text-slate-700">Company or Organization<span class="text-danger"></span></label>
+                        <input type="text" class="form-control fs-6" name="company">
+                    </div>
+
+                    <h6 class="form-label fs-6 fw-bold text-slate-700">I am a...*</h6>
+
+                    <div class="mb-4">
+                        <select id="iama" class="form-select fs-6" aria-label="select" required>
+                            <option class="fs-6" disabled selected value=""> -- select an option -- </option>
+                            <option class="fs-6" value="financial">financial professional</option>
+                            <option class="fs-6" value="researcher">researcher, analyst, or scientist</option>
+                            <option class="fs-6" value="engineer">engineer or developer</option>
+                            <option class="fs-6" value="investor">individual investor</option>
+                            <option class="fs-6" value="other">other</option>
+                        </select>
+                    </div>
+
+                    <h6 class="form-label fs-6 fw-bold text-slate-700">I'm interested in:</h6>
+                    <div class="d-flex justify-content-start flex-wrap column-gap-3 row-gap-1 mb-4 ms-1">
+                        <div class="">
+                            <input type="checkbox" id="interested-1" name="accessing-data">
+                            <label class="fs-6" for="interested-1">Accessing data</label>
+                        </div>
+                        <div class="">
+                            <input type="checkbox" id="interested-2" name="data-or-research" >
+                            <label class="fs-6" for="interested-2">Data or research partnerships</label>
+                        </div>
+                        <div class="">
+                            <input type="checkbox" id="interested-3" name="press-requests">
+                            <label class="fs-6" for="interested-3">Press requests</label>
+                        </div>
+                        <div class="">
+                            <input type="checkbox" id="interested-4" name="methodology-questions">
+                            <label class="fs-6" for="interested-4">Methodology questions</label>
+                        </div>
+                        <div class="">
+                            <input type="checkbox" id="interested-5" name="other">
+                            <label class="fs-6" for="interested-5">Other (please fill out below)</label>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="comments" class="form-label fs-6 fw-bold text-slate-700">Please describe your inquiry*</label>
+                        <textarea class="form-control fs-6" id="comments" rows="5" required minlength="10" maxlength="5000"  oninvalid="this.setCustomValidity('Enter in at least 10 characters')" oninput="this.setCustomValidity('')" ></textarea>
+                    </div>
+
+                    <div class="d-flex justify-content-center mb-3">
+                        <div id="contact-captcha" class="g-recaptcha" data-sitekey="{{ recaptcha_key }}"></div>
+                    </div>
+                    <div class="mb-3 col-auto d-flex justify-content-center">
+                        <span class="text-sm text-slate-500 fst-italic">By submitting, you agree that we may reach out to your provided contact email. We will never share or sell your contact information to third parties.</span>
+                    </div>
+                    <div class="mb-0 col-auto d-flex justify-content-center">
+                        <input type="submit" class="btn bg-sky-dark text-slate-200 bg-hover-sky px-5 rounded-0" value="Submit">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="d-none d-md-block overflow-hidden flex-grow-1 mx-2 align-self-baseline" style="margin-top:-1.5rem" >
+            <lottie-player src="/static/img/contact-animation.json" background="transparent" speed="0.5" direction="1" mode="normal" count="100" loop="" autoplay=""></lottie-player>
+        </div>
+
+    
+    </div>
+
+    <!-- Modal for loading -->
+    <div class="modal fade" id="loading-modal" tabindex="-1">
+        <div class="modal-dialog modal-sm" style="max-width: 400px);">
+            <div class="modal-content">
+                <div class="modal-body p-4">
+                    <div id="loader-text">Sending...</div>
+                    <h4 class="my-2 d-flex align-items-center justify-content-center" >
+                        <button type="button" class="btn btn-sm bg-slate-100 rounded rounded-1 text-slate-500" data-bs-dismiss="modal">Close</button>
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

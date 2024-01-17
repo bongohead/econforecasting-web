@@ -31,13 +31,14 @@ app.use(helmet({
     crossOriginEmbedderPolicy: false,
     contentSecurityPolicy: {
         directives: {
-            defaultSrc: ["'self'", 'https://cdnjs.cloudflare.com', 'https://fonts.googleapis.com'],
-            scriptSrc: ["'self'", "'unsafe-inline'", 'https://cdnjs.cloudflare.com', 'https://cdn.jsdelivr.net', 'https://cdn.datatables.net', 'https://code.highcharts.com', 'https://plausible.io'],
-            styleSrc: ["'self'", "'unsafe-inline'", 'https://cdnjs.cloudflare.com', 'https://cdn.jsdelivr.net', 'https://cdn.datatables.net', 'https://fonts.googleapis.com', 'https://fonts.gstatic.com'],
-            fontSrc: ["'self'", 'https://cdnjs.cloudflare.com', 'https://fonts.googelapis.com', 'https://fonts.gstatic.com', 'https://cdn.jsdelivr.net'],
-            connectSrc: ["'self'", 'https://cdnjs.cloudflare.com', 'https://*.econforecasting.com', 'https://*.macropredictions.com', '*'],
-            formAction: ["'self'", 'https://export.highcharts.com'],
-            imgSrc: ["'self'", 'blob:', 'data:']
+            'default-src': ["'self'", 'https://cdnjs.cloudflare.com', 'https://fonts.googleapis.com', 'https://www.google.com'],
+            'script-src': ["'self'", "'unsafe-inline'", 'https://cdnjs.cloudflare.com', 'https://cdn.jsdelivr.net', 'https://cdn.datatables.net', 'https://code.highcharts.com', 'https://plausible.io', 'https://www.google.com', 'https://www.gstatic.com'],
+            'script-src-attr': ["'unsafe-inline'"], // Needed for form validation in contact page
+            'style-src': ["'self'", "'unsafe-inline'", 'https://cdnjs.cloudflare.com', 'https://cdn.jsdelivr.net', 'https://cdn.datatables.net', 'https://fonts.googleapis.com', 'https://fonts.gstatic.com'],
+            'font-src': ["'self'", 'https://cdnjs.cloudflare.com', 'https://fonts.googelapis.com', 'https://fonts.gstatic.com', 'https://cdn.jsdelivr.net'],
+            'connect-src': ["'self'", 'https://cdnjs.cloudflare.com', 'https://*.econforecasting.com', 'https://*.macropredictions.com', '*'],
+            'form-action': ["'self'", 'https://export.highcharts.com'],
+            'img-src': ["'self'", 'blob:', 'data:']
           }
     }
 }));
