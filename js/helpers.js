@@ -29,6 +29,40 @@ const getApi = async function(endpoint, timeout = 10, verbose = false) {
 	return fetchRequest;
 }
 
+const postApi = async function(endpoint, body = {}, timeout = 10, verbose = false) {
+		
+	const timerStart = Date.now();
+	const controller = new AbortController()
+	const timeoutId = setTimeout(() => controller.abort(), timeout * 1000)
+	
+	const jwt =  ('; '+document.cookie).split(`; 1gasdog=`).pop().split(';')[0];
+
+	const ep = (window.location.href.includes('dev') ? 'https://dev-api.macropredictions.com/external/' : 'https://api.macropredictions.com/external/');
+	
+	const fetchRequest = fetch(ep + endpoint, {
+			method: 'post',
+			headers: new Headers({
+				'X-Requested-With': 'XMLHttpRequest',
+				'Authorization': 'Bearer ' + jwt,
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			}),
+			// Note: do not pass content-type with formData!
+			body: JSON.stringify(body),
+			signal: controller.signal  // Eventually migrate to AbortSignal https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal/timeout
+		}).then((response) => {
+			if (!response.ok) {
+				return response.text().then(text => {throw new Error(`HTTP error: ${response.status} - ${text}`)})
+			}
+			clearTimeout(timeoutId);
+			if (verbose) console.log('Fetch: '+ (Date.now() - timerStart));
+			return response.json();
+		});
+
+	return fetchRequest;
+}
+
+
 const getData = function(k) {
 	if (sessionStorage.getItem('data') === null) return null;
 	const data = JSON.parse(sessionStorage.getItem('data'));

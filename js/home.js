@@ -1,7 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-	console.log('TEST');
-
 	
 	const page_list = [
 		{group: 'Interest Rates', fullname: 'Federal Funds Rate (FFR)', url: 'forecast/ffr'},

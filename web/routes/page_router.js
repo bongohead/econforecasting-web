@@ -23,6 +23,20 @@ const basic_routes = [
     template: 'home', endpoints: ['/'], 
     input_js: ['libs/lottie/lottie-player', 'libs/autocomplete/autoComplete', 'home', 'libs/bootstrap/bootstrap'], output_js: 'home'
   }, {
+    title: 'Contact Us',
+    url: '/contact',
+    description: 'Reach out to our team! We provide open datasets for macroeconomic time series, financial forecasts, and other economic data.',
+    keywords: 'contact us, econforecasting.com contact page, macropredictions.com contact page',
+    template: 'contact', endpoints: ['/contact'], 
+    input_js: ['libs/lottie/lottie-player','libs/bootstrap/bootstrap', 'helpers', 'contact'], output_js: 'contact'
+  }, {
+    title: 'About Us',
+    url: '/about',
+    description: 'Reach out to our team! We provide open datasets for macroeconomic time series, financial forecasts, and other economic data.',
+    keywords: 'about us, econforecasting.com about, macropredictions.com about, econforecasting.com',
+    template: 'about', endpoints: ['/about'], 
+    input_js: ['libs/lottie/lottie-player','libs/bootstrap/bootstrap'], output_js: 'about'
+  }, {
     title: 'Treasury Curve Forecast',
     url: '/treasury-curve',
     description: 'Historical data and daily-updated monthly forecasts for the full Treasury yield curve.',
@@ -54,7 +68,8 @@ basic_routes.forEach(function(r) {
         description: r.description,
         keywords: r.keywords,
         canonical: `https://econforecasting.com${r.url}`,
-        pagescript: `${r.output_js}.js`
+        pagescript: `${r.output_js}.js`,
+        recaptcha_key: process.env.RECAPTCHA_KEY
       });
 
     } catch(err) {

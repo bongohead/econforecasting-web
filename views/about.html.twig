@@ -1,0 +1,58 @@
+{% extends "partials/base.html.twig" %}
+
+{% block meta %}
+{% endblock %}
+
+{% block navbar %}
+	{% include 'partials/navbar-fluid.html.twig' %}
+{% endblock %}
+
+
+{% block content %}
+<div class="bg-white-neutral pb-5">
+
+    <div style="background:linear-gradient(to bottom right,  rgba(195, 190, 250, .3), rgba(200, 250, 209, .4));padding-bottom:8rem">
+        <div class="container-xxl">
+            <div class="row py-5 px-3">
+                <h5 class="text-slate-400 fw-bolder my-4">ABOUT US</h5>
+                <div class="d-flex justify-content-center"  style="margin-bottom:-1.5rem">
+                    <h6 class="text-slate-500 fs-6 fw-bolder mb-3">EVERYTHING IS CORRELATED</h6>
+                </div>
+                <div class="d-md-block" style="height:8rem" >
+                    <lottie-player src="/static/img/about-animation.json" background="transparent" speed="0.4" direction="1" mode="normal" count="100" loop="" autoplay=""></lottie-player>
+                </div>
+                <div class="d-flex justify-content-center" style="margin-top:-1rem">
+                    <p class="fs-5 text-slate-800" style="max-width:55rem">We're a small, research-oriented team of economists, data scientists, and machine learning engineers working to develop a unified source of open macroeconomic forecasts and indices to measure and predict the economy.</p>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <p class="fs-5 text-slate-800" style="max-width:55rem">We construct models with a <span class="text-forest">scientific</span>, <span class="text-forest">evidence-oriented</span> focus, using proven and novel methods from econometrics and machine learning.</p>
+                </div>
+
+                <div class="d-flex justify-content-center mt-3">
+                    <a role="button" href="/contact" class="btn bg-sky-dark bg-hover-sky transition duration-200 text-slate-200 rounded rounded-0 px-4 py-1">Contact Us</a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="container d-flex pb-5 justify-content-center">
+        <div class="shadow bg-white-cool rounded-0 p-0" style="margin-top:-5.0rem;max-width:40rem">
+            <div class="bg-forest-dark" style="height:5px"></div>
+            <div class="d-flex justify-content-start">
+                <div style="margin-top: -1.25rem;" class="bg-forest-dark px-5 py-1 text-slate-200">Our Mission</div>
+            </div>
+            <div class="px-4 pt-4 pb-3">
+                <p>Our goal is to advance the frontier of macroeconomic modeling and time series forecasting.</p>
+                <p>Stay tuned for more updates.</p>
+            </div>
+
+        </div>
+
+
+    
+    </div>
+
+</div>
+{% endblock %}
