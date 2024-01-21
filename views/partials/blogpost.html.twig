@@ -1,0 +1,30 @@
+{#
+Passable variables; all @var variables are REQUIRED, in addition to variables listed in base.html.twig.
+- @var title 
+- @var description 
+#}
+{% extends "partials/base.html.twig" %}
+
+{% block meta %}
+{% endblock %}
+
+{% block navbar %}
+	{% include 'partials/navbar-fluid.html.twig' %}
+{% endblock %}
+
+{% block content %}
+    <div class="container p-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-xxl-6">
+                <h2>{{ blog_title }}</h2>
+                <div class="text-slate-500">
+                    metadata here
+                </div>
+                <hr class="py-2" style="">
+                <div class="col-8 mx-auto" style="height:25rem;background-image:url(/static/img/blog/{{ blog_img }});background-size:cover;background-repeat:no-repeat;background-position:center;"></h2>
+                {% block post %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
