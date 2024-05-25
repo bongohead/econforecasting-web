@@ -200,7 +200,7 @@
 }
 ,{
     "varname": "t05y",
-    "fullname": "5 Month Treasury Note Yield",
+    "fullname": "5 Year Treasury Note Yield",
     "meta_description": "5-year daily-updated forecasts of the 5-year Treasury note yield, based off futures data and market yields.",
     "meta_keywords": "5 year treasury forecast, treasury yield forecast, 5-year treasury bond forecast, 5-year treasury note forecast, 5-year treasury yield forecast, 5-year t bill forecast",
     "primary_forecast": "int",
