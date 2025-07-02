@@ -9,15 +9,22 @@ Description TBA
 - To end automation: pm2 unstartup [run unstartup and startup after node update]
 - To restart: pm2 reload
 
+# TBD
+- Add support for LLM to ping data
 
 # CHANGELOG
-## [v3.00]
+## 2025-07-02 [v3.2]
+- Updated variable descriptions
+- Added Euribor, deprecated BSBY
+
+## 2024-01-13 [v3.1]
+- Misc styling fixes, about page, contact page
+
+## 2024-01-03 [v3.0]
 - Updated homepage UI
+- Cleanup UI for forecast history
 
-## [v2.01]
-- Added new Treasury docs
-
-## [v2.00] (CSS Overhaul & Express Migration)
+## 2023-01-23 [v2.00] (CSS Overhaul & Express Migration)
 - Added rebuilt SASS styles
 - Added new logo integration
 - Added Express migration
@@ -25,6 +32,7 @@ Description TBA
 - Added speed optimizations to load pages and better error handling
 - Added reduction of JS load weight and moved variable description loads to server side
 - Added new build system
+- Added new Treasury docs
 
 ## 2022-12-13 [v1.04] (VPS Migration, API Integration & Misc)
 - Added API v0 with JWT auth
