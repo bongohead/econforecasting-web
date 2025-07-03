@@ -6,19 +6,20 @@
 
 {% block content %}
 
-<div class="d-flex bg-white-warm">
+<div class="d-flex bg-white-cool">
 	{% include "partials/forecast-sidebar.html.twig" %}
 	<div class="col mx-2 pb-5">
 		<div class="container-xxl" id="forecast-container" data-site="{{ site }}">
 
 			<div class="row">
 				<div class="col-12 card p-4 my-3 rounded">
-					<h4 class="mb-3 d-flex align-items-center" >
+					{# <h4 class="mb-3 d-flex align-items-center" >
 						<span class="card-header">YIELD CURVE FORECASTS</span>
-					</h4>
+					</h4> #}
+					{# <h5 class="fw-bolder ms-3 text-slate-800 mt-2">Treasury curve forecasts</h5> #}
 					<div class="chart-container position-relative rounded" id="chart-container">
 						<div class="loader-container"><span>Pulling data...</span><div></div></div>
-						<div class="loadee-container position-relative" style="height:400px">
+						<div class="loadee-container position-relative" style="height:450px">
 							<div id="chart-container-1" class="position-absolute w-100 px-2 pt-1"></div>
 							<div id="chart-container-2" class="position-absolute d-none d-md-block" style="width:150px; right:.5rem" ></div>
 						</div>

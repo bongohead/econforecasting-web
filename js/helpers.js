@@ -285,12 +285,11 @@ const init = function() {
 		exporting: {
 			menuItemDefinitions: {
 				downloadPNG: {text: '<i class="bi bi-filetype-png me-1"></i> Image (PNG)'},
-				downloadSVG: {text: '<i class="bi bi-filetype-svg me-1"></i> Image (SVG)'},
-				downloadPDF: {text: '<i class="bi bi-filetype-pdf me-1"></i> PDF'},
+				downloadSVG: {text: '<i class="bi bi-filetype-svg me-1"></i> Image (SVG)'}
 			},
 			buttons: {
 				contextButton: {
-					menuItems: ['downloadPNG', 'downloadSVG', 'downloadPDF'],
+					menuItems: ['downloadPNG', 'downloadSVG'],
 					text: `<span class="d-flex align-items-center text-xs"><i class="bi bi-download me-1"></i>EXPORT</span>`,
 					useHTML: true,
 					symbol: null,

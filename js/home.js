@@ -4,10 +4,10 @@ document.addEventListener('DOMContentLoaded', function() {
 	const page_list = [
 		{group: 'Interest Rates', fullname: 'Federal Funds Rate (FFR)', url: 'forecast/ffr'},
 		{group: 'Interest Rates', fullname: 'Secured Overnight Financing Rate (SOFR)', url: 'forecast/sofr'},
-		{group: 'Interest Rates', fullname: 'BSBY Overnight Rate', url: 'forecast/bsby'},
 		{group: 'Interest Rates', fullname: 'AMERIBOR Overnight Rate', url: 'forecast/ameribor'},
 		{group: 'Interest Rates', fullname: 'Sterling Overnight Rate (SONIA)', url: 'forecast/sonia'},
 		{group: 'Interest Rates', fullname: 'Euro Short-Term Rate (ESTR)', url: 'forecast/estr'},
+		{group: 'Interest Rates', fullname: 'Euribor 3-Month Rate', url: 'forecast/euribor03m'},
 		{group: 'Interest Rates', fullname: 'Bank of England Base Rate', url: 'forecast/ukbankrate'},
 
 		{group: 'Interest Rates', fullname: 'Treasury Yield Curve', url: 'treasury-curve'},

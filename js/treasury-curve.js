@@ -146,11 +146,13 @@ function drawChart(treasury_data, play_index, forecast_vdate, hist_vdate, site) 
 	Highcharts.AST.allowedAttributes.push('data-dir');
 	const o = {
         chart: {
+			height: 450,
 			animation: {
 				duration: 500,
 				easing: 'linear'
 			},	
-			spacingTop: 10,
+			spacingTop: 20,
+			marginTop: 100,
 			marginBottom: 80,
 			spacingRight: 150,
 			events: {
@@ -176,47 +178,39 @@ function drawChart(treasury_data, play_index, forecast_vdate, hist_vdate, site) 
         },
 		responsive: {
 			rules: [
-			{
 			// Smallish, for ipads
+			{
+				condition: {maxWidth: 900},
 				chartOptions: {
-					exporting: {
-						enabled: false
-					},
-					subtitle: {
-						align: 'right',
-						x: -10
-					},
+					exporting: {enabled: false},
 					caption: {
 						text: `<span class="text-xs d-block text-end">
 							<a href="https://${site}.com" class="d-flex align-items-center text-xs justify-content-end"><img class="me-1" width="12" height="12" src="/static/brand/small.svg"> https://${site}.com</a>
-						</span>`
+						</span>`,
+						align: 'right',
+						x: 0
 					}
 				},
-				condition: {
-					maxWidth: 900
-				}
 			},
-			// When sidegraph is hidden 
+			// Tiny 
 			{
+				condition: { maxWidth: 692 },
 				chartOptions: {
-					chart: {
-						spacingRight: 0
-					},
-					title: {
-						text: null
-					},
-					subtitle: {
-						align: 'center',
-						floating: false,
-						x: 0,
-						y: 15
-					}
+					exporting: {enabled: false},
+					chart: {marginRight: 0, spacingRight: 0},
+					caption: {enabled: false, text: null}
 				},
-				condition: {
-					maxWidth: 692 
-				}
-			}]
+			}
+			]
 		},	
+		navigation: {
+			buttonOptions: {
+				align: 'right',
+				verticalAlign: 'bottom',
+				y: 3,
+				zIndex: 99999
+			}
+		},
 		exporting: {
 			enabled: true,
 			sourceWidth: 1000,
@@ -250,6 +244,7 @@ function drawChart(treasury_data, play_index, forecast_vdate, hist_vdate, site) 
 				},
 				caption: {
 					enabled: true,
+					x: 0,
 					text: `https://${site}.com`
 				}	
 			}
@@ -269,7 +264,11 @@ function drawChart(treasury_data, play_index, forecast_vdate, hist_vdate, site) 
 		},
         title: {
 			align: 'left',
-			text: 'Treasury curve forecasts'
+			text: 'Treasury curve forecasts',
+			style: {
+				fontWeight: 'bold',
+				fontSize: '1.2rem'
+			}
         },
 		subtitle: {
 			useHTML: true,
@@ -277,14 +276,15 @@ function drawChart(treasury_data, play_index, forecast_vdate, hist_vdate, site) 
 			floating: true,
 			text: 
 			'<div class="btn-group d-inline-block" role="group" id="treasury-curve-subtitle-group">' +
-				'<button class="btn btn-sm rounded-0 bg-slate-300 text-slate-500 fw-bolder text-xs border-0" type="button">SHOW HISTORY/FORECAST OVER TIME</button>'+
+				'<button class="btn btn-sm rounded-0 bg-slate-300 text-slate-500 fw-bolder text-xs border-0" type="button">FORECAST OVER TIME</button>'+
 				'<button class="btn btn-sm rounded-0 text-xs treasury-curve-action-button" type="button" data-dir="start"><i class="bi bi-skip-backward"></i></button>' +
 				'<button class="btn btn-sm rounded-0 text-xs treasury-curve-action-button" type="button" data-dir="back"><i class="bi bi-caret-left"></i></button>' +
 				'<button class="btn btn-sm rounded-0 text-xs treasury-curve-action-button active" type="button" data-dir="pause"><i class="bi bi-pause"></i></button>' +
 				'<button class="btn btn-sm rounded-0 text-xs treasury-curve-action-button" type="button" data-dir="forward" ><i class="bi bi-caret-right"></i></button>' +
 				'<button class="btn btn-sm rounded-0 text-xs treasury-curve-action-button" type="button" data-dir="end"><i class="bi bi-skip-forward"></i></button>' +
 			'</div>',
-			y: 15
+			y: 30,
+			x: 10
 		},
 		caption: {
 			useHTML: true,
@@ -295,7 +295,8 @@ function drawChart(treasury_data, play_index, forecast_vdate, hist_vdate, site) 
 					<span class="d-block">*<em>Average of daily data from ${dayjs(hist_vdate).startOf('month').format('MM/DD')} - ${dayjs(hist_vdate).format('MM/DD')}</em></span>
 				</span>
 				`,
-			align: 'right'
+			align: 'right',
+			x: -80
 		},
 		xAxis: {
 			title: {
@@ -395,7 +396,8 @@ function drawChart(treasury_data, play_index, forecast_vdate, hist_vdate, site) 
 
 	const o2 = {
         chart: {
-			marginTop: 53,
+			height: 470,
+			marginTop: 83,
 			marginLeft: 30,
 			marginBottom: 25,
 			marginRight: 10,
@@ -416,7 +418,7 @@ function drawChart(treasury_data, play_index, forecast_vdate, hist_vdate, site) 
 			floating: true,
 			text: '<span class="text-xs fw-bold text-slate-500">SELECT A DATE</span>',
 			widthAdjust: 0,
-			y: 25,
+			y: 50,
 			align: 'center'
 		},
 		tooltip: {
@@ -434,17 +436,18 @@ function drawChart(treasury_data, play_index, forecast_vdate, hist_vdate, site) 
 			min: dayjs(treasury_data[0].date).add(-6, 'M').unix() * 1000,  
 			max: dayjs(treasury_data[treasury_data.length - 1].date).add(6, 'M').unix() * 1000,
 			lineWidth: 0,
-			offset: -50,
+			offset: -0,
 			tickLength: 0,
 			labels: {
 				zIndex: -999999,
+				distance: -40
 			},
 			tickPosition: 'inside',
 			tickInterval: 12 * 3 * 30 * 24 * 3600 * 1000,
 			plotLines: [{
 				value: dayjs(treasury_data[play_index].date).unix() * 1000,
 				color: 'rgba(255,0,0,.5)',
-				width: 5,
+				width: 8,
 				id: 'plot-line',
 				zIndex: 3,
 			}],
@@ -668,6 +671,7 @@ function updateChart() {
 	//console.log('Updating data...', newData);
 	/* Update chart data and colors */
 	chart.series[0].setData(newData, redraw = true, animation = {duration: 250}, updatePoints = true);
+	chart.series[0].userOptions.data = newData; // <-- make exporter aware *added 7/3/25
 	chart.series[0].update({
 		color: (ud.treasury_data[ud.play_index].type === 'forecast' ? '#298D25' : '#d97706'),
 		fillColor: (ud.treasury_data[ud.play_index].type === 'forecast' ? 'rgba(83, 163, 78, .4)' : 'rgba(228,159,80, .4)')
