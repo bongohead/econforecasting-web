@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			debug: window.location.host.split('.')[0] === 'dev'
 		};
 
-		show_local_time('#user-time')
+		showLocalTime('#user-time')
 
 		setData('treasury-curve', ud);
 	}
@@ -893,12 +893,3 @@ function drawChartAlt(treasury_data) {
 	return;
 }
 
-const show_local_time = function(selector) {
-	ET_TZ = 'US/Eastern'
-	LOCAL_TZ = dayjs.tz.guess();
-	if (dayjs().tz(ET_TZ).startOf('hour').hour() !== dayjs().tz(LOCAL_TZ).startOf('hour').hour()) {
-		const etToday = dayjs().tz(ET_TZ).startOf('day').add(9, 'hour').add(35, 'minute');
-		const local = etToday.tz(LOCAL_TZ);
-		document.querySelector(selector).textContent = `/${local.format('h:mm A')} ${local.format('z')}`;
-	}
-}

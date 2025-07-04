@@ -326,7 +326,9 @@ const init = function() {
 			},	
 			buttonTheme: {
 				width: '6rem',
-				padding: 5,
+				paddingLeft: 8,
+				paddingRight: 8,
+				padding: 4,
 				fill: 'var(--sky)',
 				r: 0,
 				style: {fontWeight: 'normal', color: 'var(--slate-100)', fontSize: '.75rem'},
@@ -365,3 +367,19 @@ const withLoader = function(id, fn){
 		return fn_res;
 	};
 };
+
+
+// Show Local Time - requires selector el with data-hour and data-minute attribute
+const showLocalTime = function(selector) {
+	ET_TZ = 'US/Eastern'
+	LOCAL_TZ = dayjs.tz.guess();
+	if (dayjs().tz(ET_TZ).startOf('hour').hour() !== dayjs().tz(LOCAL_TZ).startOf('hour').hour()) {
+		
+		const el = document.querySelector(selector);
+		const hour = el.dataset.hour;
+		const minute = el.dataset.minute;
+		const etToday = dayjs().tz(ET_TZ).startOf('day').add(hour, 'hour').add(minute, 'minute');
+		const local = etToday.tz(LOCAL_TZ);
+		document.querySelector(selector).textContent = `/${local.format('h:mm A')} ${local.format('z')}`;
+	}
+}
