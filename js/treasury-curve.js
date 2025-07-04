@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
 			debug: window.location.host.split('.')[0] === 'dev'
 		};
 
+		show_local_time('#user-time')
+
 		setData('treasury-curve', ud);
 	}
 
@@ -146,13 +148,13 @@ function drawChart(treasury_data, play_index, forecast_vdate, hist_vdate, site) 
 	Highcharts.AST.allowedAttributes.push('data-dir');
 	const o = {
         chart: {
-			height: 450,
+			height: 420,
 			animation: {
 				duration: 500,
 				easing: 'linear'
 			},	
-			spacingTop: 20,
-			marginTop: 100,
+			spacingTop: 15,
+			marginTop: 60,
 			marginBottom: 80,
 			spacingRight: 150,
 			events: {
@@ -189,7 +191,8 @@ function drawChart(treasury_data, play_index, forecast_vdate, hist_vdate, site) 
 						</span>`,
 						align: 'right',
 						x: 0
-					}
+					},
+					title: {text: ''}
 				},
 			},
 			// Tiny 
@@ -206,9 +209,9 @@ function drawChart(treasury_data, play_index, forecast_vdate, hist_vdate, site) 
 		navigation: {
 			buttonOptions: {
 				align: 'right',
-				verticalAlign: 'bottom',
-				y: 3,
-				zIndex: 99999
+				verticalAlign: 'top',
+				zIndex: 99999,
+				y: 5
 			}
 		},
 		exporting: {
@@ -244,7 +247,6 @@ function drawChart(treasury_data, play_index, forecast_vdate, hist_vdate, site) 
 				},
 				caption: {
 					enabled: true,
-					x: 0,
 					text: `https://${site}.com`
 				}	
 			}
@@ -266,8 +268,8 @@ function drawChart(treasury_data, play_index, forecast_vdate, hist_vdate, site) 
 			align: 'left',
 			text: 'Treasury curve forecasts',
 			style: {
-				fontWeight: 'bold',
-				fontSize: '1.2rem'
+				fontWeight: 'bolder',
+				fontSize: '1.1rem'
 			}
         },
 		subtitle: {
@@ -276,14 +278,14 @@ function drawChart(treasury_data, play_index, forecast_vdate, hist_vdate, site) 
 			floating: true,
 			text: 
 			'<div class="btn-group d-inline-block" role="group" id="treasury-curve-subtitle-group">' +
-				'<button class="btn btn-sm rounded-0 bg-slate-300 text-slate-500 fw-bolder text-xs border-0" type="button">FORECAST OVER TIME</button>'+
+				'<button class="btn btn-sm rounded-0 bg-slate-300 text-slate-500 fw-bolder text-xs border-0" type="button">SHOW DATA/FORECAST OVER TIME</button>'+
 				'<button class="btn btn-sm rounded-0 text-xs treasury-curve-action-button" type="button" data-dir="start"><i class="bi bi-skip-backward"></i></button>' +
 				'<button class="btn btn-sm rounded-0 text-xs treasury-curve-action-button" type="button" data-dir="back"><i class="bi bi-caret-left"></i></button>' +
 				'<button class="btn btn-sm rounded-0 text-xs treasury-curve-action-button active" type="button" data-dir="pause"><i class="bi bi-pause"></i></button>' +
 				'<button class="btn btn-sm rounded-0 text-xs treasury-curve-action-button" type="button" data-dir="forward" ><i class="bi bi-caret-right"></i></button>' +
 				'<button class="btn btn-sm rounded-0 text-xs treasury-curve-action-button" type="button" data-dir="end"><i class="bi bi-skip-forward"></i></button>' +
 			'</div>',
-			y: 30,
+			y: 20,
 			x: 10
 		},
 		caption: {
@@ -295,8 +297,7 @@ function drawChart(treasury_data, play_index, forecast_vdate, hist_vdate, site) 
 					<span class="d-block">*<em>Average of daily data from ${dayjs(hist_vdate).startOf('month').format('MM/DD')} - ${dayjs(hist_vdate).format('MM/DD')}</em></span>
 				</span>
 				`,
-			align: 'right',
-			x: -80
+			align: 'right'
 		},
 		xAxis: {
 			title: {
@@ -396,10 +397,10 @@ function drawChart(treasury_data, play_index, forecast_vdate, hist_vdate, site) 
 
 	const o2 = {
         chart: {
-			height: 470,
-			marginTop: 83,
+			height: 420,
+			marginTop: 45,
 			marginLeft: 30,
-			marginBottom: 25,
+			marginBottom: 20,
 			marginRight: 10,
 			// width: 140,
 			inverted: true,
@@ -418,12 +419,12 @@ function drawChart(treasury_data, play_index, forecast_vdate, hist_vdate, site) 
 			floating: true,
 			text: '<span class="text-xs fw-bold text-slate-500">SELECT A DATE</span>',
 			widthAdjust: 0,
-			y: 50,
+			y: 18,
 			align: 'center'
 		},
 		tooltip: {
             useHTML: true,
-			backgroundColor: 'rgba(255, 255, 255, .8)',
+			backgroundColor: 'rgba(255, 255, 255, 0.8)',
             formatter: function () {
                 return `<div style="backdrop-filter:blur(5px);">
 					<span class="text-center text-sm text-slate-800 d-block">${dayjs(this.point.x).format('MMM YYYY')}</span>
@@ -516,7 +517,7 @@ function drawChart(treasury_data, play_index, forecast_vdate, hist_vdate, site) 
 			type: 'arearange',
 			color: 'transparent',
 			fillColor: 'transparent',
-			lineWidth: 5,
+			lineWidth: 8,
 			marker: {
 				enabled: false
 			}
@@ -568,8 +569,12 @@ const drawTable = function(treasury_data, forecast_vdate, hist_vdate) {
 			return {...x, ...{
 				orderable: true,
 				ordering: true,
+				orderSequence: ['asc', 'desc'], // disables null sort, see https://datatables.net/reference/option/columns.orderSequence
 				type: (x.title === 'Date' ? 'date' : 'num'),
-				className: 'dt-center'
+				className: 'dt-center',
+				render: function ( data, type, row ) {
+					return x.title === 'Date' ? data : Number(data).toFixed(2);
+				}
 			}}
 		});
 		
@@ -625,16 +630,16 @@ const drawTable = function(treasury_data, forecast_vdate, hist_vdate) {
 		
 		// Draw the table
 		const dt_table = $(table_el).DataTable(o);
-		$(table_el).parents('div.dataTables_wrapper').addClass('transition duration-400');
-		if (i !== 0) $(table_el).parents('div.dataTables_wrapper').addClass('position-absolute'); // Make all els after first el absolute-positioned
+		$(table_el).parents('div.dt-container').addClass('transition duration-400');
+		if (i !== 0) $(table_el).parents('div.dt-container').addClass('position-absolute'); // Make all els after first el absolute-positioned
 		if (series.type !== 'forecast') {
-			$(table_el).parents('div.dataTables_wrapper').css('opacity', 0).css('z-index', 1);	
+			$(table_el).parents('div.dt-container').css('opacity', 0).css('z-index', 1);	
 		} else {
-			$(table_el).parents('div.dataTables_wrapper').css('opacity', 1).css('z-index', 2);
+			$(table_el).parents('div.dt-container').css('opacity', 1).css('z-index', 2);
 		}
 
 		// Move the download buttons
-		const download_div = table_el.closest('.dataTables_wrapper').querySelector('.dt-buttons');
+		const download_div = table_el.closest('.dt-container').querySelector('.dt-buttons');
 		download_div.classList.add('float-end');
 		if (series.type !== 'forecast') download_div.style.display = 'none';
 		$('#table-container > div.loadee-container > span').after($(download_div).detach());
@@ -644,9 +649,9 @@ const drawTable = function(treasury_data, forecast_vdate, hist_vdate) {
 			document.querySelectorAll('#li-container > li').forEach(el => el.classList.remove('active'));
 			this.classList.add('active');
 			
-			$('div.dataTables_wrapper').css('opacity', 0).css('z-index', 1);
+			$('div.dt-container').css('opacity', 0).css('z-index', 1);
 
-			$(table_el).parents('div.dataTables_wrapper').css('opacity', 1).css('z-index', 2);
+			$(table_el).parents('div.dt-container').css('opacity', 1).css('z-index', 2);
 
 			$('#data-card div.dt-buttons').hide();
 			$(download_div).show();
@@ -886,4 +891,14 @@ function drawChartAlt(treasury_data) {
 	const chart = Highcharts.chart('chart-container-alt', o);
 	
 	return;
+}
+
+const show_local_time = function(selector) {
+	ET_TZ = 'US/Eastern'
+	LOCAL_TZ = dayjs.tz.guess();
+	if (dayjs().tz(ET_TZ).startOf('hour').hour() !== dayjs().tz(LOCAL_TZ).startOf('hour').hour()) {
+		const etToday = dayjs().tz(ET_TZ).startOf('day').add(9, 'hour').add(35, 'minute');
+		const local = etToday.tz(LOCAL_TZ);
+		document.querySelector(selector).textContent = `/${local.format('h:mm A')} ${local.format('z')}`;
+	}
 }

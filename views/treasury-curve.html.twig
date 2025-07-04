@@ -6,20 +6,19 @@
 
 {% block content %}
 
-<div class="d-flex bg-white-cool">
+<div class="d-flex bg-neutral-100">
 	{% include "partials/forecast-sidebar.html.twig" %}
-	<div class="col mx-2 pb-5">
+	<div class="col mx-2 mx-lg-3 pb-5">
 		<div class="container-xxl" id="forecast-container" data-site="{{ site }}">
 
 			<div class="row">
 				<div class="col-12 card p-4 my-3 rounded">
-					{# <h4 class="mb-3 d-flex align-items-center" >
+					<h4 class="mb-3 d-flex align-items-center" >
 						<span class="card-header">YIELD CURVE FORECASTS</span>
-					</h4> #}
-					{# <h5 class="fw-bolder ms-3 text-slate-800 mt-2">Treasury curve forecasts</h5> #}
+					</h4>
 					<div class="chart-container position-relative rounded" id="chart-container">
 						<div class="loader-container"><span>Pulling data...</span><div></div></div>
-						<div class="loadee-container position-relative" style="height:450px">
+						<div class="loadee-container position-relative" style="height:420px">
 							<div id="chart-container-1" class="position-absolute w-100 px-2 pt-1"></div>
 							<div id="chart-container-2" class="position-absolute d-none d-md-block" style="width:150px; right:.5rem" ></div>
 						</div>
@@ -52,17 +51,18 @@
 						<h4 class="mb-3" >
 							<span class="card-header">DESCRIPTION</span>
 						</h4>
-						<div id="variable-description">
+						<div id="variable-description" class="prose">
 							<p>
 								Forecasts shown on this page are from our <span class="fw-bolder text-forest">market consensus forecast</span> of Treasury yields. It is generated primarily using yield data, futures market prices, and survey data, using minimal econometric assumptions. Forecasts from the model can be interpreted as the median expectation of market participants.</p><p>The Treasury yield component of the forecast is generated using three seperate component forecasts:
 							</p>
-							<ol style="font-size:.98rem">
+							<ol>
 								<li>A <a href="/forecast/ffr">benchmark rate forecast</a> extracted directly from federal funds rate futures;</li>
 								<li>A credit spread forecast extracted directly from the yield curve</a>;</li>
 								<li>A term premium (usually near zero) calculated using survey data and macroeconomic variables.</li>
 							</ol>
 							<p>Full methodology can be found in the <a href="/static/research/rate-forecasts-draft.pdf">model documentation<i class="ps-1 bi bi-file-pdf text-rose"></i></a>.</p>
-							<p>While the model prioritizes consistency with market expectations over forecast accuracy, its forecast accuracy has historically exceeded that of survey and agency-based forecasts due to its higher update frequency and timeliness. Prior forecast values are available below.</p><p>The model is updated daily between <small>9:30-10:00 ET (13:30/14:30 UTC)</small> with the prior day's data. Key inputs include the prior trading day's futures prices (as of a 3pm ET settlement time); the prior business day's Treasury par yield curves data, obtained from the U.S. Treasury; and the prior business day's effective fed funds rate prices, obtained from the New York Fed.</p>
+							<p>While the model prioritizes consistency with market expectations over forecast accuracy, its forecast accuracy has historically exceeded that of survey and agency-based forecasts due to its higher update frequency and timeliness. Prior forecast values are available below.</p>
+							<p>The model is updated daily at 9:35 ET<span id="user-time"></span> using prior-day closing values. Key inputs include the prior trading day's futures prices (as of a 3pm ET settlement time); the prior business day's Treasury par yield curves data, obtained from the U.S. Treasury; and the prior business day's effective fed funds rate prices, obtained from the New York Fed.</p>
 						</div>
 
 					</div>
@@ -74,4 +74,7 @@
 	</div>
 
 </div>
+
+<script>
+</script>
 {% endblock %}
