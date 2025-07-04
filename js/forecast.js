@@ -19,6 +19,8 @@ document.addEventListener('DOMContentLoaded', function() {
 			debug: window.location.host.split('.')[0] === 'dev'
 		};
 
+		showLocalTime('#user-time')
+
 		setData('forecast', ud);
 	}
 
@@ -328,7 +330,7 @@ const drawChart = function(ts_data_parsed, fullname, units, hist_freq, site) {
 					}
 				}, {
 					type: 'all',
-					text: 'Full Historical Data & Forecast'
+					text: 'Show All Data'
 				}
 			]
 		},
@@ -1098,16 +1100,16 @@ const drawTable = function(ts_data_parsed, units) {
 		
 		// Draw the table
 		$(table_el).DataTable(o);
-		$(table_el).parents('div.dataTables_wrapper').addClass('transition duration-400');
-		if (i !== 0) $(table_el).parents('div.dataTables_wrapper').addClass('position-absolute'); // Make all els after first el absolute-positioned
+		$(table_el).parents('div.dt-container').addClass('transition duration-400');
+		if (i !== 0) $(table_el).parents('div.dt-container').addClass('position-absolute'); // Make all els after first el absolute-positioned
 		if (x.ts_type !== 'primary') {
-			$(table_el).parents('div.dataTables_wrapper').css('opacity', 0).css('z-index', 1);
+			$(table_el).parents('div.dt-container').css('opacity', 0).css('z-index', 1);
 		} else {
-			$(table_el).parents('div.dataTables_wrapper').css('opacity', 1).css('z-index', 2);
+			$(table_el).parents('div.dt-container').css('opacity', 1).css('z-index', 2);
 		}
 
 		// Move the download buttons
-		const download_div = table_el.closest('.dataTables_wrapper').querySelector('.dt-buttons');
+		const download_div = table_el.closest('.dt-container').querySelector('.dt-buttons');
 		download_div.classList.add('float-end');
 		if (x.ts_type !== 'primary') download_div.style.display = 'none'
 		$('#table-container > div.loadee-container > span').after($(download_div).detach());
@@ -1117,9 +1119,9 @@ const drawTable = function(ts_data_parsed, units) {
 			document.querySelectorAll('#li-container > li').forEach(el => el.classList.remove('active'));
 			this.classList.add('active');
 			
-			$('div.dataTables_wrapper').css('opacity', 0).css('z-index', 1);
+			$('div.dt-container').css('opacity', 0).css('z-index', 1);
 			
-			$(table_el).parents('div.dataTables_wrapper').css('opacity', 1).css('z-index', 2);
+			$(table_el).parents('div.dt-container').css('opacity', 1).css('z-index', 2);
 			
 			$('#data-card div.dt-buttons').hide();
 			$(download_div).show();

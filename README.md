@@ -13,6 +13,12 @@ Description TBA
 - Add support for LLM to ping data
 
 # CHANGELOG
+## 2025-07-04 [v3.3]
+- Added dynamic TZ updating
+- Added minor styling improvements for Treasury curve pages
+- Updated & simplified build system, support for Sass 1.89
+- Updated support for DT v2.0+
+
 ## 2025-07-02 [v3.2]
 - Updated variable descriptions
 - Added Euribor, deprecated BSBY

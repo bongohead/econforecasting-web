@@ -7,10 +7,10 @@ let page_router = Router();
 const standard_libs =
     [
       'jquery/jquery',
-      'dt/jquery.dataTables', 'dt/dataTables.bootstrap5', 'dt/dataTables.buttons', 'dt/buttons.html5',
+      'dt/dataTables.min', 'dt/dataTables.bootstrap5', 'dt/dataTables.buttons', 'dt/buttons.html5',
       'dayjs/dayjs', 'dayjs/timezone', 'dayjs/utc', 'dayjs/minmax', 'dayjs/advancedformat', 'dayjs/quarterofyear',
-      'hc/highstock', 'hc/highcharts-more', 'hc/modules/accessibility', 'hc/modules/exporting', 'hc/modules/offline-exporting', 'hc/modules/series-labels',
-      'bootstrap/bootstrap', 'gradient/gradient', 
+      'hc/highstock', 'hc/highcharts-more', 'hc/modules/accessibility', 'hc/modules/exporting', 'hc/modules/offline-exporting', 'hc/modules/series-label',
+      'bootstrap/bootstrap', 'gradient/gradient',
     ].map(f => `libs/${f}`)
     .concat(['helpers'])
 

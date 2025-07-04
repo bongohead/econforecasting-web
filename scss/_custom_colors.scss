@@ -1,13 +1,38 @@
 $custom-colors: (
-	slate-100: rgb(241, 245, 249),
-	slate-200: rgb(226, 232, 240),
-	slate-300: rgb(203, 213, 225),
-	slate-400: rgb(148, 163, 184),
-	slate-500: rgb(100, 116, 139),
-	slate-600: rgb(71, 85, 105),
-	slate-700: rgb(51, 65, 85),
-	slate-800: rgb(30, 41, 59),
-	slate-900: rgb(15, 23, 42),
+	slate-50: oklch(0.984 0.003 247.858),
+	slate-100: oklch(0.968 0.007 247.896),
+	slate-200: oklch(0.929 0.013 255.508),
+	slate-300: oklch(0.869 0.022 252.894),
+	slate-400: oklch(0.704 0.04 256.788),
+	slate-500: oklch(0.554 0.046 257.417),
+	slate-600: oklch(0.446 0.043 257.281),
+	slate-700: oklch(0.372 0.044 257.287),
+	slate-800: oklch(0.279 0.041 260.031),
+	slate-900: oklch(0.208 0.042 265.755),
+		
+	stone-50: oklch(0.985 0.001 106.423),
+	stone-100: oklch(0.97 0.001 106.424),
+	stone-200: oklch(0.923 0.003 48.717),
+	stone-300: oklch(0.869 0.005 56.366),
+	stone-400: oklch(0.709 0.01 56.259),
+	stone-500: oklch(0.553 0.013 58.071),
+	stone-600: oklch(0.444 0.011 73.639),
+	stone-700: oklch(0.374 0.01 67.558),
+	stone-800: oklch(0.268 0.007 34.298),
+	stone-900: oklch(0.216 0.006 56.043),
+	stone-950: oklch(0.147 0.004 49.25),
+	
+	neutral-50: oklch(0.985 0 0),
+	neutral-100: oklch(0.97 0 0),
+	neutral-200: oklch(0.922 0 0),
+	neutral-300: oklch(0.87 0 0),
+	neutral-400: oklch(0.708 0 0),
+	neutral-500: oklch(0.556 0 0),
+	neutral-600: oklch(0.439 0 0),
+	neutral-700: oklch(0.371 0 0),
+	neutral-800: oklch(0.269 0 0),
+	neutral-900: oklch(0.205 0 0),
+	neutral-950: oklch(0.145 0 0),
 
 	// To make a color lighter, rotate the hue towards the nearest bright hue — 60°, 180°, or 300°.
 	// To make a color darker, rotate the hue towards the nearest dark hue — 0°, 120°, or 240°.
@@ -54,40 +79,27 @@ $custom-colors: (
     }
 }
 
-// https://frontstuff.io/generate-all-your-utility-classes-with-sass-maps
-/* Use BS5 mixins instead */
-@mixin color-modifiers($attribute: 'color', $modifier: '') {
-	@each $name, $hex in $custom-colors {
-		&-#{$name}#{$modifier} {
-			#{$attribute}: $hex !important;
-		}
-	}
+// Generate Bootstrap-style utilities from custom colors
+@each $name, $value in $custom-colors {
+  .text-#{$name} { color: var(--#{$name}) !important; }
+  .bg-#{$name} { background-color: var(--#{$name}) !important; }
+  .bg-hover-#{$name}:hover { background-color: var(--#{$name}) !important; }
+  .bg-active-#{$name}:active,
+  .bg-active-#{$name}.active { background-color: var(--#{$name}) !important; }
+  .border-#{$name} { border-color: var(--#{$name}) !important; }
 }
 
-@mixin color-modifiers-hover($attribute: 'color') {
-	@each $name, $hex in $custom-colors {
-		&-#{$name}:hover {
-			#{$attribute}: $hex !important;
-		}
-	}
-}
-
-.text {
-	@include color-modifiers('color');
-}
+// Additional text utilities for completeness
 .text-hover {
-    @include color-modifiers('color', ':hover');
+  @each $name, $value in $custom-colors {
+    &-#{$name}:hover { color: var(--#{$name}) !important; }
+  }
 }
+
 .text-active {
-    @include color-modifiers('color', '.active');
-}
-.bg {
-	@include color-modifiers('background-color');
-}
-.bg-hover {
-    @include color-modifiers('background-color', ':hover');
-}
-.bg-active {
-    @include color-modifiers('background-color', '.active');
+  @each $name, $value in $custom-colors {
+    &-#{$name}:active,
+    &-#{$name}.active { color: var(--#{$name}) !important; }
+  }
 }
 

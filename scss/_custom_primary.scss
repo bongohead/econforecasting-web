@@ -1,4 +1,3 @@
-/***** ! Automatic build at #{$BuildTimeStamp} *****/
 
 /***** Base Styling *****/
 :root {
@@ -13,13 +12,10 @@
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
 }
 
-.cursor-pointer {
-  cursor: pointer;
-}
-
+// Enhanced typography with better line heights
 p {
-	line-height: 1.25rem;
-	margin-bottom: 1.2rem;
+	line-height: 1.3rem;
+	margin-bottom: 1.1rem;
 }
 
 .transition {
@@ -45,9 +41,6 @@ p {
 }
 
 
-
-
-
 /***** Homepage *****/
 .bg-grid {
 	background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(15 23 42 / 0.04)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
@@ -67,12 +60,13 @@ p {
 	@extend .rounded-0;
 	@extend .px-2;
 	@extend .py-1;
-	letter-spacing: .05rem
+	letter-spacing: .05rem;
+	border-bottom: none !important;
 }
 
 .card {
 	border:none;
-	box-shadow: 0 5px 5px 0 hsla(0, 0%, 0%, .15);
+	box-shadow: 0 4px 4px 0 hsla(0, 0%, 0%, .15);
 	@extend .rounded-1;
 }
 
@@ -202,7 +196,7 @@ p {
 	
 }
 
-/***** Homepage *****/
+/***** Blog *****/
 .blog-pagination {
 	a.disabled {
 		@extend .bg-slate-100;
@@ -219,7 +213,6 @@ p {
 	}
 
 }
-
 
 /****** Forecast Data Table *****/
 #li-container {
@@ -403,7 +396,7 @@ nav.sidebar {
 	
 	/* Submenu */	
 	div.sidebar-submenu {
-		@extend .bg-slate-100;
+		@extend .bg-slate-50;
 	}
 
 	div.sidebar-submenu > a {
@@ -472,13 +465,19 @@ table.dataTable {
 	}
 	thead {
 		background-color: var(--slate-100);
+	}
+	thead > tr > th {
+		background-color: var(--slate-100) !important;
 		padding-top: .55rem;
 		padding-bottom: .55rem;
 	}
-	thead > tr > th.sorting::after {
+	thead > tr > th:hover {
+		outline: none !important;
+	}
+	thead > tr > th span.dt-column-order {
 		color: var(--sky);
 	}
-	thead > tr > th.sorting::before {
+	thead > tr > th span.dt-column-order {
 		color: var(--sky);
 	}
 }
@@ -499,22 +498,35 @@ table.dataTable.data-table {
 		border: none;
 	}
 
-	tr.odd  {
-		background-color: rgba(200, 230, 245, .35);
+	/* Odd rows */
+	> tbody > tr:nth-of-type(2n + 1) {
+		background-color: rgba(200, 230, 245, .25);
 	}
 
-	tr.odd:hover, tr.even:hover  {
-		background-color: rgba(240, 235, 235, .8);
+	/* Hover styling - same color applied to all rows  */
+	> tbody > tr:nth-of-type(2n + 1):hover, tr:nth-of-type(2n):hover  {
+		background-color: var(--white-warmer)/*--rgba(240, 235, 235, .8);*/
+	}
+
+	/* Children inherit background color */
+	> tbody > tr > * {
+		background-color: inherit;
+		@extend .transition;
+		@extend .duration-100;
+
 	}
 
 	tr {
 		border: none;
 	}
 
-
+	/* Prevent dt-type-* from flipping the left <-> right order of the header text and sorting arrows, issue in DT 2.3.4 */
+	th.dt-type-numeric div.dt-column-header, th.dt-type-numeric div.dt-column-footer, th.dt-type-date div.dt-column-header, th.dt-type-date div.dt-column-footer, td.dt-type-numeric div.dt-column-header, td.dt-type-numeric div.dt-column-footer, td.dt-type-date div.dt-column-header, td.dt-type-date div.dt-column-footer {
+		flex-direction: row 
+	}
 }
 
-li.paginate_button.page-item a.page-link {
+li.dt-paging-button.page-item button.page-link {
 	font-size: .80rem;
 	border-radius: 0;
 	background-color: transparent;
@@ -523,7 +535,7 @@ li.paginate_button.page-item a.page-link {
 	padding: .3rem .7rem;
 }
 
-li.paginate_button.page-item {
+li.dt-paging-button.page-item {
 	@extend .bg-active-slate-300;
 	@extend .bg-hover-slate-300;
 	@extend .bg-slate-100;
@@ -531,7 +543,7 @@ li.paginate_button.page-item {
 	@extend .duration-300;
 }
 
-li.paginate_button.page-item a.page-link:focus {
+li.dt-paging-button.page-item button.page-link:focus {
 	box-shadow: none !important;
 }
 
