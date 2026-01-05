@@ -1,8 +1,11 @@
 // @ts-nocheck
-import jwt from 'jsonwebtoken';
 import { rateLimit } from 'express-rate-limit';
-import crypto from 'crypto';
-import fs from 'fs';
+import crypto from 'node:crypto';
+import fs from 'node:fs';
+import { SignJWT } from 'jose';
+import { TextEncoder } from 'node:util';
+
+const textEncoder = new TextEncoder();
 
 	
 // App-level middleware (above are router-level)
@@ -14,29 +17,40 @@ export const rate_limiter = rateLimit({
 	legacyHeaders: false
 });
 
-export const cookie_setter = function(req, res, next) {
+export const cookie_setter = async function (req, res, next) {
+	try {
+		const payload = { username: 'prodsite', auth_level: 'prodsite' };
 
-	const payload = {username: 'prodsite', auth_level: 'prodsite'};
+		const iv_bytes = crypto.randomBytes(16);
+		const pk_bytes = Buffer.from(process.env.ENCRYPT_SECRET, 'base64');
 
-	const iv_bytes = crypto.randomBytes(16);
-	const pk_bytes = Buffer.from(process.env.ENCRYPT_SECRET, 'base64');
+		const cipher = crypto.createCipheriv('aes-256-cbc', pk_bytes, iv_bytes);
+		const encrypted_data_b64 = Buffer.concat([
+			cipher.update(Buffer.from(JSON.stringify(payload), 'utf8')),
+			cipher.final(),
+		]).toString('base64');
 
-	const cipher = crypto.createCipheriv('aes-256-cbc', pk_bytes, iv_bytes);
-	const encrypted_data_b64 = Buffer.concat([cipher.update(Buffer.from(JSON.stringify(payload), 'utf8')), cipher.final()]).toString('base64');
+		const jwt_payload = { iv: iv_bytes.toString('base64'), data: encrypted_data_b64 };
 
-	const jwt_payload = {iv: iv_bytes.toString('base64'), data: encrypted_data_b64};
+		// Set cookies (HS256)
+		const tokenSecretBytes = textEncoder.encode(String(process.env.TOKEN_SECRET ?? ''));
+		const token = await new SignJWT(jwt_payload)
+			.setProtectedHeader({ alg: 'HS256' })
+			.setIssuedAt()
+			.setExpirationTime('2h')
+			.sign(tokenSecretBytes);
 
-	// Set cookies
-	const token = jwt.sign(jwt_payload, process.env.TOKEN_SECRET, {expiresIn: '2h'});
+		res.cookie(process.env.COOKIE_NAME, token, {
+			domain: process.env.DOMAIN,
+			secure: true,
+			sameSite: 'lax',
+			expires: new Date(Date.now() + 2 * 3600000), // cookie will be removed after 2 hours
+		});
 
-	res.cookie(process.env.COOKIE_NAME, token, {
-		domain: process.env.DOMAIN, 
-		secure: true,
-		sameSite: 'lax',
-		expires: new Date(Date.now() + 2 * 3600000) // cookie will be removed after 8 hours
-	});
-	
-	next()
+		next();
+	} catch (err) {
+		next(err);
+	}
 };
 
 export const concat_js = function(filename, files) {

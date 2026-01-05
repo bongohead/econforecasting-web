@@ -13,6 +13,9 @@ Description TBA
 - Add support for LLM to ping data
 
 # CHANGELOG
+## 2026-01-04 [v3.4]
+- Migrated from `jsonwebtoken` to `jose`
+
 ## 2025-07-04 [v3.3]
 - Added dynamic TZ updating
 - Added minor styling improvements for Treasury curve pages
