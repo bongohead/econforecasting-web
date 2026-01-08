@@ -23,5 +23,3 @@ style.css.map
 ecosystem.config.js
 ecosystem.config.cjs
 
-# LLM Helpers
-CLAUDE.md

@@ -1,24 +1,31 @@
 [
     {
-        "id": "2023-11-20_rate-forecasts",
-        "title": "How accurate are forecast markets for interest rates?",
-        "datetime": "2023-11-20 20:42",
-        "blurb": "Blah blah blah",
-        "img": "",
-        "tags": ["forecasting", "macroeconomics"]
+        "id": "2024-05-20_rate-forecasts",
+        "title": "Forecasting part 1: how good are forecasters at predicting the economy anyways?",
+        "datetime": "2024-01-19 17:42",
+        "blurb": "Ways to measure and understand forecast performance.",
+        "img": "a-prayer-for-rate-cuts.jpg",
+        "topics": ["forecasting", "economics", "interest rates"]
     }, {
-        "id": "2023-11-05_test-2",
-        "title": "Test",
-        "datetime": "2023-11-20 17:42",
-        "blurb": "Blah blah blah",
-        "img": "",
-        "tags": []
+        "id": "2024-01-20_rate-forecasts",
+        "title": "Forecasting, part 2: why are economic forecasts so bad?",
+        "datetime": "2024-01-19 17:42",
+        "blurb": "Ways to measure and understand forecast performance.",
+        "img": "a-prayer-for-rate-cuts.jpg",
+        "topics": ["forecasting", "economics", "interest rates"]
     }, {
-        "id": "2023-11-05_test-3",
-        "title": "Test",
-        "datetime": "2023-11-20 17:42",
-        "blurb": "Blah blah blah",
-        "img": "",
-        "tags": []
+        "id": "2024-01-21_ai-economic-forecasting",
+        "title": "LLMs for macroeconomic modeling?",
+        "datetime": "2024-01-21 12:51",
+        "blurb": "LLMs and deep learning for economic modeling. Good or bad idea? We summarize the existing literature.",
+        "img": "ai-doing-modeling.jpg",
+        "topics": ["machine learning", "llms", "machine learning", "economics"]
+    }, {
+        "id": "2024-01-24_doomers",
+        "title": "The rise of economic doomerism",
+        "datetime": "2024-01-24 17:00",
+        "blurb": "Economic sentiment is at its worst ever, despite improving ",
+        "img": "bears-economy.jpg",
+        "topics": ["economics"]
     }
 ]

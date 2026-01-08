@@ -15,6 +15,7 @@ Description TBA
 # CHANGELOG
 ## 2026-01-04 [v3.4]
 - Migrated from `jsonwebtoken` to `jose`
+- Updated rate draft
 
 ## 2025-07-04 [v3.3]
 - Added dynamic TZ updating

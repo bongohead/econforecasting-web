@@ -9,37 +9,57 @@
 {% endblock %}
 
 {% block navbar %}
-	{% include 'partials/navbar.html.twig' %}
+	{% include 'partials/navbar-fluid.html.twig' %}
 {% endblock %}
 
 
 {% block content %}
-<div class="container-fluid"><div class="container">
-	<div class="row mb-5 mt-5 justify-content-center px-sm-4 p-0">
-		<div class="col-md-8 col-xl-7 col-xxl-6 blog-posts-container">
-			<div>
-				<h2 class="border-bottom font-family-serif">Posts <span class="fs-6 fst-italic">{{ clear_filters }}</span></h2>
-				{{ blog_posts }}
-			</div>
-			<div class="blog-pagination d-flex justify-content-center mt-5">
-				{{ pagination }}
+<div class="bg-white pb-5 pt-1">
+	<div class="container-xxl px-sm-5 px-md-4">
+		<div class="row justify-content-center mt-5">
+			<div class="col-12 col-md-11 col-lg-10 col-xxl-9" >
+				{{ banner_blog_post }}
+				<hr style="border-top:1px solid var(--slate-200)" class="mt-3 mb-5">
 			</div>
 		</div>
+		
+		<div class="row justify-content-center">
 
-		<aside class="ps-4 px-sm-4 col-md-4 col-lg-3 col-xxl-3 blog-sidebar font-family-serif">
-			<div class="mb-5 bg-light rounded">
-				<h5 class="font-italic border-bottom">About</h5>
-				<p class="mb-0">Our latest commentary, analysis and data on economic forecasting, with a focus on the technical side of modeling and macroeconomics.</p>
+			<div class="col-md-8 col-lg-7 col-xxl-6 blog-posts-container ">
+				<div>
+					{{ blog_posts }}
+				</div>
+				<div class="blog-pagination d-flex justify-content-center mt-5">
+					{{ pagination }}
+				</div>
 			</div>
 
-			<div>
-				<h5 class="font-italic border-bottom">Filter</h5>
-				<span class="fs-6">Topics</span>
-				<ul class="list-group">
-					{{ tags }}
-				</ul>
-			</div>		
-		</aside>
+			<div class="d-none d-md-block ps-md-4 col-md-3 blog-sidebar ">
+				{# <div class="mb-5 bg-white-neutral rounded px-3 py-3">
+					<h6 class="text-slate-400 fw-bolder">ABOUT</h6>
+					<p class="mb-0">Our latest commentary, analysis and data on economic forecasting, with a focus on the technical side of modeling and macroeconomics.</p>
+				</div> #}
+
+
+				<div class="bg-white-cool px-4 py-4">
+					<h6 class="text-slate-800">About</h6>
+					<p class="mb-5 text-sm text-slate-600">Our latest commentary, analysis and data on economic forecasting, with a focus on the technical side of modeling and macroeconomics.</p>
+
+					<div class="text-slate-800 pt-3"><span class="fs-6">Filter Results</span>{{ clear_filters }}</div>
+
+					<div class="text-sm mt-3 mb-2 text-slate-500 fw-bold text-sm">Topic</div>
+					<div class="d-flex flex-wrap row-gap-2 column-gap-2">
+						{{ topics }}
+					</div>
+					<div class="text-sm mt-4 mb-2 text-slate-500 fw-bold text-sm">Dates</div>
+					<div class="d-flex flex-wrap row-gap-2 column-gap-2">
+						{{ years }}
+					</div>
+				</div>		
+			</div>
+
+
+		</div>
 	</div>
- </div></div>
+</div>
  {% endblock %}
