@@ -519,7 +519,7 @@
     "meta_description": "10-year monthly-updated forecasts of the U.S. inflation rate (CPI-U), based off TIPS-Treasury yield spreads and inflations swap rates.",
     "meta_keywords": "Inflation forecasts, U.S. inflation forecasts, CPI forecasts, monthly inflation forecasts, CPI inflation forecasts",
     "primary_forecast": "compinf",
-    "secondary_forecasts": ["cbo", "fnma", "spf", "wsj", "cb", "einf", "wfc"],
+    "secondary_forecasts": ["cbo", "fnma", "spf", "wsj", "einf", "wfc"],
     "show_vintage_chart": true,
     "units": "CPI-U, YoY % Change",
     "hist_freq": "m",
