@@ -8,7 +8,7 @@ Requires Node.js 24. Run Node commands from `web/`:
 
 ```bash
 cd web
-npm ci
+npm ci --include=dev
 npm run check
 npm test
 ```
@@ -36,14 +36,16 @@ Production should run with `NODE_ENV=production`. It does not need development m
 
 ```bash
 cd web
-npm ci
+npm ci --include=dev
+npm run check
+npm test
 npm run build
 NODE_ENV=production pm2 reload econforecasting.com --update-env
 NODE_ENV=production pm2 reload macropredictions.com --update-env
 pm2 save
 ```
 
-The production ecosystem definition should also set `NODE_ENV=production`; otherwise a later `startOrReload` can restore the old development workaround.
+Ansible owns the production ecosystem definition through `setup-prod-server/manage-website-runtime.yaml` in the `vps-admin` repository. It keeps both production processes in `NODE_ENV=production`.
 
 # CHANGELOG
 
