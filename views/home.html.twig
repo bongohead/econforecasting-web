@@ -24,7 +24,7 @@
 					<p class="font-family-logo text-black-80 mt-3" style="font-size:1.1rem;font-weight: 500">Our models are built ground-up combining traditional structural modeling with ML-based signal extraction, allowing us to shift from reactive to proactive insights.</p>
 					-->
 					<!-- Autocomplete -->
-			
+					<label class="visually-hidden" for="autoComplete">Search forecasts</label>
 					<div role="combobox" aria-owns="autoComplete_list" aria-haspopup="true" aria-expanded="false" class="autoComplete_wrapper mb-2 mt-4">
 						<input id="autoComplete" class="form-control">
 					</div>
@@ -69,6 +69,74 @@
 
 
 <div class="container-fluid px-0 pb-5" style="background:white">
+	<section class="container py-5" aria-labelledby="forecast-snapshot-title">
+		{% set forecast_cards = [
+			{ id: 't10y', name: '10-year Treasury yield' },
+			{ id: 'ffr', name: 'Federal funds rate' },
+			{ id: 'sofr', name: 'Secured Overnight Financing Rate (SOFR)' },
+			{ id: 'cpi', name: 'Inflation (YoY, % change in CPI)' }
+		] %}
+		{% set forecast_horizons = [
+			{ months: 1, label: '1 mo', mobile: false },
+			{ months: 3, label: '3 mo', mobile: true },
+			{ months: 12, label: '12 mo', mobile: true },
+			{ months: 48, label: '48 mo', mobile: false }
+		] %}
+
+		<div class="border border-slate-200 rounded overflow-hidden mx-auto" style="max-width:70rem;border-top:3px solid var(--forest) !important">
+			<div class="d-flex align-items-center justify-content-between gap-3 px-4 py-3" style="background:linear-gradient(90deg, var(--forest-lightest), white 42%)">
+				<div>
+					<h2 id="forecast-snapshot-title" class="h5 text-slate-800 fw-semibold mb-0">Selected forecasts</h2>
+				</div>
+				<div class="text-xs text-slate-400 text-nowrap" data-field="snapshot-updated" aria-label="Forecast update date" aria-live="polite">…</div>
+			</div>
+
+			<div class="row g-0 mx-0 align-items-center px-3 px-sm-4 py-2 bg-slate-50 border-top border-bottom border-slate-200">
+				<div class="col-6 col-sm-4 col-lg-3">
+					<span class="visually-hidden">Series</span>
+				</div>
+				{% for horizon in forecast_horizons %}
+					<div class="{% if horizon.mobile %}col-3{% else %}d-none d-sm-block{% endif %} col-sm-2 col-lg text-center">
+						<div class="text-xs fw-semibold text-slate-600 text-nowrap" data-field="snapshot-date-{{ horizon.months }}">{{ horizon.label }}</div>
+					</div>
+				{% endfor %}
+				<div class="d-none d-lg-block col-lg-3 ps-4">
+					<div class="text-xs fw-semibold text-slate-500 text-uppercase">48-month path</div>
+				</div>
+			</div>
+
+			<div>
+				{% for card in forecast_cards %}
+					<a class="row g-0 mx-0 align-items-center px-3 px-sm-4 py-3 text-decoration-none text-slate-700 bg-hover-slate-50 transition duration-200{% if not loop.first %} border-top border-slate-100{% endif %}" href="/forecast/{{ card.id }}" data-home-series="{{ card.id }}">
+						<div class="col-6 col-sm-4 col-lg-3 pe-2">
+							<div class="ps-2" style="border-left:2px solid var(--forest-lighter)">
+								<h3 class="text-sm fw-semibold text-slate-700 mb-0">{{ card.name }}</h3>
+							</div>
+						</div>
+						{% for horizon in forecast_horizons %}
+							<div class="{% if horizon.mobile %}col-3{% else %}d-none d-sm-block{% endif %} col-sm-2 col-lg text-center">
+								<div class="fs-6 fw-semibold text-slate-800 mb-1" data-field="forecast-{{ horizon.months }}">—</div>
+								<div class="text-xs text-slate-400 text-nowrap" data-field="change-{{ horizon.months }}">—</div>
+							</div>
+						{% endfor %}
+						<div class="d-none d-lg-block col-lg-3 ps-4">
+							<div class="d-flex align-items-stretch invisible" style="height:2.75rem;margin-top:-.25rem;margin-bottom:-.25rem" data-field="sparkline" role="img" aria-label="{{ card.name }} forecast path">
+								<svg class="d-block h-100" style="min-width:0;flex:1 1 auto" viewBox="0 0 200 36" preserveAspectRatio="none" aria-hidden="true">
+									<path data-field="sparkline-line" fill="none" stroke="var(--sky-dark)" stroke-width="1.75" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"></path>
+									<circle data-field="sparkline-end" r="2.25" fill="var(--sky-dark)" vector-effect="non-scaling-stroke"></circle>
+								</svg>
+								<div class="d-flex flex-column justify-content-between text-end text-slate-400 ms-2 h-100" style="width:2.75rem;font-size:.6rem;line-height:1">
+									<span data-field="sparkline-maximum">—</span>
+									<span data-field="sparkline-minimum">—</span>
+								</div>
+							</div>
+						</div>
+					</a>
+				{% endfor %}
+			</div>
+		</div>
+	</section>
+
 	{# <div class="container">
 		<div class="row d-flex mt-5 justify-content-between">
 			<div class="col-md-6 col-sm-12 mt-4 d-flex ">
@@ -148,7 +216,6 @@
 
 		</div>
 	</div> #}
-</div>
-<div class="row my-5"></div>
+	</div>
 
 {% endblock %}

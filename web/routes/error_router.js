@@ -1,9 +1,8 @@
 import { Router } from 'express';
 let error_router = Router();
 
-// 404
-error_router.get('/404', (req, res) => {
-    res.render('./404.html.twig', {
+export function renderNotFound(req, res) {
+    return res.status(404).render('./404.html.twig', {
         domain: process.env.DOMAIN,
         site: process.env.SITE,
         title_site: process.env.TITLE_SITE,
@@ -11,14 +10,12 @@ error_router.get('/404', (req, res) => {
         description: '404',
         keywords: '',
         canonical: 'https://econforecasting.com/404',
+        robots: 'noindex, follow',
         pagescript: null
     });
+}
 
-});
-  
-// Catch all route
-error_router.get('*', (req, res) => {
-    res.redirect('/404');
-});
+error_router.get('/404', renderNotFound);
+error_router.use(renderNotFound);
 
-export default error_router;  
+export default error_router;

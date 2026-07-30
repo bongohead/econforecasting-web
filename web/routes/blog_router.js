@@ -1,15 +1,10 @@
 import { Router } from 'express';
-import { concat_js } from '../middleware.js';
+import { renderNotFound } from './error_router.js';
 import fs from 'fs'
 import path from 'path';
 import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 let blog_router = Router();
-
-const libs =
-    ['jquery/jquery', 'bootstrap/bootstrap', 'gradient/gradient', 'dayjs/dayjs', 'dayjs/timezone', 'dayjs/utc', 'dayjs/minmax', 'dayjs/advancedformat']
-    .map(f => `libs/${f}`)
-    .concat(['helpers'])
 
 // Get all blog posts existing in JSON
 const raw_data = await fs.promises.readFile(path.join(__dirname, '..', '..', 'views', 'blog_posts', 'posts.json'), 'utf8');
@@ -29,7 +24,7 @@ const valid_topics = [...new Set(valid_posts.flatMap(p => p.topics))].sort();
 const valid_years = [...new Set(valid_posts.flatMap(p => p.year))].sort();
 
 // Main blog page
-blog_router.get('/', concat_js('blog.js', libs), async (req, res, next) => {
+blog_router.get('/', async (req, res, next) => {
 
     try {
         const page = req.query.p ? Number(req.query.p) : 1;
@@ -169,12 +164,12 @@ blog_router.get('/', concat_js('blog.js', libs), async (req, res, next) => {
 });
 
 
-blog_router.get('/:post_id', concat_js('blog.js', libs), async (req, res, next) => {
+blog_router.get('/:post_id', async (req, res, next) => {
 
     const post_id = req.params.post_id;
     const match_posts = valid_posts.filter(post => post.id === post_id);
     
-    if (match_posts.length !== 1) res.status(200).json('Error');
+    if (match_posts.length !== 1) return renderNotFound(req, res);
     const this_post = match_posts[0]
 
     try {

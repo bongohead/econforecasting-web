@@ -1,3 +1,15 @@
+const getSiteApiBaseUrl = function() {
+	const hostname = window.location.hostname.toLowerCase();
+	const isDevelopment = hostname === 'localhost'
+		|| hostname === '127.0.0.1'
+		|| hostname === '[::1]'
+		|| hostname.startsWith('dev.');
+
+	return isDevelopment
+		? 'https://dev-api.macropredictions.com/site/'
+		: 'https://api.econforecasting.com/site/';
+}
+
 const getApi = async function(endpoint, timeout = 10, verbose = false) {
 		
 	const timerStart = Date.now();
@@ -6,7 +18,7 @@ const getApi = async function(endpoint, timeout = 10, verbose = false) {
 	
 	const jwt =  ('; '+document.cookie).split(`; 1gasdog=`).pop().split(';')[0];
 
-	const ep = (window.location.href.includes('dev') ? 'https://dev-api.macropredictions.com/external/' : 'https://api.macropredictions.com/external/');
+	const ep = getSiteApiBaseUrl();
 	
 	const fetchRequest = fetch(ep + endpoint, {
 			method: 'get',
@@ -37,7 +49,7 @@ const postApi = async function(endpoint, body = {}, timeout = 10, verbose = fals
 	
 	const jwt =  ('; '+document.cookie).split(`; 1gasdog=`).pop().split(';')[0];
 
-	const ep = (window.location.href.includes('dev') ? 'https://dev-api.macropredictions.com/external/' : 'https://api.macropredictions.com/external/');
+	const ep = getSiteApiBaseUrl();
 	
 	const fetchRequest = fetch(ep + endpoint, {
 			method: 'post',

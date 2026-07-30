@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { Router } from 'express';
 import { concat_js } from '../middleware.js';
+import { renderNotFound } from './error_router.js';
 import fs from 'fs'
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -30,7 +31,7 @@ forecast_router.get('/:varname', concat_js('forecast.js', libs), async (req, res
 
         const varname_data = JSON.parse(data).filter(d => d.varname === varname)[0];
         if (varname_data == null) {
-            res.redirect('/404');
+            return renderNotFound(req, res);
         }
         const forecast_descriptions = JSON.parse(fdata);
 

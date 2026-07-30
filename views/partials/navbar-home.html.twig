@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar pt-2 mx-xxl-2 mx-lg-1 mx-md-0 navbar-home"><div class="container-fluid">
-    <a class="navbar-brand py-0 ps-3 me-0 " href="/">
+    <a class="navbar-brand py-0 ps-3 me-0 " href="/" aria-label="{{ title_site }} home">
         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" height="45" viewBox="0 0 1200 200" preserveAspectRatio="xMinYMin">
             <style class="base-styles">
                 .path-1, .path-4 {stroke-width: 8px; stroke: rgba(50, 50, 50, .5); }
@@ -18,7 +18,7 @@
         </svg>					 
     </a>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse"><span class="navbar-toggler-icon"></span></button>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
 
     <div class="navbar-collapse collapse justify-content-center" id="navbar-collapse">
         {% include "partials/navbar-inner.html.twig" %}

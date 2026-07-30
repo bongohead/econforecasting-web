@@ -1,21 +1,73 @@
-Description TBA
+# EconForecasting / MacroPredictions Website
 
-# Using PM2:
-- Install pm2 globally: npm install pm2 -g
-- Start application: NODE_PORT=4000 NODE_ENV=production pm2 start app.js --name <app_name>
-- List: pm2 list
-- To automate startup: pm2 startup (copy-paste as needed)
-- Save app list to be rebooted at reboot: pm2 save
-- To end automation: pm2 unstartup [run unstartup and startup after node update]
-- To restart: pm2 reload
+This is the website code, built with Express and Twig.
 
-# TBD
-- Add support for LLM to ping data
+## Development
+
+Requires Node.js 24. Run Node commands from `web/`:
+
+```bash
+cd web
+npm ci
+npm run check
+npm test
+```
+
+Build all browser assets with `cd web && npm run build`. `scss/run.sh` remains as a shortcut for rebuilding only the stylesheet.
+
+JavaScript bundles are built when the app starts and rebuilt on each request in development. Generated bundles in `web/cache/` are not tracked.
+
+Third-party browser and Sass sources in `js/libs/` and `scss/libs/` are also ignored, so they must be provisioned before a clean checkout can run.
+
+## PM2
+
+The app loads shared secrets from `.env` in the repository root, with site-specific process settings in `web/ecosystem.config.cjs`.
+
+```bash
+cd web
+pm2 start ecosystem.config.cjs
+pm2 reload dev.econforecasting.com
+pm2 reload dev.macropredictions.com
+pm2 status
+pm2 save
+```
+
+Production should run with `NODE_ENV=production`. It does not need development mode to generate JavaScript bundles.
+
+```bash
+cd web
+npm ci
+npm run build
+NODE_ENV=production pm2 reload econforecasting.com --update-env
+NODE_ENV=production pm2 reload macropredictions.com --update-env
+pm2 save
+```
+
+The production ecosystem definition should also set `NODE_ENV=production`; otherwise a later `startOrReload` can restore the old development workaround.
 
 # CHANGELOG
+
+## 2026-07-30 [v4.0]
+
+- Updated runtime and dependencies for Node.js 24, Express 5, and Twig 3; removed unused packages and the duplicate root lockfile
+- Cleaned up app startup, static requests, rate limiting, cookie reuse, security headers, and error handling
+- Added real `404` and `noindex` responses for unknown pages, forecasts, and blog posts
+- Removed the contact form and reCAPTCHA integration in favor of email
+- Fixed site-specific contact links, duplicate SONIA/ESTR navigation, and navigation/search accessibility
+- Updated first-party website requests from the `/external` to `/site` API routes
+- Added responsive homepage forecasts for Treasury, FFR, SOFR, and CPI, including forecast changes and 48-month sparklines
+- Built browser JavaScript at startup so production no longer needs to run in development mode
+- Hardened homepage environment selection, update dates, and sparkline data handling; clarified forecast names
+- Added middleware and route tests
+
+## 2026-03-27 [v3.5]
+
+- Removed the Conference Board forecast from CPI-U comparisons
+
 ## 2026-01-04 [v3.4]
+
 - Migrated from `jsonwebtoken` to `jose`
-- Updated rate draft
+- Updated rate forecast documentation
 
 ## 2025-07-04 [v3.3]
 - Added dynamic TZ updating

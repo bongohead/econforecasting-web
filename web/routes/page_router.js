@@ -21,14 +21,14 @@ const basic_routes = [
     description: 'Open datasets for macroeconomic time series, financial forecasts, and other economic data.',
     keywords: 'treasury yields, treasury yield forecasts, macroeconomic forecasts, interest rate forecasts, 10 year treasury yield forecast, rate forecasts, economic forecasts, sofr forecasts',
     template: 'home', endpoints: ['/'], 
-    input_js: ['libs/lottie/lottie-player', 'libs/autocomplete/autoComplete', 'home', 'libs/bootstrap/bootstrap'], output_js: 'home'
+    input_js: ['libs/lottie/lottie-player', 'libs/autocomplete/autoComplete', 'helpers', 'home', 'libs/bootstrap/bootstrap'], output_js: 'home'
   }, {
     title: 'Contact Us',
     url: '/contact',
-    description: 'Reach out to our team! We provide open datasets for macroeconomic time series, financial forecasts, and other economic data.',
+    description: 'Contact us with questions about our economic forecasts, data, research, press, or partnerships.',
     keywords: 'contact us, econforecasting.com contact page, macropredictions.com contact page',
-    template: 'contact', endpoints: ['/contact'], 
-    input_js: ['libs/lottie/lottie-player','libs/bootstrap/bootstrap', 'helpers', 'contact'], output_js: 'contact'
+    template: 'contact', endpoints: ['/contact'],
+    input_js: ['libs/bootstrap/bootstrap'], output_js: 'contact'
   }, {
     title: 'About Us',
     url: '/about',
@@ -68,8 +68,7 @@ basic_routes.forEach(function(r) {
         description: r.description,
         keywords: r.keywords,
         canonical: `https://econforecasting.com${r.url}`,
-        pagescript: `${r.output_js}.js`,
-        recaptcha_key: process.env.RECAPTCHA_KEY
+        pagescript: `${r.output_js}.js`
       });
 
     } catch(err) {

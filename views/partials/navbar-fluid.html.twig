@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-md py-1 shadow-sm"><div class="container-fluid">
-	<a class="navbar-brand py-0 ps-3 me-0 my-1 pb-1" href="/">
+	<a class="navbar-brand py-0 ps-3 me-0 my-1 pb-1" href="/" aria-label="{{ title_site }} home">
 	<!-- Width:height should be 6:1 -->
 		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" height="30" viewBox="0 0 1200 200" preserveAspectRatio="xMinYMin">
 			<style class="base-styles">
@@ -19,7 +19,7 @@
 		</svg>
 	</a>
 
-	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsingNavbarLg"><span class="navbar-toggler-icon"></span></button>
+	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsingNavbarLg" aria-controls="collapsingNavbarLg" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
 
 	<div class="navbar-collapse collapse justify-content-center pe-xxl-5 me-xxl-5 me-xl-3 ml-lg-0 me-0" id="collapsingNavbarLg">
 		{% include "partials/navbar-inner.html.twig" %}
