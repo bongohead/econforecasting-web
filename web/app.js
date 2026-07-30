@@ -78,7 +78,7 @@ const app = createApp();
 if (process.env.BUILD_ONLY === 'true') {
   pruneJsBundles();
 } else if (process.env.NODE_ENV !== 'test') {
-  const port = Number(process.env.PORT ?? 3011);
+  const port = Number(process.env.PORT ?? 3012);
   app.listen(port, '127.0.0.1', (error) => {
     if (error) throw error;
     console.log(`App listening on 127.0.0.1:${port}`);

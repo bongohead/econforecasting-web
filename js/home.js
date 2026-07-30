@@ -135,7 +135,7 @@ const homepageAxisPercentFormatter = new Intl.NumberFormat('en-US', {
 	maximumFractionDigits: 1,
 });
 
-const homepageHorizons = [1, 3, 12, 48];
+const homepageHorizons = [1, 3, 12, 36];
 
 const parseHomepageDate = function(value) {
 	if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;

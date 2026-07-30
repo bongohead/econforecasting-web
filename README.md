@@ -26,7 +26,6 @@ The app loads shared secrets from `.env` in the repository root, with site-speci
 ```bash
 cd web
 pm2 start ecosystem.config.cjs
-pm2 reload dev.econforecasting.com
 pm2 reload dev.macropredictions.com
 pm2 status
 pm2 save
@@ -57,9 +56,10 @@ Ansible owns the production ecosystem definition through `setup-prod-server/mana
 - Removed the contact form and reCAPTCHA integration in favor of email
 - Fixed site-specific contact links, duplicate SONIA/ESTR navigation, and navigation/search accessibility
 - Updated first-party website requests from the `/external` to `/site` API routes
-- Added responsive homepage forecasts for Treasury, FFR, SOFR, and CPI, including forecast changes and 48-month sparklines
+- Added responsive homepage forecasts for Treasury, FFR, SOFR, and CPI, including forecast changes and 36-month sparklines
 - Built browser JavaScript at startup so production no longer needs to run in development mode
 - Hardened homepage environment selection, update dates, and sparkline data handling; clarified forecast names
+- Retired the unused `dev.econforecasting.com` process
 - Added middleware and route tests
 
 ## 2026-03-27 [v3.5]
